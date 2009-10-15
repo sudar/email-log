@@ -3,7 +3,7 @@ Contributors: sudar
 Tags: email, wpmu, wordpress-mu, log
 Requires at least: 2.8
 Tested up to: 2.8.4
-Stable tag: 0.1
+Stable tag: 0.2
 
 Logs every email sent through WordPress. Compatiable with WPMU too.
 
@@ -33,7 +33,7 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 
 #### WordPress MU installations
 
-Extract the zip file and just drop the contents in the wp-content/plugins/ directory or mu-plugins directory of your WordPress MU installation and then activate the Plugin from Plugins page. You can activate it site wide or just for a single blog.
+Extract the zip file and drop the contents in the wp-content/plugins/ directory or mu-plugins directory of your WordPress MU installation and then activate the Plugin from Plugins page. You can activate it site wide or just for a single blog.
 == Screenshots ==
 1. The following screenshot shows how the logged emails will be displayed
 
@@ -46,6 +46,10 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 ###v0.1 (2009-10-08)
 
 *   Initial Release
+
+###v0.2 (2009-10-15)
+
+*   Added compatability for MySQL 4
 
 ==Readme Generator== 
 
