@@ -4,13 +4,14 @@ Plugin Name: Email Log
 Plugin URI: http://sudarmuthu.com/wordpress/email-log
 Description: Logs every email sent through WordPress. Compatiable with WPMU too.
 Author: Sudar
-Version: 0.2
+Version: 0.3
 Author URI: http://sudarmuthu.com/
 Text Domain: email-log
 
 === RELEASE NOTES ===
 2009-10-08 – v0.1 – Initial Release
 2009-10-15 – v0.2 – Added compatability for MySQL 4
+2009-10-19 – v0.3 – Added compatability for MySQL 4 (Thanks Frank)
 */
 
 global $wpdb;
@@ -508,13 +509,15 @@ class EmailLog {
 
         global $wpdb;
 
+        $attachment_present = (count ($mail_info['attachments']) > 0) ? "true" : "false";
+
         // Log into the database
         $wpdb->insert($this->table_name, array(
                 'to_email' => $mail_info['to'],
                 'subject' => $mail_info['subject'],
                 'message' => $mail_info['message'],
                 'headers' => $mail_info['headers'],
-                'attachments' => $mail_info['attachments']
+                'attachments' => $attachment_present
         ));
 
         // return unmodifiyed array
@@ -549,8 +552,8 @@ function smel_on_install() {
           message TEXT NOT NULL,
           headers TEXT NOT NULL,
           attachments TEXT NOT NULL,
-          sent_date timestamp default CURRENT_TIMESTAMP,
-          UNIQUE KEY id (id)
+          sent_date timestamp(14) NOT NULL,
+          PRIMARY KEY  (id)
         );";
 
       require_once(ABSPATH . 'wp-admin/upgrade-functions.php');
