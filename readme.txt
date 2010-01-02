@@ -27,6 +27,8 @@ As [recommended by Ozh][1], the Plugin has uninstall hook which will clean up th
 
 ### Translation
 
+*   German (Thanks Frank)
+
 The pot file is available with the Plugin. If you are willing to do translation for the Plugin, use the pot file to create the .po files for your language and let me know. I will add it to the Plugin after giving credit to you.
 
 ### Support
