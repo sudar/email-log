@@ -1,0 +1,262 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Email Log WordPress Plugin 0.2\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/email-log\n"
+"POT-Creation-Date: 2009-10-08 17:51+0000\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: Frank Weichbrodt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+
+#. #-#-#-#-#  email-log.pot (Email Log 0.1)  #-#-#-#-#
+#. Plugin Name of an extension
+#: email-log.php:58
+msgid "Email Log"
+msgstr "E-Mail Log"
+
+#: email-log.php:69
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: email-log.php:79
+msgid "plugin"
+msgstr "Plugin"
+
+#: email-log.php:79
+msgid "Version"
+msgstr "Version"
+
+#: email-log.php:79
+msgid "by"
+msgstr "von"
+
+#: email-log.php:109
+#: email-log.php:463
+#: email-log.php:487
+msgid "Delete Logs"
+msgstr "Logs löschen"
+
+#: email-log.php:118
+#, php-format
+msgid "All Email Logs For email id %s Have Been Deleted."
+msgstr "Alle E-Mail Logs mit ID %s wurden gelöscht."
+
+#: email-log.php:120
+#, php-format
+msgid "An Error Has Occured while deleting All Email Logs For email id %s."
+msgstr "Beim Löschen der E-Mail Logs mit der ID %s ist ein Fehler aufgetreten."
+
+#: email-log.php:128
+#, php-format
+msgid "All Email Logs With Subject %s Have Been Deleted."
+msgstr "Alle E-Mail Logs mit dem Betreff %s wurden gelöscht."
+
+#: email-log.php:130
+#, php-format
+msgid "An Error Has Occured While Deleting All Email Logs With Subject %s."
+msgstr "Beim Löschen der E-Mail Logs mit dem Betreff %s ist ein Fehler aufgetreten."
+
+#: email-log.php:138
+msgid "All Email log Has Been Deleted."
+msgstr "Alle E-Mail Logs wurden gelöscht."
+
+#: email-log.php:140
+msgid "An Error Has Occured While Deleting All Email Logs"
+msgstr "Beim Löschen aller E-Mail Logs ist ein Fehler aufgetreten."
+
+#: email-log.php:174
+#: email-log.php:311
+#: email-log.php:346
+#: email-log.php:430
+msgid "ID"
+msgstr "ID"
+
+#: email-log.php:178
+#: email-log.php:431
+#: email-log.php:480
+msgid "To Email"
+msgstr "Empfänger"
+
+#: email-log.php:182
+#: email-log.php:314
+#: email-log.php:349
+#: email-log.php:432
+#: email-log.php:482
+msgid "Subject"
+msgstr "Betreff"
+
+#: email-log.php:187
+#: email-log.php:433
+msgid "Date"
+msgstr "Datum"
+
+#: email-log.php:194
+#: email-log.php:437
+msgid "Ascending"
+msgstr "aufsteigend"
+
+#: email-log.php:199
+#: email-log.php:438
+msgid "Descending"
+msgstr "absteigend"
+
+#: email-log.php:248
+msgid "Email Log Settings"
+msgstr "E-Mail Log - Einstellungen"
+
+#: email-log.php:249
+#, php-format
+msgid "Displaying <strong>%s</strong> to <strong>%s</strong> of <strong>%s</strong> Email log entries."
+msgstr "Anzeige: <strong>%s</strong> bis <strong>%s</strong> von <strong>%s</strong> Einträgen."
+
+#: email-log.php:250
+#, php-format
+msgid "Sorted by <strong>%s</strong> in <strong>%s</strong> order."
+msgstr "Sortiert nach <strong>%s</strong> in <strong>%ser</strong> Reihenfolge."
+
+#: email-log.php:261
+#: email-log.php:361
+msgid "Previous Page"
+msgstr "Vorherige Seite"
+
+#: email-log.php:268
+#: email-log.php:368
+#, php-format
+msgid "Pages (%s): "
+msgstr "Seiten (%s): "
+
+#: email-log.php:271
+#: email-log.php:371
+msgid "Go to First Page"
+msgstr "Gehe zur ersten Seite"
+
+#: email-log.php:271
+#: email-log.php:371
+msgid "First"
+msgstr "Erste"
+
+#: email-log.php:274
+#: email-log.php:286
+#: email-log.php:374
+#: email-log.php:386
+msgid "Go to Page"
+msgstr "Gehe zu Seite"
+
+#: email-log.php:281
+#: email-log.php:381
+msgid "Page"
+msgstr "Seite"
+
+#: email-log.php:289
+#: email-log.php:389
+msgid "Go to Last Page"
+msgstr "Gehe zur letzten Seite"
+
+#: email-log.php:289
+#: email-log.php:389
+msgid "Last"
+msgstr "Letzte"
+
+#: email-log.php:296
+#: email-log.php:396
+msgid "Next Page"
+msgstr "Nächste Seite"
+
+#: email-log.php:312
+#: email-log.php:347
+msgid "Date / Time"
+msgstr "Datum / Zeit"
+
+#: email-log.php:313
+#: email-log.php:348
+msgid "To"
+msgstr "An"
+
+#: email-log.php:328
+#, php-format
+msgid "%s @ %s"
+msgstr "%s @ %s"
+
+#: email-log.php:340
+msgid "No email Logs Found"
+msgstr "Keine E-Mail Logs gefunden."
+
+#: email-log.php:416
+msgid "Filter Options:"
+msgstr "Filter Optionen:"
+
+#: email-log.php:418
+msgid "ID:"
+msgstr "ID:"
+
+#: email-log.php:420
+msgid "To Email:"
+msgstr "Empfänger:"
+
+#: email-log.php:422
+msgid "Subject:"
+msgstr "Betreff:"
+
+#: email-log.php:427
+msgid "Sort Options:"
+msgstr "Sortierung:"
+
+#: email-log.php:445
+#: email-log.php:447
+msgid "Per Page"
+msgstr "je Seite"
+
+#: email-log.php:455
+msgid "Go"
+msgstr "Los"
+
+#: email-log.php:469
+msgid "Delete Type : "
+msgstr "Löschen:"
+
+#: email-log.php:472
+msgid "Based on"
+msgstr "wenn Bedingung zutrifft"
+
+#: email-log.php:473
+msgid "All Logs"
+msgstr "alle Einträge"
+
+#: email-log.php:478
+msgid "Condition:"
+msgstr "Bedingung:"
+
+#: email-log.php:481
+msgid "or"
+msgstr "oder"
+
+#: email-log.php:487
+msgid ""
+"You Are About To Delete Email Logs.\\n"
+"This Action Is Not Reversible.\\n"
+"\\n"
+" Choose \\'Cancel\\' to stop, \\'OK\\' to delete."
+msgstr ""
+"Du willst die E-Mail Logs löschen.\\n"
+"Diese Aktion lässt sich nicht rückgängig machen."
+
+#. Plugin URI of an extension
+msgid "http://sudarmuthu.com/wordpress/email-log"
+msgstr "http://sudarmuthu.com/wordpress/email-log"
+
+#. Description of an extension
+msgid "Logs every email sent through WordPress. Compatiable with WPMU too."
+msgstr "Logt jede von WordPress gesendete E-Mail. Kompatibel mit WPMU."
+
+#. Author of an extension
+msgid "Sudar"
+msgstr "Sudar"
+
+#. Author URI of an extension
+msgid "http://sudarmuthu.com/"
+msgstr "http://sudarmuthu.com/"
+
