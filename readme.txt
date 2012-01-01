@@ -33,9 +33,23 @@ The pot file is available with the Plugin. If you are willing to do translation 
 
 ### Support
 
-Support for the Plugin is available from the [Plugin's home page][1]. If you have any questions or suggestions, do leave a comment there.
+Support for the Plugin is available from the [Plugin's home page][1]. If you have any questions or suggestions, do leave a comment there or contact me in [twitter][2].
+
+### Stay updated
+
+I would be posting updates about this Plugin in my [blog][3] and in [Twitter][2]. If you want to be informed when new version of this Plugin is released, then you can either subscribe to this [blog's RSS feed][4] or [follow me in Twitter][2].
+
+### Links
+
+*   [Plugin home page][1]
+*   [Author's Blog][3]
+*   [Other Plugins by the author][5]
 
  [1]: http://sudarmuthu.com/wordpress/email-log
+ [2]: http://twitter.com/sudarmuthu
+ [3]: http://sudarmuthu.com/blog
+ [4]: http://sudarmuthu.com/feed
+ [5]: http://sudarmuthu.com/wordpress
 
 == Installation ==
 
