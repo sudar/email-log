@@ -4,7 +4,7 @@ Plugin Name: Email Log
 Plugin URI: http://sudarmuthu.com/wordpress/email-log
 Description: Logs every email sent through WordPress. Compatiable with WPMU too.
 Author: Sudar
-Version: 0.4
+Version: 0.5
 Author URI: http://sudarmuthu.com/
 Text Domain: email-log
 
@@ -13,6 +13,7 @@ Text Domain: email-log
 2009-10-15 - v0.2 - Added compatability for MySQL 4
 2009-10-19 - v0.3 - Added compatability for MySQL 4 (Thanks Frank)
 2010-01-02 - v0.4 - Added german translation (Thanks Frank)
+2012-01-01 - v0.5 - Fixed a deprecation notice
 */
 
 global $wpdb;
@@ -58,7 +59,7 @@ class EmailLog {
      * Register the settings page
      */
     function register_settings_page() {
-        add_options_page( __('Email Log', 'email-log'), __('Email Log', 'email-log'), 8, 'email-log', array(&$this, 'settings_page') );
+        add_options_page( __('Email Log', 'email-log'), __('Email Log', 'email-log'), 'manage_options', 'email-log', array(&$this, 'settings_page') );
     }
 
     /**
