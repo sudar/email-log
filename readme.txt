@@ -2,14 +2,14 @@
 Contributors: sudar 
 Tags: email, wpmu, wordpress-mu, log
 Requires at least: 2.8
-Tested up to: 3.3
-Stable tag: 0.5
+Tested up to: 3.3.2
+Stable tag: 0.6
 
-Logs every email sent through WordPress. Compatiable with WPMU too.
+Logs every email sent through WordPress. Compatible with WPMU too.
 
 == Description ==
 
-Logs every email sent through WordPress. Compatiable with WPMU too.
+Logs every email sent through WordPress. Compatible with WPMU too.
 
 #### Viewing logged emails
 
@@ -28,6 +28,7 @@ As [recommended by Ozh][1], the Plugin has uninstall hook which will clean up th
 ### Translation
 
 *   German (Thanks Frank)
+*   Lithuanian (Thanks  Vincent G , from [http://www.host1free.com][6])
 
 The pot file is available with the Plugin. If you are willing to do translation for the Plugin, use the pot file to create the .po files for your language and let me know. I will add it to the Plugin after giving credit to you.
 
@@ -50,6 +51,7 @@ I would be posting updates about this Plugin in my [blog][3] and in [Twitter][2]
  [3]: http://sudarmuthu.com/blog
  [4]: http://sudarmuthu.com/feed
  [5]: http://sudarmuthu.com/wordpress
+ [6]: http://www.host1free.com
 
 == Installation ==
 
@@ -60,10 +62,11 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 #### WordPress MU installations
 
 Extract the zip file and drop the contents in the wp-content/plugins/ directory or mu-plugins directory of your WordPress MU installation and then activate the Plugin from the main blog's Plugins page.
+
 == Screenshots ==
 1. The following screenshot shows how the logged emails will be displayed
 
-2.�This screenshot shows how the email logs could be filtered or sorted.
+2. This screenshot shows how the email logs could be filtered or sorted.
 
 3. This one shows how the email logs could be deleted
 
@@ -75,19 +78,25 @@ Extract the zip file and drop the contents in the wp-content/plugins/ directory 
 
 ###v0.2 (2009-10-15)
 
-*   Added compatability for MySQL 4
+*   Added compatibility for MySQL 4
 
 ###v0.3 (2009-10-19)
 
-*   Added compatability for MySQL 4 (Thanks Frank)
+*   Added compatibility for MySQL 4 (Thanks Frank)
 
 ###v0.4 (2010-01-02)
 
-*   Added german translation (Thanks Frank)
+*   Added German translation (Thanks Frank)
 
 ###v0.5 (2012-01-01)
 
 *   Fixed a deprecation notice
+
+###v0.6 (2012-04-29) (Dev time: 2 hours)
+* Added option to delete individual email logs
+* Moved pages per screen option to Screen options panel
+* Added information to the screen help tab                   
+* Added Lithuanian translations
 
 ==Readme Generator== 
 
