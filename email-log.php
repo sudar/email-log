@@ -18,6 +18,7 @@ Text Domain: email-log
                   - Added option to delete individual email logs
                   - Moved pages per screen option to Screen options panel
                   - Added information to the screen help tab                   
+                  - Added Lithuanian translations
 */
 /*  Copyright 2009  Sudar Muthu  (email : sudar@sudarmuthu.com)
 

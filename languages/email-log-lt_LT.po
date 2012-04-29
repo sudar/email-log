@@ -1,0 +1,264 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Email Log WordPress Plugin 0.2\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/email-log\n"
+"POT-Creation-Date: 2009-10-08 17:51+0000\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: Frank Weichbrodt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+
+#. #-#-#-#-#  email-log.pot (Email Log 0.1)  #-#-#-#-#
+#. Plugin Name of an extension
+#: email-log.php:58
+msgid "Email Log"
+msgstr "Email Log"
+
+#: email-log.php:69
+msgid "Settings"
+msgstr "Nuostatos"
+
+#: email-log.php:79
+msgid "plugin"
+msgstr "papildinio"
+
+#: email-log.php:79
+msgid "Version"
+msgstr "Versija"
+
+#: email-log.php:79
+msgid "by"
+msgstr "pagal"
+
+#: email-log.php:109
+#: email-log.php:463
+#: email-log.php:487
+msgid "Delete Logs"
+msgstr "Ištrinti Žurnalo įrašus"
+
+#: email-log.php:118
+#, php-format
+msgid "All Email Logs For email id %s Have Been Deleted."
+msgstr "Visi Elektroninio pašto Žurnalo įrašai, Priskirti elektroninio pašto adresui su identifikatoriumi %s Buvo Ištrinti."
+
+#: email-log.php:120
+#, php-format
+msgid "An Error Has Occured while deleting All Email Logs For email id %s."
+msgstr "Įvyko Klaida, ištrinant Visus Elektroninio pašto Žurnalo įrašus, priskirtus elektroniniam paštui su identfiikatoriumi %s."
+
+#: email-log.php:128
+#, php-format
+msgid "All Email Logs With Subject %s Have Been Deleted."
+msgstr "Visi Elektroninio pašto Žurnalo įrašai, su antrašte %s Buvo Ištrinti."
+
+#: email-log.php:130
+#, php-format
+msgid "An Error Has Occured While Deleting All Email Logs With Subject %s."
+msgstr "Įvyko Klaida, ištrinant Visus Elekektroninio pašto Žurnalo įrašus su antrašte %s."
+
+#: email-log.php:138
+msgid "All Email log Has Been Deleted."
+msgstr "Visi Elektroninio pašto žurnalai buvo Ištrinti."
+
+#: email-log.php:140
+msgid "An Error Has Occured While Deleting All Email Logs"
+msgstr "Įvyko Klaida, Ištrinant Visus Elektroninio pašto Žurnalo Įrašus"
+
+#: email-log.php:174
+#: email-log.php:311
+#: email-log.php:346
+#: email-log.php:430
+msgid "ID"
+msgstr "Identifikatorius"
+
+#: email-log.php:178
+#: email-log.php:431
+#: email-log.php:480
+msgid "To Email"
+msgstr "Į Elektroninį paštą"
+
+#: email-log.php:182
+#: email-log.php:314
+#: email-log.php:349
+#: email-log.php:432
+#: email-log.php:482
+msgid "Subject"
+msgstr "Antraštė"
+
+#: email-log.php:187
+#: email-log.php:433
+msgid "Date"
+msgstr "Data"
+
+#: email-log.php:194
+#: email-log.php:437
+msgid "Ascending"
+msgstr "Didėjanti"
+
+#: email-log.php:199
+#: email-log.php:438
+msgid "Descending"
+msgstr "Mažėjanti"
+
+#: email-log.php:248
+msgid "Email Log Settings"
+msgstr "Email Log Nuostatos"
+
+#: email-log.php:249
+#, php-format
+msgid "Displaying <strong>%s</strong> to <strong>%s</strong> of <strong>%s</strong> Email log entries."
+msgstr "Rodoma <strong>%s</strong> iki <strong>%s</strong> iš <strong>%s</strong> Elektroninio pašto žurnalo įrašų."
+
+#: email-log.php:250
+#, php-format
+msgid "Sorted by <strong>%s</strong> in <strong>%s</strong> order."
+msgstr "Išrikiuota pagal <strong>%s</strong> po <strong>%ser</strong> tvarką."
+
+#: email-log.php:261
+#: email-log.php:361
+msgid "Previous Page"
+msgstr "Ankstesnis Puslapis"
+
+#: email-log.php:268
+#: email-log.php:368
+#, php-format
+msgid "Pages (%s): "
+msgstr "Puslapiai (%s):"
+
+#: email-log.php:271
+#: email-log.php:371
+msgid "Go to First Page"
+msgstr "Eiti į Pirmąjį Puslapį"
+
+#: email-log.php:271
+#: email-log.php:371
+msgid "First"
+msgstr "Pirmas"
+
+#: email-log.php:274
+#: email-log.php:286
+#: email-log.php:374
+#: email-log.php:386
+msgid "Go to Page"
+msgstr "Eiti į Puslapį"
+
+#: email-log.php:281
+#: email-log.php:381
+msgid "Page"
+msgstr "Puslapis"
+
+#: email-log.php:289
+#: email-log.php:389
+msgid "Go to Last Page"
+msgstr "Eiti į Paskutinį Puslapį"
+
+#: email-log.php:289
+#: email-log.php:389
+msgid "Last"
+msgstr "Paskutinis"
+
+#: email-log.php:296
+#: email-log.php:396
+msgid "Next Page"
+msgstr "Sekantis Puslapis"
+
+#: email-log.php:312
+#: email-log.php:347
+msgid "Date / Time"
+msgstr "Data / Laikas"
+
+#: email-log.php:313
+#: email-log.php:348
+msgid "To"
+msgstr "Į"
+
+#: email-log.php:328
+#, php-format
+msgid "%s @ %s"
+msgstr "%s @ %s"
+
+#: email-log.php:340
+msgid "No email Logs Found"
+msgstr "Nerasta jokių elektroninio pašto Žurnalo įrašų"
+
+#: email-log.php:416
+msgid "Filter Options:"
+msgstr "Filtravimo Parinktys:"
+
+#: email-log.php:418
+msgid "ID:"
+msgstr "Identifikatorius:"
+
+#: email-log.php:420
+msgid "To Email:"
+msgstr "Į Elektroninį paštą:"
+
+#: email-log.php:422
+msgid "Subject:"
+msgstr "Antraštė:"
+
+#: email-log.php:427
+msgid "Sort Options:"
+msgstr "Rikiavimo Parinktys:"
+
+#: email-log.php:445
+#: email-log.php:447
+msgid "Per Page"
+msgstr "Puslapyje"
+
+#: email-log.php:455
+msgid "Go"
+msgstr "Eiti"
+
+#: email-log.php:469
+msgid "Delete Type : "
+msgstr "Ištrinti Tipą:"
+
+#: email-log.php:472
+msgid "Based on"
+msgstr "Pagrįsta"
+
+#: email-log.php:473
+msgid "All Logs"
+msgstr "Visi Žurnalai"
+
+#: email-log.php:478
+msgid "Condition:"
+msgstr "Sąlyga:"
+
+#: email-log.php:481
+msgid "or"
+msgstr "arba"
+
+#: email-log.php:487
+msgid ""
+"You Are About To Delete Email Logs.\\n"
+"This Action Is Not Reversible.\\n"
+"\\n"
+" Choose \\'Cancel\\' to stop, \\'OK\\' to delete."
+msgstr ""
+"Jūs Mėginate Ištrinti Visus Elektroninio Pašto Žurnalus. \\n"
+"Šio veiksmo padariniai yra neatstatomi. \\n"
+"\\n"
+"Pasirinkite \\'Cancel\\', kad sustabdytumėte procesą, \\'OK\\'. kad tęstumėte trynimą."
+
+#. Plugin URI of an extension
+msgid "http://sudarmuthu.com/wordpress/email-log"
+msgstr "http://sudarmuthu.com/wordpress/email-log"
+
+#. Description of an extension
+msgid "Logs every email sent through WordPress. Compatiable with WPMU too."
+msgstr "Į žurnalą įrašo kiekvieną per WordPress išsiųstą elektroninį laišką. Taip pat suderinamas su WPMU."
+
+#. Author of an extension
+msgid "Sudar"
+msgstr "Sudar"
+
+#. Author URI of an extension
+msgid "http://sudarmuthu.com/"
+msgstr "http://sudarmuthu.com/"
+
