@@ -2,8 +2,8 @@
 Contributors: sudar 
 Tags: email, wpmu, wordpress-mu, log
 Requires at least: 2.8
-Tested up to: 3.3.2
-Stable tag: 0.6
+Tested up to: 3.4
+Stable tag: 0.7
 
 Logs every email sent through WordPress. Compatible with WPMU too.
 
@@ -97,6 +97,10 @@ Extract the zip file and drop the contents in the wp-content/plugins/ directory 
 * Moved pages per screen option to Screen options panel
 * Added information to the screen help tab                   
 * Added Lithuanian translations
+
+###v0.7 (2012-06-23) (Dev time: 1 hour)
+- Changed Timestamp(n) MySQL datatype to Timestamp (now compatible with MySQL 5.5+)
+- Added the ability to bulk delete checkboxes
 
 ==Readme Generator== 
 
