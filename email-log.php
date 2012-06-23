@@ -3,8 +3,9 @@
 Plugin Name: Email Log
 Plugin URI: http://sudarmuthu.com/wordpress/email-log
 Description: Logs every email sent through WordPress. Compatiable with WPMU too.
+Donate Link: http://sudarmuthu.com/if-you-wanna-thank-me
 Author: Sudar
-Version: 0.6
+Version: 0.7
 Author URI: http://sudarmuthu.com/
 Text Domain: email-log
 
@@ -19,6 +20,9 @@ Text Domain: email-log
                   - Moved pages per screen option to Screen options panel
                   - Added information to the screen help tab                   
                   - Added Lithuanian translations
+2012-06-23 - v0.7 - (Dev time: 1 hour) 
+                  - Changed Timestamp(n) MySQL datatype to Timestamp (now compatible with MySQL 5.5+)
+
 */
 /*  Copyright 2009  Sudar Muthu  (email : sudar@sudarmuthu.com)
 
@@ -642,7 +646,7 @@ function smel_on_install() {
           message TEXT NOT NULL,
           headers TEXT NOT NULL,
           attachments TEXT NOT NULL,
-          sent_date timestamp(14) NOT NULL,
+          sent_date timestamp NOT NULL,
           PRIMARY KEY  (id)
         );";
 
