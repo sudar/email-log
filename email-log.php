@@ -22,6 +22,7 @@ Text Domain: email-log
                   - Added Lithuanian translations
 2012-06-23 - v0.7 - (Dev time: 1 hour) 
                   - Changed Timestamp(n) MySQL datatype to Timestamp (now compatible with MySQL 5.5+)
+                  - Added the ability to bulk delete checkboxes
 
 */
 /*  Copyright 2009  Sudar Muthu  (email : sudar@sudarmuthu.com)
@@ -346,7 +347,20 @@ class EmailLog {
 
         // Get The Logs
         $email_logs = $wpdb->get_results("SELECT * FROM $this->table_name WHERE 1=1 $emaillog_where ORDER BY $emaillog_sort_by $emaillog_sortorder LIMIT $offset, $email_log_perpage");
+
+        // TODO: Should move this to a seperate js file
 ?>
+<script type = "text/javascript">
+jQuery('document').ready(function() {
+    jQuery('.selectall').click(function (e) {
+        if (jQuery(e.target).is(':checked')) {
+            jQuery('.select_box').attr('checked', 'checked');
+        } else {
+            jQuery('.select_box').removeAttr('checked');
+        }        
+    });
+});
+</script>
         <?php if(!empty($text)) { echo '<!-- Last Action --><div id="message" class="updated fade"><p>'.$text.'</p></div>'; } ?>
         <div class="wrap">
             <?php screen_icon(); ?>
@@ -453,7 +467,7 @@ class EmailLog {
             <table class="widefat">
                 <thead>
                     <tr>
-                        <th width="5%">&nbsp;</th>
+                        <td width="5%"><input type = "checkbox" name = "selectall" class = "selectall" ></td>
                         <th width="5%"><?php _e('ID', 'email-log'); ?></th>
                         <th width="20%"><?php _e('Date / Time', 'email-log'); ?></th>
                         <th width="30%"><?php _e('To', 'email-log'); ?></th>
@@ -475,7 +489,7 @@ class EmailLog {
                         $email_to = stripslashes($email_log->to_email);
                         $email_subject = stripslashes($email_log->subject);
                         echo "<tr $style>\n";
-                        echo '<td><input type = "checkbox" name = "selected_ids[]" value = "' . $email_id . '"></td>'."\n";
+                        echo '<td><input type = "checkbox" class = "select_box" name = "selected_ids[]" value = "' . $email_id . '"></td>'."\n";
                         echo '<td>'.$email_id.'</td>'."\n";
                         echo "<td>$email_date</td>\n";
                         echo "<td>$email_to</td>\n";
@@ -490,7 +504,7 @@ class EmailLog {
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th width="5%">&nbsp;</th>
+                        <td width="5%"><input type = "checkbox" name = "selectall" class = "selectall" ></td>
                         <th width="5%"><?php _e('ID', 'email-log'); ?></th>
                         <th width="20%"><?php _e('Date / Time', 'email-log'); ?></th>
                         <th width="30%"><?php _e('To', 'email-log'); ?></th>
