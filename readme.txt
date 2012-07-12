@@ -2,8 +2,8 @@
 Contributors: sudar 
 Tags: email, wpmu, wordpress-mu, log
 Requires at least: 2.8
-Tested up to: 3.4
-Stable tag: 0.7
+Tested up to: 3.4.1
+Stable tag: 0.8
 
 Logs every email sent through WordPress. Compatible with WPMU too.
 
@@ -29,6 +29,7 @@ As [recommended by Ozh][1], the Plugin has uninstall hook which will clean up th
 
 *   German (Thanks Frank)
 *   Lithuanian (Thanks  Vincent G , from [http://www.host1free.com][6])
+*   Dutch (Thanks Zjan Preijde)
 
 The pot file is available with the Plugin. If you are willing to do translation for the Plugin, use the pot file to create the .po files for your language and let me know. I will add it to the Plugin after giving credit to you.
 
@@ -101,6 +102,10 @@ Extract the zip file and drop the contents in the wp-content/plugins/ directory 
 ###v0.7 (2012-06-23) (Dev time: 1 hour)
 - Changed Timestamp(n) MySQL datatype to Timestamp (now compatible with MySQL 5.5+)
 - Added the ability to bulk delete checkboxes
+
+###v0.8 (2012-07-12) (Dev time: 1 hour)
+- Fixed undefined notices - http://wordpress.org/support/topic/plugin-email-log-notices-undefined-indices
+- Added Dutch translations
 
 ==Readme Generator== 
 
