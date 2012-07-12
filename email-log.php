@@ -5,7 +5,7 @@ Plugin URI: http://sudarmuthu.com/wordpress/email-log
 Description: Logs every email sent through WordPress. Compatiable with WPMU too.
 Donate Link: http://sudarmuthu.com/if-you-wanna-thank-me
 Author: Sudar
-Version: 0.7
+Version: 0.8
 Author URI: http://sudarmuthu.com/
 Text Domain: email-log
 
@@ -23,6 +23,9 @@ Text Domain: email-log
 2012-06-23 - v0.7 - (Dev time: 1 hour) 
                   - Changed Timestamp(n) MySQL datatype to Timestamp (now compatible with MySQL 5.5+)
                   - Added the ability to bulk delete checkboxes
+2012-07-12 - v0.8 - (Dev time: 1 hour) 
+                  - Fixed undefined notices - http://wordpress.org/support/topic/plugin-email-log-notices-undefined-indices
+                  - Added Dutch translations
 
 */
 /*  Copyright 2009  Sudar Muthu  (email : sudar@sudarmuthu.com)
@@ -191,13 +194,13 @@ class EmailLog {
         $base_name = plugin_basename('email-log');
         $base_page = 'admin.php?page='.$base_name;
 
-        $email_log_page            = intval($_GET['emaillog_page']);
-        $emaillogs_filterid        = trim(addslashes($_GET['id']));
-        $emaillogs_filter_to_email = trim(addslashes($_GET['to_email']));
-        $emaillogs_filter_subject  = trim(addslashes($_GET['subject']));
-        $emaillog_sort_by          = trim($_GET['by']);
+        $email_log_page            = intval($this->array_get($_GET, 'emaillog_page'));
+        $emaillogs_filterid        = trim(addslashes($this->array_get($_GET, 'id')));
+        $emaillogs_filter_to_email = trim(addslashes($this->array_get($_GET, 'to_email')));
+        $emaillogs_filter_subject  = trim(addslashes($this->array_get($_GET, 'subject')));
+        $emaillog_sort_by          = trim($this->array_get($_GET, 'by'));
         $emaillog_sortby_text      = '';
-        $emaillog_sortorder        = trim($_GET['order']);
+        $emaillog_sortorder        = trim($this->array_get($_GET, 'order'));
         $emaillog_sortorder_text   = '';
         $email_log_perpage         = intval($this->get_per_page());
         $emaillog_sort_url         = '';
@@ -630,6 +633,20 @@ jQuery('document').ready(function() {
 
         // return unmodifiyed array
         return $mail_info;
+    }
+
+    /**
+    * Check whether a key is present. If present returns the value, else returns the default value
+    *
+    * @param <array> $array - Array whose key has to be checked
+    * @param <string> $key - key that has to be checked
+    * @param <string> $default - the default value that has to be used, if the key is not found (optional)
+    *
+    * @return <mixed> If present returns the value, else returns the default value
+    * @author Sudar
+    */
+    private function array_get($array, $key, $default = NULL) {
+        return isset($array[$key]) ? $array[$key] : $default;
     }
 
     // PHP4 compatibility
