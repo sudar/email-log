@@ -5,7 +5,7 @@ Plugin URI: http://sudarmuthu.com/wordpress/email-log
 Description: Logs every email sent through WordPress. Compatiable with WPMU too.
 Donate Link: http://sudarmuthu.com/if-you-wanna-thank-me
 Author: Sudar
-Version: 0.8
+Version: 0.8.1
 Author URI: http://sudarmuthu.com/
 Text Domain: email-log
 
@@ -26,6 +26,8 @@ Text Domain: email-log
 2012-07-12 - v0.8 - (Dev time: 1 hour) 
                   - Fixed undefined notices - http://wordpress.org/support/topic/plugin-email-log-notices-undefined-indices
                   - Added Dutch translations
+2012-07-23 - v0.8.1 - (Dev time: 0.5 hour) 
+                  - Reworded most error messages and fixed lot of typos
 
 */
 /*  Copyright 2009  Sudar Muthu  (email : sudar@sudarmuthu.com)
@@ -229,9 +231,9 @@ class EmailLog {
                             if ('' != $to_email) {
                                 $delete_logs = $wpdb->query("DELETE FROM $this->table_name where to_email = '$to_email'");
                                 if($delete_logs) {
-                                    $text = '<font color="green">'.sprintf(__('All Email Logs For email id %s Have Been Deleted.', 'email-log'), $to_email).'</font>';
+                                    $text = '<font color="green">'.sprintf(__('All Email Logs for email id "%s" have been deleted.', 'email-log'), $to_email).'</font>';
                                 } else {
-                                    $text = '<font color="red">'.sprintf(__('An error has occurred while deleting All Email Logs For email id %s.', 'email-log'), $to_email).'</font>';
+                                    $text = '<font color="red">'.sprintf(__('An error has occurred while deleting all Email Logs for email id "%s".', 'email-log'), $to_email).'</font>';
                                 }
                             }
 
@@ -239,9 +241,9 @@ class EmailLog {
                             if ('' != $subject) {
                                 $delete_logs = $wpdb->query("DELETE FROM $this->table_name where subject = '$subject'");
                                 if($delete_logs) {
-                                    $text .= '<font color="green">'.sprintf(__('All Email Logs With Subject %s Have Been Deleted.', 'email-log'), $subject).'</font>';
+                                    $text .= '<font color="green">'.sprintf(__('All Email Logs with subject "%s" have been deleted.', 'email-log'), $subject).'</font>';
                                 } else {
-                                    $text .= '<font color="red">'.sprintf(__('An Error Has Occurred While Deleting All Email Logs With Subject %s.', 'email-log'), $subject).'</font>';
+                                    $text .= '<font color="red">'.sprintf(__('An error has occurred while deleting all Email Logs with subject "%s".', 'email-log'), $subject).'</font>';
                                 }
                             }
                             break;
@@ -249,9 +251,9 @@ class EmailLog {
                             // Delete all
                             $delete_logs = $wpdb->query("DELETE FROM $this->table_name ");
                             if ($delete_logs) {
-                                $text = '<font color="green">'.__('All Email log Has Been Deleted.', 'email-log').'</font><br />';
+                                $text = '<font color="green">'.__('All Email Logs were deleted.', 'email-log').'</font><br />';
                             } else {
-                                $text = '<font color="red">'.__('An Error Has Occurred While Deleting All Email Logs', 'email-log').'</font>';
+                                $text = '<font color="red">'.__('An error has occurred while deleting all Email Logs', 'email-log').'</font>';
                             }
                             break;
                     }
@@ -501,7 +503,7 @@ jQuery('document').ready(function() {
                         $i++;
                     }
                 } else {
-                    echo '<tr><td colspan="7" align="center"><strong>'.__('No email Logs Found', 'email-log').'</strong></td></tr>';
+                    echo '<tr><td colspan="7" align="center"><strong>'.__('No Email Logs were found', 'email-log').'</strong></td></tr>';
                 }
 ?>
                 </tbody>
