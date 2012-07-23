@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the Email Log package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Email Log 0.6\n"
+"Project-Id-Version: Email Log 0.8.1\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/email-log\n"
-"POT-Creation-Date: 2012-04-29 17:11:23+00:00\n"
+"POT-Creation-Date: 2012-07-23 16:21:31+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,234 +12,236 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#. #-#-#-#-#  plugin.pot (Email Log 0.6)  #-#-#-#-#
+#. #-#-#-#-#  plugin.pot (Email Log 0.8.1)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
-#: email-log.php:85
+#: email-log.php:96
 msgid "Email Log"
 msgstr ""
 
-#: email-log.php:106
+#: email-log.php:117
 msgid "About Plugin"
 msgstr ""
 
-#: email-log.php:108
+#: email-log.php:119
 msgid ""
 "Email Log WordPress Plugin, allows you to log all emails that are sent "
 "through WordPress."
 msgstr ""
 
-#: email-log.php:115
+#: email-log.php:126
 msgid "More information"
 msgstr ""
 
-#: email-log.php:116
+#: email-log.php:127
 msgid "Plugin Homepage/support"
 msgstr ""
 
-#: email-log.php:117
+#: email-log.php:128
 msgid "Plugin author's blog"
 msgstr ""
 
-#: email-log.php:118
+#: email-log.php:129
 msgid "Other Plugin's by Author"
 msgstr ""
 
-#: email-log.php:125
+#: email-log.php:136
 msgid "Entries per page"
 msgstr ""
 
-#: email-log.php:163
+#: email-log.php:174
 msgid "Settings"
 msgstr ""
 
-#: email-log.php:173
+#: email-log.php:184
 msgid "plugin"
 msgstr ""
 
-#: email-log.php:173
+#: email-log.php:184
 msgid "Version"
 msgstr ""
 
-#: email-log.php:173
+#: email-log.php:184
 msgid "by"
 msgstr ""
 
-#: email-log.php:203 email-log.php:555 email-log.php:578
+#: email-log.php:214 email-log.php:579 email-log.php:602
 msgid "Delete Logs"
 msgstr ""
 
-#: email-log.php:212
+#: email-log.php:223
 msgid "The selected Email Logs have been deleted."
 msgstr ""
 
-#: email-log.php:214
+#: email-log.php:225
 msgid "An error has occurred while deleting the selected Email logs"
 msgstr ""
 
-#: email-log.php:223
-msgid "All Email Logs For email id %s Have Been Deleted."
+#: email-log.php:234
+msgid "All Email Logs for email id \"%s\" have been deleted."
 msgstr ""
 
-#: email-log.php:225
-msgid "An error has occurred while deleting All Email Logs For email id %s."
+#: email-log.php:236
+msgid ""
+"An error has occurred while deleting all Email Logs for email id \"%s\"."
 msgstr ""
 
-#: email-log.php:233
-msgid "All Email Logs With Subject %s Have Been Deleted."
+#: email-log.php:244
+msgid "All Email Logs with subject \"%s\" have been deleted."
 msgstr ""
 
-#: email-log.php:235
-msgid "An Error Has Occurred While Deleting All Email Logs With Subject %s."
+#: email-log.php:246
+msgid ""
+"An error has occurred while deleting all Email Logs with subject \"%s\"."
 msgstr ""
 
-#: email-log.php:243
-msgid "All Email log Has Been Deleted."
+#: email-log.php:254
+msgid "All Email Logs were deleted."
 msgstr ""
 
-#: email-log.php:245
-msgid "An Error Has Occurred While Deleting All Email Logs"
+#: email-log.php:256
+msgid "An error has occurred while deleting all Email Logs"
 msgstr ""
 
-#: email-log.php:275 email-log.php:370 email-log.php:452 email-log.php:489
+#: email-log.php:286 email-log.php:394 email-log.php:476 email-log.php:513
 msgid "ID"
 msgstr ""
 
-#: email-log.php:279 email-log.php:371 email-log.php:571
+#: email-log.php:290 email-log.php:395 email-log.php:595
 msgid "To Email"
 msgstr ""
 
-#: email-log.php:283 email-log.php:372 email-log.php:455 email-log.php:492
-#: email-log.php:573
+#: email-log.php:294 email-log.php:396 email-log.php:479 email-log.php:516
+#: email-log.php:597
 msgid "Subject"
 msgstr ""
 
-#: email-log.php:288 email-log.php:373
+#: email-log.php:299 email-log.php:397
 msgid "Date"
 msgstr ""
 
-#: email-log.php:295 email-log.php:377
+#: email-log.php:306 email-log.php:401
 msgid "Ascending"
 msgstr ""
 
-#: email-log.php:300 email-log.php:378
+#: email-log.php:311 email-log.php:402
 msgid "Descending"
 msgstr ""
 
-#: email-log.php:348
+#: email-log.php:372
 msgid "Email Log Settings"
 msgstr ""
 
-#: email-log.php:356
+#: email-log.php:380
 msgid "Filter Options:"
 msgstr ""
 
-#: email-log.php:358
+#: email-log.php:382
 msgid "ID:"
 msgstr ""
 
-#: email-log.php:360
+#: email-log.php:384
 msgid "To Email:"
 msgstr ""
 
-#: email-log.php:362
+#: email-log.php:386
 msgid "Subject:"
 msgstr ""
 
-#: email-log.php:367
+#: email-log.php:391
 msgid "Sort Options:"
 msgstr ""
 
-#: email-log.php:383
+#: email-log.php:407
 msgid "Filter"
 msgstr ""
 
-#: email-log.php:388
+#: email-log.php:412
 msgid ""
 "Displaying <strong>%s</strong> to <strong>%s</strong> of <strong>%s</strong> "
 "Email log entries."
 msgstr ""
 
-#: email-log.php:389
+#: email-log.php:413
 msgid "Sorted by <strong>%s</strong> in <strong>%s</strong> order."
 msgstr ""
 
-#: email-log.php:401 email-log.php:504
+#: email-log.php:425 email-log.php:528
 msgid "Previous Page"
 msgstr ""
 
-#: email-log.php:408 email-log.php:511
+#: email-log.php:432 email-log.php:535
 msgid "Pages (%s): "
 msgstr ""
 
-#: email-log.php:411 email-log.php:514
+#: email-log.php:435 email-log.php:538
 msgid "Go to First Page"
 msgstr ""
 
-#: email-log.php:411 email-log.php:514
+#: email-log.php:435 email-log.php:538
 msgid "First"
 msgstr ""
 
-#: email-log.php:414 email-log.php:426 email-log.php:517 email-log.php:529
+#: email-log.php:438 email-log.php:450 email-log.php:541 email-log.php:553
 msgid "Go to Page"
 msgstr ""
 
-#: email-log.php:421 email-log.php:524
+#: email-log.php:445 email-log.php:548
 msgid "Page"
 msgstr ""
 
-#: email-log.php:429 email-log.php:532
+#: email-log.php:453 email-log.php:556
 msgid "Go to Last Page"
 msgstr ""
 
-#: email-log.php:429 email-log.php:532
+#: email-log.php:453 email-log.php:556
 msgid "Last"
 msgstr ""
 
-#: email-log.php:436 email-log.php:539
+#: email-log.php:460 email-log.php:563
 msgid "Next Page"
 msgstr ""
 
-#: email-log.php:453 email-log.php:490
+#: email-log.php:477 email-log.php:514
 msgid "Date / Time"
 msgstr ""
 
-#: email-log.php:454 email-log.php:491
+#: email-log.php:478 email-log.php:515
 msgid "To"
 msgstr ""
 
-#: email-log.php:469
+#: email-log.php:493
 msgid "%s @ %s"
 msgstr ""
 
-#: email-log.php:482
-msgid "No email Logs Found"
+#: email-log.php:506
+msgid "No Email Logs were found"
 msgstr ""
 
-#: email-log.php:559
+#: email-log.php:583
 msgid "Delete Type : "
 msgstr ""
 
-#: email-log.php:562
+#: email-log.php:586
 msgid "Selected entries"
 msgstr ""
 
-#: email-log.php:563
+#: email-log.php:587
 msgid "Based on"
 msgstr ""
 
-#: email-log.php:564
+#: email-log.php:588
 msgid "All Logs"
 msgstr ""
 
-#: email-log.php:569
+#: email-log.php:593
 msgid "Condition:"
 msgstr ""
 
-#: email-log.php:572
+#: email-log.php:596
 msgid "or"
 msgstr ""
 
-#: email-log.php:578
+#: email-log.php:602
 msgid ""
 "You Are About To Delete Email Logs.\\nThis Action Is Not Reversible.\\n\\n "
 "Choose \\'Cancel\\' to stop, \\'OK\\' to delete."
