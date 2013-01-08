@@ -2,8 +2,8 @@
 Contributors: sudar 
 Tags: email, wpmu, wordpress-mu, log
 Requires at least: 2.8
-Tested up to: 3.4.1
-Stable tag: 0.8.1
+Tested up to: 3.5
+Stable tag: 0.9
 
 Logs every email sent through WordPress. Compatible with WPMU too.
 
@@ -33,7 +33,10 @@ As [recommended by Ozh][1], the Plugin has uninstall hook which will clean up th
 
 The pot file is available with the Plugin. If you are willing to do translation for the Plugin, use the pot file to create the .po files for your language and let me know. I will add it to the Plugin after giving credit to you.
 
-### Support
+### Development and Support
+The development of the Plugin happens over at [github](http://github.com/sudar/email-log). If you want to contribute to the Plugin, [fork the project at github](http://github.com/sudar/email-log) and send me a pull request.
+
+If you are not familiar with either git or Github then refer to this [guide to see how fork and send pull request](http://sudarmuthu.com/blog/contributing-to-project-hosted-in-github).
 
 Support for the Plugin is available from the [Plugin's home page][1]. If you have any questions or suggestions, do leave a comment there or contact me in [twitter][2].
 
@@ -109,6 +112,10 @@ Extract the zip file and drop the contents in the wp-content/plugins/ directory 
 
 ###v0.8.1 (2012-07-23) (Dev time: 0.5 hour)
 * Reworded most error messages and fixed lot of typos
+
+### v0.9(2013-01-08) - (Dev time: 1 hour) 
+* Use blog date/time for send date instead of server time
+* Handle cases where the headers send is an array
 
 ==Readme Generator== 
 

@@ -31,7 +31,6 @@ Text Domain: email-log
 2013-01-08 - v0.9 - (Dev time: 1 hour) 
                   - Use blog date/time for send date instead of server time
                   - Handle cases where the headers send is an array
-                
 
 */
 /*  Copyright 2009  Sudar Muthu  (email : sudar@sudarmuthu.com)
