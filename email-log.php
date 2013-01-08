@@ -30,6 +30,7 @@ Text Domain: email-log
                   - Reworded most error messages and fixed lot of typos
 2013-01-08 - v0.9 - (Dev time: 1 hour) 
                   - Use blog date/time for send date instead of server time
+                  - Handle cases where the headers send is an array
                 
 
 */
@@ -632,7 +633,7 @@ jQuery('document').ready(function() {
                 'to_email' => is_array($mail_info['to']) ? $mail_info['to'][0] : $mail_info['to'],
                 'subject' => $mail_info['subject'],
                 'message' => $mail_info['message'],
-                'headers' => $mail_info['headers'],
+                'headers' => is_array($mail_info['headers']) ? implode("\r\n", $mail_info['headers']) : $mail_info['headers'],
                 'attachments' => $attachment_present,
                 'sent_date' => current_time('mysql')
         ));
