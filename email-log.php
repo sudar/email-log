@@ -5,7 +5,7 @@ Plugin URI: http://sudarmuthu.com/wordpress/email-log
 Description: Logs every email sent through WordPress. Compatiable with WPMU too.
 Donate Link: http://sudarmuthu.com/if-you-wanna-thank-me
 Author: Sudar
-Version: 0.9
+Version: 0.9.1
 Author URI: http://sudarmuthu.com/
 Text Domain: email-log
 
@@ -31,6 +31,8 @@ Text Domain: email-log
 2013-01-08 - v0.9 - (Dev time: 1 hour) 
                   - Use blog date/time for send date instead of server time
                   - Handle cases where the headers send is an array
+2013-01-08 - v0.9.1 - (Dev time: 0.5 hour) 
+                  - Moved the menu under tools (Thanks samuelaguilera)
 
 */
 /*  Copyright 2009  Sudar Muthu  (email : sudar@sudarmuthu.com)

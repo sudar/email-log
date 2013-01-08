@@ -3,7 +3,7 @@ Contributors: sudar
 Tags: email, wpmu, wordpress-mu, log
 Requires at least: 2.8
 Tested up to: 3.5
-Stable tag: 0.9
+Stable tag: 0.9.1
 
 Logs every email sent through WordPress. Compatible with WPMU too.
 
@@ -116,6 +116,9 @@ Extract the zip file and drop the contents in the wp-content/plugins/ directory 
 ### v0.9(2013-01-08) - (Dev time: 1 hour) 
 * Use blog date/time for send date instead of server time
 * Handle cases where the headers send is an array
+
+### v0.9.1 (2013-01-08) - (Dev time: 0.5 hour) 
+* Moved the menu under tools (Thanks samuelaguilera)
 
 ==Readme Generator== 
 
