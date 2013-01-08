@@ -1,5 +1,5 @@
 <?php
-/**
+/*
 Plugin Name: Email Log
 Plugin URI: http://sudarmuthu.com/wordpress/email-log
 Description: Logs every email sent through WordPress. Compatiable with WPMU too.
@@ -96,7 +96,7 @@ class EmailLog {
      */
     function register_settings_page() {
         //Save the handle to your admin page - you'll need it to create a WP_Screen object
-        $this->admin_page = add_options_page( __('Email Log', 'email-log'), __('Email Log', 'email-log'), 'manage_options', 'email-log', array(&$this, 'settings_page') );
+        $this->admin_page = add_submenu_page( 'tools.php', __('Email Log', 'email-log'), __('Email Log', 'email-log'), 'manage_options', 'email-log', array(&$this, 'settings_page') );
 
 		add_action("load-{$this->admin_page}",array(&$this,'create_settings_panel'));
     }
@@ -174,7 +174,7 @@ class EmailLog {
      */
     function add_action_links( $links ) {
         // Add a link to this plugin's settings page
-        $settings_link = '<a href="options-general.php?page=email-log">' . __("Settings", 'email-log') . '</a>';
+        $settings_link = '<a href="tools.php?page=email-log">' . __("Log", 'email-log') . '</a>';
         array_unshift( $links, $settings_link );
         return $links;
     }
@@ -197,7 +197,7 @@ class EmailLog {
         global $text_direction;
 
         $base_name = plugin_basename('email-log');
-        $base_page = 'admin.php?page='.$base_name;
+        $base_page = 'tools.php?page='.$base_name;
 
         $email_log_page            = intval($this->array_get($_GET, 'emaillog_page'));
         $emaillogs_filterid        = trim(addslashes($this->array_get($_GET, 'id')));
