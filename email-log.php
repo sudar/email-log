@@ -372,7 +372,7 @@ jQuery('document').ready(function() {
         <?php if(!empty($text)) { echo '<!-- Last Action --><div id="message" class="updated fade"><p>'.$text.'</p></div>'; } ?>
         <div class="wrap">
             <?php screen_icon(); ?>
-            <h2><?php _e( 'Email Log Settings', 'email-log' ); ?></h2>
+            <h2><?php _e( 'Email Log', 'email-log' ); ?></h2>
 
             <p>&nbsp;</p>
 
