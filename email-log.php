@@ -631,12 +631,12 @@ jQuery('document').ready(function() {
 
         // Log into the database
         $wpdb->insert($this->table_name, array(
-                'to_email' => is_array($mail_info['to']) ? $mail_info['to'][0] : $mail_info['to'],
-                'subject' => $mail_info['subject'],
-                'message' => $mail_info['message'],
-                'headers' => is_array($mail_info['headers']) ? implode("\r\n", $mail_info['headers']) : $mail_info['headers'],
+                'to_email'    => is_array($mail_info['to']) ? $mail_info['to'][0] : $mail_info['to'],
+                'subject'     => $mail_info['subject'],
+                'message'     => $mail_info['message'],
+                'headers'     => is_array($mail_info['headers']) ? implode("\r\n", $mail_info['headers']) : $mail_info['headers'],
                 'attachments' => $attachment_present,
-                'sent_date' => current_time('mysql')
+                'sent_date'   => current_time('mysql')
         ));
 
         // return unmodifiyed array
@@ -655,11 +655,6 @@ jQuery('document').ready(function() {
     */
     private function array_get($array, $key, $default = NULL) {
         return isset($array[$key]) ? $array[$key] : $default;
-    }
-
-    // PHP4 compatibility
-    function EmailLog() {
-        $this->__construct();
     }
 }
 
