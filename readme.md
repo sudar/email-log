@@ -1,13 +1,13 @@
-﻿=== Email Log ===
-Contributors: sudar 
-Tags: email, wpmu, wordpress-mu, log
-Requires at least: 2.8
-Tested up to: 3.5
-Stable tag: 0.9.1
+﻿# Email Log #
+**Contributors:** sudar 
+**Tags:** email, wpmu, wordpress-mu, log
+**Requires at least:** 2.8
+**Tested up to:** 3.5
+**Stable tag:** 0.9.1
 
 Logs every email sent through WordPress. Compatible with WPMU too.
 
-== Description ==
+## Description ##
 
 Logs every email sent through WordPress. Compatible with WPMU too.
 
@@ -57,7 +57,7 @@ I would be posting updates about this Plugin in my [blog][3] and in [Twitter][2]
  [5]: http://sudarmuthu.com/wordpress
  [6]: http://www.host1free.com
 
-== Installation ==
+## Installation ##
 
 #### Normal WordPress installations
 
@@ -67,14 +67,14 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 
 Extract the zip file and drop the contents in the wp-content/plugins/ directory or mu-plugins directory of your WordPress MU installation and then activate the Plugin from the main blog's Plugins page.
 
-== Screenshots ==
+## Screenshots ##
 1. The following screenshot shows how the logged emails will be displayed
 
 2. This screenshot shows how the email logs could be filtered or sorted.
 
 3. This one shows how the email logs could be deleted
 
-== Changelog ==
+## Changelog ##
 
 ###v0.1 (2009-10-08)
 
@@ -120,6 +120,6 @@ Extract the zip file and drop the contents in the wp-content/plugins/ directory 
 ### v0.9.1 (2013-01-08) - (Dev time: 0.5 hour) 
 * Moved the menu under tools (Thanks samuelaguilera)
 
-==Readme Generator== 
+## Readme Generator ## 
 
 This Readme file was generated using <a href = 'http://sudarmuthu.com/wordpress/wp-readme'>wp-readme</a>, which generates readme files for WordPress Plugins.
