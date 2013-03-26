@@ -1,11 +1,11 @@
 <?php
-/*
+/**
 Plugin Name: Email Log
 Plugin URI: http://sudarmuthu.com/wordpress/email-log
-Description: Logs every email sent through WordPress. Compatiable with WPMU too.
+Description: Logs every email sent through WordPress. Compatible with WPMU too.
 Donate Link: http://sudarmuthu.com/if-you-wanna-thank-me
 Author: Sudar
-Version: 0.9.1
+Version: 0.9.2
 Author URI: http://sudarmuthu.com/
 Text Domain: email-log
 
@@ -33,6 +33,8 @@ Text Domain: email-log
                   - Handle cases where the headers send is an array
 2013-01-08 - v0.9.1 - (Dev time: 0.5 hour) 
                   - Moved the menu under tools (Thanks samuelaguilera)
+2013-03-14 - v0.9.2 - (Dev time: 0.5 hour) 
+                  - Added support for filters which can be used while logging emails
 
 */
 /*  Copyright 2009  Sudar Muthu  (email : sudar@sudarmuthu.com)
@@ -66,6 +68,7 @@ class EmailLog {
 	private $admin_page;
 	private $admin_screen;
 
+    const FILTER_NAME = 'wp_mail_log';
     /**
      * Initalize the plugin by registering the hooks
      */
@@ -76,7 +79,8 @@ class EmailLog {
         global $smel_db_version;
 
         // Load localization domain
-        load_plugin_textdomain( 'email-log', false, dirname(plugin_basename(__FILE__)) . '/languages' );
+        $this->translations = dirname(plugin_basename(__FILE__)) . '/languages/' ;
+        load_plugin_textdomain( 'email-log', false, $this->translations);
 
         // Register hooks
         add_action( 'admin_menu', array(&$this, 'register_settings_page') );
@@ -639,8 +643,8 @@ jQuery('document').ready(function() {
                 'sent_date'   => current_time('mysql')
         ));
 
-        // return unmodifiyed array
-        return $mail_info;
+        // return filtered array
+        return apply_filters(self::FILTER_NAME, $mail_info);
     }
 
     /**
