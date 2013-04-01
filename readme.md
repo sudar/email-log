@@ -3,7 +3,7 @@
 **Tags:** email, wpmu, wordpress-mu, log
 **Requires at least:** 2.8
 **Tested up to:** 3.5.1
-**Stable tag:** 0.9.2
+**Stable tag:** 0.9.3
 
 Logs every email sent through WordPress. Compatible with WPMU too.
 
@@ -122,6 +122,9 @@ Extract the zip file and drop the contents in the wp-content/plugins/ directory 
 
 ### v0.9.2 (2013-03-14) - (Dev time: 0.5 hour) 
 * Added support for filters which can be used while logging emails
+
+### v0.9.3 (2013-04-01) - (Dev time: 0.5 hour) 
+* Moved table name into a seperate constants file
 
 ## Upgrade Notice ##
 
