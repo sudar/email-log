@@ -5,7 +5,7 @@ Plugin URI: http://sudarmuthu.com/wordpress/email-log
 Description: Logs every email sent through WordPress. Compatible with WPMU too.
 Donate Link: http://sudarmuthu.com/if-you-wanna-thank-me
 Author: Sudar
-Version: 0.9.2
+Version: 0.9.3
 Author URI: http://sudarmuthu.com/
 Text Domain: email-log
 
@@ -35,7 +35,8 @@ Text Domain: email-log
                   - Moved the menu under tools (Thanks samuelaguilera)
 2013-03-14 - v0.9.2 - (Dev time: 0.5 hour) 
                   - Added support for filters which can be used while logging emails
-
+2013-04-01 - v0.9.3 - (Dev time: 0.5 hour) 
+                  - Moved table name into a seperate constants file
 */
 /*  Copyright 2009  Sudar Muthu  (email : sudar@sudarmuthu.com)
 
@@ -53,30 +54,23 @@ Text Domain: email-log
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-global $wpdb;
-global $smel_table_name;
-$smel_table_name = $wpdb->prefix . "email_log";
-
-// TODO - Should find some way to get away with these global variables.
-global $smel_db_version;
-$smel_db_version = "0.1";
-
 class EmailLog {
 
-    private $table_name ;    /* Database table name */
-    private $db_version ;    /* Database version */
 	private $admin_page;
 	private $admin_screen;
 
     const FILTER_NAME = 'wp_mail_log';
+
+    const TABLE_NAME = 'email_log';          /* Database table name */
+    const DB_OPTION_NAME = 'email-log-db';   /* Database option name */
+    const DB_VERSION = '0.1';                /* Database version */
+
     /**
      * Initalize the plugin by registering the hooks
      */
     function __construct() {
 
         global $wpdb;
-        global $smel_table_name;
-        global $smel_db_version;
 
         // Load localization domain
         $this->translations = dirname(plugin_basename(__FILE__)) . '/languages/' ;
@@ -92,9 +86,7 @@ class EmailLog {
         $plugin = plugin_basename(__FILE__);
         add_filter("plugin_action_links_$plugin", array(&$this, 'add_action_links'));
 
-        // Initialize Variables
-        $this->table_name = $smel_table_name;
-        $this->db_version = $smel_db_version;
+        $this->table_name = $wpdb->prefix . self::TABLE_NAME;
     }
 
     /**
@@ -196,7 +188,8 @@ class EmailLog {
     /**
      * Dipslay the Settings page
      *
-     * Some parts of this function is based on the wp-rattings Plugin http://wordpress.org/extend/plugins/email-log/
+     * Some parts of this function is based on the wp-rattings Plugin 
+     * TODO: Rewrite this using this technique http://wp.smashingmagazine.com/2011/11/03/native-admin-tables-wordpress/
      */
     function settings_page() {
         global $wpdb;
@@ -663,42 +656,45 @@ jQuery('document').ready(function() {
 }
 
 /**
- * Create database table when the Plugin is installed for the first time
- *
- * @global object $wpdb
- * @global string $smel_table_name Table Name
- * @global string $smel_db_version DB Version
+ * Helper class to create and maintain tables
  */
-function smel_on_install() {
+class EmailLogInit {
 
-   global $wpdb;
-   global $smel_table_name;
-   global $smel_db_version;
+    /**
+     * Create database table when the Plugin is installed for the first time
+     *
+     * @global object $wpdb
+     * @global string $smel_table_name Table Name
+     */
+    function on_activate() {
 
-   if($wpdb->get_var("show tables like '{$smel_table_name}'") != $smel_table_name) {
+        global $wpdb;
+        $table_name = $wpdb->prefix . EmailLog::TABLE_NAME;
 
-      $sql = "CREATE TABLE " . $smel_table_name . " (
-          id mediumint(9) NOT NULL AUTO_INCREMENT,
-          to_email VARCHAR(100) NOT NULL,
-          subject VARCHAR(250) NOT NULL,
-          message TEXT NOT NULL,
-          headers TEXT NOT NULL,
-          attachments TEXT NOT NULL,
-          sent_date timestamp NOT NULL,
-          PRIMARY KEY  (id)
-        );";
+        if($wpdb->get_var("show tables like '{$table_name}'") != $table_name) {
 
-      require_once(ABSPATH . 'wp-admin/upgrade-functions.php');
-      dbDelta($sql);
+            $sql = "CREATE TABLE " . $table_name . " (
+                id mediumint(9) NOT NULL AUTO_INCREMENT,
+                to_email VARCHAR(100) NOT NULL,
+                subject VARCHAR(250) NOT NULL,
+                message TEXT NOT NULL,
+                headers TEXT NOT NULL,
+                attachments TEXT NOT NULL,
+                sent_date timestamp NOT NULL,
+                PRIMARY KEY  (id)
+            );";
 
-      add_option("email-log-db", $smel_db_version);
-   }
+            require_once(ABSPATH . 'wp-admin/upgrade-functions.php');
+            dbDelta($sql);
+
+            add_option(EmailLog::DB_OPTION_NAME, EmailLog::DB_VERSION);
+        }
+    }
 }
 
-// When installed
-register_activation_hook(__FILE__, 'smel_on_install');
+// When the Plugin installed
+register_activation_hook(__FILE__, array('EmailLogInit', 'on_activate'));
 
 // Start this plugin once all other plugins are fully loaded
 add_action( 'init', 'EmailLog' ); function EmailLog() { global $EmailLog; $EmailLog = new EmailLog(); }
-
 ?>

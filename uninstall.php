@@ -6,8 +6,7 @@ if( !defined( 'ABSPATH') && !defined('WP_UNINSTALL_PLUGIN') )
     exit();
 
 global $wpdb;
-global $smel_table_name;
-$smel_table_name = $wpdb->prefix . "email_log";
+$smel_table_name = $wpdb->prefix . "email_log"; // This is hardcoded on purpose
 
 if($wpdb->get_var("show tables like '{$smel_table_name}'") == $smel_table_name) {
     // If table is present, drop it
@@ -17,6 +16,4 @@ if($wpdb->get_var("show tables like '{$smel_table_name}'") == $smel_table_name) 
 
 // Delete the option
 delete_option('email-log-db');
-
-//Sorry to see you go :(
 ?>
