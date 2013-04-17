@@ -5,7 +5,7 @@ Plugin URI: http://sudarmuthu.com/wordpress/email-log
 Description: Logs every email sent through WordPress. Compatible with WPMU too.
 Donate Link: http://sudarmuthu.com/if-you-wanna-thank-me
 Author: Sudar
-Version: 0.9.3
+Version: 1.0
 Author URI: http://sudarmuthu.com/
 Text Domain: email-log
 
@@ -36,7 +36,9 @@ Text Domain: email-log
 2013-03-14 - v0.9.2 - (Dev time: 0.5 hour) 
                   - Added support for filters which can be used while logging emails
 2013-04-01 - v0.9.3 - (Dev time: 0.5 hour) 
-                  - Moved table name into a seperate constants file
+                  - Moved table name into a separate constants file
+2013-04-17 - v1.0 - (Dev time: 0.5 hour) 
+                  - Added support for buying pro addons
 */
 /*  Copyright 2009  Sudar Muthu  (email : sudar@sudarmuthu.com)
 
@@ -54,6 +56,9 @@ Text Domain: email-log
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+/**
+ * The main Plugin class
+ */
 class EmailLog {
 
 	private $admin_page;
