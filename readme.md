@@ -148,9 +148,12 @@ Extract the zip file and drop the contents in the wp-content/plugins/ directory 
 
 ## Upgrade Notice ##
 
-### 0.9.2 ### Added filters for more customizing
-### 1.0 ### Added support for buying pro addons
+### 0.9.2 ###
+Added filters for more customizing
 
-## Readme Generator ## 
+### 1.0 ###
+Added support for buying pro addons
+
+## Readme Generator ##
 
 This Readme file was generated using <a href = 'http://sudarmuthu.com/wordpress/wp-readme'>wp-readme</a>, which generates readme files for WordPress Plugins.
