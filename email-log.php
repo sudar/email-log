@@ -106,7 +106,7 @@ class EmailLog {
 
         if ($file == $plugin) // only for this plugin
             return array_merge( $links, 
-            array( '<a href="http://sudarmuthu.com/out/buy-email-log-forward-email-addon" target="_blank">' . __('Buy Addons') . '</a>' )
+            array( '<a href="http://sudarmuthu.com/out/buy-email-log-forward-email-addon" target="_blank">' . __('Buy Addons', 'email-log') . '</a>' )
         );
         return $links;
     }
@@ -630,9 +630,9 @@ jQuery('document').ready(function() {
 	</div>
 		</form>
 <?php 
-        echo '<h3>', __('Pro Addon'), '</h3>';
+        echo '<h3>', __('Pro Addon', 'email-log'), '</h3>';
         echo '<p>';
-        _e('You can <a href = "http://sudarmuthu.com/out/buy-email-log-forward-email-addon">buy the Forward email pro addon</a>, which allows you to send a copy of all the emails send from WordPress, to another email address. The addon allows you to choose whether you want to forward through to, cc or bcc fields. This can be extremely useful when you want to debug by analyzing the emails that are sent from WordPress. The cost of the addon is $15.');
+        _e('You can <a href = "http://sudarmuthu.com/out/buy-email-log-forward-email-addon">buy the Forward email pro addon</a>, which allows you to send a copy of all the emails send from WordPress, to another email address. The addon allows you to choose whether you want to forward through to, cc or bcc fields. This can be extremely useful when you want to debug by analyzing the emails that are sent from WordPress. The cost of the addon is $15.', 'email-log');
         echo '</p>';
 ?>
 </div>
