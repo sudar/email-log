@@ -61,6 +61,13 @@ I would be posting updates about this Plugin in my [blog][3] and in [Twitter][2]
 
 You can also checkout some of the [other Plugins that I have released][5].
 
+ [1]: http://sudarmuthu.com/wordpress/email-log
+ [2]: http://twitter.com/sudarmuthu
+ [3]: http://sudarmuthu.com/blog
+ [4]: http://sudarmuthu.com/feed
+ [5]: http://sudarmuthu.com/wordpress
+ [7]: http://wordpress.org/extend/plugins/email-log
+
 ## Translation ##
 
 The Plugin currently has translations for the following languages.
@@ -71,13 +78,7 @@ The Plugin currently has translations for the following languages.
 
 The pot file is available with the Plugin. If you are willing to do translation for the Plugin, use the pot file to create the .po files for your language and let me know. I will add it to the Plugin after giving credit to you.
 
- [1]: http://sudarmuthu.com/wordpress/email-log
- [2]: http://twitter.com/sudarmuthu
- [3]: http://sudarmuthu.com/blog
- [4]: http://sudarmuthu.com/feed
- [5]: http://sudarmuthu.com/wordpress
  [6]: http://www.host1free.com
- [7]: http://wordpress.org/extend/plugins/email-log
 
 ## Installation ##
 
