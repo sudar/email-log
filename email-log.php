@@ -5,9 +5,10 @@ Plugin URI: http://sudarmuthu.com/wordpress/email-log
 Description: Logs every email sent through WordPress. Compatible with WPMU too.
 Donate Link: http://sudarmuthu.com/if-you-wanna-thank-me
 Author: Sudar
-Version: 1.0
+Version: 1.1
 Author URI: http://sudarmuthu.com/
 Text Domain: email-log
+Domain Path: languages/
 
 === RELEASE NOTES ===
 2009-10-08 - v0.1 - Initial Release
@@ -39,6 +40,8 @@ Text Domain: email-log
                   - Moved table name into a separate constants file
 2013-04-17 - v1.0 - (Dev time: 0.5 hour) 
                   - Added support for buying pro addons
+2013-04-27 - v1.1 - (Dev time: 0.5 hour) 
+                  - Added more documentation
 */
 /*  Copyright 2009  Sudar Muthu  (email : sudar@sudarmuthu.com)
 
@@ -83,6 +86,7 @@ class EmailLog {
 
         // Register hooks
         add_action( 'admin_menu', array(&$this, 'register_settings_page') );
+        add_filter( 'plugin_row_meta', array( &$this, 'add_plugin_links' ), 10, 2 );  
 
         // Register Filter
         add_filter('wp_mail', array(&$this, 'log_email'));
@@ -92,6 +96,19 @@ class EmailLog {
         add_filter("plugin_action_links_$plugin", array(&$this, 'add_action_links'));
 
         $this->table_name = $wpdb->prefix . self::TABLE_NAME;
+    }
+
+    /**
+     * Adds additional links in the Plugin listing. Based on http://zourbuth.com/archives/751/creating-additional-wordpress-plugin-links-row-meta/
+     */
+    function add_plugin_links($links, $file) {
+        $plugin = plugin_basename(__FILE__);
+
+        if ($file == $plugin) // only for this plugin
+            return array_merge( $links, 
+            array( '<a href="http://sudarmuthu.com/out/buy-email-log-forward-email-addon" target="_blank">' . __('Buy Addons') . '</a>' )
+        );
+        return $links;
     }
 
     /**
@@ -612,6 +629,12 @@ jQuery('document').ready(function() {
 		</table>
 	</div>
 		</form>
+<?php 
+        echo '<h3>', __('Pro Addon'), '</h3>';
+        echo '<p>';
+        _e('You can <a href = "http://sudarmuthu.com/out/buy-email-log-forward-email-addon">buy the Forward email pro addon</a>, which allows you to send a copy of all the emails send from WordPress, to another email address. The addon allows you to choose whether you want to forward through to, cc or bcc fields. This can be extremely useful when you want to debug by analyzing the emails that are sent from WordPress. The cost of the addon is $15.');
+        echo '</p>';
+?>
 </div>
 <?php
         // Display credits in Footer
