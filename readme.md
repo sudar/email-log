@@ -1,7 +1,7 @@
 ﻿# Email Log #
 **Contributors:** sudar  
 **Tags:** email, wpmu, wordpress-mu, log  
-**Requires at least:** 2.8  
+**Requires at least:** 3.3  
 **Tested up to:** 3.5.1  
 **Stable tag:** 1.1  
 
