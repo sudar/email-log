@@ -336,7 +336,7 @@ class EmailLogInit {
                 PRIMARY KEY  (id)
             );";
 
-            require_once(ABSPATH . 'wp-admin/upgrade-functions.php');
+            require_once( ABSPATH . 'wp-admin/upgrade.php' );
             dbDelta($sql);
 
             add_option(EmailLog::DB_OPTION_NAME, EmailLog::DB_VERSION);
