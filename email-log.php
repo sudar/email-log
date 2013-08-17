@@ -5,7 +5,7 @@ Plugin URI: http://sudarmuthu.com/wordpress/email-log
 Description: Logs every email sent through WordPress. Compatible with WPMU too.
 Donate Link: http://sudarmuthu.com/if-you-wanna-thank-me
 Author: Sudar
-Version: 1.1
+Version: 1.5
 Author URI: http://sudarmuthu.com/
 Text Domain: email-log
 Domain Path: languages/
@@ -42,6 +42,8 @@ Domain Path: languages/
                   - Added support for buying pro addons
 2013-04-27 - v1.1 - (Dev time: 0.5 hour) 
                   - Added more documentation
+2013-08-17 - v1.5 - (Dev time: 10 hours) 
+                  - Rewrote Admin interface using native tables
 */
 /*  Copyright 2009  Sudar Muthu  (email : sudar@sudarmuthu.com)
 
@@ -68,6 +70,9 @@ class EmailLog {
 	private $admin_screen;
 
     const FILTER_NAME = 'wp_mail_log';
+    const PAGE_SLUG = 'email-log';
+    const DELETE_LOG_NONCE_FIELD = 'sm-delete-email-log-nonce';
+    const DELETE_LOG_ACTION = 'sm-delete-email-log';
 
     const TABLE_NAME = 'email_log';          /* Database table name */
     const DB_OPTION_NAME = 'email-log-db';   /* Database option name */
@@ -86,11 +91,11 @@ class EmailLog {
 
         // Register hooks
         add_action( 'admin_menu', array(&$this, 'register_settings_page') );
-        add_filter( 'plugin_row_meta', array( &$this, 'add_plugin_links' ), 10, 2 );  
 
         // Register Filter
         add_filter('wp_mail', array(&$this, 'log_email'));
         add_filter('set-screen-option', array(&$this, 'save_screen_options'), 10, 3);
+        add_filter( 'plugin_row_meta', array( &$this, 'add_plugin_links' ), 10, 2 );  
 
         $plugin = plugin_basename(__FILE__);
         add_filter("plugin_action_links_$plugin", array(&$this, 'add_action_links'));
@@ -116,9 +121,51 @@ class EmailLog {
      */
     function register_settings_page() {
         //Save the handle to your admin page - you'll need it to create a WP_Screen object
-        $this->admin_page = add_submenu_page( 'tools.php', __('Email Log', 'email-log'), __('Email Log', 'email-log'), 'manage_options', 'email-log', array(&$this, 'settings_page') );
+        $this->admin_page = add_submenu_page( 'tools.php', __('Email Log', 'email-log'), __('Email Log', 'email-log'), 'manage_options', self::PAGE_SLUG , array( &$this, 'display_logs') );
 
 		add_action("load-{$this->admin_page}",array(&$this,'create_settings_panel'));
+    }
+
+    /**
+     * Display email logs
+     */
+    function display_logs() {
+
+        $this->logs_table->prepare_items( $this->get_per_page() );
+?>
+    <div class="wrap">
+        <?php screen_icon(); ?>
+        <h2><?php _e('Email Logs', 'email-log');?></h2>
+<?php
+        if ( $this->logs_deleted != '' ) {
+            $logs_deleted = intval( $this->logs_deleted );
+
+            if ( $logs_deleted > 0 ) {
+                echo "<div class = 'updated'><p>" . sprintf( _n( '1 email log deleted.', '%s email logs deleted', $logs_deleted, 'email-log' ), $logs_deleted ) . "</p></div>";
+            } else {
+                echo "<div class = 'updated'><p>" . __( 'There was some problem in deleting the email logs' ) . "</p></div>";
+            }
+            unset($this->logs_deleted); 
+        }
+?>
+        <form id="email-logs-search" method="get">
+            <input type="hidden" name="page" value="<?php echo self::PAGE_SLUG; ?>" >
+<?php
+            $this->logs_table->search_box( __('Search Logs'), 'search_id' );
+?>
+        </form>
+
+        <form id="email-logs-filter" method="get">
+            <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
+<?php        
+            wp_nonce_field( self::DELETE_LOG_ACTION, self::DELETE_LOG_NONCE_FIELD );
+            $this->logs_table->display();
+?>
+        </form>
+    </div>
+<?php
+        // Display credits in Footer
+        add_action( 'in_admin_footer', array(&$this, 'add_footer_links'));
     }
 
     /**
@@ -161,6 +208,17 @@ class EmailLog {
 				'option' => 'per_page'
 			) 
 		);
+
+        if(!class_exists('WP_List_Table')){
+            require_once( ABSPATH . WPINC . '/class-wp-list-table.php' );
+        }
+
+        if (!class_exists( 'Email_Log_List_Table' ) ) {
+            require_once dirname( __FILE__ ) . '/include/class-email-log-list-table.php';
+        }
+
+        //Prepare Table of elements
+        $this->logs_table = new Email_Log_List_Table();
 	}
 
     /**
@@ -205,440 +263,6 @@ class EmailLog {
     function add_footer_links() {
         $plugin_data = get_plugin_data( __FILE__ );
         printf('%1$s ' . __("plugin", 'email-log') .' | ' . __("Version", 'email-log') . ' %2$s | '. __('by', 'email-log') . ' %3$s<br />', $plugin_data['Title'], $plugin_data['Version'], $plugin_data['Author']);
-    }
-
-    /**
-     * Dipslay the Settings page
-     *
-     * Some parts of this function is based on the wp-rattings Plugin 
-     * TODO: Rewrite this using this technique http://wp.smashingmagazine.com/2011/11/03/native-admin-tables-wordpress/
-     */
-    function settings_page() {
-        global $wpdb;
-        global $text_direction;
-
-        $base_name = plugin_basename('email-log');
-        $base_page = 'tools.php?page='.$base_name;
-
-        $email_log_page            = intval($this->array_get($_GET, 'emaillog_page'));
-        $emaillogs_filterid        = trim(addslashes($this->array_get($_GET, 'id')));
-        $emaillogs_filter_to_email = trim(addslashes($this->array_get($_GET, 'to_email')));
-        $emaillogs_filter_subject  = trim(addslashes($this->array_get($_GET, 'subject')));
-        $emaillog_sort_by          = trim($this->array_get($_GET, 'by'));
-        $emaillog_sortby_text      = '';
-        $emaillog_sortorder        = trim($this->array_get($_GET, 'order'));
-        $emaillog_sortorder_text   = '';
-        $email_log_perpage         = intval($this->get_per_page());
-        $emaillog_sort_url         = '';
-
-        ### Form Processing
-        if(!empty($_POST['do'])) {
-            // Decide What To Do
-            switch($_POST['do']) {
-                case __('Delete Logs', 'email-log'):
-                    $delete_datalog = intval($_POST['delete_datalog']);
-                    switch($delete_datalog) {
-                        case 1:
-                            // delete selected entries
-                            $selected_ids = implode(',', $_POST['selected_ids']);
-                            $delete_logs = $wpdb->query("DELETE FROM $this->table_name where id IN ($selected_ids)");
-
-                            if($delete_logs) {
-                                $text = '<font color="green">' . __('The selected Email Logs have been deleted.', 'email-log') . '</font>';
-                            } else {
-                                $text = '<font color="red">' . __('An error has occurred while deleting the selected Email logs', 'email-log') . '</font>';
-                            }
-                            break;
-                        case 2:
-                            // Delete based on condition
-                            $to_email = trim(addslashes( $_POST['delete_to_email']));
-                            if ('' != $to_email) {
-                                $delete_logs = $wpdb->query("DELETE FROM $this->table_name where to_email = '$to_email'");
-                                if($delete_logs) {
-                                    $text = '<font color="green">'.sprintf(__('All Email Logs for email id "%s" have been deleted.', 'email-log'), $to_email).'</font>';
-                                } else {
-                                    $text = '<font color="red">'.sprintf(__('An error has occurred while deleting all Email Logs for email id "%s".', 'email-log'), $to_email).'</font>';
-                                }
-                            }
-
-                            $subject = trim(addslashes( $_POST['delete_subject']));
-                            if ('' != $subject) {
-                                $delete_logs = $wpdb->query("DELETE FROM $this->table_name where subject = '$subject'");
-                                if($delete_logs) {
-                                    $text .= '<font color="green">'.sprintf(__('All Email Logs with subject "%s" have been deleted.', 'email-log'), $subject).'</font>';
-                                } else {
-                                    $text .= '<font color="red">'.sprintf(__('An error has occurred while deleting all Email Logs with subject "%s".', 'email-log'), $subject).'</font>';
-                                }
-                            }
-                            break;
-                        case 3:
-                            // Delete all
-                            $delete_logs = $wpdb->query("DELETE FROM $this->table_name ");
-                            if ($delete_logs) {
-                                $text = '<font color="green">'.__('All Email Logs were deleted.', 'email-log').'</font><br />';
-                            } else {
-                                $text = '<font color="red">'.__('An error has occurred while deleting all Email Logs', 'email-log').'</font>';
-                            }
-                            break;
-                    }
-                break;
-            }
-        }
-
-        ### Form Sorting URL
-        if(!empty($emaillogs_filterid)) {
-            $emaillogs_filterid = intval($emaillogs_filterid);
-            $emaillog_sort_url .= '&amp;id='.$emaillogs_filterid;
-        }
-        if(!empty($emaillogs_filter_to_email)) {
-            $emaillog_sort_url .= '&amp;to_email='.$emaillogs_filter_to_email;
-        }
-        if(!empty($emaillogs_filter_subject)) {
-            $emaillog_sort_url .= '&amp;subject='.$emaillogs_filter_subject;
-        }
-        if(!empty($emaillog_sort_by)) {
-            $emaillog_sort_url .= '&amp;by='.$emaillog_sort_by;
-        }
-        if(!empty($emaillog_sortorder)) {
-            $emaillog_sort_url .= '&amp;order='.$emaillog_sortorder;
-        }
-
-        ### Get Order By
-        switch($emaillog_sort_by) {
-            case 'id':
-                $emaillog_sort_by = 'id';
-                $emaillog_sortby_text = __('ID', 'email-log');
-                break;
-            case 'to_email':
-                $emaillog_sort_by = 'to_email';
-                $emaillog_sortby_text = __('To Email', 'email-log');
-                break;
-            case 'subject':
-                $emaillog_sort_by = 'subject';
-                $emaillog_sortby_text = __('Subject', 'email-log');
-                break;
-            case 'date':
-            default:
-                $emaillog_sort_by = 'sent_date';
-                $emaillog_sortby_text = __('Date', 'email-log');
-        }
-
-        ### Get Sort Order
-        switch($emaillog_sortorder) {
-            case 'asc':
-                $emaillog_sortorder = 'ASC';
-                $emaillog_sortorder_text = __('Ascending', 'email-log');
-                break;
-            case 'desc':
-            default:
-                $emaillog_sortorder = 'DESC';
-                $emaillog_sortorder_text = __('Descending', 'email-log');
-        }
-
-        // Where
-        $emaillog_where = '';
-        if(!empty($emaillogs_filterid)) {
-            $emaillog_where = "AND id =$emaillogs_filterid";
-        }
-        if(!empty($emaillogs_filter_to_email)) {
-            $emaillog_where .= " AND to_email like '%$emaillogs_filter_to_email%'";
-        }
-        if(!empty($emaillogs_filter_subject)) {
-            $emaillog_where .= " AND subject like '%$emaillogs_filter_subject%'";
-        }
-
-        // Get email Logs Data
-        $total_logs = $wpdb->get_var("SELECT COUNT(id) FROM $this->table_name WHERE 1=1 $emaillog_where");
-
-        // Checking $postratings_page and $offset
-        if(empty($email_log_page) || $email_log_page == 0) { $email_log_page = 1; }
-        if(empty($offset)) { $offset = 0; }
-
-        // Determin $offset
-        $offset = ($email_log_page-1) * $email_log_perpage;
-
-        // Determine Max Number Of Logs To Display On Page
-        if(($offset + $email_log_perpage) > $total_logs) {
-            $max_on_page = $total_logs;
-        } else {
-            $max_on_page = ($offset + $email_log_perpage);
-        }
-
-        // Determine Number Of Logs To Display On Page
-        if (($offset + 1) > ($total_logs)) {
-            $display_on_page = $total_logs;
-        } else {
-            $display_on_page = ($offset + 1);
-        }
-
-        // Determing Total Amount Of Pages
-        $total_pages = ceil($total_logs / $email_log_perpage);
-
-        // Get The Logs
-        $email_logs = $wpdb->get_results("SELECT * FROM $this->table_name WHERE 1=1 $emaillog_where ORDER BY $emaillog_sort_by $emaillog_sortorder LIMIT $offset, $email_log_perpage");
-
-        // TODO: Should move this to a seperate js file
-?>
-<script type = "text/javascript">
-jQuery('document').ready(function() {
-    jQuery('.selectall').click(function (e) {
-        if (jQuery(e.target).is(':checked')) {
-            jQuery('.select_box').attr('checked', 'checked');
-        } else {
-            jQuery('.select_box').removeAttr('checked');
-        }        
-    });
-});
-</script>
-        <?php if(!empty($text)) { echo '<!-- Last Action --><div id="message" class="updated fade"><p>'.$text.'</p></div>'; } ?>
-        <div class="wrap">
-            <?php screen_icon(); ?>
-            <h2><?php _e( 'Email Log', 'email-log' ); ?></h2>
-
-            <p>&nbsp;</p>
-
-    <form action="<?php echo esc_url($_SERVER['PHP_SELF']); ?>" method="get">
-		<input type="hidden" name="page" value="<?php echo $base_name; ?>" />
-		<table class="widefat">
-			<tr>
-				<th><?php _e('Filter Options:', 'email-log'); ?></th>
-				<td>
-					<?php _e('ID:', 'email-log'); ?>&nbsp;<input type="text" name="id" value="<?php echo $emaillogs_filterid; ?>" size="5" maxlength="5" />
-					&nbsp;&nbsp;&nbsp;
-					<?php _e('To Email:', 'email-log'); ?>&nbsp;<input type="text" name="to_email" value="<?php echo $emaillogs_filter_to_email; ?>" size="40" maxlength="50" />
-					&nbsp;&nbsp;&nbsp;
-					<?php _e('Subject:', 'email-log'); ?>&nbsp;<input type="text" name="subject" value="<?php echo $emaillogs_filter_subject; ?>" size="40" maxlength="50" />
-					&nbsp;&nbsp;&nbsp;
-				</td>
-			</tr>
-			<tr class="alternate">
-				<th><?php _e('Sort Options:', 'email-log'); ?></th>
-				<td>
-					<select name="by" size="1">
-						<option value="id"<?php if($emaillog_sort_by == 'id') { echo ' selected="selected"'; }?>><?php _e('ID', 'email-log'); ?></option>
-						<option value="to_email"<?php if($emaillog_sort_by == 'to_email') { echo ' selected="selected"'; }?>><?php _e('To Email', 'email-log'); ?></option>
-						<option value="subject"<?php if($emaillog_sort_by == 'subject') { echo ' selected="selected"'; }?>><?php _e('Subject', 'email-log'); ?></option>
-						<option value="sent_date"<?php if($emaillog_sort_by == 'sent_date') { echo ' selected="selected"'; }?>><?php _e('Date', 'email-log'); ?></option>
-					</select>
-					&nbsp;&nbsp;&nbsp;
-					<select name="order" size="1">
-						<option value="asc"<?php if($emaillog_sortorder == 'ASC') { echo ' selected="selected"'; }?>><?php _e('Ascending', 'email-log'); ?></option>
-						<option value="desc"<?php if($emaillog_sortorder == 'DESC') { echo ' selected="selected"'; } ?>><?php _e('Descending', 'email-log'); ?></option>
-					</select>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center"><input type="submit" value="<?php _e('Filter', 'email-log'); ?>" class="button" /></td>
-			</tr>
-		</table>
-	</form>
-
-            <p><?php printf(__('Displaying <strong>%s</strong> to <strong>%s</strong> of <strong>%s</strong> Email log entries.', 'email-log'), number_format_i18n($display_on_page), number_format_i18n($max_on_page), number_format_i18n($total_logs)); ?></p>
-            <p><?php printf(__('Sorted by <strong>%s</strong> in <strong>%s</strong> order.', 'email-log'), $emaillog_sortby_text, $emaillog_sortorder_text); ?></p>
-
-        <form method="post" action="<?php echo esc_url($_SERVER['PHP_SELF']); ?>?page=<?php echo $base_name; ?>">
-<?php
-			if($total_pages > 1) {
-?>
-		<br />
-		<table class="widefat">
-			<tr>
-				<td align="<?php echo ('rtl' == $text_direction) ? 'right' : 'left'; ?>" width="40%">
-					<?php
-						if($email_log_page > 1 && ((($email_log_page*$email_log_perpage)-($email_log_perpage-1)) <= $total_logs)) {
-							echo '<strong>&laquo;</strong> <a href="'.$base_page.'&amp;emaillog_page='.($email_log_page-1).$emaillog_sort_url.'" title="&laquo; '.__('Previous Page', 'email-log').'">'.__('Previous Page', 'email-log').'</a>';
-						} else {
-							echo '&nbsp;';
-						}
-					?>
-				</td>
-                <td align="center" width="20%">
-					<?php printf(__('Pages (%s): ', 'email-log'), number_format_i18n($total_pages)); ?>
-					<?php
-						if ($email_log_page >= 4) {
-							echo '<strong><a href="'.$base_page.'&amp;emaillog_page=1'.$emaillog_sort_url.$emaillog_sort_url.'" title="'.__('Go to First Page', 'email-log').'">&laquo; '.__('First', 'email-log').'</a></strong> ... ';
-						}
-						if($email_log_page > 1) {
-							echo ' <strong><a href="'.$base_page.'&amp;emaillog_page='.($email_log_page-1).$emaillog_sort_url.'" title="&laquo; '.__('Go to Page', 'email-log').' '.number_format_i18n($email_log_page-1).'">&laquo;</a></strong> ';
-						}
-						for($i = $email_log_page - 2 ; $i  <= $email_log_page +2; $i++) {
-							if ($i >= 1 && $i <= $total_pages) {
-								if($i == $email_log_page) {
-									echo '<strong>['.number_format_i18n($i).']</strong> ';
-								} else {
-									echo '<a href="'.$base_page.'&amp;emaillog_page='.($i).$emaillog_sort_url.'" title="'.__('Page', 'email-log').' '.number_format_i18n($i).'">'.number_format_i18n($i).'</a> ';
-								}
-							}
-						}
-						if($email_log_page < $total_pages) {
-							echo ' <strong><a href="'.$base_page.'&amp;emaillog_page='.($email_log_page+1).$emaillog_sort_url.'" title="'.__('Go to Page', 'email-log').' '.number_format_i18n($email_log_page+1).' &raquo;">&raquo;</a></strong> ';
-						}
-						if (($email_log_page+2) < $total_pages) {
-							echo ' ... <strong><a href="'.$base_page.'&amp;emaillog_page='.($total_pages).$emaillog_sort_url.'" title="'.__('Go to Last Page', 'email-log').'">'.__('Last', 'email-log').' &raquo;</a></strong>';
-						}
-					?>
-				</td>
-				<td align="<?php echo ('rtl' == $text_direction) ? 'left' : 'right'; ?>" width="40%">
-					<?php
-						if($email_log_page >= 1 && ((($email_log_page*$email_log_perpage)+1) <=  $total_logs)) {
-							echo '<a href="'.$base_page.'&amp;emaillog_page='.($email_log_page+1).$emaillog_sort_url.'" title="'.__('Next Page', 'email-log').' &raquo;">'.__('Next Page', 'email-log').'</a> <strong>&raquo;</strong>';
-						} else {
-							echo '&nbsp;';
-						}
-					?>
-				</td>
-			</tr>
-		</table>
-		<!-- </Paging> -->
-		<?php
-			}
-		?>
-            <table class="widefat">
-                <thead>
-                    <tr>
-                        <td width="5%"><input type = "checkbox" name = "selectall" class = "selectall" ></td>
-                        <th width="5%"><?php _e('ID', 'email-log'); ?></th>
-                        <th width="20%"><?php _e('Date / Time', 'email-log'); ?></th>
-                        <th width="30%"><?php _e('To', 'email-log'); ?></th>
-                        <th width="40%"><?php _e('Subject', 'email-log'); ?></th>
-                    </tr>
-                </thead>
-                <tbody>
-<?php
-                if($email_logs) {
-                    $i = 0;
-                    foreach($email_logs as $email_log) {
-                        if($i%2 == 0) {
-                            $style = 'class="alternate"';
-                        }  else {
-                            $style = '';
-                        }
-                        $email_id = intval($email_log->id);
-                        $email_date = mysql2date(sprintf(__('%s @ %s', 'email-log'), get_option('date_format'), get_option('time_format')), $email_log->sent_date);
-                        $email_to = stripslashes($email_log->to_email);
-                        $email_subject = stripslashes($email_log->subject);
-                        echo "<tr $style>\n";
-                        echo '<td><input type = "checkbox" class = "select_box" name = "selected_ids[]" value = "' . $email_id . '"></td>'."\n";
-                        echo '<td>'.$email_id.'</td>'."\n";
-                        echo "<td>$email_date</td>\n";
-                        echo "<td>$email_to</td>\n";
-                        echo "<td>$email_subject</td>\n";
-                        echo '</tr>';
-                        $i++;
-                    }
-                } else {
-                    echo '<tr><td colspan="7" align="center"><strong>'.__('No Email Logs were found', 'email-log').'</strong></td></tr>';
-                }
-?>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td width="5%"><input type = "checkbox" name = "selectall" class = "selectall" ></td>
-                        <th width="5%"><?php _e('ID', 'email-log'); ?></th>
-                        <th width="20%"><?php _e('Date / Time', 'email-log'); ?></th>
-                        <th width="30%"><?php _e('To', 'email-log'); ?></th>
-                        <th width="40%"><?php _e('Subject', 'email-log'); ?></th>
-                    </tr>
-                </tfoot>
-            </table>
-<?php
-			if($total_pages > 1) {
-?>
-		<table class="widefat">
-			<tr>
-				<td align="<?php echo ('rtl' == $text_direction) ? 'right' : 'left'; ?>" width="40%">
-					<?php
-						if($email_log_page > 1 && ((($email_log_page*$email_log_perpage)-($email_log_perpage-1)) <= $total_logs)) {
-							echo '<strong>&laquo;</strong> <a href="'.$base_page.'&amp;emaillog_page='.($email_log_page-1).$emaillog_sort_url.'" title="&laquo; '.__('Previous Page', 'email-log').'">'.__('Previous Page', 'email-log').'</a>';
-						} else {
-							echo '&nbsp;';
-						}
-					?>
-				</td>
-                <td align="center" width="20%">
-					<?php printf(__('Pages (%s): ', 'email-log'), number_format_i18n($total_pages)); ?>
-					<?php
-						if ($email_log_page >= 4) {
-							echo '<strong><a href="'.$base_page.'&amp;emaillog_page=1'.$emaillog_sort_url.$emaillog_sort_url.'" title="'.__('Go to First Page', 'email-log').'">&laquo; '.__('First', 'email-log').'</a></strong> ... ';
-						}
-						if($email_log_page > 1) {
-							echo ' <strong><a href="'.$base_page.'&amp;emaillog_page='.($email_log_page-1).$emaillog_sort_url.'" title="&laquo; '.__('Go to Page', 'email-log').' '.number_format_i18n($email_log_page-1).'">&laquo;</a></strong> ';
-						}
-						for($i = $email_log_page - 2 ; $i  <= $email_log_page +2; $i++) {
-							if ($i >= 1 && $i <= $total_pages) {
-								if($i == $email_log_page) {
-									echo '<strong>['.number_format_i18n($i).']</strong> ';
-								} else {
-									echo '<a href="'.$base_page.'&amp;emaillog_page='.($i).$emaillog_sort_url.'" title="'.__('Page', 'email-log').' '.number_format_i18n($i).'">'.number_format_i18n($i).'</a> ';
-								}
-							}
-						}
-						if($email_log_page < $total_pages) {
-							echo ' <strong><a href="'.$base_page.'&amp;emaillog_page='.($email_log_page+1).$emaillog_sort_url.'" title="'.__('Go to Page', 'email-log').' '.number_format_i18n($email_log_page+1).' &raquo;">&raquo;</a></strong> ';
-						}
-						if (($email_log_page+2) < $total_pages) {
-							echo ' ... <strong><a href="'.$base_page.'&amp;emaillog_page='.($total_pages).$emaillog_sort_url.'" title="'.__('Go to Last Page', 'email-log').'">'.__('Last', 'email-log').' &raquo;</a></strong>';
-						}
-					?>
-				</td>
-				<td align="<?php echo ('rtl' == $text_direction) ? 'left' : 'right'; ?>" width="40%">
-					<?php
-						if($email_log_page >= 1 && ((($email_log_page*$email_log_perpage)+1) <=  $total_logs)) {
-							echo '<a href="'.$base_page.'&amp;emaillog_page='.($email_log_page+1).$emaillog_sort_url.'" title="'.__('Next Page', 'email-log').' &raquo;">'.__('Next Page', 'email-log').'</a> <strong>&raquo;</strong>';
-						} else {
-							echo '&nbsp;';
-						}
-					?>
-				</td>
-			</tr>
-			<tr class="alternate">
-			</tr>
-		</table>
-		<!-- </Paging> -->
-		<?php
-			}
-		?>
-
-<!-- Delete Email Logs -->
-	<h3><?php _e('Delete Logs', 'email-log'); ?></h3>
-	<div align="center">
-		<table class="widefat">
-			<tr>
-				<td valign="top"><b><?php _e('Delete Type : ', 'email-log'); ?></b></td>
-				<td valign="top">
-					<select size="1" name="delete_datalog">
-						<option value="1"><?php _e('Selected entries', 'email-log'); ?></option>
-						<option value="2"><?php _e('Based on', 'email-log'); ?></option>
-						<option value="3"><?php _e('All Logs', 'email-log'); ?></option>
-					</select>
-				</td>
-			</tr>
-			<tr>
-				<td valign="top"><b><?php _e('Condition:', 'email-log'); ?></b></td>
-				<td valign="top">
-                    <label for ="delete_to_email"><?php _e('To Email', 'email-log');?> <input type="text" name="delete_to_email" size="20" dir="ltr" /></label>
-                    <?php _e('or', 'email-log');?>
-                    <label for ="delete_subject"><?php _e('Subject', 'email-log');?> <input type="text" name="delete_subject" size="20" dir="ltr" /></label>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center">
-					<input type="submit" name="do" value="<?php _e('Delete Logs', 'email-log'); ?>" class="button" onclick="return confirm('<?php _e('You Are About To Delete Email Logs.\nThis Action Is Not Reversible.\n\n Choose \\\'Cancel\\\' to stop, \\\'OK\\\' to delete.', 'email-log'); ?>')" />
-				</td>
-			</tr>
-		</table>
-	</div>
-		</form>
-<?php 
-        echo '<h3>', __('Pro Addon', 'email-log'), '</h3>';
-        echo '<p>';
-        _e('You can <a href = "http://sudarmuthu.com/out/buy-email-log-forward-email-addon">buy the Forward email pro addon</a>, which allows you to send a copy of all the emails send from WordPress, to another email address. The addon allows you to choose whether you want to forward through to, cc or bcc fields. This can be extremely useful when you want to debug by analyzing the emails that are sent from WordPress. The cost of the addon is $15.', 'email-log');
-        echo '</p>';
-?>
-</div>
-<?php
-        // Display credits in Footer
-        add_action( 'in_admin_footer', array(&$this, 'add_footer_links'));
     }
 
     /**
