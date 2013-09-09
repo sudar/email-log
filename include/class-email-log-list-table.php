@@ -119,13 +119,14 @@ class Email_Log_List_Table extends WP_List_Table {
         
         //Build row actions
         $actions = array(
-            'delete' => sprintf( '<a href="?page=%s&action=%s&%s=%s&%s=%s">Delete</a>', 
+            'delete' => sprintf( '<a href="?page=%s&action=%s&%s=%s&%s=%s">%s</a>', 
                                 $_REQUEST['page'], 
                                 'delete', 
                                 $this->_args['singular'],
                                 $item->id,
                                 EmailLog::DELETE_LOG_NONCE_FIELD,
-                                wp_create_nonce( EmailLog::DELETE_LOG_ACTION )
+                                wp_create_nonce( EmailLog::DELETE_LOG_ACTION ),
+                                __( 'Delete', 'email-log' )
                         ),
         );
 
