@@ -46,6 +46,7 @@ Domain Path: languages/
                   - Rewrote Admin interface using native tables
 2013-09-09 - v1.5.1 - (Dev time: 0.5 hours) 
                   - Correct the upgrade file include path. Issue #7
+                  - Fix undfined notice error. Issue #8
 */
 /*  Copyright 2009  Sudar Muthu  (email : sudar@sudarmuthu.com)
 
@@ -139,7 +140,7 @@ class EmailLog {
         <?php screen_icon(); ?>
         <h2><?php _e('Email Logs', 'email-log');?></h2>
 <?php
-        if ( $this->logs_deleted != '' ) {
+        if ( isset( $this->logs_deleted ) && $this->logs_deleted != '' ) {
             $logs_deleted = intval( $this->logs_deleted );
 
             if ( $logs_deleted > 0 ) {
