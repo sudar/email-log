@@ -40,9 +40,9 @@ class Email_Log_List_Table extends WP_List_Table {
     function get_columns(){
         $columns = array(
             'cb'        => '<input type="checkbox" />', //Render a checkbox instead of text
-            'sent_date' => __('Sent at'),
-            'to'        => __('To'),
-            'subject'   => __('Subject')
+            'sent_date' => __('Sent at', 'email-log'),
+            'to'        => __('To', 'email-log'),
+            'subject'   => __('Subject', 'email-log')
         );
         return $columns;
     }
@@ -186,7 +186,7 @@ class Email_Log_List_Table extends WP_List_Table {
      **************************************************************************/
     function get_bulk_actions() {
         $actions = array(
-            'delete'    => __('Delete')
+            'delete'    => __('Delete', 'email-log')
         );
         return $actions;
     }

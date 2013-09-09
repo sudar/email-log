@@ -143,7 +143,7 @@ class EmailLog {
             if ( $logs_deleted > 0 ) {
                 echo "<div class = 'updated'><p>" . sprintf( _n( '1 email log deleted.', '%s email logs deleted', $logs_deleted, 'email-log' ), $logs_deleted ) . "</p></div>";
             } else {
-                echo "<div class = 'updated'><p>" . __( 'There was some problem in deleting the email logs' ) . "</p></div>";
+                echo "<div class = 'updated'><p>" . __( 'There was some problem in deleting the email logs' , 'email-log') . "</p></div>";
             }
             unset($this->logs_deleted); 
         }
@@ -151,7 +151,7 @@ class EmailLog {
         <form id="email-logs-search" method="get">
             <input type="hidden" name="page" value="<?php echo self::PAGE_SLUG; ?>" >
 <?php
-            $this->logs_table->search_box( __('Search Logs'), 'search_id' );
+            $this->logs_table->search_box( __('Search Logs', 'email-log'), 'search_id' );
 ?>
         </form>
 
