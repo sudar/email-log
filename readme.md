@@ -2,8 +2,8 @@
 **Contributors:** sudar  
 **Tags:** email, wpmu, wordpress-mu, log  
 **Requires at least:** 3.3  
-**Tested up to:** 3.5.1  
-**Stable tag:** 1.1  
+**Tested up to:** 3.6  
+**Stable tag:** 1.5  
 
 Logs every email sent through WordPress. Compatible with WPMU too.
 
@@ -41,7 +41,6 @@ If you are looking for ideas, then you can start with one of the following TODO 
 
 The following are the features that I am thinking of adding to the Plugin, when I get some free time. If you have any feature request or want to increase the priority of a particular feature, then let me know.
 
-- Revamp the Admin UI, by following [this technique](http://wp.smashingmagazine.com/2011/11/03/native-admin-tables-wordpress/)
 - Add option to automatically delete the logs periodically
 - Make it MU compatible
 - Add the ability to view the entire email
@@ -149,6 +148,9 @@ Extract the zip file and drop the contents in the wp-content/plugins/ directory 
 ### v1.1 (2013-04-27) - (Dev time: 0.5 hour)  ###
 * Added more documentation
 
+### v1.5 (2013-09-09) - (Dev time: 10 hours) ###
+* Rewrote Admin interface using native tables
+
 ## Upgrade Notice ##
 
 ### 0.9.2 ###
@@ -156,6 +158,9 @@ Added filters for more customizing
 
 ### 1.0 ###
 Added support for buying pro addons
+
+### 1.5 ###
+Rewrote Admin interface using native tables
 
 ## Readme Generator ##
 

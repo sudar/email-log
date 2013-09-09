@@ -42,7 +42,7 @@ Domain Path: languages/
                   - Added support for buying pro addons
 2013-04-27 - v1.1 - (Dev time: 0.5 hour) 
                   - Added more documentation
-2013-08-17 - v1.5 - (Dev time: 10 hours) 
+2013-09-09 - v1.5 - (Dev time: 10 hours) 
                   - Rewrote Admin interface using native tables
 */
 /*  Copyright 2009  Sudar Muthu  (email : sudar@sudarmuthu.com)
