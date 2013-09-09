@@ -5,7 +5,7 @@ Plugin URI: http://sudarmuthu.com/wordpress/email-log
 Description: Logs every email sent through WordPress. Compatible with WPMU too.
 Donate Link: http://sudarmuthu.com/if-you-wanna-thank-me
 Author: Sudar
-Version: 1.5
+Version: 1.5.1
 Author URI: http://sudarmuthu.com/
 Text Domain: email-log
 Domain Path: languages/
@@ -44,6 +44,8 @@ Domain Path: languages/
                   - Added more documentation
 2013-09-09 - v1.5 - (Dev time: 10 hours) 
                   - Rewrote Admin interface using native tables
+2013-09-09 - v1.5.1 - (Dev time: 0.5 hours) 
+                  - Correct the upgrade file include path. Issue #7
 */
 /*  Copyright 2009  Sudar Muthu  (email : sudar@sudarmuthu.com)
 
@@ -336,7 +338,7 @@ class EmailLogInit {
                 PRIMARY KEY  (id)
             );";
 
-            require_once( ABSPATH . 'wp-admin/upgrade.php' );
+            require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
             dbDelta($sql);
 
             add_option(EmailLog::DB_OPTION_NAME, EmailLog::DB_VERSION);
