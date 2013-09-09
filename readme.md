@@ -73,12 +73,10 @@ You can also checkout some of the [other Plugins that I have released][5].
 The Plugin currently has translations for the following languages.
 
 *   German (Thanks Frank)
-*   Lithuanian (Thanks  Vincent G , from [http://www.host1free.com][6])
+*   Lithuanian (Thanks  Vincent G)
 *   Dutch (Thanks Zjan Preijde)
 
 The pot file is available with the Plugin. If you are willing to do translation for the Plugin, use the pot file to create the .po files for your language and let me know. I will add it to the Plugin after giving credit to you.
-
- [6]: http://www.host1free.com
 
 ## Installation ##
 
