@@ -47,6 +47,7 @@ Domain Path: languages/
 2013-09-09 - v1.5.1 - (Dev time: 0.5 hours) 
                   - Correct the upgrade file include path. Issue #7
                   - Fix undfined notice error. Issue #8
+                  - Update screenshots. Issue #6
 */
 /*  Copyright 2009  Sudar Muthu  (email : sudar@sudarmuthu.com)
 

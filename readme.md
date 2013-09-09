@@ -89,11 +89,9 @@ Extract the zip file and drop the contents in the wp-content/plugins/ directory 
 
 ## Screenshots ##
 
-1. The following screenshot shows how the logged emails will be displayed
+1. The above screenshot shows how the logged emails will be displayed by the Plugin
 
-2. This screenshot shows how the email logs could be filtered or sorted.
-
-3. This one shows how the email logs could be deleted
+2. This screenshot shows how you can configure the email display screen. You can choose the fields and the number of emails per page.
 
 ## Changelog ##
 
