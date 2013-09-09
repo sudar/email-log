@@ -3,7 +3,7 @@
 **Tags:** email, wpmu, wordpress-mu, log  
 **Requires at least:** 3.3  
 **Tested up to:** 3.6  
-**Stable tag:** 1.5  
+**Stable tag:** 1.5.1  
 
 Logs every email sent through WordPress. Compatible with WPMU too.
 
@@ -148,6 +148,11 @@ Extract the zip file and drop the contents in the wp-content/plugins/ directory 
 
 ### v1.5 (2013-09-09) - (Dev time: 10 hours) ###
 * Rewrote Admin interface using native tables
+
+### v1.5.1 (2013-09-09) - (Dev time: 0.5 hours) ###
+- Correct the upgrade file include path. Issue #7
+- Fix undfined notice error. Issue #8
+- Update screenshots. Issue #6
 
 ## Upgrade Notice ##
 
