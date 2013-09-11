@@ -73,14 +73,15 @@ class EmailLog {
 	private $admin_page;
 	private $admin_screen;
 
-    const FILTER_NAME = 'wp_mail_log';
-    const PAGE_SLUG = 'email-log';
-    const DELETE_LOG_NONCE_FIELD = 'sm-delete-email-log-nonce';
-    const DELETE_LOG_ACTION = 'sm-delete-email-log';
+    const FILTER_NAME              = 'wp_mail_log';
+    const PAGE_SLUG                = 'email-log';
+    const DELETE_LOG_NONCE_FIELD   = 'sm-delete-email-log-nonce';
+    const DELETE_LOG_ACTION        = 'sm-delete-email-log';
 
-    const TABLE_NAME = 'email_log';          /* Database table name */
-    const DB_OPTION_NAME = 'email-log-db';   /* Database option name */
-    const DB_VERSION = '0.1';                /* Database version */
+    // DB stuff
+    const TABLE_NAME               = 'email_log';          /* Database table name */
+    const DB_OPTION_NAME           = 'email-log-db';       /* Database option name */
+    const DB_VERSION               = '0.1';                /* Database version */
 
     /**
      * Initalize the plugin by registering the hooks
