@@ -44,7 +44,8 @@ class Email_Log_List_Table extends WP_List_Table {
             'to'        => __('To', 'email-log'),
             'subject'   => __('Subject', 'email-log')
         );
-        return $columns;
+
+        return apply_filters( EmailLog::HOOK_LOG_COLUMNS, $columns );
     }
     
     /** ************************************************************************
@@ -91,13 +92,9 @@ class Email_Log_List_Table extends WP_List_Table {
      * @param array $column_name The name/slug of the column to be processed
      * @return string Text or HTML to be placed inside the column <td>
      **************************************************************************/
-    function column_default($item, $column_name){
-        switch($column_name){
-            default:
-                return print_r($item,true); //Show the whole array for troubleshooting purposes
-        }
+    function column_default( $item, $column_name ){
+        do_action( EmailLog::HOOK_LOG_DISPLAY_COLUMNS, $column_name, $item );
     }
-    
         
     /** ************************************************************************
      * Recommended. This is a custom column method and is responsible for what

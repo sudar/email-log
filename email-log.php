@@ -48,6 +48,9 @@ Domain Path: languages/
                   - Correct the upgrade file include path. Issue #7
                   - Fix undfined notice error. Issue #8
                   - Update screenshots. Issue #6
+2013-09-12 - v1.5.2 - (Dev time: 0.5 hours) 
+                  - Add the ability to override the fields displayed in the log page
+
 */
 /*  Copyright 2009  Sudar Muthu  (email : sudar@sudarmuthu.com)
 
@@ -82,6 +85,10 @@ class EmailLog {
     const TABLE_NAME               = 'email_log';          /* Database table name */
     const DB_OPTION_NAME           = 'email-log-db';       /* Database option name */
     const DB_VERSION               = '0.1';                /* Database version */
+
+    //hooks
+    const HOOK_LOG_COLUMNS         = 'email_log_manage_log_columns';
+    const HOOK_LOG_DISPLAY_COLUMNS = 'email_log_display_log_columns';
 
     /**
      * Initalize the plugin by registering the hooks
