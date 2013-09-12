@@ -73,7 +73,6 @@ Domain Path: languages/
  */
 class EmailLog {
 
-	private $admin_page;
 	private $admin_screen;
 
     const FILTER_NAME              = 'wp_mail_log';
