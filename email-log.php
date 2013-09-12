@@ -283,18 +283,20 @@ class EmailLog {
 
         $attachment_present = (count ($mail_info['attachments']) > 0) ? "true" : "false";
 
+        // return filtered array
+        $mail_info = apply_filters(self::FILTER_NAME, $mail_info);
+
         // Log into the database
         $wpdb->insert($this->table_name, array(
                 'to_email'    => is_array($mail_info['to']) ? $mail_info['to'][0] : $mail_info['to'],
                 'subject'     => $mail_info['subject'],
                 'message'     => $mail_info['message'],
-                'headers'     => is_array($mail_info['headers']) ? implode("\r\n", $mail_info['headers']) : $mail_info['headers'],
+                'headers'     => is_array($mail_info['headers']) ? implode("\n", $mail_info['headers']) : $mail_info['headers'],
                 'attachments' => $attachment_present,
                 'sent_date'   => current_time('mysql')
         ));
 
-        // return filtered array
-        return apply_filters(self::FILTER_NAME, $mail_info);
+        return $mail_info;
     }
 
     /**
