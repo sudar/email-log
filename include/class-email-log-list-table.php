@@ -260,15 +260,15 @@ class Email_Log_List_Table extends WP_List_Table {
         $query = "SELECT * FROM " . $EmailLog->table_name;
 
         if ( isset( $_GET['s'] ) ) {
-            $search_term = $wpdb->escape( $_GET['s'] );
+            $search_term = esc_sql( $_GET['s'] );
 
             $query .= " WHERE to_email LIKE '%$search_term%' OR subject LIKE '%$search_term%' ";
         }
 
         /* -- Ordering parameters -- */
 	    //Parameters that are going to be used to order the result
-	    $orderby = !empty( $_GET["orderby"] ) ? $wpdb->escape( $_GET["orderby"] ) : 'sent_date';
-	    $order = !empty( $_GET["order"] ) ? $wpdb->escape( $_GET["order"] ) : 'DESC';
+	    $orderby = !empty( $_GET["orderby"] ) ? esc_sql( $_GET["orderby"] ) : 'sent_date';
+	    $order = !empty( $_GET["order"] ) ? esc_sql( $_GET["order"] ) : 'DESC';
 
         if(!empty($orderby) & !empty($order)) {
             $query .= ' ORDER BY ' . $orderby . ' ' . $order; 
@@ -278,7 +278,7 @@ class Email_Log_List_Table extends WP_List_Table {
         $total_items = $wpdb->query( $query ); //return the total number of affected rows
 
         //Which page is this?
-        $current_page = !empty( $_GET["paged"] ) ? $wpdb->escape( $_GET["paged"] ) : '';
+        $current_page = !empty( $_GET["paged"] ) ? esc_sql( $_GET["paged"] ) : '';
         //Page Number
         if( empty( $current_page ) || !is_numeric( $current_page ) || $current_page <= 0 ) {
             $current_page = 1; 
