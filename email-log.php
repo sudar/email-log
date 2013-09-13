@@ -122,7 +122,7 @@ class EmailLog {
 
         if ($file == $plugin) // only for this plugin
             return array_merge( $links, 
-            array( '<a href="http://sudarmuthu.com/out/buy-email-log-forward-email-addon" target="_blank">' . __('Buy Addons', 'email-log') . '</a>' )
+            array( '<a href="http://sudarmuthu.com/wordpress/email-log/pro-addons" target="_blank">' . __('Buy Addons', 'email-log') . '</a>' )
         );
         return $links;
     }

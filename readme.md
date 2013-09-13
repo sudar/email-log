@@ -21,7 +21,20 @@ In the admin interface, all the logged emails can be delete in bulk or can also 
 
 ### Forward email (Pro addon)
 
-You can [buy the Forward email pro addon](http://sudarmuthu.com/out/buy-email-log-forward-email-addon), which allows you to send a copy of all the emails send from WordPress, to another email address. The addon allows you to choose whether you want to forward through to, cc or bcc fields. This can be extremely useful when you want to debug by analyzing the emails that are sent from WordPress. The cost of the addon is $15.
+You can [buy the Forward email pro addon](http://sudarmuthu.com/wordpress/email-log/pro-addons#forward-email-addon), which allows you to send a copy of all the emails send from WordPress, to another email address. The addon allows you to choose whether you want to forward through to, cc or bcc fields. This can be extremely useful when you want to debug by analyzing the emails that are sent from WordPress. The cost of the addon is $15 and you can buy it through [paypal](http://sudarmuthu.com/out/buy-email-log-forward-email-addon).
+
+### More Fields (Pro addon)
+
+You can [buy the More Fields pro addon](http://sudarmuthu.com/wordpress/email-log/pro-addons#more-fields-addon), which shows additional fields in the email log page. The following are the additional fields that are added by this addon.
+
+- From
+- CC
+- BCC
+- Reply To
+- Attachment
+
+The cost of the addon is $15 and you can buy it through [paypal](http://sudarmuthu.com/out/buy-email-log-more-fields-addon).
+
 
 ### Cleaning up db on uninstall
 

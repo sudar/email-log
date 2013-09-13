@@ -23,6 +23,51 @@ class Email_Log_List_Table extends WP_List_Table {
             'ajax'      => false        //does this table support ajax?
         ) );
     }
+
+
+	/**
+	 * Add extra markup in the toolbars before or after the list
+	 * @param string $which, helps you decide if you add the markup after (bottom) or before (top) the list
+	 */
+	function extra_tablenav( $which ) {
+		if ( $which == "top" ){
+			//The code that goes before the table is here
+            echo '<span id = "el-pro-msg">';
+            _e('More fields are available in Pro addon. ', 'email-log');
+            echo '<a href = "http://sudarmuthu.com/out/buy-email-log-more-fields-addon" style = "color:red">';
+            _e('Buy Now', 'email-log');
+            echo '</a>';
+            echo '</span>';
+		}
+
+		if ( $which == "bottom" ){
+			//The code that goes after the table is there
+            echo '<p>&nbsp;</p>';
+            echo '<p>&nbsp;</p>';
+
+            echo '<p>';
+            _e('The following are the list of pro addons that are currently available for purchase.', 'email-log');
+            echo '</p>';
+
+            echo '<ul style="list-style:disc; padding-left:35px">';
+
+            echo '<li>';
+            echo '<strong>', __('Email Log - Forward Email', 'email-log'), '</strong>', ' - ';
+            echo __('This addon allows you to send a copy of all emails send from WordPress to another email address', 'email-log');
+            echo ' <a href = "http://sudarmuthu.com/wordpress/email-log/pro-addons#forward-email-addon">', __('More Info', 'email-log'), '</a>.';
+            echo ' <a href = "http://sudarmuthu.com/out/buy-email-log-forward-email-addon">', __('Buy now', 'email-log'), '</a>';
+            echo '</li>';
+
+            echo '<li>';
+            echo '<strong>', __('Email Log - More fields', 'email-log'), '</strong>', ' - ';
+            echo __('Adds more fields (From, CC, BCC, Reply To, Attachment) to the logs page.', 'email-log');
+            echo ' <a href = "http://sudarmuthu.com/wordpress/email-log/pro-addons#more-fields-addon">', __('More Info', 'email-log'), '</a>.';
+            echo ' <a href = "http://sudarmuthu.com/out/buy-email-log-more-fields-addon">', __('Buy now', 'email-log'), '</a>';
+            echo '</li>';
+
+            echo '</ul>';
+		}
+	}
     
     /** ************************************************************************
      * REQUIRED! This method dictates the table's columns and titles. This should
