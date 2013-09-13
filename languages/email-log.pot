@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the Email Log package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Email Log 1.5.1\n"
+"Project-Id-Version: Email Log 1.5.2\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/email-log\n"
-"POT-Creation-Date: 2013-09-09 06:55:00+00:00\n"
+"POT-Creation-Date: 2013-09-13 15:15:13+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,101 +12,145 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: email-log.php:118
+#: email-log.php:125
 msgid "Buy Addons"
 msgstr ""
 
-#. #-#-#-#-#  email-log.pot (Email Log 1.5.1)  #-#-#-#-#
+#. #-#-#-#-#  email-log.pot (Email Log 1.5.2)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
-#: email-log.php:128
+#: email-log.php:135
 msgid "Email Log"
 msgstr ""
 
-#: email-log.php:142
+#: email-log.php:149
 msgid "Email Logs"
 msgstr ""
 
-#: email-log.php:148
+#: email-log.php:155
 msgid "1 email log deleted."
 msgid_plural "%s email logs deleted"
 msgstr[0] ""
 msgstr[1] ""
 
-#: email-log.php:150
+#: email-log.php:157
 msgid "There was some problem in deleting the email logs"
 msgstr ""
 
-#: email-log.php:158
+#: email-log.php:165
 msgid "Search Logs"
 msgstr ""
 
-#: email-log.php:191
+#: email-log.php:198
 msgid "About Plugin"
 msgstr ""
 
-#: email-log.php:193
+#: email-log.php:200
 msgid ""
 "Email Log WordPress Plugin, allows you to log all emails that are sent "
 "through WordPress."
 msgstr ""
 
-#: email-log.php:200
+#: email-log.php:207
 msgid "More information"
 msgstr ""
 
-#: email-log.php:201
+#: email-log.php:208
 msgid "Plugin Homepage/support"
 msgstr ""
 
-#: email-log.php:202
+#: email-log.php:209
 msgid "Plugin author's blog"
 msgstr ""
 
-#: email-log.php:203
+#: email-log.php:210
 msgid "Other Plugin's by Author"
 msgstr ""
 
-#: email-log.php:210
+#: email-log.php:217
 msgid "Entries per page"
 msgstr ""
 
-#: email-log.php:259
+#: email-log.php:266
 msgid "Log"
 msgstr ""
 
-#: email-log.php:269
+#: email-log.php:276
 msgid "plugin"
 msgstr ""
 
-#: email-log.php:269
+#: email-log.php:276
 msgid "Version"
 msgstr ""
 
-#: email-log.php:269
+#: email-log.php:276
 msgid "by"
 msgstr ""
 
-#: include/class-email-log-list-table.php:43
+#: include/class-email-log-list-table.php:36
+msgid "More fields are available in Pro addon. "
+msgstr ""
+
+#: include/class-email-log-list-table.php:38
+msgid "Buy Now"
+msgstr ""
+
+#: include/class-email-log-list-table.php:49
+msgid ""
+"The following are the list of pro addons that are currently available for "
+"purchase."
+msgstr ""
+
+#: include/class-email-log-list-table.php:55
+msgid "Email Log - Forward Email"
+msgstr ""
+
+#: include/class-email-log-list-table.php:56
+msgid ""
+"This addon allows you to send a copy of all emails send from WordPress to "
+"another email address"
+msgstr ""
+
+#: include/class-email-log-list-table.php:57
+#: include/class-email-log-list-table.php:64
+msgid "More Info"
+msgstr ""
+
+#: include/class-email-log-list-table.php:58
+#: include/class-email-log-list-table.php:65
+msgid "Buy now"
+msgstr ""
+
+#: include/class-email-log-list-table.php:62
+msgid "Email Log - More fields"
+msgstr ""
+
+#: include/class-email-log-list-table.php:63
+msgid ""
+"Adds more fields (From, CC, BCC, Reply To, Attachment) to the logs page."
+msgstr ""
+
+#: include/class-email-log-list-table.php:88
 msgid "Sent at"
 msgstr ""
 
-#: include/class-email-log-list-table.php:44
+#: include/class-email-log-list-table.php:89
 msgid "To"
 msgstr ""
 
-#: include/class-email-log-list-table.php:45
+#: include/class-email-log-list-table.php:90
 msgid "Subject"
 msgstr ""
 
-#: include/class-email-log-list-table.php:132
-msgid "%s @ %s"
-msgstr ""
-
-#: include/class-email-log-list-table.php:189
+#: include/class-email-log-list-table.php:171
+#: include/class-email-log-list-table.php:232
 msgid "Delete"
 msgstr ""
 
-#: include/class-email-log-list-table.php:312
+#: include/class-email-log-list-table.php:175
+msgid "%s @ %s"
+msgstr ""
+
+#: include/class-email-log-list-table.php:355
 msgid "Your email log is empty"
 msgstr ""
 
