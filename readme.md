@@ -3,7 +3,7 @@
 **Tags:** email, wpmu, wordpress-mu, log  
 **Requires at least:** 3.3  
 **Tested up to:** 3.6.1  
-**Stable tag:** 1.5.2  
+**Stable tag:** 1.5.3  
 
 Logs every email sent through WordPress. Compatible with WPMU too.
 
@@ -167,9 +167,12 @@ Extract the zip file and drop the contents in the wp-content/plugins/ directory 
 - Fix undfined notice error. Issue #8
 - Update screenshots. Issue #6
 
-### v1.5.2 (2013-09-13) - (Dev time: 0.5 hours) ### 
+### v1.5.2 (2013-09-13) - (Dev time: 0.5 hours) ###
 - Add the ability to override the fields displayed in the log page
 - Add support for "More Fields" addon
+
+### v1.5.3 (2013-09-14) - (Dev time: 0.5 hours) ###
+- Fix issue in bulk deleting logs
 
 ## Upgrade Notice ##
 
@@ -181,6 +184,9 @@ Added support for buying pro addons
 
 ### 1.5 ###
 Rewrote Admin interface using native tables
+
+### 1.5.3 ###
+Fix issue in bulk deleting logs
 
 ## Readme Generator ##
 
