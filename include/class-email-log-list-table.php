@@ -259,9 +259,12 @@ class Email_Log_List_Table extends WP_List_Table {
                     $selected_ids = $ids;
                 }
 
-                $EmailLog->logs_deleted = $wpdb->query( 
-                    $wpdb->prepare( "DELETE FROM $EmailLog->table_name where id IN ( %s )", $selected_ids )
-                );
+                // Can't use wpdb->prepare for the below query. If used it results in this bug
+                // https://github.com/sudar/email-log/issues/13
+
+                $selected_ids = esc_sql( $selected_ids );
+
+                $EmailLog->logs_deleted = $wpdb->query( "DELETE FROM $EmailLog->table_name where id IN ( $selected_ids )" );
             } else {
                 wp_die( 'Cheating, Huh? ');
             }
