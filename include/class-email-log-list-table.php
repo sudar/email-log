@@ -234,14 +234,11 @@ class Email_Log_List_Table extends WP_List_Table {
         return $actions;
     }
     
-    
-    /** ************************************************************************
-     * Optional. You can handle your bulk actions anywhere or anyhow you prefer.
-     * For this example package, we will handle it in the class to keep things
-     * clean and organized.
+    /**
+     * Handle bulk actions
      * 
      * @see $this->prepare_items()
-     **************************************************************************/
+     */
     function process_bulk_action() {
         global $EmailLog;
         global $wpdb;
