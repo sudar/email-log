@@ -268,50 +268,29 @@ class Email_Log_List_Table extends WP_List_Table {
         }
     }
     
-    /** ************************************************************************
-     * REQUIRED! This is where you prepare your data for display. This method will
-     * usually be used to query the database, sort and filter the data, and generally
-     * get it ready to be displayed. At a minimum, we should set $this->items and
-     * $this->set_pagination_args(), although the following properties and methods
-     * are frequently interacted with here...
-     * 
-     * @global WPDB $wpdb
-     * @uses $this->_column_headers
-     * @uses $this->items
-     * @uses $this->get_columns()
-     * @uses $this->get_sortable_columns()
-     * @uses $this->get_pagenum()
-     * @uses $this->set_pagination_args()
-     **************************************************************************/
+    /**
+     * Prepare data for display.
+     */
     function prepare_items( $per_page ) {
         global $wpdb;
         global $EmailLog;
 
         $this->_column_headers = $this->get_column_info();
         
-        /**
-         * Optional. You can handle your bulk actions however you see fit. In this
-         * case, we'll handle them within our package just to keep things clean.
-         */
+        // Handle bulk actions
         $this->process_bulk_action();
         
-        /**
-         * REQUIRED for pagination. Let's figure out what page the user is currently 
-         * looking at. We'll need this later, so you should always include it in 
-         * your own package classes.
-         */
+        // get current page number
         $current_page = $this->get_pagenum();
         
         $query = "SELECT * FROM " . $EmailLog->table_name;
 
         if ( isset( $_GET['s'] ) ) {
             $search_term = trim( esc_sql( $_GET['s'] ) );
-
             $query .= " WHERE to_email LIKE '%$search_term%' OR subject LIKE '%$search_term%' ";
         }
 
-        /* -- Ordering parameters -- */
-	    //Parameters that are going to be used to order the result
+        // Ordering parameters
 	    $orderby = !empty( $_GET["orderby"] ) ? esc_sql( $_GET["orderby"] ) : 'sent_date';
 	    $order = !empty( $_GET["order"] ) ? esc_sql( $_GET["order"] ) : 'DESC';
 
@@ -319,15 +298,8 @@ class Email_Log_List_Table extends WP_List_Table {
             $query .= ' ORDER BY ' . $orderby . ' ' . $order; 
         }
 
-        /* -- Pagination parameters -- */
+        // Pagination parameters
         $total_items = $wpdb->query( $query ); //return the total number of affected rows
-
-        //Which page is this?
-        $current_page = !empty( $_GET["paged"] ) ? esc_sql( $_GET["paged"] ) : '';
-        //Page Number
-        if( empty( $current_page ) || !is_numeric( $current_page ) || $current_page <= 0 ) {
-            $current_page = 1; 
-        }
 
         //adjust the query to take pagination into account
 	    if( !empty( $current_page ) && !empty( $per_page ) ) {
@@ -335,12 +307,10 @@ class Email_Log_List_Table extends WP_List_Table {
             $query .= ' LIMIT ' . (int)$offset . ',' . (int)$per_page;
 	    }
 
-         /* -- Fetch the items -- */
+        // Fetch the items
         $this->items = $wpdb->get_results( $query );
         
-        /**
-         * register our pagination options & calculations.
-         */
+        // register pagination options & calculations.
         $this->set_pagination_args( array(
             'total_items' => $total_items,
             'per_page'    => $per_page,
