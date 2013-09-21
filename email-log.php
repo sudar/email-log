@@ -55,7 +55,7 @@ Domain Path: languages/
                   - Fix issue in bulk deleting logs
 2013-09-21 - v1.5.4 - (Dev time: 0.5 hours)
                   - Fix issue in searching non-english characters
-
+                  - Add addon screenshots
 */
 /*  Copyright 2009  Sudar Muthu  (email : sudar@sudarmuthu.com)
 

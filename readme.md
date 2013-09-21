@@ -104,7 +104,13 @@ Extract the zip file and drop the contents in the wp-content/plugins/ directory 
 
 1. The above screenshot shows how the logged emails will be displayed by the Plugin
 
-2. This screenshot shows how you can configure the email display screen. You can choose the fields and the number of emails per page.
+2. This screenshot shows how you can configure the email display screen. You can choose the fields and the number of emails per page
+
+3. This screenshot shows the additional fields that will be added by the [more fields](http://sudarmuthu.com/wordpress/email-log/pro-addons#more-fields-addon) addon
+
+4. The above screenshot shows how the logged emails will be displayed by the Plugin after you install the [more fields](http://sudarmuthu.com/wordpress/email-log/pro-addons#more-fields-addon) addon
+
+5. This screenshot shows the settings page of [forward email](http://sudarmuthu.com/wordpress/email-log/pro-addons#forward-email-addon) addon
 
 ## Changelog ##
 
