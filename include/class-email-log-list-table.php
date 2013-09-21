@@ -305,7 +305,7 @@ class Email_Log_List_Table extends WP_List_Table {
         $query = "SELECT * FROM " . $EmailLog->table_name;
 
         if ( isset( $_GET['s'] ) ) {
-            $search_term = esc_sql( $_GET['s'] );
+            $search_term = trim( esc_sql( $_GET['s'] ) );
 
             $query .= " WHERE to_email LIKE '%$search_term%' OR subject LIKE '%$search_term%' ";
         }

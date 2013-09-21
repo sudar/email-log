@@ -5,7 +5,7 @@ Plugin URI: http://sudarmuthu.com/wordpress/email-log
 Description: Logs every email sent through WordPress. Compatible with WPMU too.
 Donate Link: http://sudarmuthu.com/if-you-wanna-thank-me
 Author: Sudar
-Version: 1.5.3
+Version: 1.5.4
 Author URI: http://sudarmuthu.com/
 Text Domain: email-log
 Domain Path: languages/
@@ -53,6 +53,9 @@ Domain Path: languages/
                   - Add support for "More Fields" addon
 2013-09-14 - v1.5.3 - (Dev time: 0.5 hours)
                   - Fix issue in bulk deleting logs
+2013-09-21 - v1.5.4 - (Dev time: 0.5 hours)
+                  - Fix issue in searching non-english characters
+
 */
 /*  Copyright 2009  Sudar Muthu  (email : sudar@sudarmuthu.com)
 
