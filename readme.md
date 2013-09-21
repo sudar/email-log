@@ -3,7 +3,7 @@
 **Tags:** email, wpmu, wordpress-mu, log  
 **Requires at least:** 3.3  
 **Tested up to:** 3.6.1  
-**Stable tag:** 1.5.3  
+**Stable tag:** 1.5.4  
 
 Logs every email sent through WordPress. Compatible with WPMU too.
 
@@ -180,6 +180,10 @@ Extract the zip file and drop the contents in the wp-content/plugins/ directory 
 ### v1.5.3 (2013-09-14) - (Dev time: 0.5 hours) ###
 - Fix issue in bulk deleting logs
 
+### v1.5.4  (2013-09-21) - (Dev time: 0.5 hours) ###
+- Fix issue in searching non-english characters
+- Add addon screenshots
+
 ## Upgrade Notice ##
 
 ### 0.9.2 ###
@@ -193,6 +197,9 @@ Rewrote Admin interface using native tables
 
 ### 1.5.3 ###
 Fix issue in bulk deleting logs
+
+### 1.5.4 ###
+Fixed issue in searching for non-english characters
 
 ## Readme Generator ##
 
