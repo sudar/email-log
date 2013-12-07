@@ -184,22 +184,28 @@ Extract the zip file and drop the contents in the wp-content/plugins/ directory 
 - Fix issue in searching non-english characters
 - Add addon screenshots
 
+### v1.6  (2013-12-08) - (Dev time: 0.5 hours) ###
+- New: Add a link to view the content of the email in the log screen
+
 ## Upgrade Notice ##
 
-### 0.9.2 ###
-Added filters for more customizing
+### 1.6 ###
+Ability to view content of the email
 
-### 1.0 ###
-Added support for buying pro addons
-
-### 1.5 ###
-Rewrote Admin interface using native tables
+### 1.5.4 ###
+Fixed issue in searching for non-english characters
 
 ### 1.5.3 ###
 Fix issue in bulk deleting logs
 
-### 1.5.4 ###
-Fixed issue in searching for non-english characters
+### 1.5 ###
+Rewrote Admin interface using native tables
+
+### 1.0 ###
+Added support for buying pro addons
+
+### 0.9.2 ###
+Added filters for more customizing
 
 ## Readme Generator ##
 

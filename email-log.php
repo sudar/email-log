@@ -116,6 +116,12 @@ class EmailLog {
         $plugin = plugin_basename(__FILE__);
         add_filter("plugin_action_links_$plugin", array(&$this, 'add_action_links'));
 
+        //Add our ajax call
+        add_action( 'wp_ajax_display_content', array(&$this, 'display_content_callback'));
+
+        // Add our javascript in the footer
+        add_action( 'admin_footer', array(&$this, 'include_js') );
+
         $this->table_name = $wpdb->prefix . self::TABLE_NAME;
     }
 
@@ -236,6 +242,56 @@ class EmailLog {
         //Prepare Table of elements
         $this->logs_table = new Email_Log_List_Table();
 	}
+
+    /**
+     * Include JavaScript displaying email content
+     *
+     * @since 1.6
+     */
+    function include_js() {
+?>
+        <script type="text/javascript">
+        jQuery(document).ready(function($) {
+
+          $(".email_content").click(function() {
+
+            var w = window.open('', 'newwin', 'width=650,height=500');
+
+            var email_id = $(this).attr('id').replace('email_content_','');
+            data = {
+              action: 'display_content',
+              email_id: email_id
+            };
+
+            $.post(ajaxurl, data, function (response) {
+              $(w.document.body).html(response);
+            }); 
+
+          }); 
+        });
+        </script>
+<?php
+    }
+
+    /**
+     * AJAX callback for displaying email content
+     *
+     * @since 1.6
+     */
+    function display_content_callback() {
+      global $wpdb; 
+      global $EmailLog;
+      $email_id = absint( $_POST['email_id'] );
+
+      // Select the matching item from the database
+      $query = $wpdb->prepare( "SELECT * FROM " . $EmailLog->table_name . " WHERE id = %d", $email_id );
+	  $content = $wpdb->get_results( $query );
+
+      // Write the message content to the screen
+      echo $content[0]->message;
+
+      die(); // this is required to return a proper result
+    }
 
     /**
      * Save Screen option
