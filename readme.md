@@ -2,8 +2,8 @@
 **Contributors:** sudar  
 **Tags:** email, wpmu, wordpress-mu, log  
 **Requires at least:** 3.3  
-**Tested up to:** 3.6.1  
-**Stable tag:** 1.5.4  
+**Tested up to:** 3.7.1  
+**Stable tag:** 1.6  
 
 Logs every email sent through WordPress. Compatible with WPMU too.
 
