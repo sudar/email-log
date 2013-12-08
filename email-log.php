@@ -11,52 +11,9 @@ Text Domain: email-log
 Domain Path: languages/
 
 === RELEASE NOTES ===
-2009-10-08 - v0.1 - Initial Release
-2009-10-15 - v0.2 - Added compatability for MySQL 4
-2009-10-19 - v0.3 - Added compatability for MySQL 4 (Thanks Frank)
-2010-01-02 - v0.4 - Added german translation (Thanks Frank)
-2012-01-01 - v0.5 - Fixed a deprecation notice
-2012-04-29 - v0.6 - (Dev time: 2 hours) 
-                  - Added option to delete individual email logs
-                  - Moved pages per screen option to Screen options panel
-                  - Added information to the screen help tab                   
-                  - Added Lithuanian translations
-2012-06-23 - v0.7 - (Dev time: 1 hour) 
-                  - Changed Timestamp(n) MySQL datatype to Timestamp (now compatible with MySQL 5.5+)
-                  - Added the ability to bulk delete checkboxes
-2012-07-12 - v0.8 - (Dev time: 1 hour) 
-                  - Fixed undefined notices - http://wordpress.org/support/topic/plugin-email-log-notices-undefined-indices
-                  - Added Dutch translations
-2012-07-23 - v0.8.1 - (Dev time: 0.5 hour) 
-                  - Reworded most error messages and fixed lot of typos
-2013-01-08 - v0.9 - (Dev time: 1 hour) 
-                  - Use blog date/time for send date instead of server time
-                  - Handle cases where the headers send is an array
-2013-01-08 - v0.9.1 - (Dev time: 0.5 hour) 
-                  - Moved the menu under tools (Thanks samuelaguilera)
-2013-03-14 - v0.9.2 - (Dev time: 0.5 hour) 
-                  - Added support for filters which can be used while logging emails
-2013-04-01 - v0.9.3 - (Dev time: 0.5 hour) 
-                  - Moved table name into a separate constants file
-2013-04-17 - v1.0 - (Dev time: 0.5 hour) 
-                  - Added support for buying pro addons
-2013-04-27 - v1.1 - (Dev time: 0.5 hour) 
-                  - Added more documentation
-2013-09-09 - v1.5 - (Dev time: 10 hours) 
-                  - Rewrote Admin interface using native tables
-2013-09-09 - v1.5.1 - (Dev time: 0.5 hours) 
-                  - Correct the upgrade file include path. Issue #7
-                  - Fix undfined notice error. Issue #8
-                  - Update screenshots. Issue #6
-2013-09-13 - v1.5.2 - (Dev time: 0.5 hours) 
-                  - Add the ability to override the fields displayed in the log page
-                  - Add support for "More Fields" addon
-2013-09-14 - v1.5.3 - (Dev time: 0.5 hours)
-                  - Fix issue in bulk deleting logs
-2013-09-21 - v1.5.4 - (Dev time: 0.5 hours)
-                  - Fix issue in searching non-english characters
-                  - Add addon screenshots
+Check readme file for full release notes
 */
+
 /*  Copyright 2009  Sudar Muthu  (email : sudar@sudarmuthu.com)
 
     This program is free software; you can redistribute it and/or modify
