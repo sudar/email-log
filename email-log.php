@@ -113,7 +113,6 @@ class EmailLog {
         $this->logs_table->prepare_items( $this->get_per_page() );
 ?>
     <div class="wrap">
-        <?php screen_icon(); ?>
         <h2><?php _e('Email Logs', 'email-log');?></h2>
 <?php
         if ( isset( $this->logs_deleted ) && $this->logs_deleted != '' ) {
