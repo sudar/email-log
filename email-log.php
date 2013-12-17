@@ -2,7 +2,7 @@
 /**
 Plugin Name: Email Log
 Plugin URI: http://sudarmuthu.com/wordpress/email-log
-Description: Logs every email sent through WordPress. Compatible with WPMU too.
+Description: Logs every email sent through WordPress
 Donate Link: http://sudarmuthu.com/if-you-wanna-thank-me
 Author: Sudar
 Version: 1.6

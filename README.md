@@ -5,11 +5,11 @@
 **Tested up to:** 3.7.1  
 **Stable tag:** 1.6  
 
-Logs every email sent through WordPress. Compatible with WPMU too.
+Logs every email sent through WordPress
 
 ## Description ##
 
-Logs every email sent through WordPress. Compatible with WPMU too.
+Logs every email sent through WordPress and provides a UI where you can view them.
 
 ### Viewing logged emails
 
@@ -56,7 +56,6 @@ The following are the features that I am thinking of adding to the Plugin, when 
 
 - Add option to automatically delete the logs periodically
 - Make it MU compatible
-- Add the ability to view the entire email
 - Add the ability to resend the emails
 
 ### Support
@@ -95,10 +94,6 @@ The pot file is available with the Plugin. If you are willing to do translation 
 ### Normal WordPress installations
 
 Extract the zip file and just drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
-
-### WordPress MU installations
-
-Extract the zip file and drop the contents in the wp-content/plugins/ directory or mu-plugins directory of your WordPress MU installation and then activate the Plugin from the main blog's Plugins page.
 
 ## Screenshots ##
 
