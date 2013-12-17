@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the Email Log package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Email Log 1.6\n"
+"Project-Id-Version: Email Log 1.6.1\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/email-log\n"
-"POT-Creation-Date: 2013-12-08 15:03:49+00:00\n"
+"POT-Creation-Date: 2013-12-17 15:04:13+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -16,69 +16,73 @@ msgstr ""
 msgid "Buy Addons"
 msgstr ""
 
+#. #-#-#-#-#  email-log.pot (Email Log 1.6.1)  #-#-#-#-#
+#. Plugin Name of the plugin/theme
 #: email-log.php:103
 msgid "Email Log"
 msgstr ""
 
-#: email-log.php:117
+#: email-log.php:116
 msgid "Email Logs"
 msgstr ""
 
-#: email-log.php:123
+#: email-log.php:122
 msgid "1 email log deleted."
 msgid_plural "%s email logs deleted"
 msgstr[0] ""
 msgstr[1] ""
 
-#: email-log.php:125
+#: email-log.php:124
 msgid "There was some problem in deleting the email logs"
 msgstr ""
 
-#: email-log.php:133
+#: email-log.php:132
 msgid "Search Logs"
 msgstr ""
 
-#: email-log.php:166 tmp_addon/email-log-forward-email.php:152
+#: email-log.php:165 tmp_addon/email-log-forward-email.php:152
 msgid "About Plugin"
 msgstr ""
 
-#: email-log.php:168 tmp_addon/email-log-forward-email.php:154
-msgid "Email Log WordPress Plugin, allows you to log all emails that are sent through WordPress."
+#: email-log.php:167 tmp_addon/email-log-forward-email.php:154
+msgid ""
+"Email Log WordPress Plugin, allows you to log all emails that are sent "
+"through WordPress."
 msgstr ""
 
-#: email-log.php:175 tmp_addon/email-log-forward-email.php:162
+#: email-log.php:174 tmp_addon/email-log-forward-email.php:162
 msgid "More information"
 msgstr ""
 
-#: email-log.php:176 tmp_addon/email-log-forward-email.php:163
+#: email-log.php:175 tmp_addon/email-log-forward-email.php:163
 msgid "Plugin Homepage/support"
 msgstr ""
 
-#: email-log.php:177 tmp_addon/email-log-forward-email.php:164
+#: email-log.php:176 tmp_addon/email-log-forward-email.php:164
 msgid "Plugin author's blog"
 msgstr ""
 
-#: email-log.php:178 tmp_addon/email-log-forward-email.php:165
+#: email-log.php:177 tmp_addon/email-log-forward-email.php:165
 msgid "Other Plugin's by Author"
 msgstr ""
 
-#: email-log.php:185
+#: email-log.php:184
 msgid "Entries per page"
 msgstr ""
 
-#: email-log.php:284
+#: email-log.php:288
 msgid "Log"
 msgstr ""
 
-#: email-log.php:294
+#: email-log.php:298
 msgid "plugin"
 msgstr ""
 
-#: email-log.php:294
+#: email-log.php:298
 msgid "Version"
 msgstr ""
 
-#: email-log.php:294
+#: email-log.php:298
 msgid "by"
 msgstr ""
 
@@ -91,7 +95,9 @@ msgid "Buy Now"
 msgstr ""
 
 #: include/class-email-log-list-table.php:49
-msgid "The following are the list of pro addons that are currently available for purchase."
+msgid ""
+"The following are the list of pro addons that are currently available for "
+"purchase."
 msgstr ""
 
 #: include/class-email-log-list-table.php:55
@@ -99,7 +105,9 @@ msgid "Email Log - Forward Email"
 msgstr ""
 
 #: include/class-email-log-list-table.php:56
-msgid "This addon allows you to send a copy of all emails send from WordPress to another email address"
+msgid ""
+"This addon allows you to send a copy of all emails send from WordPress to "
+"another email address"
 msgstr ""
 
 #: include/class-email-log-list-table.php:57
@@ -117,7 +125,8 @@ msgid "Email Log - More fields"
 msgstr ""
 
 #: include/class-email-log-list-table.php:63
-msgid "Adds more fields (From, CC, BCC, Reply To, Attachment) to the logs page."
+msgid ""
+"Adds more fields (From, CC, BCC, Reply To, Attachment) to the logs page."
 msgstr ""
 
 #: include/class-email-log-list-table.php:88
@@ -146,7 +155,7 @@ msgstr ""
 msgid "View Content"
 msgstr ""
 
-#: include/class-email-log-list-table.php:327
+#: include/class-email-log-list-table.php:328
 msgid "Your email log is empty"
 msgstr ""
 
@@ -190,16 +199,13 @@ msgstr ""
 #: tmp_addon/email-log-more-fields.php:84
 msgid "Attachment"
 msgstr ""
-#. Plugin Name of the plugin/theme
-msgid "Email Log"
-msgstr ""
 
 #. Plugin URI of the plugin/theme
 msgid "http://sudarmuthu.com/wordpress/email-log"
 msgstr ""
 
 #. Description of the plugin/theme
-msgid "Logs every email sent through WordPress. Compatible with WPMU too."
+msgid "Logs every email sent through WordPress"
 msgstr ""
 
 #. Author of the plugin/theme
