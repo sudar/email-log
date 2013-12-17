@@ -259,8 +259,13 @@ class EmailLog {
 
     /**
      * Get the per page option
+     * 
+     * @static
+     * @access public
+     * @return int $per_page Number of logs a user wanted to be displayed in a page
+     *
      */
-    private function get_per_page() {
+    public static function get_per_page() {
         $screen = get_current_screen();
         $option = $screen->get_option('per_page', 'option');
         

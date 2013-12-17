@@ -273,7 +273,7 @@ class Email_Log_List_Table extends WP_List_Table {
     /**
      * Prepare data for display.
      */
-    function prepare_items( $per_page ) {
+    function prepare_items() {
         global $wpdb;
         global $EmailLog;
 
@@ -304,6 +304,7 @@ class Email_Log_List_Table extends WP_List_Table {
         $total_items = $wpdb->query( $query ); //return the total number of affected rows
 
         //adjust the query to take pagination into account
+        $per_page = EmailLog::get_per_page();
 	    if( !empty( $current_page ) && !empty( $per_page ) ) {
 		    $offset = ($current_page-1) * $per_page;
             $query .= ' LIMIT ' . (int)$offset . ',' . (int)$per_page;

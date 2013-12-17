@@ -1,5 +1,8 @@
 ## Changelog ##
 
+### v1.7  (2013-12-17) - (Dev time: 0.5 hours) ###
+- Fix: Change `prepare_items` function so that it adheres to strict mode
+
 ### v1.6  (2013-12-08) - (Dev time: 0.5 hours) ###
 - New: Add a link to view the content of the email in the log screen
 
