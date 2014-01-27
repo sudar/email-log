@@ -1,5 +1,8 @@
 ## Changelog ##
 
+### v1.6.2  (2014-01-27) - (Dev time: 0.5 hours) ###
+- Fix: Fix unexpected output while activating the plugin
+
 ### v1.6.1  (2013-12-17) - (Dev time: 0.5 hours) ###
 - Fix: Change `prepare_items` function so that it adheres to strict mode
 - Fix: Remove `screen_icon` function call which is not used in WordPress 3.8
