@@ -1,11 +1,11 @@
-﻿# Email Log #
+# Email Log #
 **Contributors:** sudar  
 **Tags:** email, wpmu, wordpress-mu, log  
 **Requires at least:** 3.3  
 **Tested up to:** 3.8.1  
 **Stable tag:** 1.6.2  
 
-Logs every email sent through WordPress
+Logs every email sent through WordPress. Works with WordPress Multisite as well
 
 ## Description ##
 
@@ -55,8 +55,8 @@ If you are looking for ideas, then you can start with one of the following TODO 
 The following are the features that I am thinking of adding to the Plugin, when I get some free time. If you have any feature request or want to increase the priority of a particular feature, then let me know.
 
 - Add option to automatically delete the logs periodically
-- Make it MU compatible
 - Add the ability to resend the emails
+- <strike>Make it MU compatible</strike>. Done in v1.7
 
 ### Support
 

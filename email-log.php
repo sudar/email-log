@@ -30,6 +30,9 @@ Check readme file for full release notes
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+// handle installation and table creation
+require_once dirname( __FILE__ ) . '/include/install.php';
+
 /**
  * The main Plugin class
  */
@@ -55,9 +58,6 @@ class EmailLog {
      * Initalize the plugin by registering the hooks
      */
     function __construct() {
-
-        global $wpdb;
-
         // Load localization domain
         $this->translations = dirname(plugin_basename(__FILE__)) . '/languages/' ;
         load_plugin_textdomain( 'email-log', false, $this->translations);
@@ -78,8 +78,6 @@ class EmailLog {
 
         // Add our javascript in the footer
         add_action( 'admin_footer', array(&$this, 'include_js') );
-
-        $this->table_name = $wpdb->prefix . self::TABLE_NAME;
     }
 
     /**
@@ -205,6 +203,7 @@ class EmailLog {
      * @since 1.6
      */
     function include_js() {
+        // TODO: Move this to a separate js file
 ?>
         <script type="text/javascript">
         jQuery(document).ready(function($) {
@@ -235,12 +234,13 @@ class EmailLog {
      */
     function display_content_callback() {
       global $wpdb;
-      global $EmailLog;
-      $email_id = absint( $_POST['email_id'] );
+
+      $table_name = $wpdb->prefix . self::TABLE_NAME;
+      $email_id   = absint( $_POST['email_id'] );
 
       // Select the matching item from the database
-      $query = $wpdb->prepare( "SELECT * FROM " . $EmailLog->table_name . " WHERE id = %d", $email_id );
-	  $content = $wpdb->get_results( $query );
+      $query      = $wpdb->prepare( "SELECT * FROM " . $table_name . " WHERE id = %d", $email_id );
+	  $content    = $wpdb->get_results( $query );
 
       // Write the message content to the screen
       echo $content[0]->message;
@@ -311,10 +311,11 @@ class EmailLog {
         $attachment_present = (count ($mail_info['attachments']) > 0) ? "true" : "false";
 
         // return filtered array
-        $mail_info = apply_filters(self::FILTER_NAME, $mail_info);
+        $mail_info  = apply_filters(self::FILTER_NAME, $mail_info);
+        $table_name = $wpdb->prefix . self::TABLE_NAME;
 
         // Log into the database
-        $wpdb->insert($this->table_name, array(
+        $wpdb->insert( $table_name, array(
                 'to_email'    => is_array($mail_info['to']) ? $mail_info['to'][0] : $mail_info['to'],
                 'subject'     => $mail_info['subject'],
                 'message'     => $mail_info['message'],
@@ -327,58 +328,19 @@ class EmailLog {
     }
 
     /**
-    * Check whether a key is present. If present returns the value, else returns the default value
-    *
-    * @param <array> $array - Array whose key has to be checked
-    * @param <string> $key - key that has to be checked
-    * @param <string> $default - the default value that has to be used, if the key is not found (optional)
-    *
-    * @return <mixed> If present returns the value, else returns the default value
-    * @author Sudar
-    */
+     * Check whether a key is present. If present returns the value, else returns the default value
+     *
+     * @param <array> $array - Array whose key has to be checked
+     * @param <string> $key - key that has to be checked
+     * @param <string> $default - the default value that has to be used, if the key is not found (optional)
+     *
+     * @return <mixed> If present returns the value, else returns the default value
+     * @author Sudar
+     */
     private function array_get($array, $key, $default = NULL) {
         return isset($array[$key]) ? $array[$key] : $default;
     }
 }
-
-/**
- * Helper class to create and maintain tables
- */
-class EmailLogInit {
-
-    /**
-     * Create database table when the Plugin is installed for the first time
-     *
-     * @global object $wpdb
-     * @global string $smel_table_name Table Name
-     */
-    public static function on_activate() {
-        global $wpdb;
-        $table_name = $wpdb->prefix . EmailLog::TABLE_NAME;
-
-        if($wpdb->get_var("show tables like '{$table_name}'") != $table_name) {
-
-            $sql = "CREATE TABLE " . $table_name . " (
-                id mediumint(9) NOT NULL AUTO_INCREMENT,
-                to_email VARCHAR(100) NOT NULL,
-                subject VARCHAR(250) NOT NULL,
-                message TEXT NOT NULL,
-                headers TEXT NOT NULL,
-                attachments TEXT NOT NULL,
-                sent_date timestamp NOT NULL,
-                PRIMARY KEY  (id)
-            );";
-
-            require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-            dbDelta($sql);
-
-            add_option(EmailLog::DB_OPTION_NAME, EmailLog::DB_VERSION);
-        }
-    }
-}
-
-// When the Plugin installed
-register_activation_hook(__FILE__, array('EmailLogInit', 'on_activate'));
 
 // Start this plugin once all other plugins are fully loaded
 add_action( 'init', 'EmailLog' ); function EmailLog() { global $EmailLog; $EmailLog = new EmailLog(); }

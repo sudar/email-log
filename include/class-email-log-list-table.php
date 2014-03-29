@@ -241,8 +241,8 @@ class Email_Log_List_Table extends WP_List_Table {
      * @see $this->prepare_items()
      */
     function process_bulk_action() {
-        global $EmailLog;
         global $wpdb;
+        global $EmailLog;
 
         //Detect when a bulk action is being triggered...
         if( 'delete' === $this->current_action() ) {
@@ -262,7 +262,8 @@ class Email_Log_List_Table extends WP_List_Table {
 
                 $selected_ids = esc_sql( $selected_ids );
 
-                $EmailLog->logs_deleted = $wpdb->query( "DELETE FROM $EmailLog->table_name where id IN ( $selected_ids )" );
+                $table_name = $wpdb->prefix . EmailLog::TABLE_NAME;
+                $EmailLog->logs_deleted = $wpdb->query( "DELETE FROM $table_name where id IN ( $selected_ids )" );
             } else {
                 wp_die( 'Cheating, Huh? ');
             }
@@ -274,8 +275,8 @@ class Email_Log_List_Table extends WP_List_Table {
      */
     function prepare_items() {
         global $wpdb;
-        global $EmailLog;
 
+        $table_name = $wpdb->prefix . EmailLog::TABLE_NAME;
         $this->_column_headers = $this->get_column_info();
 
         // Handle bulk actions
@@ -284,7 +285,7 @@ class Email_Log_List_Table extends WP_List_Table {
         // get current page number
         $current_page = $this->get_pagenum();
 
-        $query = "SELECT * FROM " . $EmailLog->table_name;
+        $query = "SELECT * FROM " . $table_name;
 
         if ( isset( $_GET['s'] ) ) {
             $search_term = trim( esc_sql( $_GET['s'] ) );
@@ -293,7 +294,7 @@ class Email_Log_List_Table extends WP_List_Table {
 
         // Ordering parameters
 	    $orderby = !empty( $_GET["orderby"] ) ? esc_sql( $_GET["orderby"] ) : 'sent_date';
-	    $order = !empty( $_GET["order"] ) ? esc_sql( $_GET["order"] ) : 'DESC';
+	    $order   = !empty( $_GET["order"] ) ? esc_sql( $_GET["order"] ) : 'DESC';
 
         if(!empty($orderby) & !empty($order)) {
             $query .= ' ORDER BY ' . $orderby . ' ' . $order;
