@@ -1,5 +1,8 @@
 ## Changelog ##
 
+### v1.7  (2014-03-29) - (Dev time: 1.5 hours) ###
+- Fix: Fix whitespace
+
 ### v1.6.2  (2014-01-27) - (Dev time: 0.5 hours) ###
 - Fix: Fix unexpected output while activating the plugin
 
@@ -63,7 +66,7 @@
 ### v0.6 (2012-04-29) (Dev time: 2 hours) ###
 - Added option to delete individual email logs
 - Moved pages per screen option to Screen options panel
-- Added information to the screen help tab                   
+- Added information to the screen help tab
 - Added Lithuanian translations
 
 ### v0.5 (2012-01-01) ###

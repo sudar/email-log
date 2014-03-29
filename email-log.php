@@ -68,7 +68,7 @@ class EmailLog {
         // Register Filter
         add_filter('wp_mail', array(&$this, 'log_email'));
         add_filter('set-screen-option', array(&$this, 'save_screen_options'), 10, 3);
-        add_filter( 'plugin_row_meta', array( &$this, 'add_plugin_links' ), 10, 2 );  
+        add_filter( 'plugin_row_meta', array( &$this, 'add_plugin_links' ), 10, 2 );
 
         $plugin = plugin_basename(__FILE__);
         add_filter("plugin_action_links_$plugin", array(&$this, 'add_action_links'));
@@ -89,7 +89,7 @@ class EmailLog {
         $plugin = plugin_basename(__FILE__);
 
         if ($file == $plugin) // only for this plugin
-            return array_merge( $links, 
+            return array_merge( $links,
             array( '<a href="http://sudarmuthu.com/wordpress/email-log/pro-addons" target="_blank">' . __('Buy Addons', 'email-log') . '</a>' )
         );
         return $links;
@@ -123,7 +123,7 @@ class EmailLog {
             } else {
                 echo "<div class = 'updated'><p>" . __( 'There was some problem in deleting the email logs' , 'email-log') . "</p></div>";
             }
-            unset($this->logs_deleted); 
+            unset($this->logs_deleted);
         }
 ?>
         <form id="email-logs-search" method="get">
@@ -135,7 +135,7 @@ class EmailLog {
 
         <form id="email-logs-filter" method="get">
             <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
-<?php        
+<?php
             wp_nonce_field( self::DELETE_LOG_ACTION, self::DELETE_LOG_NONCE_FIELD );
             $this->logs_table->display();
 ?>
@@ -148,15 +148,15 @@ class EmailLog {
 
     /**
      * Add settings Panel
-     */ 
+     */
 	function create_settings_panel() {
- 
-		/** 
+
+		/**
 		 * Create the WP_Screen object against your admin page handle
 		 * This ensures we're working with the right admin page
 		 */
 		$this->admin_screen = WP_Screen::get($this->admin_page);
- 
+
 		/**
 		 * Content specified inline
 		 */
@@ -168,7 +168,7 @@ class EmailLog {
 				'callback' => false
 			)
 		);
- 
+
         // Add help sidebar
 		$this->admin_screen->set_help_sidebar(
             '<p><strong>' . __('More information', 'email-log') . '</strong></p>' .
@@ -176,15 +176,15 @@ class EmailLog {
             '<p><a href = "http://sudarmuthu.com/blog">' . __("Plugin author's blog", 'email-log') . '</a></p>' .
             '<p><a href = "http://sudarmuthu.com/wordpress/">' . __("Other Plugin's by Author", 'email-log') . '</a></p>'
         );
- 
+
         // Add screen options
-		$this->admin_screen->add_option( 
-			'per_page', 
+		$this->admin_screen->add_option(
+			'per_page',
 			array(
-				'label' => __('Entries per page', 'email-log'), 
-				'default' => 20, 
+				'label' => __('Entries per page', 'email-log'),
+				'default' => 20,
 				'option' => 'per_page'
-			) 
+			)
 		);
 
         if(!class_exists('WP_List_Table')){
@@ -221,9 +221,8 @@ class EmailLog {
 
             $.post(ajaxurl, data, function (response) {
               $(w.document.body).html(response);
-            }); 
-
-          }); 
+            });
+          });
         });
         </script>
 <?php
@@ -235,7 +234,7 @@ class EmailLog {
      * @since 1.6
      */
     function display_content_callback() {
-      global $wpdb; 
+      global $wpdb;
       global $EmailLog;
       $email_id = absint( $_POST['email_id'] );
 
@@ -258,7 +257,7 @@ class EmailLog {
 
     /**
      * Get the per page option
-     * 
+     *
      * @static
      * @access public
      * @return int $per_page Number of logs a user wanted to be displayed in a page
@@ -267,16 +266,16 @@ class EmailLog {
     public static function get_per_page() {
         $screen = get_current_screen();
         $option = $screen->get_option('per_page', 'option');
-        
+
         $per_page = get_user_meta(get_current_user_id(), $option, TRUE);
-        
+
         if ( empty ( $per_page) || $per_page < 1 ) {
             $per_page = $screen->get_option( 'per_page', 'default' );
         }
 
         return $per_page;
     }
-        
+
     /**
      * hook to add action links
      *
