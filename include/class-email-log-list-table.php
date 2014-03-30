@@ -214,23 +214,15 @@ class Email_Log_List_Table extends WP_List_Table {
         );
     }
 
-    /** ************************************************************************
-     * Optional. If you need to include bulk actions in your list table, this is
-     * the place to define them. Bulk actions are an associative array in the format
-     * 'slug'=>'Visible Title'
-     *
-     * If this method returns an empty value, no bulk action will be rendered. If
-     * you specify any bulk actions, the bulk actions box will be rendered with
-     * the table automatically on display().
-     *
-     * Also note that list tables are not automatically wrapped in <form> elements,
-     * so you will need to create those manually in order for bulk actions to function.
+    /**
+     * Specify the list of bulk actions
      *
      * @return array An associative array containing all the bulk actions: 'slugs'=>'Visible Titles'
-     **************************************************************************/
+     */
     function get_bulk_actions() {
         $actions = array(
-            'delete'    => __('Delete', 'email-log')
+            'delete'     => __( 'Delete', 'email-log' ),
+            'delete-all' => __( 'Delete All Logs', 'email-log' )
         );
         return $actions;
     }
@@ -244,8 +236,9 @@ class Email_Log_List_Table extends WP_List_Table {
         global $wpdb;
         global $EmailLog;
 
-        //Detect when a bulk action is being triggered...
         if( 'delete' === $this->current_action() ) {
+            // delete a list of logs by id
+
             $nouce = $_REQUEST[EmailLog::DELETE_LOG_NONCE_FIELD ];
             if ( wp_verify_nonce( $nouce, EmailLog::DELETE_LOG_ACTION ) ) {
 
@@ -264,6 +257,16 @@ class Email_Log_List_Table extends WP_List_Table {
 
                 $table_name = $wpdb->prefix . EmailLog::TABLE_NAME;
                 $EmailLog->logs_deleted = $wpdb->query( "DELETE FROM $table_name where id IN ( $selected_ids )" );
+            } else {
+                wp_die( 'Cheating, Huh? ');
+            }
+        } else if( 'delete-all' === $this->current_action() ) {
+            // delete all logs
+
+            $nouce = $_REQUEST[EmailLog::DELETE_LOG_NONCE_FIELD ];
+            if ( wp_verify_nonce( $nouce, EmailLog::DELETE_LOG_ACTION ) ) {
+                $table_name = $wpdb->prefix . EmailLog::TABLE_NAME;
+                $EmailLog->logs_deleted = $wpdb->query( "DELETE FROM $table_name" );
             } else {
                 wp_die( 'Cheating, Huh? ');
             }

@@ -1,8 +1,9 @@
 ## Changelog ##
 
-### v1.7  (2014-03-29) - (Dev time: 1.5 hours) ###
+### v1.7  (2014-03-29) - (Dev time: 2.5 hours) ###
 - Fix: Fix whitespace
 - New: Add support for WordPress Multisite (issue #18)
+- New: Add ability to delete all logs at once (issue #19)
 
 ### v1.6.2  (2014-01-27) - (Dev time: 0.5 hours) ###
 - Fix: Fix unexpected output while activating the plugin
