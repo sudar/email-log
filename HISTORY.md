@@ -1,5 +1,8 @@
 ## Changelog ##
 
+### v1.7.1  (2014-04-02) - (Dev time: 0.5 hours) ###
+- Fix: Fix the issue that was preventing the tables to be created
+
 ### v1.7  (2014-03-29) - (Dev time: 2.5 hours) ###
 - Fix: Fix whitespace
 - New: Add support for WordPress Multisite (issue #18)
@@ -87,6 +90,9 @@
 - Initial Release
 
 ## Upgrade Notice ##
+
+### 1.7.1 ###
+Fix the bug that was introduced in v1.7
 
 ### 1.6 ###
 Ability to view content of the email

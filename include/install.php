@@ -27,7 +27,7 @@ class Email_Log_Init {
      *
      * @global object $wpdb
      */
-    public static function activate( $network_wide ) {
+    public static function on_activate( $network_wide ) {
         global $wpdb;
 
         if ( is_multisite() && $network_wide ) {
@@ -67,13 +67,13 @@ class Email_Log_Init {
     /**
      * Delete email log table when a blog is deleted
      *
-     * @since 1.7
+     * @since  1.7
      * @static
      * @access public
      *
      * @global object $wpdb
-     * @param $tables - List of tables to be deleted
-     * @return $tables - List of tables to be deleted with the plugin's table name
+     * @param  array  $tables List of tables to be deleted
+     * @return array  $tables Modified list of tables to be deleted
      */
     public static function on_delete_blog( $tables ) {
         global $wpdb;
@@ -84,7 +84,7 @@ class Email_Log_Init {
     /**
      * Create email log table
      *
-     * @since 1.7
+     * @since  1.7
      * @static
      * @access private
      *
