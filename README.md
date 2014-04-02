@@ -3,7 +3,7 @@
 **Tags:** email, wpmu, wordpress-mu, log  
 **Requires at least:** 3.3  
 **Tested up to:** 3.8.1  
-**Stable tag:** 1.7  
+**Stable tag:** 1.7.1  
 
 Logs every email sent through WordPress. Works with WordPress Multisite as well
 
