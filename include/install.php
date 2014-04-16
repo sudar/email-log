@@ -116,7 +116,7 @@ class Email_Log_Init {
 }
 
 // When the Plugin installed
-register_activation_hook( __FILE__, array( 'Email_Log_Init', 'on_activate' ) );
+register_activation_hook( EMAIL_LOG_PLUGIN_FILE, array( 'Email_Log_Init', 'on_activate' ) );
 
 // when a new blog is created in multisite
 add_action( 'wpmu_new_blog', array( 'Email_Log_Init', 'on_create_blog' ), 10, 6 );

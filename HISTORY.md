@@ -1,5 +1,8 @@
 ## Changelog ##
 
+### v1.7.2  (2014-04-16) - (Dev time: 0.5 hours) ###
+- Fix: Fix issue in register_activation_hook
+
 ### v1.7.1  (2014-04-02) - (Dev time: 0.5 hours) ###
 - Fix: Fix the issue that was preventing the tables to be created
 
@@ -90,6 +93,9 @@
 - Initial Release
 
 ## Upgrade Notice ##
+
+### 1.7.2 ###
+Fix the bug that was introduced in v1.7
 
 ### 1.7.1 ###
 Fix the bug that was introduced in v1.7

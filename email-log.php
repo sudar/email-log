@@ -30,6 +30,15 @@ Check readme file for full release notes
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+/**
+ * Plugin Root File
+ *
+ * @since 1.7.2
+ */
+if ( ! defined( 'EMAIL_LOG_PLUGIN_FILE' ) ) {
+    define( 'EMAIL_LOG_PLUGIN_FILE', __FILE__ );
+}
+
 // handle installation and table creation
 require_once dirname( __FILE__ ) . '/include/install.php';
 
