@@ -1,9 +1,9 @@
 # Email Log #
 **Contributors:** sudar  
-**Tags:** email, wpmu, wordpress-mu, log  
+**Tags:** email, log, multisite  
 **Requires at least:** 3.3  
-**Tested up to:** 3.8.3  
-**Stable tag:** 1.7.2  
+**Tested up to:** 3.9.1  
+**Stable tag:** 1.7.3  
 
 Logs every email sent through WordPress. Works with WordPress Multisite as well
 
