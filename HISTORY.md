@@ -1,5 +1,8 @@
 ## Changelog ##
 
+### v1.7.3  (2014-05-14) - (Dev time: 0.5 hours) ###
+- Fix: Fixed a compatibility issue with wpmandrill plugin (issue #20)
+
 ### v1.7.2  (2014-04-16) - (Dev time: 0.5 hours) ###
 - Fix: Fix issue in register_activation_hook
 

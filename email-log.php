@@ -307,14 +307,13 @@ class EmailLog {
     }
 
     /**
-     * Log all email to database
+     * Log email to database
      *
      * @global object $wpdb
-     * @param array $mail_info Information about email
-     * @return array Information about email
+     * @param  array  $mail_info Information about email
+     * @return array             Information about email
      */
     function log_email($mail_info) {
-
         global $wpdb;
 
         $attachment_present = (count ($mail_info['attachments']) > 0) ? "true" : "false";
@@ -323,11 +322,23 @@ class EmailLog {
         $mail_info  = apply_filters(self::FILTER_NAME, $mail_info);
         $table_name = $wpdb->prefix . self::TABLE_NAME;
 
+        if ( isset( $mail_info['message'] ) ) {
+            $message = $mail_info['message'];
+        } else {
+            // wpmandrill plugin is changing "message" key to "html". See https://github.com/sudar/email-log/issues/20
+            // Ideally this should be fixed in wpmandrill, but I am including this hack here till it is fixed by them.
+            if ( isset( $mail_info['html'] ) ) {
+                $message = $mail_info['html'];
+            } else {
+                $message = '';
+            }
+        }
+
         // Log into the database
         $wpdb->insert( $table_name, array(
                 'to_email'    => is_array($mail_info['to']) ? $mail_info['to'][0] : $mail_info['to'],
                 'subject'     => $mail_info['subject'],
-                'message'     => $mail_info['message'],
+                'message'     => $message,
                 'headers'     => is_array($mail_info['headers']) ? implode("\n", $mail_info['headers']) : $mail_info['headers'],
                 'attachments' => $attachment_present,
                 'sent_date'   => current_time('mysql')

@@ -95,6 +95,12 @@ The pot file is available with the Plugin. If you are willing to do translation 
 
 Extract the zip file and just drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
+## Frequently Asked Questions ##
+
+### The content of the email is not getting logged when I am using wpmandrill plugin
+
+wpmandrill plugin has a bug that prevents this plugin from logging the content of the email. More details about the bug is available at http://wordpress.org/support/topic/mandrill-is-changing-the-names-of-args-in-the-filter?replies=1. I have asked the author of the plugin to fix it and it might get fixed it the next release. Meanwhile, I have added a hack to handle this condition in v1.7.3 of my plugin. So if the content is not getting logged, then upgrade to v1.7.3.
+
 ## Screenshots ##
 
 ![](screenshot-1.png)
