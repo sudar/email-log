@@ -5,7 +5,7 @@
  * Based on Custom List Table Example by Matt Van Andel
  *
  * @package Email Log
- * @author Sudar
+ * @author  Sudar
  */
 class Email_Log_List_Table extends WP_List_Table {
 
@@ -20,13 +20,13 @@ class Email_Log_List_Table extends WP_List_Table {
         parent::__construct( array(
             'singular'  => 'email-log',     //singular name of the listed records
             'plural'    => 'email-logs',    //plural name of the listed records
-            'ajax'      => false        //does this table support ajax?
+            'ajax'      => false            //does this table support ajax?
         ) );
     }
 
-
 	/**
 	 * Add extra markup in the toolbars before or after the list
+     *
 	 * @param string $which, helps you decide if you add the markup after (bottom) or before (top) the list
 	 */
 	function extra_tablenav( $which ) {
@@ -69,19 +69,12 @@ class Email_Log_List_Table extends WP_List_Table {
 		}
 	}
 
-    /** ************************************************************************
-     * REQUIRED! This method dictates the table's columns and titles. This should
-     * return an array where the key is the column slug (and class) and the value
-     * is the column's title text. If you need a checkbox for bulk actions, refer
-     * to the $columns array below.
-     *
-     * The 'cb' column is treated differently than the rest. If including a checkbox
-     * column in your table you must create a column_cb() method. If you don't need
-     * bulk actions or checkboxes, simply leave the 'cb' entry out of your array.
+    /**
+     * Return the list of column and title names
      *
      * @see WP_List_Table::::single_row_columns()
      * @return array An associative array containing column information: 'slugs'=>'Visible Titles'
-     **************************************************************************/
+     */
     function get_columns(){
         $columns = array(
             'cb'        => '<input type="checkbox" />', //Render a checkbox instead of text
@@ -93,20 +86,11 @@ class Email_Log_List_Table extends WP_List_Table {
         return apply_filters( EmailLog::HOOK_LOG_COLUMNS, $columns );
     }
 
-    /** ************************************************************************
-     * Optional. If you want one or more columns to be sortable (ASC/DESC toggle),
-     * you will need to register it here. This should return an array where the
-     * key is the column that needs to be sortable, and the value is db column to
-     * sort by. Often, the key and value will be the same, but this is not always
-     * the case (as the value is a column name from the database, not the list table).
-     *
-     * This method merely defines which columns should be sortable and makes them
-     * clickable - it does not handle the actual sorting. You still need to detect
-     * the ORDERBY and ORDER querystring variables within prepare_items() and sort
-     * your data accordingly (usually by modifying your query).
+    /**
+     * Return the list of columns
      *
      * @return array An associative array containing all the columns that should be sortable: 'slugs'=>array('data_values',bool)
-     **************************************************************************/
+     */
     function get_sortable_columns() {
         $sortable_columns = array(
             'sent_date'   => array('sent_date',TRUE),     //true means it's already sorted
@@ -116,47 +100,16 @@ class Email_Log_List_Table extends WP_List_Table {
         return $sortable_columns;
     }
 
-    /** ************************************************************************
-     * Recommended. This method is called when the parent class can't find a method
-     * specifically build for a given column. Generally, it's recommended to include
-     * one method for each column you want to render, keeping your package class
-     * neat and organized. For example, if the class needs to process a column
-     * named 'title', it would first see if a method named $this->column_title()
-     * exists - if it does, that method will be used. If it doesn't, this one will
-     * be used. Generally, you should try to use custom column methods as much as
-     * possible.
-     *
-     * Since we have defined a column_title() method later on, this method doesn't
-     * need to concern itself with any column with a name of 'title'. Instead, it
-     * needs to handle everything else.
-     *
-     * For more detailed insight into how columns are handled, take a look at
-     * WP_List_Table::single_row_columns()
-     *
-     * @param array $item A singular item (one full row's worth of data)
-     * @param array $column_name The name/slug of the column to be processed
-     * @return string Text or HTML to be placed inside the column <td>
-     **************************************************************************/
+    /**
+     * Return values for default columns
+     */
     function column_default( $item, $column_name ){
         do_action( EmailLog::HOOK_LOG_DISPLAY_COLUMNS, $column_name, $item );
     }
 
-    /** ************************************************************************
-     * Recommended. This is a custom column method and is responsible for what
-     * is rendered in any column with a name/slug of 'title'. Every time the class
-     * needs to render a column, it first looks for a method named
-     * column_{$column_title} - if it exists, that method is run. If it doesn't
-     * exist, column_default() is called instead.
-     *
-     * This example also illustrates how to implement rollover actions. Actions
-     * should be an associative array formatted as 'slug'=>'link html' - and you
-     * will need to generate the URLs yourself. You could even ensure the links
-     *
-     *
-     * @see WP_List_Table::::single_row_columns()
-     * @param array $item A singular item (one full row's worth of data)
-     * @return string Text to be placed inside the column <td>
-     **************************************************************************/
+    /**
+     * Display sent date column
+     */
     function column_sent_date($item){
 
         //Build row actions
@@ -200,15 +153,9 @@ class Email_Log_List_Table extends WP_List_Table {
         return stripslashes( $item->subject );
     }
 
-    /** ************************************************************************
-     * REQUIRED if displaying checkboxes or using bulk actions! The 'cb' column
-     * is given special treatment when columns are processed. It ALWAYS needs to
-     * have it's own method.
-     *
-     * @see WP_List_Table::::single_row_columns()
-     * @param array $item A singular item (one full row's worth of data)
-     * @return string Text to be placed inside the column <td> (movie title only)
-     **************************************************************************/
+    /**
+     * Markup for action column
+     */
     function column_cb($item){
         return sprintf(
             '<input type="checkbox" name="%1$s[]" value="%2$s" />',
