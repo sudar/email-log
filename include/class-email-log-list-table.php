@@ -172,7 +172,10 @@ class Email_Log_List_Table extends WP_List_Table {
                         ),
         );
 
-        $email_date = mysql2date(sprintf(__('%s @ %s', 'email-log'), get_option('date_format'), get_option('time_format')), $item->sent_date);
+        $email_date = mysql2date(
+            sprintf( __( '%s @ %s', 'email-log' ), get_option( 'date_format', 'F j, Y' ), get_option( 'time_format', 'g:i A' ) ),
+            $item->sent_date
+        );
 
         return sprintf('%1$s <span style="color:silver">[<a href="#" class="email_content" id="email_content_%2$s">%3$s</a>] (id:%4$s)</span>%5$s',
             /*$1%s*/ $email_date,
