@@ -1,5 +1,8 @@
 ## Changelog ##
 
+### v1.7.5  (2014-09-23) - (Dev time: 0.5 hours) ###
+- Fix: Fix a bug in the save user options function (issue #27)
+
 ### v1.7.4  (2014-07-24) - (Dev time: 0.5 hours) ###
 - Fix: Handle cases where `date_format` or `time_format` are empty (issue #23)
 - Tweak: Remove excessive comments from include/class-email-log-list-table.php (issue #10)

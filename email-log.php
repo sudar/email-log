@@ -258,10 +258,14 @@ class EmailLog {
     }
 
     /**
-     * Save Screen option
+     * Save Screen option.
      */
-    function save_screen_options($status, $option, $value) {
-        if ( 'per_page' == $option ) return $value;
+    function save_screen_options( $status, $option, $value ) {
+        if ( 'per_page' == $option ) {
+            return $value;
+        } else {
+            return $status;
+        }
     }
 
     /**
