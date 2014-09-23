@@ -1,6 +1,7 @@
 ## Changelog ##
 
 ### v1.7.5  (2014-09-23) - (Dev time: 0.5 hours) ###
+- Tweak: Remove PHP 4.0 compatibility code
 - Fix: Fix a bug in the save user options function (issue #27)
 
 ### v1.7.4  (2014-07-24) - (Dev time: 0.5 hours) ###

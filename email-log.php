@@ -14,7 +14,7 @@ Domain Path: languages/
 Check readme file for full release notes
 */
 
-/*  Copyright 2009  Sudar Muthu  (email : sudar@sudarmuthu.com)
+/**  Copyright 2009  Sudar Muthu  (email : sudar@sudarmuthu.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as
@@ -64,29 +64,29 @@ class EmailLog {
     const HOOK_LOG_DISPLAY_COLUMNS = 'email_log_display_log_columns';
 
     /**
-     * Initalize the plugin by registering the hooks
+     * Initialize the plugin by registering the hooks
      */
     function __construct() {
         // Load localization domain
         $this->translations = dirname(plugin_basename(__FILE__)) . '/languages/' ;
-        load_plugin_textdomain( 'email-log', false, $this->translations);
+        load_plugin_textdomain( 'email-log', false, $this->translations );
 
         // Register hooks
-        add_action( 'admin_menu', array(&$this, 'register_settings_page') );
+        add_action( 'admin_menu', array( $this, 'register_settings_page' ) );
 
         // Register Filter
-        add_filter('wp_mail', array(&$this, 'log_email'));
-        add_filter('set-screen-option', array(&$this, 'save_screen_options'), 10, 3);
-        add_filter( 'plugin_row_meta', array( &$this, 'add_plugin_links' ), 10, 2 );
+        add_filter( 'wp_mail', array( $this, 'log_email' ) );
+        add_filter( 'set-screen-option', array( $this, 'save_screen_options' ), 10, 3 );
+        add_filter( 'plugin_row_meta', array( $this, 'add_plugin_links' ), 10, 2 );
 
         $plugin = plugin_basename(__FILE__);
-        add_filter("plugin_action_links_$plugin", array(&$this, 'add_action_links'));
+        add_filter( "plugin_action_links_$plugin", array( $this, 'add_action_links' ) );
 
         //Add our ajax call
-        add_action( 'wp_ajax_display_content', array(&$this, 'display_content_callback'));
+        add_action( 'wp_ajax_display_content', array( $this, 'display_content_callback' ) );
 
         // Add our javascript in the footer
-        add_action( 'admin_footer', array(&$this, 'include_js') );
+        add_action( 'admin_footer', array( $this, 'include_js' ) );
     }
 
     /**
