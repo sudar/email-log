@@ -39,11 +39,8 @@ class Email_Log_Init {
             foreach ( $blog_ids as $blog_id ) {
                 switch_to_blog( $blog_id );
                 self::create_emaillog_table();
+                restore_current_blog();
             }
-
-            // Switch back to the current blog
-            switch_to_blog( $current_blog );
-
         } else {
             self::create_emaillog_table();
         }
