@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the Email Log package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Email Log 1.7.4\n"
+"Project-Id-Version: Email Log 1.7.5\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/email-log\n"
-"POT-Creation-Date: 2014-07-24 14:57:36+00:00\n"
+"POT-Creation-Date: 2014-09-24 06:48:43+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,73 +12,73 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: email-log.php:100
+#: email-log.php:101
 msgid "Buy Addons"
 msgstr ""
 
-#: email-log.php:110
+#: email-log.php:111
 msgid "Email Log"
 msgstr ""
 
-#: email-log.php:123
+#: email-log.php:127
 msgid "Email Logs"
 msgstr ""
 
-#: email-log.php:129
+#: email-log.php:133
 msgid "1 email log deleted."
 msgid_plural "%s email logs deleted"
 msgstr[0] ""
 msgstr[1] ""
 
-#: email-log.php:131
+#: email-log.php:135
 msgid "There was some problem in deleting the email logs"
 msgstr ""
 
-#: email-log.php:139
+#: email-log.php:143
 msgid "Search Logs"
 msgstr ""
 
-#: email-log.php:172 tmp_addon/email-log-forward-email.php:152
+#: email-log.php:176 tmp_addon/email-log-forward-email.php:152
 msgid "About Plugin"
 msgstr ""
 
-#: email-log.php:174 tmp_addon/email-log-forward-email.php:154
+#: email-log.php:178 tmp_addon/email-log-forward-email.php:154
 msgid "Email Log WordPress Plugin, allows you to log all emails that are sent through WordPress."
 msgstr ""
 
-#: email-log.php:181 tmp_addon/email-log-forward-email.php:162
+#: email-log.php:185 tmp_addon/email-log-forward-email.php:162
 msgid "More information"
 msgstr ""
 
-#: email-log.php:182 tmp_addon/email-log-forward-email.php:163
+#: email-log.php:186 tmp_addon/email-log-forward-email.php:163
 msgid "Plugin Homepage/support"
 msgstr ""
 
-#: email-log.php:183 tmp_addon/email-log-forward-email.php:164
+#: email-log.php:187 tmp_addon/email-log-forward-email.php:164
 msgid "Plugin author's blog"
 msgstr ""
 
-#: email-log.php:184 tmp_addon/email-log-forward-email.php:165
+#: email-log.php:188 tmp_addon/email-log-forward-email.php:165
 msgid "Other Plugin's by Author"
 msgstr ""
 
-#: email-log.php:191
+#: email-log.php:195
 msgid "Entries per page"
 msgstr ""
 
-#: email-log.php:296
+#: email-log.php:283
 msgid "Log"
 msgstr ""
 
-#: email-log.php:306
+#: email-log.php:293
 msgid "plugin"
 msgstr ""
 
-#: email-log.php:306
+#: email-log.php:293
 msgid "Version"
 msgstr ""
 
-#: email-log.php:306
+#: email-log.php:293
 msgid "by"
 msgstr ""
 
