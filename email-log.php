@@ -49,6 +49,7 @@ class EmailLog {
 
 	private $admin_screen;
 
+    const VERSION                  = '1.7.5';
     const FILTER_NAME              = 'wp_mail_log';
     const PAGE_SLUG                = 'email-log';
     const DELETE_LOG_NONCE_FIELD   = 'sm-delete-email-log-nonce';
@@ -58,6 +59,9 @@ class EmailLog {
     const TABLE_NAME               = 'email_log';          /* Database table name */
     const DB_OPTION_NAME           = 'email-log-db';       /* Database option name */
     const DB_VERSION               = '0.1';                /* Database version */
+
+    // JS Stuff
+    const JS_HANDLE                = 'email-log';
 
     //hooks
     const HOOK_LOG_COLUMNS         = 'email_log_manage_log_columns';
@@ -84,9 +88,6 @@ class EmailLog {
 
         //Add our ajax call
         add_action( 'wp_ajax_display_content', array( $this, 'display_content_callback' ) );
-
-        // Add our javascript in the footer
-        add_action( 'admin_footer', array( $this, 'include_js' ) );
     }
 
     /**
@@ -110,6 +111,9 @@ class EmailLog {
         $this->admin_page = add_submenu_page( 'tools.php', __('Email Log', 'email-log'), __('Email Log', 'email-log'), 'manage_options', self::PAGE_SLUG , array( &$this, 'display_logs') );
 
 		add_action("load-{$this->admin_page}",array(&$this,'create_settings_panel'));
+
+        // enqueue JavaScript
+        add_action( 'admin_print_scripts-' . $this->admin_page, array( $this, 'include_js' ) );
     }
 
     /**
@@ -207,33 +211,12 @@ class EmailLog {
 	}
 
     /**
-     * Include JavaScript displaying email content
+     * Include JavaScript displaying email content.
      *
-     * @since 1.6
+     * @since 1.7.5
      */
     function include_js() {
-        // TODO: Move this to a separate js file
-?>
-        <script type="text/javascript">
-        jQuery(document).ready(function($) {
-
-          $(".email_content").click(function() {
-
-            var w = window.open('', 'newwin', 'width=650,height=500');
-
-            var email_id = $(this).attr('id').replace('email_content_','');
-            data = {
-              action: 'display_content',
-              email_id: email_id
-            };
-
-            $.post(ajaxurl, data, function (response) {
-              $(w.document.body).html(response);
-            });
-          });
-        });
-        </script>
-<?php
+        wp_enqueue_script( self::JS_HANDLE, plugins_url( '/js/email-log.js', __FILE__ ), array( 'jquery' ), self::VERSION, TRUE );
     }
 
     /**
