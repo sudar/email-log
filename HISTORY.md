@@ -107,6 +107,9 @@
 
 ## Upgrade Notice ##
 
+### 1.7.5 ###
+Fix a bug in the save user options function
+
 ### 1.7.4 ###
 Handle cases where `date_format` or `time_format` are empty
 

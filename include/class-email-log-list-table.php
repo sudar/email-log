@@ -110,7 +110,7 @@ class Email_Log_List_Table extends WP_List_Table {
     /**
      * Display sent date column
      */
-    function column_sent_date($item){
+    function column_sent_date($item) {
 
         //Build row actions
         $actions = array(
