@@ -156,6 +156,13 @@ class EmailLog {
 		</form>
 	</div>
 <?php
+		/**
+		 * Action to add additional content to email log admin footer.
+		 *
+		 * @since 1.8
+		 */
+		do_action( 'el_admin_footer' );
+
 		// Display credits in Footer
 		add_action( 'in_admin_footer', array( $this, 'add_footer_links' ) );
 	}

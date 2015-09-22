@@ -1,9 +1,10 @@
 ## Changelog ##
 
 ### v1.8 (in development) - (Dev time: 2 hour) ###
-- Fix: Sanitize the delete email log url
+- New: Added filters and actions for addons
 - Tweak: Format email content
 - Tweak: Remove PHP4 compatible code
+- Fix: Sanitize the delete email log url
 
 ### v1.7.5  (2014-09-23) - (Dev time: 1 hour) ###
 - Tweak: Remove PHP 4.0 compatibility code
