@@ -119,20 +119,33 @@ class Email_Log_List_Table extends WP_List_Table {
 			$item->sent_date
 		);
 
-		$actions = array(
-			'view-content' => sprintf( '<a href="#" class="email_content" id="email_content_%1$s">%2$s</a>',
-				$item->id,
-				__( 'View Content', 'email-log' )
+		$actions = array();
+
+		$content_ajax_url = add_query_arg(
+			array(
+				'action'    => 'display_content',
+				'email_id'  => $item->id,
+				'TB_iframe' => 'true',
+				'width'     => '600',
+				'height'    => '550',
 			),
-			'delete' => sprintf( '<a href="?page=%s&action=%s&%s=%s&%s=%s">%s</a>',
-				$_REQUEST['page'],
-				'delete',
-				$this->_args['singular'],
-				$item->id,
-				EmailLog::DELETE_LOG_NONCE_FIELD,
-				wp_create_nonce( EmailLog::DELETE_LOG_ACTION ),
-				__( 'Delete', 'email-log' )
-			),
+			'admin-ajax.php'
+		);
+
+		$actions['view-content'] = sprintf( '<a href="%1$s" class="thickbox" title="%2$s">%3$s</a>',
+			esc_url( $content_ajax_url ),
+			__( 'Email Content', 'email-log' ),
+			__( 'View Content', 'email-log' )
+		);
+
+		$actions['delete'] = sprintf( '<a href="?page=%s&action=%s&%s=%s&%s=%s">%s</a>',
+			$_REQUEST['page'],
+			'delete',
+			$this->_args['singular'],
+			$item->id,
+			EmailLog::DELETE_LOG_NONCE_FIELD,
+			wp_create_nonce( EmailLog::DELETE_LOG_ACTION ),
+			__( 'Delete', 'email-log' )
 		);
 
 		return sprintf( '%1$s <span style="color:silver">(id:%2$s)</span>%3$s',

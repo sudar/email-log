@@ -1,6 +1,6 @@
 ## Changelog ##
 
-### v1.8 (in development) - (Dev time: 1 hour) ###
+### v1.8 (in development) - (Dev time: 2 hour) ###
 - Tweak: Format email content
 - Tweak: Remove PHP4 compatible code
 

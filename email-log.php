@@ -122,6 +122,8 @@ class EmailLog {
 	 * Display email logs
 	 */
 	function display_logs() {
+		add_thickbox();
+
 		$this->logs_table->prepare_items( $this->get_per_page() );
 ?>
 	<div class="wrap">
@@ -229,7 +231,7 @@ class EmailLog {
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . self::TABLE_NAME;
-		$email_id   = absint( $_POST['email_id'] );
+		$email_id   = absint( $_GET['email_id'] );
 
 		$query      = $wpdb->prepare( 'SELECT * FROM ' . $table_name . ' WHERE id = %d', $email_id );
 		$content    = $wpdb->get_results( $query );
