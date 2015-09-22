@@ -108,9 +108,9 @@ class EmailLog {
      */
     function register_settings_page() {
         //Save the handle to your admin page - you'll need it to create a WP_Screen object
-        $this->admin_page = add_submenu_page( 'tools.php', __('Email Log', 'email-log'), __('Email Log', 'email-log'), 'manage_options', self::PAGE_SLUG , array( &$this, 'display_logs') );
+        $this->admin_page = add_submenu_page( 'tools.php', __('Email Log', 'email-log'), __('Email Log', 'email-log'), 'manage_options', self::PAGE_SLUG , array( $this, 'display_logs') );
 
-		add_action("load-{$this->admin_page}",array(&$this,'create_settings_panel'));
+		add_action("load-{$this->admin_page}",array( $this,'create_settings_panel'));
 
         // enqueue JavaScript
         add_action( 'admin_print_scripts-' . $this->admin_page, array( $this, 'include_js' ) );
@@ -154,7 +154,7 @@ class EmailLog {
     </div>
 <?php
         // Display credits in Footer
-        add_action( 'in_admin_footer', array(&$this, 'add_footer_links'));
+        add_action( 'in_admin_footer', array( $this, 'add_footer_links'));
     }
 
     /**
