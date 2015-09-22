@@ -1,6 +1,7 @@
 ## Changelog ##
 
 ### v1.8 (in development) - (Dev time: 2 hour) ###
+- Fix: Sanitize the delete email log url
 - Tweak: Format email content
 - Tweak: Remove PHP4 compatible code
 

@@ -138,13 +138,17 @@ class Email_Log_List_Table extends WP_List_Table {
 			__( 'View Content', 'email-log' )
 		);
 
-		$actions['delete'] = sprintf( '<a href="?page=%s&action=%s&%s=%s&%s=%s">%s</a>',
-			$_REQUEST['page'],
-			'delete',
-			$this->_args['singular'],
-			$item->id,
-			EmailLog::DELETE_LOG_NONCE_FIELD,
-			wp_create_nonce( EmailLog::DELETE_LOG_ACTION ),
+		$delete_url = add_query_arg(
+			array(
+				'page'                           => $_REQUEST['page'],
+				'action'                         => 'delete',
+				$this->_args['singular']         => $item->id,
+				EmailLog::DELETE_LOG_NONCE_FIELD => wp_create_nonce( EmailLog::DELETE_LOG_ACTION ),
+			)
+		);
+
+		$actions['delete'] = sprintf( '<a href="%s">%s</a>',
+			esc_url( $delete_url ),
 			__( 'Delete', 'email-log' )
 		);
 
