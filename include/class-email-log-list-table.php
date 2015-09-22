@@ -108,15 +108,22 @@ class Email_Log_List_Table extends WP_List_Table {
 	}
 
 	/**
-	 * Display sent date column
+	 * Display sent date column.
 	 *
-	 * @param unknown $item
-	 * @return unknown
+	 * @param  object $item Current item object
+	 * @return string       Markup to be displayed for the column
 	 */
 	function column_sent_date( $item ) {
+		$email_date = mysql2date(
+			sprintf( __( '%s @ %s', 'email-log' ), get_option( 'date_format', 'F j, Y' ), get_option( 'time_format', 'g:i A' ) ),
+			$item->sent_date
+		);
 
-		//Build row actions
 		$actions = array(
+			'view-content' => sprintf( '<a href="#" class="email_content" id="email_content_%1$s">%2$s</a>',
+				$item->id,
+				__( 'View Content', 'email-log' )
+			),
 			'delete' => sprintf( '<a href="?page=%s&action=%s&%s=%s&%s=%s">%s</a>',
 				$_REQUEST['page'],
 				'delete',
@@ -128,17 +135,10 @@ class Email_Log_List_Table extends WP_List_Table {
 			),
 		);
 
-		$email_date = mysql2date(
-			sprintf( __( '%s @ %s', 'email-log' ), get_option( 'date_format', 'F j, Y' ), get_option( 'time_format', 'g:i A' ) ),
-			$item->sent_date
-		);
-
-		return sprintf( '%1$s <span style="color:silver">[<a href="#" class="email_content" id="email_content_%2$s">%3$s</a>] (id:%4$s)</span>%5$s',
+		return sprintf( '%1$s <span style="color:silver">(id:%2$s)</span>%3$s',
 			/*$1%s*/ $email_date,
 			/*$2%s*/ $item->id,
-			/*$3%s*/ __( 'View Content', 'email-log' ),
-			/*$4%s*/ $item->id,
-			/*$5%s*/ $this->row_actions( $actions )
+			/*$3%s*/ $this->row_actions( $actions )
 		);
 	}
 

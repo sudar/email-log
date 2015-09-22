@@ -231,12 +231,10 @@ class EmailLog {
 		$table_name = $wpdb->prefix . self::TABLE_NAME;
 		$email_id   = absint( $_POST['email_id'] );
 
-		// Select the matching item from the database
 		$query      = $wpdb->prepare( 'SELECT * FROM ' . $table_name . ' WHERE id = %d', $email_id );
 		$content    = $wpdb->get_results( $query );
 
-		// Write the message content to the screen
-		echo $content[0]->message;
+		echo wpautop( $content[0]->message );
 
 		die(); // this is required to return a proper result
 	}
