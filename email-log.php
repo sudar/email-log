@@ -113,9 +113,6 @@ class EmailLog {
 		$this->admin_page = add_submenu_page( 'tools.php', __( 'Email Log', 'email-log' ), __( 'Email Log', 'email-log' ), 'manage_options', self::PAGE_SLUG , array( $this, 'display_logs' ) );
 
 		add_action( "load-{$this->admin_page}", array( $this, 'create_settings_panel' ) );
-
-		// enqueue JavaScript
-		add_action( 'admin_print_scripts-' . $this->admin_page, array( $this, 'include_js' ) );
 	}
 
 	/**
@@ -218,15 +215,6 @@ class EmailLog {
 
 		//Prepare Table of elements
 		$this->logs_table = new Email_Log_List_Table();
-	}
-
-	/**
-	 * Include JavaScript displaying email content.
-	 *
-	 * @since 1.7.5
-	 */
-	function include_js() {
-		wp_enqueue_script( self::JS_HANDLE, plugins_url( '/js/email-log.js', __FILE__ ), array( 'jquery' ), self::VERSION, true );
 	}
 
 	/**
