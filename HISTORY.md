@@ -1,5 +1,8 @@
 ## Changelog ##
 
+### v1.8 (in development) - (Dev time: 1 hour) ###
+- Tweak: Remove PHP4 compatible code
+
 ### v1.7.5  (2014-09-23) - (Dev time: 1 hour) ###
 - Tweak: Remove PHP 4.0 compatibility code
 - Tweak: Tweak the install code (issue #26)
