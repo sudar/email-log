@@ -19,9 +19,9 @@ The logged emails will be stored in a separate table and can be viewed from the 
 
 In the admin interface, all the logged emails can be delete in bulk or can also be selectively deleted based on date, email and subject.
 
-### Forward email (Pro addon)
+### Resend email (Pro addon)
 
-You can [buy the Forward email pro addon](http://sudarmuthu.com/wordpress/email-log/pro-addons#forward-email-addon), which allows you to send a copy of all the emails send from WordPress, to another email address. The addon allows you to choose whether you want to forward through to, cc or bcc fields. This can be extremely useful when you want to debug by analyzing the emails that are sent from WordPress. The cost of the addon is $15 and you can buy it through [paypal](http://sudarmuthu.com/out/buy-email-log-forward-email-addon).
+You can [buy the Resend email pro addon](http://sudarmuthu.com/wordpress/email-log/pro-addons#resend-email-addon), which allows you to resend the email directly from the email log. The addon allows you to modify the different fields before resending the email. The cost of the addon is $15 and you can buy it through [paypal](http://sudarmuthu.com/out/buy-email-log-resend-email-addon).
 
 ### More Fields (Pro addon)
 
@@ -35,6 +35,9 @@ You can [buy the More Fields pro addon](http://sudarmuthu.com/wordpress/email-lo
 
 The cost of the addon is $15 and you can buy it through [paypal](http://sudarmuthu.com/out/buy-email-log-more-fields-addon).
 
+### Forward email (Pro addon)
+
+You can [buy the Forward email pro addon](http://sudarmuthu.com/wordpress/email-log/pro-addons#forward-email-addon), which allows you to send a copy of all the emails send from WordPress, to another email address. The addon allows you to choose whether you want to forward through to, cc or bcc fields. This can be extremely useful when you want to debug by analyzing the emails that are sent from WordPress. The cost of the addon is $15 and you can buy it through [paypal](http://sudarmuthu.com/out/buy-email-log-forward-email-addon).
 
 ### Cleaning up db on uninstall
 
