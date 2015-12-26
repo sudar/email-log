@@ -277,10 +277,12 @@ class Email_Log_List_Table extends WP_List_Table {
 		$current_page = $this->get_pagenum();
 
 		$query = 'SELECT * FROM ' . $table_name;
+		$count_query = 'SELECT * FROM ' . $table_name;
+		$query_cond = '';
 
 		if ( isset( $_GET['s'] ) ) {
 			$search_term = trim( esc_sql( $_GET['s'] ) );
-			$query .= " WHERE to_email LIKE '%$search_term%' OR subject LIKE '%$search_term%' ";
+			$query_cond .= " WHERE to_email LIKE '%$search_term%' OR subject LIKE '%$search_term%' ";
 		}
 
 		// Ordering parameters
@@ -288,20 +290,22 @@ class Email_Log_List_Table extends WP_List_Table {
 		$order   = ! empty( $_GET['order'] ) ? esc_sql( $_GET['order'] ) : 'DESC';
 
 		if ( ! empty( $orderby ) & ! empty( $order ) ) {
-			$query .= ' ORDER BY ' . $orderby . ' ' . $order;
+			$query_cond .= ' ORDER BY ' . $orderby . ' ' . $order;
 		}
 
-		// Pagination parameters
-		$total_items = $wpdb->query( $query ); //return the total number of affected rows
+		// find total number of items
+		$count_query = $count_query . $query_cond;
+		$total_items = $wpdb->get_var( $count_query );
 
-		//adjust the query to take pagination into account
+		// adjust the query to take pagination into account
 		$per_page = EmailLog::get_per_page();
 		if ( ! empty( $current_page ) && ! empty( $per_page ) ) {
 			$offset = ( $current_page - 1 ) * $per_page;
-			$query .= ' LIMIT ' . (int) $offset . ',' . (int) $per_page;
+			$query_cond .= ' LIMIT ' . (int) $offset . ',' . (int) $per_page;
 		}
 
 		// Fetch the items
+		$query = $query . $query_cond;
 		$this->items = $wpdb->get_results( $query );
 
 		// register pagination options & calculations.

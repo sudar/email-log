@@ -1,7 +1,8 @@
 ## Changelog ##
 
-### v1.8 (in development) - (Dev time: 2 hour) ###
+### v1.8 (in development) - (Dev time: 3 hour) ###
 - New: Added filters and actions for addons
+- Tweak: Optimize for large number of logs
 - Tweak: Format email content
 - Tweak: Remove PHP4 compatible code
 - Fix: Sanitize the delete email log url
