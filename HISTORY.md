@@ -1,7 +1,8 @@
 ## Changelog ##
 
-### v1.8 (in development) - (Dev time: 4 hour) ###
+### v1.8 (2015-12-26) - (Dev time: 5 hour) ###
 - New: Added filters and actions for addons
+- New: Added Resend Email Addon
 - Tweak: Optimize for large number of logs
 - Tweak: Use charset and collate that is defined in wp-config.php file
 - Tweak: Format email content
@@ -114,6 +115,9 @@
 - Initial Release
 
 ## Upgrade Notice ##
+
+### 1.8 ###
+Added support for resending emails through addon
 
 ### 1.7.5 ###
 Fix a bug in the save user options function
