@@ -89,11 +89,13 @@ class Email_Log_Init {
      */
     private static function create_emaillog_table() {
         global $wpdb;
+
         $table_name = $wpdb->prefix . EmailLog::TABLE_NAME;
+		$charset_collate = $wpdb->get_charset_collate();
 
         if( $wpdb->get_var( "show tables like '{$table_name}'" ) != $table_name ) {
 
-            $sql = "CREATE TABLE " . $table_name . " (
+            $sql = 'CREATE TABLE ' . $table_name . ' (
                 id mediumint(9) NOT NULL AUTO_INCREMENT,
                 to_email VARCHAR(100) NOT NULL,
                 subject VARCHAR(250) NOT NULL,
@@ -102,7 +104,7 @@ class Email_Log_Init {
                 attachments TEXT NOT NULL,
                 sent_date timestamp NOT NULL,
                 PRIMARY KEY  (id)
-            );";
+            ) ' . $charset_collate . ' ;';
 
             require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
             dbDelta( $sql );

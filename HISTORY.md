@@ -1,8 +1,9 @@
 ## Changelog ##
 
-### v1.8 (in development) - (Dev time: 3 hour) ###
+### v1.8 (in development) - (Dev time: 4 hour) ###
 - New: Added filters and actions for addons
 - Tweak: Optimize for large number of logs
+- Tweak: Use charset and collate that is defined in wp-config.php file
 - Tweak: Format email content
 - Tweak: Remove PHP4 compatible code
 - Fix: Sanitize the delete email log url
