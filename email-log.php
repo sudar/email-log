@@ -37,12 +37,14 @@ if ( ! defined( 'EMAIL_LOG_PLUGIN_FILE' ) ) {
 }
 
 // handle installation and table creation
-require_once dirname( __FILE__ ) . '/include/install.php';
+require_once plugin_dir_path( __FILE__ ) . 'include/install.php';
 
 /**
  * The main Plugin class
  */
 class EmailLog {
+	public $include_path;
+
 	private $admin_screen;
 
 	const VERSION                  = '1.7.5';
@@ -67,6 +69,8 @@ class EmailLog {
 	 * Initialize the plugin by registering the hooks
 	 */
 	function __construct() {
+		$this->include_path = plugin_dir_path( __FILE__ );
+
 		// Load localization domain
 		$this->translations = dirname( plugin_basename( __FILE__ ) ) . '/languages/' ;
 		load_plugin_textdomain( 'email-log', false, $this->translations );
@@ -210,7 +214,7 @@ class EmailLog {
 		}
 
 		if ( ! class_exists( 'Email_Log_List_Table' ) ) {
-			require_once dirname( __FILE__ ) . '/include/class-email-log-list-table.php';
+			require_once $this->include_path . 'include/class-email-log-list-table.php';
 		}
 
 		//Prepare Table of elements
@@ -266,7 +270,7 @@ class EmailLog {
 
 		$per_page = get_user_meta( get_current_user_id(), $option, true );
 
-		if ( empty ( $per_page ) || $per_page < 1 ) {
+		if ( empty( $per_page ) || $per_page < 1 ) {
 			$per_page = $screen->get_option( 'per_page', 'default' );
 		}
 
