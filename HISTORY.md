@@ -119,6 +119,9 @@
 
 ## Upgrade Notice ##
 
+### 1.8.1 ###
+Fixed issue with "Delete All Logs" action that was introduced in v1.8
+
 ### 1.8 ###
 Added support for resending emails through addon
 
