@@ -234,8 +234,8 @@ class Email_Log_List_Table extends WP_List_Table {
 		if ( 'delete' === $this->current_action() ) {
 			// delete a list of logs by id
 
-			$nouce = $_REQUEST[ EmailLog::DELETE_LOG_NONCE_FIELD ];
-			if ( wp_verify_nonce( $nouce, EmailLog::DELETE_LOG_ACTION ) ) {
+			$nonce = $_REQUEST[ EmailLog::DELETE_LOG_NONCE_FIELD ];
+			if ( wp_verify_nonce( $nonce, EmailLog::DELETE_LOG_ACTION ) ) {
 
 				$ids = $_GET[ $this->_args['singular'] ];
 
@@ -257,9 +257,8 @@ class Email_Log_List_Table extends WP_List_Table {
 			}
 		} else if ( 'delete-all' === $this->current_action() ) {
 			// delete all logs
-
-			$nouce = $_REQUEST[ EmailLog::DELETE_LOG_NONCE_FIELD ];
-			if ( wp_verify_nonce( $nouce, EmailLog::DELETE_LOG_ACTION ) ) {
+			$nonce = $_REQUEST[ EmailLog::DELETE_LOG_NONCE_FIELD ];
+			if ( wp_verify_nonce( $nonce, EmailLog::DELETE_LOG_ACTION ) ) {
 				$table_name = $wpdb->prefix . EmailLog::TABLE_NAME;
 				$EmailLog->logs_deleted = $wpdb->query( "DELETE FROM $table_name" );
 			} else {
