@@ -261,7 +261,7 @@ class Email_Log_List_Table extends WP_List_Table {
 			$nouce = $_REQUEST[ EmailLog::DELETE_LOG_NONCE_FIELD ];
 			if ( wp_verify_nonce( $nouce, EmailLog::DELETE_LOG_ACTION ) ) {
 				$table_name = $wpdb->prefix . EmailLog::TABLE_NAME;
-				$EmailLog->logs_deleted = $wpdb->query( 'DELETE FROM $table_name' );
+				$EmailLog->logs_deleted = $wpdb->query( "DELETE FROM $table_name" );
 			} else {
 				wp_die( 'Cheating, Huh? ' );
 			}

@@ -1,5 +1,8 @@
 ## Changelog ##
 
+### v1.8.1 (2015-12-27) - (Dev time: 0.5 hour) ###
+- Fix: Fixed the "Delete All Logs" issue that was introduced in v1.8
+
 ### v1.8 (2015-12-26) - (Dev time: 5 hour) ###
 - New: Added filters and actions for addons
 - New: Added Resend Email Addon
