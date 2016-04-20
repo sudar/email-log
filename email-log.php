@@ -328,7 +328,7 @@ class EmailLog {
 
 		// Log into the database
 		$wpdb->insert( $table_name, array(
-				'to_email'    => is_array( $mail_info['to'] ) ? $mail_info['to'][0] : $mail_info['to'],
+				'to_email'    => is_array( $mail_info['to'] ) ? implode( ',', $mail_info['to'] ) : $mail_info['to'],
 				'subject'     => $mail_info['subject'],
 				'message'     => $message,
 				'headers'     => is_array( $mail_info['headers'] ) ? implode( "\n", $mail_info['headers'] ) : $mail_info['headers'],
