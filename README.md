@@ -2,8 +2,8 @@
 **Contributors:** sudar  
 **Tags:** email, log, multisite  
 **Requires at least:** 3.3  
-**Tested up to:** 4.4  
-**Stable tag:** 1.8.1  
+**Tested up to:** 4.5  
+**Stable tag:** 1.8.2  
 
 Logs every email sent through WordPress. Works with WordPress Multisite as well
 

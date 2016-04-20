@@ -123,6 +123,9 @@
 
 ## Upgrade Notice ##
 
+### 1.8.2 ###
+Added the ability to log all emails in the TO field instead of just the first one
+
 ### 1.8.1 ###
 Fixed issue with "Delete All Logs" action that was introduced in v1.8
 
