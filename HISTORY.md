@@ -1,5 +1,8 @@
 ## Changelog ##
 
+### v1.8.2 (2016-04-20) - (Dev time: 0.5 hour) ###
+- Fix: Fixed issues in parsing reply-to and content-type headers
+
 ### v1.8.1 (2015-12-27) - (Dev time: 0.5 hour) ###
 - Fix: Fixed the "Delete All Logs" issue that was introduced in v1.8
 

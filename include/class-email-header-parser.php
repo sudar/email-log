@@ -90,11 +90,11 @@ class Email_Header_Parser {
 						break;
 
 					case 'reply-to':
-						$data['reply-to'] = $value;
+						$data['reply_to'] = $value;
 						break;
 
 					case 'content-type':
-						$data['content-type'] = $value;
+						$data['content_type'] = $value;
 						break;
 				}
 			}
