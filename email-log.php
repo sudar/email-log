@@ -338,20 +338,6 @@ class EmailLog {
 
 		return $mail_info;
 	}
-
-	/**
-	 * Check whether a key is present.
-	 *
-	 * If present returns the value, else returns the default value
-	 *
-	 * @param  array  $array   Array whose key has to be checked
-	 * @param  string $key     Key that has to be checked
-	 * @param  string $default The default value that has to be used, if the key is not found (optional)
-	 * @return mixed           If present returns the value, else returns the default value
-	 */
-	private function array_get( $array, $key, $default = null ) {
-		return isset( $array[ $key ] ) ? $array[ $key ] : $default;
-	}
 }
 
 /**
