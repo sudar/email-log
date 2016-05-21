@@ -1,7 +1,8 @@
 ## Changelog ##
 
-### In Developemnt - (Dev time: 0.5 hour) ###
+### In Developemnt - (Dev time: 1.5 hour) ###
 - Docs: Removed unused array_get() method
+- Docs: Inline documentation added
 
 ### v1.8.2 (2016-04-20) - (Dev time: 1 hour) ###
 - Tweak: Log all emails from the TO field. Earlier the plugin was logging only the first email

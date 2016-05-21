@@ -36,21 +36,73 @@ if ( ! defined( 'EMAIL_LOG_PLUGIN_FILE' ) ) {
 	define( 'EMAIL_LOG_PLUGIN_FILE', __FILE__ );
 }
 
-// handle installation and table creation
+/**
+ * Handles installation and table creation.
+ */
 require_once plugin_dir_path( __FILE__ ) . 'include/install.php';
 
 /**
- * The main Plugin class
+ * The main plugin class.
+ *
+ * @since Genesis
  */
 class EmailLog {
+
+	/**
+	 * Filesystem directory path with trailing slash.
+	 *
+	 * @since Genesis
+	 * @var string $include_path
+	 */
 	public $include_path;
 
+	/**
+	 * Admin screen object.
+	 *
+	 * @since Genesis
+	 * @access private
+	 * @var string $include_path
+	 */
 	private $admin_screen;
 
+	/**
+	 * Version number.
+	 *
+	 * @since Genesis
+	 * @var const VERSION
+	 */
 	const VERSION                  = '1.8.2';
+
+	/**
+	 * Filter name.
+	 *
+	 * @since Genesis
+	 * @var const FILTER_NAME
+	 */
 	const FILTER_NAME              = 'wp_mail_log';
+
+	/**
+	 * Page slug to be used in admin dashboard hyperlinks.
+	 *
+	 * @since Genesis
+	 * @var const PAGE_SLUG
+	 */
 	const PAGE_SLUG                = 'email-log';
+
+	/**
+	 * String value to generate nonce.
+	 *
+	 * @since Genesis
+	 * @var const DELETE_LOG_NONCE_FIELD
+	 */
 	const DELETE_LOG_NONCE_FIELD   = 'sm-delete-email-log-nonce';
+
+	/**
+	 * String value to generate nonce.
+	 *
+	 * @since Genesis
+	 * @var const DELETE_LOG_ACTION
+	 */
 	const DELETE_LOG_ACTION        = 'sm-delete-email-log';
 
 	// DB stuff
@@ -66,19 +118,19 @@ class EmailLog {
 	const HOOK_LOG_DISPLAY_COLUMNS = 'email_log_display_log_columns';
 
 	/**
-	 * Initialize the plugin by registering the hooks
+	 * Initialize the plugin by registering the hooks.
 	 */
 	function __construct() {
 		$this->include_path = plugin_dir_path( __FILE__ );
 
-		// Load localization domain
+		// Load localization domain.
 		$this->translations = dirname( plugin_basename( __FILE__ ) ) . '/languages/' ;
 		load_plugin_textdomain( 'email-log', false, $this->translations );
 
-		// Register hooks
+		// Register hooks.
 		add_action( 'admin_menu', array( $this, 'register_settings_page' ) );
 
-		// Register Filter
+		// Register Filter.
 		add_filter( 'wp_mail', array( $this, 'log_email' ) );
 		add_filter( 'set-screen-option', array( $this, 'save_screen_options' ), 10, 3 );
 		add_filter( 'plugin_row_meta', array( $this, 'add_plugin_links' ), 10, 2 );
@@ -86,16 +138,21 @@ class EmailLog {
 		$plugin = plugin_basename( __FILE__ );
 		add_filter( "plugin_action_links_$plugin", array( $this, 'add_action_links' ) );
 
-		//Add our ajax call
+		// Add our ajax call.
 		add_action( 'wp_ajax_display_content', array( $this, 'display_content_callback' ) );
 	}
 
 	/**
-	 * Adds additional links in the Plugin listing. Based on http://zourbuth.com/archives/751/creating-additional-wordpress-plugin-links-row-meta/
+	 * Adds additional links in the plugin listing page.
 	 *
-	 * @param unknown $links
-	 * @param unknown $file
-	 * @return unknown
+	 * @since Genesis
+	 *
+	 * @see Additional links in the Plugin listing is based on
+	 * @link http://zourbuth.com/archives/751/creating-additional-wordpress-plugin-links-row-meta/
+	 *
+	 * @param array $links Array with default links to display in plugins page.
+	 * @param string $file The name of the plugin file.
+	 * @return array Array with links to display in plugins page.
 	 */
 	function add_plugin_links( $links, $file ) {
 		$plugin = plugin_basename( __FILE__ );
@@ -110,7 +167,9 @@ class EmailLog {
 	}
 
 	/**
-	 * Register the settings page
+	 * Registers the settings page.
+	 *
+	 * @since Genesis
 	 */
 	function register_settings_page() {
 		//Save the handle to your admin page - you'll need it to create a WP_Screen object
@@ -120,7 +179,9 @@ class EmailLog {
 	}
 
 	/**
-	 * Display email logs
+	 * Displays the stored email log.
+	 *
+	 * @since Genesis
 	 */
 	function display_logs() {
 		add_thickbox();
@@ -169,7 +230,9 @@ class EmailLog {
 	}
 
 	/**
-	 * Add settings Panel
+	 * Adds settings panel for the plugin.
+	 *
+	 * @since Genesis
 	 */
 	function create_settings_panel() {
 
@@ -222,7 +285,7 @@ class EmailLog {
 	}
 
 	/**
-	 * AJAX callback for displaying email content
+	 * AJAX callback for displaying email content.
 	 *
 	 * @since 1.6
 	 */
@@ -241,12 +304,14 @@ class EmailLog {
 	}
 
 	/**
-	 * Save Screen option.
+	 * Saves Screen options.
 	 *
-	 * @param unknown $status
-	 * @param unknown $option
-	 * @param unknown $value
-	 * @return unknown
+	 * @since Genesis
+	 *
+	 * @param bool|int $status Screen option value. Default false to skip.
+	 * @param string   $option The option name.
+	 * @param int      $value  The number of rows to use.
+	 * @return bool|int
 	 */
 	function save_screen_options( $status, $option, $value ) {
 		if ( 'per_page' == $option ) {
@@ -257,12 +322,11 @@ class EmailLog {
 	}
 
 	/**
-	 * Get the per page option
+	 * Gets the per page option.
 	 *
-	 * @static
-	 * @access public
+	 * @since Genesis
 	 *
-	 * @return int $per_page Number of logs a user wanted to be displayed in a page
+	 * @return int Number of logs a user wanted to be displayed in a page.
 	 */
 	public static function get_per_page() {
 		$screen = get_current_screen();
@@ -278,10 +342,12 @@ class EmailLog {
 	}
 
 	/**
-	 * hook to add action links
+	 * Adds additional links.
 	 *
-	 * @param <type>  $links
-	 * @return <type>
+	 * @since Genesis
+	 *
+	 * @param array $links
+	 * @return array
 	 */
 	function add_action_links( $links ) {
 		// Add a link to this plugin's settings page
@@ -291,7 +357,12 @@ class EmailLog {
 	}
 
 	/**
-	 * Adds Footer links. Based on http://striderweb.com/nerdaphernalia/2008/06/give-your-wordpress-plugin-credit/
+	 * Adds Footer links.
+	 *
+	 * @since Genesis
+	 *
+	 * @see Function relied on
+	 * @link http://striderweb.com/nerdaphernalia/2008/06/give-your-wordpress-plugin-credit/
 	 */
 	function add_footer_links() {
 		$plugin_data = get_plugin_data( __FILE__ );
@@ -299,11 +370,14 @@ class EmailLog {
 	}
 
 	/**
-	 * Log email to database
+	 * Logs email to database.
+	 *
+	 * @since Genesis
 	 *
 	 * @global object $wpdb
-	 * @param array   $mail_info Information about email
-	 * @return array             Information about email
+	 *
+	 * @param array $mail_info Information about email.
+	 * @return array Information about email.
 	 */
 	function log_email( $mail_info ) {
 		global $wpdb;
@@ -341,7 +415,12 @@ class EmailLog {
 }
 
 /**
- * Start this plugin once all other plugins are fully loaded
+ * Instantiates the plugin class
+ *
+ * @since Genesis
+ *
+ * @see Class `EmailLog`
+ * @global EmailLog $EmailLog
  */
 function email_log() {
 	global $EmailLog;

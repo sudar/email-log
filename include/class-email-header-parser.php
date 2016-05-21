@@ -52,7 +52,7 @@ class Email_Header_Parser {
 	/**
 	 * Return parsed headers.
 	 *
-	 * @param string $headers Headers to parse
+	 * @param string $headers Headers to parse.
 	 * @return array Parsed Headers.
 	 */
 	public function parse_headers( $headers ) {
@@ -65,7 +65,7 @@ class Email_Header_Parser {
 	 * @access private
 	 *
 	 * @param string $headers Headers to be parsed.
-	 * @return array Parsed headers
+	 * @return array Parsed headers.
 	 */
 	private function parse( $headers ) {
 		$data = array();
@@ -108,8 +108,9 @@ class Email_Header_Parser {
 	 *
 	 * @since 1.0
 	 * @access private
-	 * @param array   $header Header line to be parsed
-	 * @return string         Parsed value
+	 *
+	 * @param array   $header Header line to be parsed.
+	 * @return string         Parsed value.
 	 */
 	private function parse_header_line( $header ) {
 		$value = '';
