@@ -283,7 +283,7 @@ class Email_Log_List_Table extends WP_List_Table {
 		$current_page = $this->get_pagenum();
 
 		$query = 'SELECT * FROM ' . $table_name;
-		$count_query = 'SELECT * FROM ' . $table_name;
+		$count_query = 'SELECT count(*) FROM ' . $table_name;
 		$query_cond = '';
 
 		if ( isset( $_GET['s'] ) ) {

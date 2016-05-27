@@ -1,6 +1,7 @@
 ## Changelog ##
 
-### In Developemnt - (Dev time: 0.5 hour) ###
+### In Developemnt - (Dev time: 1.5 hour) ###
+- Fix: Improve the performance of count query (issue #33)
 - Docs: Removed unused array_get() method
 
 ### v1.8.2 (2016-04-20) - (Dev time: 1 hour) ###
