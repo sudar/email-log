@@ -15,10 +15,10 @@ class Email_Log_List_Table extends WP_List_Table {
 	 */
 	function __construct() {
 		parent::__construct( array(
-				'singular'  => 'email-log',     //singular name of the listed records
-				'plural'    => 'email-logs',    //plural name of the listed records
-				'ajax'      => false,           //does this table support ajax?
-			) );
+			'singular'  => 'email-log',     //singular name of the listed records
+			'plural'    => 'email-logs',    //plural name of the listed records
+			'ajax'      => false,           //does this table support ajax?
+		) );
 	}
 
 	/**
@@ -229,7 +229,7 @@ class Email_Log_List_Table extends WP_List_Table {
 	 */
 	function process_bulk_action() {
 		global $wpdb;
-		global $EmailLog;
+		global $EmailLog; //@codingStandardsIgnoreLine
 
 		if ( 'delete' === $this->current_action() ) {
 			// delete a list of logs by id
@@ -251,16 +251,16 @@ class Email_Log_List_Table extends WP_List_Table {
 				$selected_ids = esc_sql( $selected_ids );
 
 				$table_name = $wpdb->prefix . EmailLog::TABLE_NAME;
-				$EmailLog->logs_deleted = $wpdb->query( "DELETE FROM $table_name where id IN ( $selected_ids )" );
+				$EmailLog->logs_deleted = $wpdb->query( "DELETE FROM $table_name where id IN ( $selected_ids )" ); //@codingStandardsIgnoreLine
 			} else {
 				wp_die( 'Cheating, Huh? ' );
 			}
-		} else if ( 'delete-all' === $this->current_action() ) {
+		} elseif ( 'delete-all' === $this->current_action() ) {
 			// delete all logs
 			$nonce = $_REQUEST[ EmailLog::DELETE_LOG_NONCE_FIELD ];
 			if ( wp_verify_nonce( $nonce, EmailLog::DELETE_LOG_ACTION ) ) {
 				$table_name = $wpdb->prefix . EmailLog::TABLE_NAME;
-				$EmailLog->logs_deleted = $wpdb->query( "DELETE FROM $table_name" );
+				$EmailLog->logs_deleted = $wpdb->query( "DELETE FROM $table_name" ); //@codingStandardsIgnoreLine
 			} else {
 				wp_die( 'Cheating, Huh? ' );
 			}
@@ -316,10 +316,10 @@ class Email_Log_List_Table extends WP_List_Table {
 
 		// register pagination options & calculations.
 		$this->set_pagination_args( array(
-				'total_items' => $total_items,
-				'per_page'    => $per_page,
-				'total_pages' => ceil( $total_items / $per_page ),
-			) );
+			'total_items' => $total_items,
+			'per_page'    => $per_page,
+			'total_pages' => ceil( $total_items / $per_page ),
+		) );
 	}
 
 	/**
