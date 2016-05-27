@@ -2,7 +2,7 @@
 /**
  * Table to display Email Logs.
  *
- * Based on Custom List Table Example by Matt Van Andel
+ * Based on Custom List Table Example by Matt Van Andel.
  *
  * @author  Sudar
  * @package Email Log
@@ -11,24 +11,25 @@ class Email_Log_List_Table extends WP_List_Table {
 
 	/**
 	 * Set up a constructor that references the parent constructor.
+	 *
 	 * We use the parent reference to set some default configs.
 	 */
 	function __construct() {
 		parent::__construct( array(
-				'singular'  => 'email-log',     //singular name of the listed records
-				'plural'    => 'email-logs',    //plural name of the listed records
-				'ajax'      => false,           //does this table support ajax?
-			) );
+			'singular'  => 'email-log',     //singular name of the listed records
+			'plural'    => 'email-logs',    //plural name of the listed records
+			'ajax'      => false,           //does this table support ajax?
+		) );
 	}
 
 	/**
-	 * Add extra markup in the toolbars before or after the list
+	 * Adds extra markup in the toolbars before or after the list.
 	 *
-	 * @param string $which Add the markup after (bottom) or before (top) the list
+	 * @param string $which Add the markup after (bottom) or before (top) the list.
 	 */
 	function extra_tablenav( $which ) {
 		if ( 'top' == $which ) {
-			//The code that goes before the table is here
+			// The code that goes before the table is here.
 			echo '<span id = "el-pro-msg">';
 			_e( 'More fields are available in Pro addon. ', 'email-log' );
 			echo '<a href = "http://sudarmuthu.com/out/buy-email-log-more-fields-addon" style = "color:red">';
@@ -38,7 +39,7 @@ class Email_Log_List_Table extends WP_List_Table {
 		}
 
 		if ( 'bottom' == $which ) {
-			//The code that goes after the table is there
+			// The code that goes after the table is here.
 			echo '<p>&nbsp;</p>';
 			echo '<p>&nbsp;</p>';
 
@@ -74,10 +75,11 @@ class Email_Log_List_Table extends WP_List_Table {
 	}
 
 	/**
-	 * Return the list of column and title names.
+	 * Returns the list of column and title names.
 	 *
 	 * @see WP_List_Table::::single_row_columns()
-	 * @return array An associative array containing column information: 'slugs'=>'Visible Titles'
+	 *
+	 * @return array An associative array containing column information: 'slugs'=>'Visible Titles'.
 	 */
 	function get_columns() {
 		$columns = array(
@@ -91,9 +93,9 @@ class Email_Log_List_Table extends WP_List_Table {
 	}
 
 	/**
-	 * Return the list of columns
+	 * Returns the list of columns.
 	 *
-	 * @return array An associative array containing all the columns that should be sortable: 'slugs'=>array('data_values',bool)
+	 * @return array An associative array containing all the columns that should be sortable: 'slugs'=>array('data_values',bool).
 	 */
 	function get_sortable_columns() {
 		$sortable_columns = array(
@@ -105,10 +107,10 @@ class Email_Log_List_Table extends WP_List_Table {
 	}
 
 	/**
-	 * Return values for default columns
+	 * Returns value for default columns.
 	 *
-	 * @param unknown $item
-	 * @param unknown $column_name
+	 * @param object $item
+	 * @param string $column_name
 	 */
 	function column_default( $item, $column_name ) {
 		do_action( EmailLog::HOOK_LOG_DISPLAY_COLUMNS, $column_name, $item );
@@ -117,8 +119,8 @@ class Email_Log_List_Table extends WP_List_Table {
 	/**
 	 * Display sent date column.
 	 *
-	 * @param  object $item Current item object
-	 * @return string       Markup to be displayed for the column
+	 * @param  object $item Current item object.
+	 * @return string       Markup to be displayed for the column.
 	 */
 	function column_sent_date( $item ) {
 		$email_date = mysql2date(
@@ -163,6 +165,7 @@ class Email_Log_List_Table extends WP_List_Table {
 		 * This filter can be used to modify the list of row actions that are displayed.
 		 *
 		 * @since 1.8
+		 *
 		 * @param array $actions List of actions.
 		 * @param object $item The current log item.
 		 */
@@ -176,30 +179,30 @@ class Email_Log_List_Table extends WP_List_Table {
 	}
 
 	/**
-	 * To field
+	 * To field.
 	 *
-	 * @param unknown $item
-	 * @return unknown
+	 * @param object $item
+	 * @return string
 	 */
 	function column_to( $item ) {
 		return stripslashes( $item->to_email );
 	}
 
 	/**
-	 * Subject field
+	 * Subject field.
 	 *
-	 * @param unknown $item
-	 * @return unknown
+	 * @param object $item
+	 * @return string
 	 */
 	function column_subject( $item ) {
 		return stripslashes( $item->subject );
 	}
 
 	/**
-	 * Markup for action column
+	 * Markup for action column.
 	 *
-	 * @param unknown $item
-	 * @return unknown
+	 * @param object $item
+	 * @return string
 	 */
 	function column_cb( $item ) {
 		return sprintf(
@@ -210,9 +213,9 @@ class Email_Log_List_Table extends WP_List_Table {
 	}
 
 	/**
-	 * Specify the list of bulk actions
+	 * Specify the list of bulk actions.
 	 *
-	 * @return array An associative array containing all the bulk actions: 'slugs'=>'Visible Titles'
+	 * @return array An associative array containing all the bulk actions: 'slugs'=>'Visible Titles'.
 	 */
 	function get_bulk_actions() {
 		$actions = array(
@@ -223,16 +226,16 @@ class Email_Log_List_Table extends WP_List_Table {
 	}
 
 	/**
-	 * Handle bulk actions
+	 * Handles bulk actions.
 	 *
 	 * @see $this->prepare_items()
 	 */
 	function process_bulk_action() {
 		global $wpdb;
-		global $EmailLog;
+		global $EmailLog; //@codingStandardsIgnoreLine
 
 		if ( 'delete' === $this->current_action() ) {
-			// delete a list of logs by id
+			// Delete a list of logs by id.
 
 			$nonce = $_REQUEST[ EmailLog::DELETE_LOG_NONCE_FIELD ];
 			if ( wp_verify_nonce( $nonce, EmailLog::DELETE_LOG_ACTION ) ) {
@@ -251,16 +254,16 @@ class Email_Log_List_Table extends WP_List_Table {
 				$selected_ids = esc_sql( $selected_ids );
 
 				$table_name = $wpdb->prefix . EmailLog::TABLE_NAME;
-				$EmailLog->logs_deleted = $wpdb->query( "DELETE FROM $table_name where id IN ( $selected_ids )" );
+				$EmailLog->logs_deleted = $wpdb->query( "DELETE FROM $table_name where id IN ( $selected_ids )" ); //@codingStandardsIgnoreLine
 			} else {
 				wp_die( 'Cheating, Huh? ' );
 			}
-		} else if ( 'delete-all' === $this->current_action() ) {
-			// delete all logs
+		} elseif ( 'delete-all' === $this->current_action() ) {
+			// Delete all logs.
 			$nonce = $_REQUEST[ EmailLog::DELETE_LOG_NONCE_FIELD ];
 			if ( wp_verify_nonce( $nonce, EmailLog::DELETE_LOG_ACTION ) ) {
 				$table_name = $wpdb->prefix . EmailLog::TABLE_NAME;
-				$EmailLog->logs_deleted = $wpdb->query( "DELETE FROM $table_name" );
+				$EmailLog->logs_deleted = $wpdb->query( "DELETE FROM $table_name" ); //@codingStandardsIgnoreLine
 			} else {
 				wp_die( 'Cheating, Huh? ' );
 			}
@@ -276,14 +279,14 @@ class Email_Log_List_Table extends WP_List_Table {
 		$table_name = $wpdb->prefix . EmailLog::TABLE_NAME;
 		$this->_column_headers = $this->get_column_info();
 
-		// Handle bulk actions
+		// Handle bulk actions.
 		$this->process_bulk_action();
 
-		// get current page number
+		// Get current page number.
 		$current_page = $this->get_pagenum();
 
 		$query = 'SELECT * FROM ' . $table_name;
-		$count_query = 'SELECT * FROM ' . $table_name;
+		$count_query = 'SELECT count(*) FROM ' . $table_name;
 		$query_cond = '';
 
 		if ( isset( $_GET['s'] ) ) {
@@ -291,7 +294,7 @@ class Email_Log_List_Table extends WP_List_Table {
 			$query_cond .= " WHERE to_email LIKE '%$search_term%' OR subject LIKE '%$search_term%' ";
 		}
 
-		// Ordering parameters
+		// Ordering parameters.
 		$orderby = ! empty( $_GET['orderby'] ) ? esc_sql( $_GET['orderby'] ) : 'sent_date';
 		$order   = ! empty( $_GET['order'] ) ? esc_sql( $_GET['order'] ) : 'DESC';
 
@@ -299,31 +302,31 @@ class Email_Log_List_Table extends WP_List_Table {
 			$query_cond .= ' ORDER BY ' . $orderby . ' ' . $order;
 		}
 
-		// find total number of items
+		// Find total number of items.
 		$count_query = $count_query . $query_cond;
 		$total_items = $wpdb->get_var( $count_query );
 
-		// adjust the query to take pagination into account
+		// Adjust the query to take pagination into account.
 		$per_page = EmailLog::get_per_page();
 		if ( ! empty( $current_page ) && ! empty( $per_page ) ) {
 			$offset = ( $current_page - 1 ) * $per_page;
 			$query_cond .= ' LIMIT ' . (int) $offset . ',' . (int) $per_page;
 		}
 
-		// Fetch the items
+		// Fetch the items.
 		$query = $query . $query_cond;
 		$this->items = $wpdb->get_results( $query );
 
-		// register pagination options & calculations.
+		// Register pagination options & calculations.
 		$this->set_pagination_args( array(
-				'total_items' => $total_items,
-				'per_page'    => $per_page,
-				'total_pages' => ceil( $total_items / $per_page ),
-			) );
+			'total_items' => $total_items,
+			'per_page'    => $per_page,
+			'total_pages' => ceil( $total_items / $per_page ),
+		) );
 	}
 
 	/**
-	 * If no items are found
+	 * Displays default message when no items are found.
 	 */
 	function no_items() {
 		_e( 'Your email log is empty', 'email-log' );
