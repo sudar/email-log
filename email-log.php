@@ -154,7 +154,7 @@ class EmailLog {
 	 * @param string $file The name of the plugin file.
 	 * @return array Array with links to display in plugins page.
 	 */
-	function add_plugin_links( $links, $file ) {
+	public function add_plugin_links( $links, $file ) {
 		$plugin = plugin_basename( __FILE__ );
 
 		if ( $file == $plugin ) {
@@ -171,8 +171,8 @@ class EmailLog {
 	 *
 	 * @since Genesis
 	 */
-	function register_settings_page() {
-		//Save the handle to your admin page - you'll need it to create a WP_Screen object
+	public function register_settings_page() {
+		// Save the handle to your admin page - you'll need it to create a WP_Screen object
 		$this->admin_page = add_submenu_page( 'tools.php', __( 'Email Log', 'email-log' ), __( 'Email Log', 'email-log' ), 'manage_options', self::PAGE_SLUG , array( $this, 'display_logs' ) );
 
 		add_action( "load-{$this->admin_page}", array( $this, 'create_settings_panel' ) );
@@ -183,7 +183,7 @@ class EmailLog {
 	 *
 	 * @since Genesis
 	 */
-	function display_logs() {
+	public function display_logs() {
 		add_thickbox();
 
 		$this->logs_table->prepare_items( $this->get_per_page() );
@@ -234,7 +234,7 @@ class EmailLog {
 	 *
 	 * @since Genesis
 	 */
-	function create_settings_panel() {
+	public function create_settings_panel() {
 
 		/**
 		 * Create the WP_Screen object against your admin page handle
@@ -289,7 +289,7 @@ class EmailLog {
 	 *
 	 * @since 1.6
 	 */
-	function display_content_callback() {
+	public function display_content_callback() {
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . self::TABLE_NAME;
@@ -349,7 +349,7 @@ class EmailLog {
 	 * @param array $links
 	 * @return array
 	 */
-	function add_action_links( $links ) {
+	public function add_action_links( $links ) {
 		// Add a link to this plugin's settings page
 		$settings_link = '<a href="tools.php?page=email-log">' . __( 'Log', 'email-log' ) . '</a>';
 		array_unshift( $links, $settings_link );
@@ -364,7 +364,7 @@ class EmailLog {
 	 * @see Function relied on
 	 * @link http://striderweb.com/nerdaphernalia/2008/06/give-your-wordpress-plugin-credit/
 	 */
-	function add_footer_links() {
+	public function add_footer_links() {
 		$plugin_data = get_plugin_data( __FILE__ );
 		printf( '%1$s ' . __( 'plugin', 'email-log' ) . ' | ' . __( 'Version', 'email-log' ) . ' %2$s | ' . __( 'by', 'email-log' ) . ' %3$s<br />', $plugin_data['Title'], $plugin_data['Version'], $plugin_data['Author'] );
 	}
@@ -379,7 +379,7 @@ class EmailLog {
 	 * @param array $mail_info Information about email.
 	 * @return array Information about email.
 	 */
-	function log_email( $mail_info ) {
+	public function log_email( $mail_info ) {
 		global $wpdb;
 
 		$attachment_present = ( count( $mail_info['attachments'] ) > 0 ) ? 'true' : 'false';
