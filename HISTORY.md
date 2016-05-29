@@ -1,6 +1,7 @@
 ## Changelog ##
 
-### In Developemnt - (Dev time: 2.5 hour) ###
+### In Developemnt - (Dev time: 3.5 hour) ###
+- Fix: Added access modifiers to class methods
 - Fix: Improve the performance of count query (issue #33)
 - Docs: Removed unused array_get() method
 - Docs: Inline documentation added
