@@ -185,7 +185,7 @@ class Email_Log_List_Table extends WP_List_Table {
 	 * @return string
 	 */
 	function column_to( $item ) {
-		return stripslashes( $item->to_email );
+		return esc_html( $item->to_email );
 	}
 
 	/**
@@ -195,7 +195,7 @@ class Email_Log_List_Table extends WP_List_Table {
 	 * @return string
 	 */
 	function column_subject( $item ) {
-		return stripslashes( $item->subject );
+		return esc_html( $item->subject );
 	}
 
 	/**
