@@ -42,6 +42,11 @@ if ( ! defined( 'EMAIL_LOG_PLUGIN_FILE' ) ) {
 require_once plugin_dir_path( __FILE__ ) . 'include/install.php';
 
 /**
+ * Helper functions.
+ */
+require_once plugin_dir_path( __FILE__ ) . 'include/util/helper.php';
+
+/**
  * The main plugin class.
  *
  * @since Genesis
