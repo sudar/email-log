@@ -1,0 +1,29 @@
+{
+  "name": "email-log",
+  "title": "Email Log",
+  "description": "Email Log is a WordPress Plugin that logs every email sent through WordPress.",
+  "version": "1.9.0",
+  "homepage": "http://sudarmuthu.com",
+  "license": "GPLv2+",
+  "author": {
+    "name": "Sudar",
+    "email": "sudar@sudarmuthu.com",
+    "url": "http://sudarmuthu.com"
+  },
+  "bugs": {
+    "url": "https://github.com/sudar/email-log/issues",
+    "email": "sudar@sudarmuthu.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sudar/email-log.git"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-copy": "^0.8.0",
+    "matchdep": "^0.3.0",
+    "time-grunt": "^1.2.0"
+  },
+  "private": true
+}
