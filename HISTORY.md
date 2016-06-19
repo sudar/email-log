@@ -1,6 +1,6 @@
 ## Changelog ##
 
-### In Developemnt - (Dev time: 6 hour) ###
+### v1.9 - (2016-06-19) - (Dev time: 6 hour) ###
 - Fix: Improve the performance of count query (issue #33)
 - Docs: Added access modifiers to class methods
 - Docs: Removed unused array_get() method
@@ -129,6 +129,9 @@
 - Initial Release
 
 ## Upgrade Notice ##
+
+### 1.9 ###
+- Fixed issues with pagination.
 
 ### 1.8.2 ###
 Added the ability to log all emails in the TO field instead of just the first one
