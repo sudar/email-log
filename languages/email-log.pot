@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the Email Log package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Email Log 1.8.2\n"
+"Project-Id-Version: Email Log 1.9\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/email-log\n"
-"POT-Creation-Date: 2016-04-20 11:54:31+00:00\n"
+"POT-Creation-Date: 2016-06-19 07:00:18+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,168 +12,199 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: email-log.php:106
+#: dist/email-log.php:168 email-log.php:168
 msgid "Buy Addons"
 msgstr ""
 
-#. #-#-#-#-#  email-log.pot (Email Log 1.8.2)  #-#-#-#-#
+#. #-#-#-#-#  email-log.pot (Email Log 1.9)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
-#: email-log.php:117
+#: dist/email-log.php:181 email-log.php:181
 msgid "Email Log"
 msgstr ""
 
-#: email-log.php:131
+#: dist/email-log.php:197 email-log.php:197
 msgid "Email Logs"
 msgstr ""
 
-#: email-log.php:137
+#: dist/email-log.php:203 email-log.php:203
 msgid "1 email log deleted."
 msgid_plural "%s email logs deleted"
 msgstr[0] ""
 msgstr[1] ""
 
-#: email-log.php:139
+#: dist/email-log.php:205 email-log.php:205
 msgid "There was some problem in deleting the email logs"
 msgstr ""
 
-#: email-log.php:147
+#: dist/email-log.php:213 email-log.php:213
 msgid "Search Logs"
 msgstr ""
 
-#: email-log.php:187 tmp_addon/email-log-forward-email.php:152
+#: dist/email-log.php:255 email-log.php:255
+#: tmp_addon/email-log-forward-email.php:152
 msgid "About Plugin"
 msgstr ""
 
-#: email-log.php:189 tmp_addon/email-log-forward-email.php:154
+#: dist/email-log.php:257 email-log.php:257
+#: tmp_addon/email-log-forward-email.php:154
 msgid ""
 "Email Log WordPress Plugin, allows you to log all emails that are sent "
 "through WordPress."
 msgstr ""
 
-#: email-log.php:196 tmp_addon/email-log-forward-email.php:162
+#: dist/email-log.php:264 email-log.php:264
+#: tmp_addon/email-log-forward-email.php:162
 msgid "More information"
 msgstr ""
 
-#: email-log.php:197 tmp_addon/email-log-forward-email.php:163
+#: dist/email-log.php:265 email-log.php:265
+#: tmp_addon/email-log-forward-email.php:163
 msgid "Plugin Homepage/support"
 msgstr ""
 
-#: email-log.php:198 tmp_addon/email-log-forward-email.php:164
+#: dist/email-log.php:266 email-log.php:266
+#: tmp_addon/email-log-forward-email.php:164
 msgid "Plugin author's blog"
 msgstr ""
 
-#: email-log.php:199 tmp_addon/email-log-forward-email.php:165
+#: dist/email-log.php:267 email-log.php:267
+#: tmp_addon/email-log-forward-email.php:165
 msgid "Other Plugin's by Author"
 msgstr ""
 
-#: email-log.php:206
+#: dist/email-log.php:274 email-log.php:274
 msgid "Entries per page"
 msgstr ""
 
-#: email-log.php:288
+#: dist/email-log.php:359 email-log.php:359
 msgid "Log"
 msgstr ""
 
-#: email-log.php:298
+#: dist/email-log.php:374 email-log.php:374
 msgid "plugin"
 msgstr ""
 
-#: email-log.php:298
+#: dist/email-log.php:374 email-log.php:374
 msgid "Version"
 msgstr ""
 
-#: email-log.php:298
+#: dist/email-log.php:374 email-log.php:374
 msgid "by"
 msgstr ""
 
-#: include/class-email-log-list-table.php:33
+#: dist/include/class-email-log-list-table.php:36
+#: include/class-email-log-list-table.php:36
 msgid "More fields are available in Pro addon. "
 msgstr ""
 
-#: include/class-email-log-list-table.php:35
+#: dist/include/class-email-log-list-table.php:38
+#: include/class-email-log-list-table.php:38
 msgid "Buy Now"
 msgstr ""
 
-#: include/class-email-log-list-table.php:46
+#: dist/include/class-email-log-list-table.php:49
+#: include/class-email-log-list-table.php:49
 msgid ""
 "The following are the list of pro addons that are currently available for "
 "purchase."
 msgstr ""
 
-#: include/class-email-log-list-table.php:52
+#: dist/include/class-email-log-list-table.php:55
+#: include/class-email-log-list-table.php:55
 msgid "Email Log - Resend Email"
 msgstr ""
 
-#: include/class-email-log-list-table.php:53
+#: dist/include/class-email-log-list-table.php:56
+#: include/class-email-log-list-table.php:56
 msgid "Adds the ability to resend email from logs."
 msgstr ""
 
-#: include/class-email-log-list-table.php:54
-#: include/class-email-log-list-table.php:61
-#: include/class-email-log-list-table.php:68
+#: dist/include/class-email-log-list-table.php:57
+#: dist/include/class-email-log-list-table.php:64
+#: dist/include/class-email-log-list-table.php:71
+#: include/class-email-log-list-table.php:57
+#: include/class-email-log-list-table.php:64
+#: include/class-email-log-list-table.php:71
 msgid "More Info"
 msgstr ""
 
-#: include/class-email-log-list-table.php:55
-#: include/class-email-log-list-table.php:62
-#: include/class-email-log-list-table.php:69
+#: dist/include/class-email-log-list-table.php:58
+#: dist/include/class-email-log-list-table.php:65
+#: dist/include/class-email-log-list-table.php:72
+#: include/class-email-log-list-table.php:58
+#: include/class-email-log-list-table.php:65
+#: include/class-email-log-list-table.php:72
 msgid "Buy now"
 msgstr ""
 
-#: include/class-email-log-list-table.php:59
+#: dist/include/class-email-log-list-table.php:62
+#: include/class-email-log-list-table.php:62
 msgid "Email Log - More fields"
 msgstr ""
 
-#: include/class-email-log-list-table.php:60
+#: dist/include/class-email-log-list-table.php:63
+#: include/class-email-log-list-table.php:63
 msgid ""
 "Adds more fields (From, CC, BCC, Reply To, Attachment) to the logs page."
 msgstr ""
 
-#: include/class-email-log-list-table.php:66
+#: dist/include/class-email-log-list-table.php:69
+#: include/class-email-log-list-table.php:69
 msgid "Email Log - Forward Email"
 msgstr ""
 
-#: include/class-email-log-list-table.php:67
+#: dist/include/class-email-log-list-table.php:70
+#: include/class-email-log-list-table.php:70
 msgid ""
 "This addon allows you to send a copy of all emails send from WordPress to "
 "another email address"
 msgstr ""
 
-#: include/class-email-log-list-table.php:85
+#: dist/include/class-email-log-list-table.php:89
+#: include/class-email-log-list-table.php:89
 msgid "Sent at"
 msgstr ""
 
-#: include/class-email-log-list-table.php:86
+#: dist/include/class-email-log-list-table.php:90
+#: include/class-email-log-list-table.php:90
 #: tmp_addon/email-log-forward-email.php:180
 msgid "To"
 msgstr ""
 
-#: include/class-email-log-list-table.php:87
+#: dist/include/class-email-log-list-table.php:91
+#: include/class-email-log-list-table.php:91
 msgid "Subject"
 msgstr ""
 
-#: include/class-email-log-list-table.php:125
+#: dist/include/class-email-log-list-table.php:135
+#: include/class-email-log-list-table.php:135
 msgid "%s @ %s"
 msgstr ""
 
-#: include/class-email-log-list-table.php:144
+#: dist/include/class-email-log-list-table.php:154
+#: include/class-email-log-list-table.php:154
 msgid "Email Content"
 msgstr ""
 
-#: include/class-email-log-list-table.php:145
+#: dist/include/class-email-log-list-table.php:155
+#: include/class-email-log-list-table.php:155
 msgid "View Content"
 msgstr ""
 
-#: include/class-email-log-list-table.php:159
-#: include/class-email-log-list-table.php:219
+#: dist/include/class-email-log-list-table.php:169
+#: dist/include/class-email-log-list-table.php:238
+#: include/class-email-log-list-table.php:169
+#: include/class-email-log-list-table.php:238
 msgid "Delete"
 msgstr ""
 
-#: include/class-email-log-list-table.php:220
+#: dist/include/class-email-log-list-table.php:239
+#: include/class-email-log-list-table.php:239
 msgid "Delete All Logs"
 msgstr ""
 
-#: include/class-email-log-list-table.php:329
+#: dist/include/class-email-log-list-table.php:348
+#: include/class-email-log-list-table.php:348
 msgid "Your email log is empty"
 msgstr ""
 
@@ -192,13 +223,13 @@ msgstr ""
 
 #: tmp_addon/email-log-forward-email.php:181
 #: tmp_addon/email-log-more-fields.php:81
-#: tmp_addon/email-log-resend-email.php:50
+#: tmp_addon/email-log-resend-email.php:51
 msgid "CC"
 msgstr ""
 
 #: tmp_addon/email-log-forward-email.php:182
 #: tmp_addon/email-log-more-fields.php:82
-#: tmp_addon/email-log-resend-email.php:54
+#: tmp_addon/email-log-resend-email.php:55
 msgid "BCC"
 msgstr ""
 
@@ -214,7 +245,7 @@ msgid "From"
 msgstr ""
 
 #: tmp_addon/email-log-more-fields.php:83
-#: tmp_addon/email-log-resend-email.php:58
+#: tmp_addon/email-log-resend-email.php:60
 msgid "Reply To"
 msgstr ""
 
@@ -230,20 +261,20 @@ msgstr ""
 msgid "Additional Details"
 msgstr ""
 
-#: tmp_addon/email-log-resend-email.php:62
+#: tmp_addon/email-log-resend-email.php:65
 msgid "Content Type"
 msgstr ""
 
-#: tmp_addon/email-log-resend-email.php:66
-#: tmp_addon/email-log-resend-email.php:85
+#: tmp_addon/email-log-resend-email.php:70
+#: tmp_addon/email-log-resend-email.php:92
 msgid "Resend Email"
 msgstr ""
 
-#: tmp_addon/email-log-resend-email.php:182
+#: tmp_addon/email-log-resend-email.php:195
 msgid "Email was successfully resent"
 msgstr ""
 
-#: tmp_addon/email-log-resend-email.php:184
+#: tmp_addon/email-log-resend-email.php:197
 msgid "There was some problem in sending the email"
 msgstr ""
 
