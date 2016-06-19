@@ -14,7 +14,7 @@ class Email_Log_List_Table extends WP_List_Table {
 	 *
 	 * We use the parent reference to set some default configs.
 	 */
-	function __construct() {
+	public function __construct() {
 		parent::__construct( array(
 			'singular'  => 'email-log',     //singular name of the listed records
 			'plural'    => 'email-logs',    //plural name of the listed records
@@ -25,9 +25,11 @@ class Email_Log_List_Table extends WP_List_Table {
 	/**
 	 * Adds extra markup in the toolbars before or after the list.
 	 *
+	 * @access protected
+	 *
 	 * @param string $which Add the markup after (bottom) or before (top) the list.
 	 */
-	function extra_tablenav( $which ) {
+	protected function extra_tablenav( $which ) {
 		if ( 'top' == $which ) {
 			// The code that goes before the table is here.
 			echo '<span id = "el-pro-msg">';
@@ -81,7 +83,7 @@ class Email_Log_List_Table extends WP_List_Table {
 	 *
 	 * @return array An associative array containing column information: 'slugs'=>'Visible Titles'.
 	 */
-	function get_columns() {
+	public function get_columns() {
 		$columns = array(
 			'cb'        => '<input type="checkbox" />', //Render a checkbox instead of text
 			'sent_date' => __( 'Sent at', 'email-log' ),
@@ -95,9 +97,11 @@ class Email_Log_List_Table extends WP_List_Table {
 	/**
 	 * Returns the list of columns.
 	 *
+	 * @access protected
+	 *
 	 * @return array An associative array containing all the columns that should be sortable: 'slugs'=>array('data_values',bool).
 	 */
-	function get_sortable_columns() {
+	protected function get_sortable_columns() {
 		$sortable_columns = array(
 			'sent_date'   => array( 'sent_date', true ), //true means it's already sorted
 			'to'          => array( 'to_email', false ),
@@ -109,20 +113,24 @@ class Email_Log_List_Table extends WP_List_Table {
 	/**
 	 * Returns value for default columns.
 	 *
+	 * @access protected
+	 *
 	 * @param object $item
 	 * @param string $column_name
 	 */
-	function column_default( $item, $column_name ) {
+	protected function column_default( $item, $column_name ) {
 		do_action( EmailLog::HOOK_LOG_DISPLAY_COLUMNS, $column_name, $item );
 	}
 
 	/**
 	 * Display sent date column.
 	 *
+	 * @access protected
+	 *
 	 * @param  object $item Current item object.
 	 * @return string       Markup to be displayed for the column.
 	 */
-	function column_sent_date( $item ) {
+	protected function column_sent_date( $item ) {
 		$email_date = mysql2date(
 			sprintf( __( '%s @ %s', 'email-log' ), get_option( 'date_format', 'F j, Y' ), get_option( 'time_format', 'g:i A' ) ),
 			$item->sent_date
@@ -181,30 +189,36 @@ class Email_Log_List_Table extends WP_List_Table {
 	/**
 	 * To field.
 	 *
+	 * @access protected
+	 *
 	 * @param object $item
 	 * @return string
 	 */
-	function column_to( $item ) {
+	protected function column_to( $item ) {
 		return esc_html( $item->to_email );
 	}
 
 	/**
 	 * Subject field.
 	 *
+	 * @access protected
+	 *
 	 * @param object $item
 	 * @return string
 	 */
-	function column_subject( $item ) {
+	protected function column_subject( $item ) {
 		return esc_html( $item->subject );
 	}
 
 	/**
 	 * Markup for action column.
 	 *
+	 * @access protected
+	 *
 	 * @param object $item
 	 * @return string
 	 */
-	function column_cb( $item ) {
+	protected function column_cb( $item ) {
 		return sprintf(
 			'<input type="checkbox" name="%1$s[]" value="%2$s" />',
 			/*$1%s*/ $this->_args['singular'],
@@ -215,9 +229,11 @@ class Email_Log_List_Table extends WP_List_Table {
 	/**
 	 * Specify the list of bulk actions.
 	 *
+	 * @access protected
+	 *
 	 * @return array An associative array containing all the bulk actions: 'slugs'=>'Visible Titles'.
 	 */
-	function get_bulk_actions() {
+	protected function get_bulk_actions() {
 		$actions = array(
 			'delete'     => __( 'Delete', 'email-log' ),
 			'delete-all' => __( 'Delete All Logs', 'email-log' ),
@@ -230,7 +246,7 @@ class Email_Log_List_Table extends WP_List_Table {
 	 *
 	 * @see $this->prepare_items()
 	 */
-	function process_bulk_action() {
+	public function process_bulk_action() {
 		global $wpdb;
 		global $EmailLog; //@codingStandardsIgnoreLine
 
@@ -273,7 +289,7 @@ class Email_Log_List_Table extends WP_List_Table {
 	/**
 	 * Prepare data for display.
 	 */
-	function prepare_items() {
+	public function prepare_items() {
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . EmailLog::TABLE_NAME;
@@ -328,7 +344,7 @@ class Email_Log_List_Table extends WP_List_Table {
 	/**
 	 * Displays default message when no items are found.
 	 */
-	function no_items() {
+	public function no_items() {
 		_e( 'Your email log is empty', 'email-log' );
 	}
 }
