@@ -1,7 +1,7 @@
 ## Changelog ##
 
 ### Development in progress ###
-
+- Fix: Only allow users with `manage_option` capability to view email content.
 
 ### v1.9 - (2016-06-19) - (Dev time: 6 hour) ###
 - Fix: Improve the performance of count query (issue #33)
