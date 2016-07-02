@@ -1,6 +1,9 @@
 ## Changelog ##
 
-### v1.9 - (2016-06-19) - (Dev time: 6 hour) ###
+### v1.9.1 - (2016-07-02) - (Dev time: 0.5 hour) ###
+- Fix: Only allow users with `manage_option` capability to view email content.
+
+### v1.9 - (2016-06-19) - (Dev time: 6 hours) ###
 - Fix: Improve the performance of count query (issue #33)
 - Docs: Added access modifiers to class methods
 - Docs: Removed unused array_get() method
@@ -14,7 +17,7 @@
 ### v1.8.1 (2015-12-27) - (Dev time: 0.5 hour) ###
 - Fix: Fixed the "Delete All Logs" issue that was introduced in v1.8
 
-### v1.8 (2015-12-26) - (Dev time: 5 hour) ###
+### v1.8 (2015-12-26) - (Dev time: 5 hours) ###
 - New: Added filters and actions for addons
 - New: Added Resend Email Addon
 - Tweak: Optimize for large number of logs
@@ -129,6 +132,9 @@
 - Initial Release
 
 ## Upgrade Notice ##
+
+### 1.9.1 ###
+- Fixed a minor security issue that allowed unprevilleged users to view content of logged emails
 
 ### 1.9 ###
 - Fixed issues with pagination.
