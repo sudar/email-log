@@ -3,7 +3,8 @@
 **Tags:** email, log, multisite  
 **Requires at least:** 3.3  
 **Tested up to:** 4.5.2  
-**Stable tag:** 1.9  
+**Stable tag:** 1.9.1  
+[![Build Status](https://scrutinizer-ci.com/g/sudar/email-log/badges/build.png?b=master)](https://scrutinizer-ci.com/g/sudar/email-log/build-status/master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/sudar/email-log/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/sudar/email-log/?branch=master)
 
 Logs every email sent through WordPress. Works with WordPress Multisite as well
 
