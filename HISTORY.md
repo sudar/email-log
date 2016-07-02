@@ -1,5 +1,8 @@
 ## Changelog ##
 
+### Development in progress ###
+
+
 ### v1.9 - (2016-06-19) - (Dev time: 6 hour) ###
 - Fix: Improve the performance of count query (issue #33)
 - Docs: Added access modifiers to class methods

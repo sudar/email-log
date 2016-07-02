@@ -3,7 +3,7 @@
 **Tags:** email, log, multisite  
 **Requires at least:** 3.3  
 **Tested up to:** 4.5.2  
-**Stable tag:** 1.9  
+**Stable tag:** 1.9.1  
 
 Logs every email sent through WordPress. Works with WordPress Multisite as well
 
