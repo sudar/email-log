@@ -1,3 +1,8 @@
+# Ditch sudo and use containers.
+# @link http://docs.travis-ci.com/user/migrating-from-legacy/#Why-migrate-to-container-based-infrastructure%3F
+# @link http://docs.travis-ci.com/user/workers/container-based-infrastructure/#Routing-your-build-to-container-based-infrastructure
+sudo: false
+
 language: php
 
 notifications:
@@ -12,11 +17,14 @@ branches:
     - master
 
 php:
+  - 5.2
   - 5.3
   - 5.4
   - 5.5
   - 5.6
   - 7.0
+  - hhvm
+  - nightly
 
 env:
   - WP_VERSION=latest WP_MULTISITE=0
@@ -25,8 +33,17 @@ matrix:
   include:
     - php: 5.3
       env: WP_VERSION=latest WP_MULTISITE=1
+    - php: 5.6
+      env: WP_VERSION=nightly WP_MULTISITE=0 CODE_COVERAGE=' --coverage-clover=coverage.clover'
 
 before_script:
   - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
 
-script: phpunit
+script: phpunit `echo $CODE_COVERAGE`
+
+after_script:
+  - |
+    if [[ -n "$CODE_COVERAGE" ]] ; then
+      wget https://scrutinizer-ci.com/ocular.phar
+      php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+    fi
