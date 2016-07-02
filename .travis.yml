@@ -12,10 +12,6 @@ notifications:
   slack:
     secure: QZrl08SxRfVNKKDwFxHzp8Yl+EQwabeNyF/mS/6HTfalV4tqaPXD9Xc8FY60c6Adgy3yrp1Vhv5h/XPL+Q2sROTDFE9oWWJcPHzQOr9qfRafrA4j2yyqVvhjZfjXtdqJgnS8Ubk3840kPAIrOyNCYbwHtTpcoNLoeVewM7mSQWI=
 
-branches:
-  only:
-    - master
-
 php:
   - 5.2
   - 5.3
