@@ -5,7 +5,7 @@
  * Description: Logs every email sent through WordPress
  * Donate Link: http://sudarmuthu.com/if-you-wanna-thank-me
  * Author: Sudar
- * Version: 1.9
+ * Version: 1.9.1
  * Author URI: http://sudarmuthu.com/
  * Text Domain: email-log
  * Domain Path: languages/
@@ -76,7 +76,7 @@ class EmailLog {
 	 * @since Genesis
 	 * @var const VERSION
 	 */
-	const VERSION                  = '1.9';
+	const VERSION                  = '1.9.1';
 
 	/**
 	 * Filter name.
@@ -297,13 +297,15 @@ class EmailLog {
 	public function display_content_callback() {
 		global $wpdb;
 
-		$table_name = $wpdb->prefix . self::TABLE_NAME;
-		$email_id   = absint( $_GET['email_id'] );
+		if ( current_user_can( 'manage_options' ) ) {
+			$table_name = $wpdb->prefix . self::TABLE_NAME;
+			$email_id   = absint( $_GET['email_id'] );
 
-		$query      = $wpdb->prepare( 'SELECT * FROM ' . $table_name . ' WHERE id = %d', $email_id );
-		$content    = $wpdb->get_results( $query );
+			$query   = $wpdb->prepare( 'SELECT * FROM ' . $table_name . ' WHERE id = %d', $email_id );
+			$content = $wpdb->get_results( $query );
 
-		echo wpautop( $content[0]->message );
+			echo wpautop( $content[0]->message );
+		}
 
 		die(); // this is required to return a proper result
 	}
