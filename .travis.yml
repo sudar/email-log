@@ -28,12 +28,17 @@ matrix:
   include:
     - php: 5.3
       env: WP_VERSION=latest WP_MULTISITE=1
+    - php: 5.6
+      env: WP_VERSION=nightly WP_MULTISITE=0 CODE_COVERAGE=' --coverage-clover=coverage.clover'
 
 before_script:
   - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
 
-script: phpunit  --coverage-clover=coverage.clover
+script: phpunit $CODE_COVERAGE
 
 after_script:
-    - wget https://scrutinizer-ci.com/ocular.phar
-    - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+  - |
+    if [[ -n "$CODE_COVERAGE" ]] ; then
+      wget https://scrutinizer-ci.com/ocular.phar
+      php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+    fi
