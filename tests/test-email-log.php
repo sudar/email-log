@@ -28,10 +28,11 @@ class Email_Log_Tests extends WP_UnitTestCase {
 
 	/**
 	 * Test translations.
-	 * @TODO: Daniel
 	 */
 	public function test_translations() {
-
+		$this->assertFileExists( $this->object->include_path . 'languages/email-log-de_DE.mo' );
+		$this->assertFileExists( $this->object->include_path . 'languages/email-log-lt_LT.mo' );
+		$this->assertFileExists( $this->object->include_path . 'languages/email-log-nl_NL.mo' );
 	}
 
 	/**
@@ -39,7 +40,7 @@ class Email_Log_Tests extends WP_UnitTestCase {
 	 */
 	public function test_included_files() {
 		$this->assertFileExists( $this->object->include_path . 'include/install.php' );
-
-		//@TODO: Daniel add it for other included files
+		$this->assertFileExists( $this->object->include_path . 'include/class-email-log-list-table.php' );
+		$this->assertFileExists( $this->object->include_path . 'include/util/helper.php' );
 	}
 }
