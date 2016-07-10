@@ -23,6 +23,7 @@
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-copy": "^0.8.0",
     "matchdep": "^0.3.0",
+    "phantomjs-prebuilt": "^2.1.7",
     "time-grunt": "^1.2.0"
   },
   "private": true

@@ -1,0 +1,59 @@
+actor: Tester
+paths:
+    tests: tests
+    log: tests/_output
+    data: tests/_data
+    helpers: tests/_support
+settings:
+    bootstrap: _bootstrap.php
+    colors: true
+    memory_limit: 1024M
+modules:
+    config:
+        Db:
+            dsn: 'mysql:host=localhost;dbname=wordpress-tests'
+            user: root
+            password: root
+            dump: tests/_data/dump.sql
+        WPBrowser:
+            url: 'http://local.wordpress.dev'
+            adminUsername: sudar
+            adminPassword: localsudar
+            adminUrl: /wp-admin
+        WPDb:
+            dsn: 'mysql:host=local.wordpress.dev;dbname=wordpress_default'
+            user: external
+            password: external
+            dump: tests/_data/dump.sql
+            populate: false
+            cleanup: false
+            url: 'http://local.wordpress.dev'
+            tablePrefix: wp_
+        WPLoader:
+            #wpRootFolder: /srv/www/wordpress-default/
+            wpRootFolder: /Users/sudar/dev/vvv/www/wordpress-default/
+            dbName: emaillog_test
+            dbHost: local.wordpress.dev
+            dbUser: external
+            dbPassword: external
+            wpDebug: true
+            dbCharset: utf8
+            dbCollate: ''
+            tablePrefix: wptests_
+            domain: local.wordpress.dev
+            adminEmail: admin@wp.local
+            title: 'WP Tests'
+            phpBinary: php
+            language: ''
+            plugins: [email-log/email-log.php]
+            activatePlugins: [email-log/email-log.php]
+            bootstrapActions: []
+        WPWebDriver:
+            url: 'http://local.wordpress.dev'
+            browser: phantomjs
+            port: 4444
+            restart: true
+            wait: 2
+            adminUsername: admin
+            adminPassword: password
+            adminUrl: /wp-admin

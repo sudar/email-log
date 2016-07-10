@@ -1,0 +1,15 @@
+{
+    "name": "sudar/email-log",
+    "description": "Email Log WordPress plugin",
+    "license": "GPL-2.0+",
+    "type": "project",
+    "require-dev": {
+        "codeception/codeception": "^2.2",
+        "lucatume/wp-browser": "^1.14"
+    },
+    "extra": {
+        "installer-paths": {
+            "vendor/{$name}/": ["type:wordpress-plugin"]
+        }
+    }
+}
