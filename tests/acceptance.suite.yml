@@ -1,0 +1,9 @@
+# Codeception Test Suite Configuration
+
+# suite for WordPress acceptance tests.
+# perform tests in browser the WPWebDriver module.
+class_name: AcceptanceTester
+modules:
+    enabled:
+        - WPWebDriver
+        - \Helper\Acceptance

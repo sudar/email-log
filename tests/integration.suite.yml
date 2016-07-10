@@ -1,0 +1,7 @@
+# Codeception Test Suite Configuration
+
+# suite for integration tests.
+# Load WordPress and test classes that rely on it.
+class_name: IntegrationTester
+modules:
+    enabled: [WPLoader, \Helper\Integration]
