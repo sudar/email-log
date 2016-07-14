@@ -20,7 +20,7 @@ class Email_Log_Tests extends WP_UnitTestCase {
 	 */
 	public function test_include_path() {
 		// Plugin Folder Path
-		$expected = str_replace( 'tests/', '', plugin_dir_path( __FILE__ ) );
+		$expected = str_replace( 'tests/wp-tests/', '', plugin_dir_path( __FILE__ ) );
 		$actual   = $this->object->include_path;
 
 		$this->assertEquals( $expected, $actual );
@@ -28,11 +28,14 @@ class Email_Log_Tests extends WP_UnitTestCase {
 
 	/**
 	 * Test translations.
-	 */
+	 */ 
 	public function test_translations() {
-		$this->assertFileExists( $this->object->include_path . 'languages/email-log-de_DE.mo' );
-		$this->assertFileExists( $this->object->include_path . 'languages/email-log-lt_LT.mo' );
-		$this->assertFileExists( $this->object->include_path . 'languages/email-log-nl_NL.mo' );
+		// Plugin Folder Path
+		$expected  = str_replace( 'tests/wp-tests', '', dirname( plugin_basename( __FILE__ ) ) );
+		$expected .= 'languages/';
+		$actual    = $this->object->translations;
+
+		$this->assertEquals( $expected, $actual );
 	}
 
 	/**
