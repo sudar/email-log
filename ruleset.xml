@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
-<ruleset name="Bulk Delete">
-	<description>Bulk Delete coding standard</description>
+<ruleset name="Email Log">
+	<description>Email Log coding standard</description>
 
 	<file>./</file>
 
  	<!-- Non code directories -->
 	<exclude-pattern>docs/*</exclude-pattern>
+	<exclude-pattern>dist/*</exclude-pattern>
  	<exclude-pattern>node_modules/*</exclude-pattern>
  	<exclude-pattern>test/*</exclude-pattern>
  	<exclude-pattern>tests/*</exclude-pattern>
@@ -26,6 +27,12 @@
 	<rule ref="WordPress-Extra">
 		<!-- Exclude suggestion to use esc_html__() instead of _e() -->
 		<exclude name="WordPress.XSS.EscapeOutput.UnsafePrintingFunction"/>
+	</rule>
+
+	<!-- PHP Compatibility -->
+	<config name="testVersion" value="5.3-7.0"/>
+	<rule ref="PHPCompatibility">
+		<exclude name="PHPCompatibility.PHP.DefaultTimezoneRequired"/>
 	</rule>
 
 	<!--Docs-->
