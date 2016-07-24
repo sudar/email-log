@@ -1,4 +1,11 @@
-<?php
+<?php namespace EmailLog\Core\UI;
+
+use EmailLog\Core\EmailLog as EmailLog;
+
+if ( ! class_exists( 'WP_List_Table' ) ) {
+	require_once ABSPATH . WPINC . '/class-wp-list-table.php';
+}
+
 /**
  * Table to display Email Logs.
  *
@@ -7,7 +14,7 @@
  * @author  Sudar
  * @package Email Log
  */
-class Email_Log_List_Table extends WP_List_Table {
+class LogTable extends \WP_List_Table {
 
 	/**
 	 * Set up a constructor that references the parent constructor.
@@ -248,7 +255,8 @@ class Email_Log_List_Table extends WP_List_Table {
 	 */
 	public function process_bulk_action() {
 		global $wpdb;
-		global $EmailLog; //@codingStandardsIgnoreLine
+
+		$email_log = email_log();
 
 		if ( 'delete' === $this->current_action() ) {
 			// Delete a list of logs by id.
@@ -270,7 +278,8 @@ class Email_Log_List_Table extends WP_List_Table {
 				$selected_ids = esc_sql( $selected_ids );
 
 				$table_name = $wpdb->prefix . EmailLog::TABLE_NAME;
-				$EmailLog->logs_deleted = $wpdb->query( "DELETE FROM $table_name where id IN ( $selected_ids )" ); //@codingStandardsIgnoreLine
+				// TODO: move this logic away from Email Log class
+				$email_log->logs_deleted = $wpdb->query( "DELETE FROM $table_name where id IN ( $selected_ids )" ); //@codingStandardsIgnoreLine
 			} else {
 				wp_die( 'Cheating, Huh? ' );
 			}
@@ -279,7 +288,7 @@ class Email_Log_List_Table extends WP_List_Table {
 			$nonce = $_REQUEST[ EmailLog::DELETE_LOG_NONCE_FIELD ];
 			if ( wp_verify_nonce( $nonce, EmailLog::DELETE_LOG_ACTION ) ) {
 				$table_name = $wpdb->prefix . EmailLog::TABLE_NAME;
-				$EmailLog->logs_deleted = $wpdb->query( "DELETE FROM $table_name" ); //@codingStandardsIgnoreLine
+				$email_log->logs_deleted = $wpdb->query( "DELETE FROM $table_name" ); //@codingStandardsIgnoreLine
 			} else {
 				wp_die( 'Cheating, Huh? ' );
 			}
@@ -348,4 +357,3 @@ class Email_Log_List_Table extends WP_List_Table {
 		_e( 'Your email log is empty', 'email-log' );
 	}
 }
-?>

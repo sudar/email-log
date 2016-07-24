@@ -13,7 +13,6 @@ notifications:
     secure: QZrl08SxRfVNKKDwFxHzp8Yl+EQwabeNyF/mS/6HTfalV4tqaPXD9Xc8FY60c6Adgy3yrp1Vhv5h/XPL+Q2sROTDFE9oWWJcPHzQOr9qfRafrA4j2yyqVvhjZfjXtdqJgnS8Ubk3840kPAIrOyNCYbwHtTpcoNLoeVewM7mSQWI=
 
 php:
-  - 5.2
   - 5.3
   - 5.4
   - 5.5
