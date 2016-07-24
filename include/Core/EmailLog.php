@@ -96,6 +96,7 @@ class EmailLog {
 	 */
 	public function __construct( $file ) {
 		$this->plugin_file = $file;
+		$this->translations_path = dirname( plugin_basename( $this->plugin_file ) ) . '/languages/' ;
 	}
 
 	/**
@@ -107,7 +108,6 @@ class EmailLog {
 		}
 
 		// Load localization domain.
-		$this->translations_path = dirname( plugin_basename( $this->plugin_file ) ) . '/languages/' ;
 		load_plugin_textdomain( 'email-log', false, $this->translations_path );
 
 		// Register hooks.
