@@ -24,6 +24,13 @@ class EmailLog {
 	private $loaded;
 
 	/**
+	 * @var string Plugin file path.
+	 *
+	 * @since 2.0
+	 */
+	private $plugin_file;
+
+	/**
 	 * Filesystem directory path where translations are stored.
 	 *
 	 * @since 2.0
