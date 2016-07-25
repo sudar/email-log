@@ -1,5 +1,6 @@
 <?php namespace EmailLog\Core\UI;
 
+use EmailLog\Core\DB\TableManager;
 use EmailLog\Core\EmailLog as EmailLog;
 
 if ( ! class_exists( 'WP_List_Table' ) ) {
@@ -277,7 +278,7 @@ class LogTable extends \WP_List_Table {
 
 				$selected_ids = esc_sql( $selected_ids );
 
-				$table_name = $wpdb->prefix . EmailLog::TABLE_NAME;
+				$table_name = $wpdb->prefix . TableManager::TABLE_NAME;
 				// TODO: move this logic away from Email Log class
 				$email_log->logs_deleted = $wpdb->query( "DELETE FROM $table_name where id IN ( $selected_ids )" ); //@codingStandardsIgnoreLine
 			} else {
@@ -287,7 +288,7 @@ class LogTable extends \WP_List_Table {
 			// Delete all logs.
 			$nonce = $_REQUEST[ EmailLog::DELETE_LOG_NONCE_FIELD ];
 			if ( wp_verify_nonce( $nonce, EmailLog::DELETE_LOG_ACTION ) ) {
-				$table_name = $wpdb->prefix . EmailLog::TABLE_NAME;
+				$table_name = $wpdb->prefix . TableManager::TABLE_NAME;
 				$email_log->logs_deleted = $wpdb->query( "DELETE FROM $table_name" ); //@codingStandardsIgnoreLine
 			} else {
 				wp_die( 'Cheating, Huh? ' );
@@ -301,7 +302,7 @@ class LogTable extends \WP_List_Table {
 	public function prepare_items() {
 		global $wpdb;
 
-		$table_name = $wpdb->prefix . EmailLog::TABLE_NAME;
+		$table_name = $wpdb->prefix . TableManager::TABLE_NAME;
 		$this->_column_headers = $this->get_column_info();
 
 		// Handle bulk actions.

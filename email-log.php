@@ -81,7 +81,13 @@ if ( file_exists( $plugin_dir . 'tests/' ) ) {
 	$loader->add_namespace( 'EmailLog', $plugin_dir . 'tests/wp-tests' );
 }
 
-$email_log = new \EmailLog\Core\EmailLog( __FILE__ );
+$email_log                = new \EmailLog\Core\EmailLog( __FILE__ );
+$email_log->table_manager = new \EmailLog\Core\DB\TableManager();
+
+// `register_activation_hook` can't be called from inside any hook.
+register_activation_hook( __FILE__, array( $email_log->table_manager, 'on_activate' ) );
+
+// Load the plugin
 add_action( 'wp_loaded', array( $email_log, 'load' ) );
 
 /**
@@ -100,20 +106,6 @@ function email_log() {
 }
 
 // TODO: move all these to seperate files.
-/**
- * Plugin Root File
- *
- * @since 1.7.2
- */
-if ( ! defined( 'EMAIL_LOG_PLUGIN_FILE' ) ) {
-	define( 'EMAIL_LOG_PLUGIN_FILE', __FILE__ );
-}
-
-/**
- * Handles installation and table creation.
- */
-require_once plugin_dir_path( __FILE__ ) . 'include/install.php';
-
 /**
  * Helper functions.
  */

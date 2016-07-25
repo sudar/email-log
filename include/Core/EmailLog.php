@@ -1,5 +1,7 @@
 <?php namespace EmailLog\Core;
 
+use EmailLog\Core\DB\TableManager;
+
 /**
  * The main plugin class.
  *
@@ -37,6 +39,13 @@ class EmailLog {
 	 * @var string $translations_path
 	 */
 	public $translations_path;
+
+	/**
+	 * @var object Table Manager.
+	 *
+	 * @since 2.0
+	 */
+	public $table_manager;
 
 	/**
 	 * Admin screen object.
@@ -79,11 +88,6 @@ class EmailLog {
 	 */
 	const DELETE_LOG_ACTION        = 'sm-delete-email-log';
 
-	// DB stuff
-	const TABLE_NAME               = 'email_log';          /* Database table name */
-	const DB_OPTION_NAME           = 'email-log-db';       /* Database option name */
-	const DB_VERSION               = '0.1';                /* Database version */
-
 	// JS Stuff
 	const JS_HANDLE                = 'email-log';
 
@@ -123,6 +127,8 @@ class EmailLog {
 
 		// Add our ajax call.
 		add_action( 'wp_ajax_display_content', array( $this, 'display_content_callback' ) );
+
+		$this->table_manager->load();
 
 		$this->loaded = true;
 	}
@@ -275,7 +281,7 @@ class EmailLog {
 		global $wpdb;
 
 		if ( current_user_can( 'manage_options' ) ) {
-			$table_name = $wpdb->prefix . self::TABLE_NAME;
+			$table_name = $wpdb->prefix . TableManager::TABLE_NAME;
 			$email_id   = absint( $_GET['email_id'] );
 
 			$query   = $wpdb->prepare( 'SELECT * FROM ' . $table_name . ' WHERE id = %d', $email_id );
@@ -374,7 +380,7 @@ class EmailLog {
 
 		// return filtered array
 		$mail_info  = apply_filters( self::FILTER_NAME, $mail_info );
-		$table_name = $wpdb->prefix . self::TABLE_NAME;
+		$table_name = $wpdb->prefix . TableManager::TABLE_NAME;
 
 		if ( isset( $mail_info['message'] ) ) {
 			$message = $mail_info['message'];

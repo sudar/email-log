@@ -31,10 +31,19 @@ matrix:
     - php: 5.6
       env: WP_VERSION=nightly WP_MULTISITE=0 CODE_COVERAGE=' --coverage-clover=coverage.clover'
 
+install:
+  - composer install
+
 before_script:
   - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
+  - ln -s `pwd` /tmp/wordpress/wp-content/plugins/email-log
 
-script: phpunit `echo $CODE_COVERAGE`
+script:
+  - phpunit `echo $CODE_COVERAGE`
+  - |
+    if [[ -n "$CODE_COVERAGE" ]] ; then
+      phpunit --group=uninstall tests/wp-tests/uninstall/
+    fi
 
 after_script:
   - |

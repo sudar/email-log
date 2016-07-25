@@ -4,13 +4,19 @@
  * Test main plugin class.
  */
 class EmailLogTest extends \WP_UnitTestCase {
-	protected $object;
+	protected $email_log;
 	protected $file;
 
 	public function setUp() {
 		parent::setUp();
-		$this->file   = str_replace( 'tests/wp-tests/Core/', '', __FILE__ );
-		$this->object = new EmailLog( $this->file );
+		$this->file      = str_replace( 'tests/wp-tests/Core/', '', __FILE__ );
+		$this->email_log = new EmailLog( $this->file );
+
+		// Create a stub for Table Manager class.
+		$table_manager_stub = $this->getMockBuilder( DB\TableManager::class )->getMock();
+		$table_manager_stub->method( 'load' );
+
+		$this->email_log->table_manager = $table_manager_stub;
 	}
 
 	public function tearDown() {
@@ -21,10 +27,10 @@ class EmailLogTest extends \WP_UnitTestCase {
 	 * Test translations_path.
 	 */
 	public function test_translations_path() {
-		$this->object->load();
+		$this->email_log->load();
 
 		$expected = dirname( plugin_basename( $this->file ) ) . '/languages/';
-		$actual   = $this->object->translations_path;
+		$actual   = $this->email_log->translations_path;
 
 		$this->assertEquals( $expected, $actual );
 	}

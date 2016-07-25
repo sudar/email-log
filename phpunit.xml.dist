@@ -7,8 +7,22 @@
 	convertWarningsToExceptions="true"
 	>
 	<testsuites>
-		<testsuite>
-			<directory suffix="Test.php">./tests/wp-tests/</directory>
+		<testsuite name="Email Log Tests">
+			<directory suffix="Test.php" phpVersion="5.3.0" phpVersionOperator=">=">./tests/wp-tests/</directory>
 		</testsuite>
 	</testsuites>
+
+	<groups>
+		<exclude>
+			<group>uninstall</group>
+		</exclude>
+	</groups>
+
+	<filter>
+		<whitelist>
+			<directory suffix=".php">include</directory>
+			<file>email-log.php</file>
+			<file>uninstall.php</file>
+		</whitelist>
+	</filter>
 </phpunit>
