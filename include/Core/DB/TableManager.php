@@ -72,7 +72,7 @@ class TableManager {
 	 * @global object $wpdb
 	 *
 	 * @param  array  $tables List of tables to be deleted.
-	 * @return array  $tables Modified list of tables to be deleted.
+	 * @return string[]  $tables Modified list of tables to be deleted.
 	 */
 	public function on_delete_blog( $tables ) {
 		global $wpdb;
