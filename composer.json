@@ -5,11 +5,7 @@
     "type": "project",
     "require-dev": {
         "codeception/codeception": "^2.2",
-        "lucatume/wp-browser": "^1.14"
-    },
-    "extra": {
-        "installer-paths": {
-            "vendor/{$name}/": ["type:wordpress-plugin"]
-        }
+        "lucatume/wp-browser": "^1.14",
+        "jdgrimes/wp-plugin-uninstall-tester": "~0.6"
     }
 }

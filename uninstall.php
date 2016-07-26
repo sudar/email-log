@@ -1,31 +1,27 @@
 <?php
 /**
- * Uninstall Email Log plugin
+ * Uninstall page for Email Log Plugin to clean up db.
  *
- * @package     Email Log
- * @subpackage  Uninstall
- * @author      Sudar
-*/
-// uninstall page for Email Log Plugin to clean up db.
-if( !defined( 'ABSPATH' ) && !defined( 'WP_UNINSTALL_PLUGIN' ) )
-    exit();
+ * This file is named uninstall.php since WordPress requires that name.
+ */
+
+// exit if WordPress is not uninstalling the plugin.
+if ( ! defined( 'ABSPATH' ) && ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
+	exit();
+}
 
 if ( is_multisite() ) {
-    global $wpdb;
+	// Note: if there are more than 10,000 blogs or
+	// if `wp_is_large_network` filter is set, then this may fail.
+	$sites = wp_get_sites();
 
-    $original_blog_id = get_current_blog_id();
-
-    $blog_ids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
-
-    foreach ( $blog_ids as $blog_id ) {
-        switch_to_blog( $blog_id );
-        email_log_delete_table();
-    }
-
-    switch_to_blog( $original_blog_id );
-
+	foreach ( $sites as $site ) {
+		switch_to_blog( $site['blog_id'] );
+		email_log_delete_table();
+		restore_current_blog();
+	}
 } else {
-    email_log_delete_table();
+	email_log_delete_table();
 }
 
 /**
@@ -36,15 +32,16 @@ if ( is_multisite() ) {
  * @global object $wpdb
  */
 function email_log_delete_table() {
-    global $wpdb;
-    $table_name = $wpdb->prefix . "email_log"; // This is hardcoded on purpose
+	global $wpdb;
 
-    if( $wpdb->get_var( "SHOW TABLES LIKE '{$table_name}'" ) == $table_name ) {
-        // If table is present, drop it
-        $wpdb->query( "DROP TABLE $table_name" );
-    }
+	// This is hardcoded on purpose, since the entire plugin is not loaded during uninstall.
+	$table_name = $wpdb->prefix . 'email_log';
 
-    // Delete the option
-    delete_option('email-log-db');
+	if ( $wpdb->get_var( "SHOW TABLES LIKE '{$table_name}'" ) == $table_name ) {
+		// If table is present, drop it
+		$wpdb->query( "DROP TABLE $table_name" );
+	}
+
+	// Delete the option
+	delete_option( 'email-log-db' );
 }
-?>

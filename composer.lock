@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5e6563a18928e10ccd005930a9492eb3",
-    "content-hash": "889c73c095ea9cbc2ef35707600e969b",
+    "hash": "3f1e11f455d43e49cdbed51857a68270",
+    "content-hash": "4eb92de766f09acb302c1540bf88cb12",
     "packages": [],
     "packages-dev": [
         {
@@ -716,6 +716,40 @@
             "description": "The Illuminate Support package.",
             "homepage": "http://laravel.com",
             "time": "2016-05-30 02:40:53"
+        },
+        {
+            "name": "jdgrimes/wp-plugin-uninstall-tester",
+            "version": "0.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/JDGrimes/wp-plugin-uninstall-tester.git",
+                "reference": "99e9c16ded11150f21a7a78a472997c2a0c59fb2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/JDGrimes/wp-plugin-uninstall-tester/zipball/99e9c16ded11150f21a7a78a472997c2a0c59fb2",
+                "reference": "99e9c16ded11150f21a7a78a472997c2a0c59fb2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "J.D. Grimes",
+                    "email": "jdg@codesymphony.co",
+                    "homepage": "http://codesymphony.co",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Utilities for testing WordPress plugin install/uninstall with PHPUnit",
+            "homepage": "https://github.com/JDGrimes/wp-plugin-uninstall-tester",
+            "time": "2016-06-30 19:28:49"
         },
         {
             "name": "lucatume/codeception-setup-local",

@@ -1,6 +1,7 @@
 .idea/
 
 dist/
+code-coverage/
 node_modules/
 vendor/
 
