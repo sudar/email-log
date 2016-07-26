@@ -7,8 +7,12 @@
 	convertWarningsToExceptions="true"
 	>
 	<testsuites>
-		<testsuite name="Email Log Tests">
+		<testsuite name="default">
 			<directory suffix="Test.php" phpVersion="5.3.0" phpVersionOperator=">=">./tests/wp-tests/</directory>
+		</testsuite>
+		<testsuite name="uninstall">
+			<!-- You must use "-\-group uninstall" when running this suite. -->
+			<directory suffix=".php">./tests/wp-tests/uninstall/</directory>
 		</testsuite>
 	</testsuites>
 
