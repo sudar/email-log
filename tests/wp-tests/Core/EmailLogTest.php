@@ -13,7 +13,7 @@ class EmailLogTest extends \WP_UnitTestCase {
 		$this->email_log = new EmailLog( $this->file );
 
 		// Create a stub for Table Manager class.
-		$table_manager_stub = $this->getMockBuilder( DB\TableManager::class )->getMock();
+		$table_manager_stub = $this->getMockBuilder( '\\EmailLog\\Core\\DB\\TableManager' )->getMock();
 		$table_manager_stub->method( 'load' );
 
 		$this->email_log->table_manager = $table_manager_stub;
