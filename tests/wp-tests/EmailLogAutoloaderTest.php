@@ -1,5 +1,9 @@
 <?php namespace EmailLog;
 
+if ( ! class_exists( '\\EmailLog\\EmailLogAutoloader' ) ) {
+	return;
+}
+
 /**
  * Mock class to test autoloader.
  * @package EmailLog

@@ -1,5 +1,9 @@
 <?php namespace EmailLog;
 
+if ( ! class_exists( '\\WP_Plugin_Uninstall_UnitTestCase' ) ) {
+	return;
+}
+
 /**
  * Plugin uninstall test case.
  *

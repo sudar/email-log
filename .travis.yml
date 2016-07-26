@@ -64,7 +64,7 @@ script:
 
       if [[ $TRAVIS_PHP_VERSION == 5.6 ]]; then
         # Run uninstall tests in PHP 5.6
-        phpunit --group=uninstall tests/wp-tests/uninstall/
+        phpunit --group=uninstall
       fi
     fi
 
