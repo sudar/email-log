@@ -1,4 +1,5 @@
-<?php
+<?php namespace EmailLog\Util;
+
 /**
  * Email Log Helper functions.
  * Some of these functions would be used the addons.
@@ -14,13 +15,13 @@
  *
  * @return string Sanitized email.
  */
-function el_sanitize_email( $email, $multiple = true ) {
+function sanitize_email( $email, $multiple = true ) {
 	$emails = explode( ',', $email );
 	if ( ! $multiple ) {
 		$emails = array_slice( $emails, 0, 1 );
 	}
 
-	$cleaned_emails = array_map( 'el_sanitize_email_with_name', $emails );
+	$cleaned_emails = array_map( __NAMESPACE__ . '\\sanitize_email_with_name', $emails );
 
 	return implode( ', ', $cleaned_emails );
 }
@@ -34,11 +35,11 @@ function el_sanitize_email( $email, $multiple = true ) {
  *
  * @return string Sanitized email.
  */
-function el_sanitize_email_with_name( $string ) {
+function sanitize_email_with_name( $string ) {
 	$string = trim( $string );
 
 	$bracket_pos = strpos( $string, '<' );
-	if ( $bracket_pos !== false ) {
+	if ( false !== $bracket_pos ) {
 		// Text before the bracketed email is the name.
 		if ( $bracket_pos > 0 ) {
 			$name = substr( $string, 0, $bracket_pos );
@@ -48,9 +49,9 @@ function el_sanitize_email_with_name( $string ) {
 			$email = substr( $string, $bracket_pos + 1 );
 			$email = str_replace( '>', '', $email );
 
-			return sanitize_text_field( $name ) . ' <' . sanitize_email( $email ) . '>';
+			return sanitize_text_field( $name ) . ' <' . \sanitize_email( $email ) . '>';
 		}
 	}
 
-	return sanitize_email( $string );
+	return \sanitize_email( $string );
 }

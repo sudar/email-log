@@ -1,15 +1,15 @@
-<?php
+<?php namespace EmailLog\Util;
 
 /**
- * Test `el_sanitize_email` and `el_sanitize_email_with_name` functions inside helper.
+ * Test `sanitize_email` and `sanitize_email_with_name` functions inside helper.
  */
-class SanitizeEmailTest extends WP_UnitTestCase {
+class SanitizeEmailTest extends \WP_UnitTestCase {
 
 	function test_email_is_trimed() {
 		$email_with_whitespace = '   sudar@sudarmuthu.com   ';
 
 		$expected = 'sudar@sudarmuthu.com';
-		$actual   = el_sanitize_email( $email_with_whitespace );
+		$actual   = sanitize_email( $email_with_whitespace );
 
 		$this->assertEquals( $expected, $actual );
 	}
@@ -18,7 +18,7 @@ class SanitizeEmailTest extends WP_UnitTestCase {
 		$invalid_email = 'sudar@sudarmuthu';
 
 		$expected = '';
-		$actual   = el_sanitize_email( $invalid_email );
+		$actual   = sanitize_email( $invalid_email );
 
 		$this->assertEquals( $expected, $actual );
 	}
@@ -27,7 +27,7 @@ class SanitizeEmailTest extends WP_UnitTestCase {
 		$email_with_name = 'Sudar Muthu<sudar@sudarmuthu.com>';
 
 		$expected = 'Sudar Muthu <sudar@sudarmuthu.com>';
-		$actual   = el_sanitize_email( $email_with_name );
+		$actual   = sanitize_email( $email_with_name );
 
 		$this->assertEquals( $expected, $actual );
 	}
@@ -36,7 +36,7 @@ class SanitizeEmailTest extends WP_UnitTestCase {
 		$email_with_name_and_space = ' Sudar Muthu <sudar@sudarmuthu.com>';
 
 		$expected = 'Sudar Muthu <sudar@sudarmuthu.com>';
-		$actual   = el_sanitize_email( $email_with_name_and_space );
+		$actual   = sanitize_email( $email_with_name_and_space );
 
 		$this->assertEquals( $expected, $actual );
 	}
@@ -45,7 +45,7 @@ class SanitizeEmailTest extends WP_UnitTestCase {
 		$multiple_emails = 'sudar@sudarmuthu.com, muthu@sudarmuthu.com';
 
 		$expected = 'sudar@sudarmuthu.com';
-		$actual   = el_sanitize_email( $multiple_emails, false );
+		$actual   = sanitize_email( $multiple_emails, false );
 
 		$this->assertEquals( $expected, $actual );
 	}
@@ -54,7 +54,7 @@ class SanitizeEmailTest extends WP_UnitTestCase {
 		$multiple_emails = 'sudar@sudarmuthu.com, muthu@sudarmuthu.com';
 
 		$expected = 'sudar@sudarmuthu.com, muthu@sudarmuthu.com';
-		$actual   = el_sanitize_email( $multiple_emails );
+		$actual   = sanitize_email( $multiple_emails );
 
 		$this->assertEquals( $expected, $actual );
 	}
@@ -63,7 +63,7 @@ class SanitizeEmailTest extends WP_UnitTestCase {
 		$multiple_emails = 'Sudar Muthu <sudar@sudarmuthu.com>, Muthu<muthu@sudarmuthu.com>';
 
 		$expected = 'Sudar Muthu <sudar@sudarmuthu.com>, Muthu <muthu@sudarmuthu.com>';
-		$actual   = el_sanitize_email( $multiple_emails );
+		$actual   = sanitize_email( $multiple_emails );
 
 		$this->assertEquals( $expected, $actual );
 	}
@@ -72,7 +72,7 @@ class SanitizeEmailTest extends WP_UnitTestCase {
 		$multiple_emails = 'Sudar Muthu <sudar@sudarmuthu.com>, Muthu <muthu@sudarmuthu.com>';
 
 		$expected = 'Sudar Muthu <sudar@sudarmuthu.com>';
-		$actual   = el_sanitize_email( $multiple_emails, false );
+		$actual   = sanitize_email( $multiple_emails, false );
 
 		$this->assertEquals( $expected, $actual );
 	}

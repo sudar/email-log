@@ -5,14 +5,18 @@
  * @package EmailLog
  */
 class MockEmailLogAutoloaderClass extends EmailLogAutoloader {
-	protected $files = array();
+	protected $class_files = array();
 
-	public function set_files( array $files ) {
-		$this->files = $files;
+	public function set_class_files( array $class_files ) {
+		$this->class_files = $class_files;
 	}
 
 	protected function require_file( $file ) {
-		return in_array( $file, $this->files );
+		return in_array( $file, $this->class_files );
+	}
+
+	public function get_files() {
+		return $this->files;
 	}
 }
 
@@ -26,7 +30,7 @@ class EmailLogAutoloaderTest extends \PHPUnit_Framework_TestCase {
 	protected function setUp() {
 		$this->loader = new MockEmailLogAutoloaderClass;
 
-		$this->loader->set_files( array(
+		$this->loader->set_class_files( array(
 			'/vendor/foo.bar/src/ClassName.php',
 			'/vendor/foo.bar/src/DoomClassName.php',
 			'/vendor/foo.bar/tests/ClassNameTest.php',
@@ -90,5 +94,29 @@ class EmailLogAutoloaderTest extends \PHPUnit_Framework_TestCase {
 		$actual = $this->loader->load_class( 'Foo\BarDoom\ClassName' );
 		$expect = '/vendor/foo.bardoom/src/ClassName.php';
 		$this->assertSame( $expect, $actual );
+	}
+
+	/**
+	 * Test autoloading of a file that doesn't exist.
+	 */
+	public function testFileAutoloadingFileNotExists() {
+		$file_name = 'path/to/some/file';
+		$this->loader->add_file( $file_name );
+
+		$actual = in_array( $file_name, $this->loader->get_files() );
+
+		$this->assertFalse( $actual );
+	}
+
+	/**
+	 * Test autoloading of a file that exists.
+	 */
+	public function testFileAutoloadingFileExists() {
+		$file_name = dirname( __FILE__ ) . '/bootstrap.php';
+		$this->loader->add_file( $file_name );
+
+		$actual = in_array( $file_name, $this->loader->get_files() );
+
+		$this->assertTrue( $actual );
 	}
 }

@@ -48,6 +48,8 @@
  *
  *      <?php
  *      new \Foo\Bar\Qux\QuuxTest;
+ *
+ * @since 2.0
  */
 class EmailLogAutoloader {
 	/**
@@ -59,12 +61,24 @@ class EmailLogAutoloader {
 	protected $prefixes = array();
 
 	/**
+	 * An associative array containing the list files that needs to be autoloaded.
+	 *
+	 * @var array
+	 */
+	protected $files = array();
+
+	/**
 	 * Register loader with SPL autoloader stack.
 	 *
 	 * @return void
 	 */
 	public function register() {
 		spl_autoload_register( array( $this, 'load_class' ) );
+
+		// file exists check is already done in `add_file`.
+		foreach ( $this->files as $file ) {
+			$this->require_file( $file );
+		}
 	}
 
 	/**
@@ -96,6 +110,17 @@ class EmailLogAutoloader {
 			array_unshift( $this->prefixes[ $prefix ], $base_dir );
 		} else {
 			array_push( $this->prefixes[ $prefix ], $base_dir );
+		}
+	}
+
+	/**
+	 * Add a file to be autoloaded.
+	 *
+	 * @param $filename File to be autoloaded.
+	 */
+	public function add_file( $filename ) {
+		if ( file_exists( $filename ) ) {
+			$this->files[] = $filename;
 		}
 	}
 
