@@ -26,10 +26,10 @@ matrix:
   include:
     # Only run HHVM against trunk.
     - php: hhvm
-      env: WP_VERSION=master
+      env: WP_VERSION=nightly
     # Only run nightly against trunk.
     - php: nightly
-      env: WP_VERSION=master
+      env: WP_VERSION=nightly
     # For PHP 5.3 also run Multisite
     - php: 5.3
       env: WP_VERSION=latest WP_MULTISITE=1
@@ -50,6 +50,7 @@ before_script:
   - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
   - |
     if [[ $TRAVIS_PHP_VERSION == 5.6 ]]; then
+      export WP_TESTS_DIR=/tmp/wordpress-tests-lib/
       ln -s `pwd` /tmp/wordpress/wp-content/plugins/email-log
     fi
 
