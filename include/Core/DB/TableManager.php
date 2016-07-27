@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly
 class TableManager {
 
 	/* Database table name */
-	const TABLE_NAME = 'email_log';
+	const LOG_TABLE_NAME = 'email_log';
 
 	/* Database option name */
 	const DB_OPTION_NAME = 'email-log-db';
@@ -34,12 +34,8 @@ class TableManager {
 
 	/**
 	 * On plugin activation, create table if needed.
-	 *
-	 * @global object $wpdb
 	 */
 	public function on_activate( $network_wide ) {
-		global $wpdb;
-
 		if ( is_multisite() && $network_wide ) {
 			// Note: if there are more than 10,000 blogs or
 			// if `wp_is_large_network` filter is set, then this may fail.
@@ -69,16 +65,37 @@ class TableManager {
 	/**
 	 * Add email log table to the list of tables deleted when a blog is deleted.
 	 *
-	 * @global object $wpdb
+	 * @param  array $tables List of tables to be deleted.
 	 *
-	 * @param  array  $tables List of tables to be deleted.
 	 * @return string[]  $tables Modified list of tables to be deleted.
 	 */
 	public function on_delete_blog( $tables ) {
+		$tables[] = $this->get_log_table_name();
+
+		return $tables;
+	}
+
+	/**
+	 * Get email log table name.
+	 *
+	 * @return string Email Log Table name.
+	 */
+	public function get_log_table_name() {
 		global $wpdb;
 
-		$tables[] = $wpdb->prefix . self::TABLE_NAME;
-		return $tables;
+		return $wpdb->prefix . self::LOG_TABLE_NAME;
+	}
+
+	/**
+	 * Insert log data into DB.
+	 *
+	 * @param array $data Data to be inserted.
+	 */
+	public function insert_log( $data ) {
+		global $wpdb;
+
+		$table_name = $this->get_log_table_name();
+		$wpdb->insert( $table_name, $data );
 	}
 
 	/**
@@ -91,7 +108,7 @@ class TableManager {
 	private function create_table() {
 		global $wpdb;
 
-		$table_name = $wpdb->prefix . self::TABLE_NAME;
+		$table_name      = $this->get_log_table_name();
 		$charset_collate = $wpdb->get_charset_collate();
 
 		if ( $wpdb->get_var( "show tables like '{$table_name}'" ) != $table_name ) {

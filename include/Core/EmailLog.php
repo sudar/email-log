@@ -41,11 +41,18 @@ class EmailLog {
 	public $translations_path;
 
 	/**
-	 * @var object Table Manager.
+	 * @var object TableManager.
 	 *
 	 * @since 2.0
 	 */
 	public $table_manager;
+
+	/**
+	 * @var object EmailLogger
+	 *
+	 * @since 2.0
+	 */
+	public $logger;
 
 	/**
 	 * Admin screen object.
@@ -55,14 +62,6 @@ class EmailLog {
 	 * @var string $include_path
 	 */
 	private $admin_screen;
-
-	/**
-	 * Filter name.
-	 *
-	 * @since Genesis
-	 * @var const FILTER_NAME
-	 */
-	const FILTER_NAME              = 'wp_mail_log';
 
 	/**
 	 * Page slug to be used in admin dashboard hyperlinks.
@@ -118,7 +117,6 @@ class EmailLog {
 		add_action( 'admin_menu', array( $this, 'register_settings_page' ) );
 
 		// Register Filter.
-		add_filter( 'wp_mail', array( $this, 'log_email' ) );
 		add_filter( 'set-screen-option', array( $this, 'save_screen_options' ), 10, 3 );
 		add_filter( 'plugin_row_meta', array( $this, 'add_plugin_links' ), 10, 2 );
 
@@ -129,6 +127,7 @@ class EmailLog {
 		add_action( 'wp_ajax_display_content', array( $this, 'display_content_callback' ) );
 
 		$this->table_manager->load();
+		$this->logger->load();
 
 		$this->loaded = true;
 	}
@@ -281,7 +280,7 @@ class EmailLog {
 		global $wpdb;
 
 		if ( current_user_can( 'manage_options' ) ) {
-			$table_name = $wpdb->prefix . TableManager::TABLE_NAME;
+			$table_name = $wpdb->prefix . TableManager::LOG_TABLE_NAME;
 			$email_id   = absint( $_GET['email_id'] );
 
 			$query   = $wpdb->prepare( 'SELECT * FROM ' . $table_name . ' WHERE id = %d', $email_id );
@@ -361,49 +360,5 @@ class EmailLog {
 	public function add_footer_links() {
 		$plugin_data = get_plugin_data( $this->plugin_file );
 		printf( '%1$s ' . __( 'plugin', 'email-log' ) . ' | ' . __( 'Version', 'email-log' ) . ' %2$s | ' . __( 'by', 'email-log' ) . ' %3$s<br />', $plugin_data['Title'], $plugin_data['Version'], $plugin_data['Author'] );
-	}
-
-	/**
-	 * Logs email to database.
-	 *
-	 * @since Genesis
-	 *
-	 * @global object $wpdb
-	 *
-	 * @param array $mail_info Information about email.
-	 * @return array Information about email.
-	 */
-	public function log_email( $mail_info ) {
-		global $wpdb;
-
-		$attachment_present = ( count( $mail_info['attachments'] ) > 0 ) ? 'true' : 'false';
-
-		// return filtered array
-		$mail_info  = apply_filters( self::FILTER_NAME, $mail_info );
-		$table_name = $wpdb->prefix . TableManager::TABLE_NAME;
-
-		if ( isset( $mail_info['message'] ) ) {
-			$message = $mail_info['message'];
-		} else {
-			// wpmandrill plugin is changing "message" key to "html". See https://github.com/sudar/email-log/issues/20
-			// Ideally this should be fixed in wpmandrill, but I am including this hack here till it is fixed by them.
-			if ( isset( $mail_info['html'] ) ) {
-				$message = $mail_info['html'];
-			} else {
-				$message = '';
-			}
-		}
-
-		// Log into the database
-		$wpdb->insert( $table_name, array(
-			'to_email'    => is_array( $mail_info['to'] ) ? implode( ',', $mail_info['to'] ) : $mail_info['to'],
-			'subject'     => $mail_info['subject'],
-			'message'     => $message,
-			'headers'     => is_array( $mail_info['headers'] ) ? implode( "\n", $mail_info['headers'] ) : $mail_info['headers'],
-			'attachments' => $attachment_present,
-			'sent_date'   => current_time( 'mysql' ),
-		) );
-
-		return $mail_info;
 	}
 }

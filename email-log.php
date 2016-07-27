@@ -85,6 +85,7 @@ $loader->register();
 
 $email_log                = new \EmailLog\Core\EmailLog( __FILE__ );
 $email_log->table_manager = new \EmailLog\Core\DB\TableManager();
+$email_log->logger        = new \EmailLog\Core\EmailLogger();
 
 // `register_activation_hook` can't be called from inside any hook.
 register_activation_hook( __FILE__, array( $email_log->table_manager, 'on_activate' ) );
