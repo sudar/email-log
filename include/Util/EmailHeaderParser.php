@@ -1,9 +1,9 @@
-<?php
+<?php namespace EmailLog\Util;
+
 /**
  * Email Header Parser.
  *
  * @author Sudar
- * @package EmailLog
  */
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly
@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly
  *
  * @since 1.0
  */
-class Email_Header_Parser {
+class EmailHeaderParser {
 
 	/**
 	 * Join email headers.
@@ -114,7 +114,7 @@ class Email_Header_Parser {
 	 */
 	private function parse_header_line( $header ) {
 		$value = '';
-		if ( count( $header ) == 2 ) {
+		if ( 2 == count( $header ) ) {
 			if ( is_array( $header[1] ) ) {
 				$value = trim( implode( ',', array_map( 'trim', $header[1] ) ) );
 			} else {

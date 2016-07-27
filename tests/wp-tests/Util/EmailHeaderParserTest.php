@@ -1,13 +1,13 @@
-<?php
+<?php namespace EmailLog\Util;
 
 /**
  * Test Email_Header_Parser class methods.
  */
-class Email_Header_Parser_Test extends WP_UnitTestCase {
+class EmailHeaderParserTest extends \WP_UnitTestCase {
 
 	public function setUp() {
 		parent::setUp();
-		$this->object = new Email_Header_Parser();
+		$this->object = new EmailHeaderParser();
 	}
 
 	public function tearDown() {
