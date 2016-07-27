@@ -15,7 +15,7 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
  * @author  Sudar
  * @package Email Log
  */
-class LogTable extends \WP_List_Table {
+class LogListTable extends \WP_List_Table {
 
 	/**
 	 * Set up a constructor that references the parent constructor.

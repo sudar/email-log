@@ -267,7 +267,7 @@ class EmailLog {
 		);
 
 		//Prepare Table of elements
-		$this->logs_table = new UI\LogTable();
+		$this->logs_table = new UI\LogListTable();
 	}
 
 	/**
