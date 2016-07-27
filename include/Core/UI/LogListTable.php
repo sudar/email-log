@@ -22,12 +22,15 @@ class LogListTable extends \WP_List_Table {
 	 *
 	 * We use the parent reference to set some default configs.
 	 */
-	public function __construct() {
-		parent::__construct( array(
-			'singular'  => 'email-log',     //singular name of the listed records
-			'plural'    => 'email-logs',    //plural name of the listed records
-			'ajax'      => false,           //does this table support ajax?
+	public function __construct( $args = array()) {
+		$args = wp_parse_args( $args, array(
+			'singular' => 'email-log',     // singular name of the listed records
+			'plural'   => 'email-logs',    // plural name of the listed records
+			'ajax'     => false,           // does this table support ajax?
+			'screen'   => null,
 		) );
+
+		parent::__construct( $args );
 	}
 
 	/**
