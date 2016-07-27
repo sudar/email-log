@@ -118,43 +118,15 @@ class EmailLog {
 
 		// Register Filter.
 		add_filter( 'set-screen-option', array( $this, 'save_screen_options' ), 10, 3 );
-		add_filter( 'plugin_row_meta', array( $this, 'add_plugin_links' ), 10, 2 );
-
-		$plugin = plugin_basename( $this->plugin_file );
-		add_filter( "plugin_action_links_$plugin", array( $this, 'add_action_links' ) );
 
 		// Add our ajax call.
 		add_action( 'wp_ajax_display_content', array( $this, 'display_content_callback' ) );
 
 		$this->table_manager->load();
 		$this->logger->load();
+		$this->plugin_list_enhancer->load();
 
 		$this->loaded = true;
-	}
-
-	/**
-	 * Adds additional links in the plugin listing page.
-	 * TODO: Move to UI namespace
-	 *
-	 * @since Genesis
-	 *
-	 * @see Additional links in the Plugin listing is based on
-	 * @link http://zourbuth.com/archives/751/creating-additional-wordpress-plugin-links-row-meta/
-	 *
-	 * @param array $links Array with default links to display in plugins page.
-	 * @param string $file The name of the plugin file.
-	 * @return array Array with links to display in plugins page.
-	 */
-	public function add_plugin_links( $links, $file ) {
-		$plugin = plugin_basename( $this->plugin_file );
-
-		if ( $file == $plugin ) {
-			// only for this plugin
-			return array_merge( $links,
-				array( '<a href="http://sudarmuthu.com/wordpress/email-log/pro-addons" target="_blank">' . __( 'Buy Addons', 'email-log' ) . '</a>' )
-			);
-		}
-		return $links;
 	}
 
 	/**
@@ -330,22 +302,6 @@ class EmailLog {
 		}
 
 		return $per_page;
-	}
-
-	/**
-	 * Adds additional links.
-	 * TODO: Move to UI namespace
-	 *
-	 * @since Genesis
-	 *
-	 * @param array $links
-	 * @return array
-	 */
-	public function add_action_links( $links ) {
-		// Add a link to this plugin's settings page
-		$settings_link = '<a href="tools.php?page=email-log">' . __( 'Log', 'email-log' ) . '</a>';
-		array_unshift( $links, $settings_link );
-		return $links;
 	}
 
 	/**

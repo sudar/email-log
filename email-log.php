@@ -83,9 +83,10 @@ $loader->add_file( $plugin_dir . 'include/Util/helper.php' );
 
 $loader->register();
 
-$email_log                = new \EmailLog\Core\EmailLog( __FILE__ );
-$email_log->table_manager = new \EmailLog\Core\DB\TableManager();
-$email_log->logger        = new \EmailLog\Core\EmailLogger();
+$email_log                       = new \EmailLog\Core\EmailLog( __FILE__ );
+$email_log->table_manager        = new \EmailLog\Core\DB\TableManager();
+$email_log->logger               = new \EmailLog\Core\EmailLogger();
+$email_log->plugin_list_enhancer = new \EmailLog\Core\UI\PluginListEnhancer( __FILE__ );
 
 // `register_activation_hook` can't be called from inside any hook.
 register_activation_hook( __FILE__, array( $email_log->table_manager, 'on_activate' ) );
