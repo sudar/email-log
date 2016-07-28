@@ -5,6 +5,8 @@
  */
 class EmailHeaderParserTest extends \WP_UnitTestCase {
 
+	protected $object;
+
 	public function setUp() {
 		parent::setUp();
 		$this->object = new EmailHeaderParser();
