@@ -55,6 +55,13 @@ class EmailLog {
 	public $logger;
 
 	/**
+	 * @var object UIManager.
+	 *
+	 * @since 2.0
+	 */
+	public $ui_manager;
+
+	/**
 	 * Admin screen object.
 	 *
 	 * @since Genesis
@@ -124,7 +131,7 @@ class EmailLog {
 
 		$this->table_manager->load();
 		$this->logger->load();
-		$this->plugin_list_enhancer->load();
+		$this->ui_manager->load();
 
 		$this->loaded = true;
 	}
