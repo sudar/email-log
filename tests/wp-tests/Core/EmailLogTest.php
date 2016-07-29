@@ -20,15 +20,15 @@ class EmailLogTest extends \WP_UnitTestCase {
 		$email_logger_stub = $this->getMockBuilder( '\\EmailLog\\Core\\EmailLogger' )->getMock();
 		$email_logger_stub->method( 'load' );
 
-		// Create a stub for Email Logger class.
-		$plugin_list_enhancer_stub = $this->getMockBuilder( '\\EmailLog\\Core\\UI\\PluginListEnhancer' )
-			->setConstructorArgs( array( $this->file ) )
-			->getMock();
-		$plugin_list_enhancer_stub->method( 'load' );
+		// Create a stub for UI Manager class.
+		$ui_manager_stub = $this->getMockBuilder( '\\EmailLog\\Core\\UI\\UIManager' )
+		                        ->setConstructorArgs( array( $this->file ) )
+		                        ->getMock();
+		$ui_manager_stub->method( 'load' );
 
 		$this->email_log->table_manager = $table_manager_stub;
-		$this->email_log->logger = $email_logger_stub;
-		$this->email_log->plugin_list_enhancer = $plugin_list_enhancer_stub;
+		$this->email_log->logger        = $email_logger_stub;
+		$this->email_log->ui_manager    = $ui_manager_stub;
 	}
 
 	public function tearDown() {

@@ -1,6 +1,5 @@
 <?php namespace EmailLog\Core\UI;
 
-use EmailLog\Core\DB\TableManager;
 use EmailLog\Core\EmailLog as EmailLog;
 
 if ( ! class_exists( 'WP_List_Table' ) ) {
@@ -11,23 +10,28 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
  * Table to display Email Logs.
  *
  * Based on Custom List Table Example by Matt Van Andel.
- *
- * @author  Sudar
- * @package Email Log
  */
 class LogListTable extends \WP_List_Table {
+	/**
+	 * @var object The page where this table is rendered.
+	 *
+	 * @since 2.0
+	 */
+	protected $page;
 
 	/**
 	 * Set up a constructor that references the parent constructor.
 	 *
 	 * We use the parent reference to set some default configs.
 	 */
-	public function __construct( $args = array()) {
+	public function __construct( $page, $args = array() ) {
+		$this->page = $page;
+
 		$args = wp_parse_args( $args, array(
 			'singular' => 'email-log',     // singular name of the listed records
 			'plural'   => 'email-logs',    // plural name of the listed records
 			'ajax'     => false,           // does this table support ajax?
-			'screen'   => null,
+			'screen'   => $this->page->get_screen(),
 		) );
 
 		parent::__construct( $args );
@@ -151,8 +155,8 @@ class LogListTable extends \WP_List_Table {
 
 		$content_ajax_url = add_query_arg(
 			array(
-				'action'    => 'display_content',
-				'email_id'  => $item->id,
+				'action'    => 'display_email_message',
+				'log_id'    => $item->id,
 				'TB_iframe' => 'true',
 				'width'     => '600',
 				'height'    => '550',
@@ -168,12 +172,12 @@ class LogListTable extends \WP_List_Table {
 
 		$delete_url = add_query_arg(
 			array(
-				'page'                           => $_REQUEST['page'],
-				'action'                         => 'delete',
-				$this->_args['singular']         => $item->id,
-				EmailLog::DELETE_LOG_NONCE_FIELD => wp_create_nonce( EmailLog::DELETE_LOG_ACTION ),
+				'page'                   => $_REQUEST['page'],
+				'action'                 => 'delete',
+				$this->_args['singular'] => $item->id,
 			)
 		);
+		$delete_url = add_query_arg( $this->page->get_nonce_args(), $delete_url );
 
 		$actions['delete'] = sprintf( '<a href="%s">%s</a>',
 			esc_url( $delete_url ),
@@ -255,47 +259,13 @@ class LogListTable extends \WP_List_Table {
 	/**
 	 * Handles bulk actions.
 	 *
-	 * @see $this->prepare_items()
+	 * @access protected.
 	 */
-	public function process_bulk_action() {
-		global $wpdb;
-
-		$email_log = email_log();
-
+	protected function process_bulk_action() {
 		if ( 'delete' === $this->current_action() ) {
-			// Delete a list of logs by id.
-
-			$nonce = $_REQUEST[ EmailLog::DELETE_LOG_NONCE_FIELD ];
-			if ( wp_verify_nonce( $nonce, EmailLog::DELETE_LOG_ACTION ) ) {
-
-				$ids = $_GET[ $this->_args['singular'] ];
-
-				if ( is_array( $ids ) ) {
-					$selected_ids = implode( ',', $ids );
-				} else {
-					$selected_ids = $ids;
-				}
-
-				// Can't use wpdb->prepare for the below query. If used it results in this bug
-				// https://github.com/sudar/email-log/issues/13
-
-				$selected_ids = esc_sql( $selected_ids );
-
-				$table_name = $wpdb->prefix . TableManager::LOG_TABLE_NAME;
-				// TODO: move this logic away from Email Log class
-				$email_log->logs_deleted = $wpdb->query( "DELETE FROM $table_name where id IN ( $selected_ids )" ); //@codingStandardsIgnoreLine
-			} else {
-				wp_die( 'Cheating, Huh? ' );
-			}
+			$this->page->delete_logs_by_id( $_GET[ $this->_args['singular'] ] );
 		} elseif ( 'delete-all' === $this->current_action() ) {
-			// Delete all logs.
-			$nonce = $_REQUEST[ EmailLog::DELETE_LOG_NONCE_FIELD ];
-			if ( wp_verify_nonce( $nonce, EmailLog::DELETE_LOG_ACTION ) ) {
-				$table_name = $wpdb->prefix . TableManager::LOG_TABLE_NAME;
-				$email_log->logs_deleted = $wpdb->query( "DELETE FROM $table_name" ); //@codingStandardsIgnoreLine
-			} else {
-				wp_die( 'Cheating, Huh? ' );
-			}
+			$this->page->delete_all_logs();
 		}
 	}
 
@@ -303,48 +273,18 @@ class LogListTable extends \WP_List_Table {
 	 * Prepare data for display.
 	 */
 	public function prepare_items() {
-		global $wpdb;
-
-		$table_name = $wpdb->prefix . TableManager::LOG_TABLE_NAME;
 		$this->_column_headers = $this->get_column_info();
 
 		// Handle bulk actions.
 		$this->process_bulk_action();
 
 		// Get current page number.
-		$current_page = $this->get_pagenum();
+		$current_page_no = $this->get_pagenum();
+		$per_page        = $this->page->get_per_page();
 
-		$query = 'SELECT * FROM ' . $table_name;
-		$count_query = 'SELECT count(*) FROM ' . $table_name;
-		$query_cond = '';
+		list( $items, $total_items ) = $this->page->get_table_manager()->fetch_log_items( $_GET, $per_page, $current_page_no );
 
-		if ( isset( $_GET['s'] ) ) {
-			$search_term = trim( esc_sql( $_GET['s'] ) );
-			$query_cond .= " WHERE to_email LIKE '%$search_term%' OR subject LIKE '%$search_term%' ";
-		}
-
-		// Ordering parameters.
-		$orderby = ! empty( $_GET['orderby'] ) ? esc_sql( $_GET['orderby'] ) : 'sent_date';
-		$order   = ! empty( $_GET['order'] ) ? esc_sql( $_GET['order'] ) : 'DESC';
-
-		if ( ! empty( $orderby ) & ! empty( $order ) ) {
-			$query_cond .= ' ORDER BY ' . $orderby . ' ' . $order;
-		}
-
-		// Find total number of items.
-		$count_query = $count_query . $query_cond;
-		$total_items = $wpdb->get_var( $count_query );
-
-		// Adjust the query to take pagination into account.
-		$per_page = EmailLog::get_per_page();
-		if ( ! empty( $current_page ) && ! empty( $per_page ) ) {
-			$offset = ( $current_page - 1 ) * $per_page;
-			$query_cond .= ' LIMIT ' . (int) $offset . ',' . (int) $per_page;
-		}
-
-		// Fetch the items.
-		$query = $query . $query_cond;
-		$this->items = $wpdb->get_results( $query );
+		$this->items = $items;
 
 		// Register pagination options & calculations.
 		$this->set_pagination_args( array(

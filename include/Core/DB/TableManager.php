@@ -99,6 +99,101 @@ class TableManager {
 	}
 
 	/**
+	 * Delete log entires by ids.
+	 *
+	 * @param string $ids Comma seperated list of log ids.
+	 *
+	 * @return false|int Number of log entries that got deleted. False on failure.
+	 */
+	public function delete_logs_by_id( $ids ) {
+		global $wpdb;
+
+		// Can't use wpdb->prepare for the below query. If used it results in this bug
+		// https://github.com/sudar/email-log/issues/13
+
+		$ids        = esc_sql( $ids );
+		$table_name = $this->get_log_table_name();
+
+		return $wpdb->query( "DELETE FROM $table_name where id IN ( $ids )" ); //@codingStandardsIgnoreLine
+	}
+
+	/**
+	 * Delete all log entries.
+	 *
+	 * @return false|int Number of log entries that got deleted. False on failure.
+	 */
+	public function delete_all_logs() {
+		global $wpdb;
+
+		$table_name = $this->get_log_table_name();
+
+		return $wpdb->query( "DELETE FROM $table_name" ); //@codingStandardsIgnoreLine
+	}
+
+	/**
+	 * Get message by log id.
+	 *
+	 * @param int $id Id of the log whose message is needed.
+	 *
+	 * @return null|string Message of the log with $id.
+	 */
+	public function get_log_message( $id ) {
+		global $wpdb;
+
+		$table_name = $this->get_log_table_name();
+		$query      = $wpdb->prepare( 'SELECT message FROM ' . $table_name . ' WHERE id = %d', $id );
+
+		return $wpdb->get_var( $query );
+	}
+
+	/**
+	 * Fetch log items.
+	 *
+	 * @param array $request         Request object.
+	 * @param int   $per_page        Entries per page.
+	 * @param int   $current_page_no Current page no.
+	 *
+	 * @return array Log entries and total items count.
+	 */
+	public function fetch_log_items( $request, $per_page, $current_page_no ) {
+		global $wpdb;
+		$table_name = $this->get_log_table_name();
+
+		$query       = 'SELECT * FROM ' . $table_name;
+		$count_query = 'SELECT count(*) FROM ' . $table_name;
+		$query_cond  = '';
+
+		if ( isset( $request['s'] ) ) {
+			$search_term = trim( esc_sql( $request['s'] ) );
+			$query_cond .= " WHERE to_email LIKE '%$search_term%' OR subject LIKE '%$search_term%' ";
+		}
+
+		// Ordering parameters.
+		$orderby = ! empty( $request['orderby'] ) ? esc_sql( $request['orderby'] ) : 'sent_date';
+		$order   = ! empty( $request['order'] ) ? esc_sql( $request['order'] ) : 'DESC';
+
+		if ( ! empty( $orderby ) & ! empty( $order ) ) {
+			$query_cond .= ' ORDER BY ' . $orderby . ' ' . $order;
+		}
+
+		// Find total number of items.
+		$count_query = $count_query . $query_cond;
+		$total_items = $wpdb->get_var( $count_query );
+
+		// Adjust the query to take pagination into account.
+		if ( ! empty( $current_page_no ) && ! empty( $per_page ) ) {
+			$offset = ( $current_page_no - 1 ) * $per_page;
+			$query_cond .= ' LIMIT ' . (int) $offset . ',' . (int) $per_page;
+		}
+
+		// Fetch the items.
+		$query = $query . $query_cond;
+		$items = $wpdb->get_results( $query );
+
+		return array( $items, $total_items );
+	}
+
+	/**
 	 * Create email log table.
 	 *
 	 * @access private

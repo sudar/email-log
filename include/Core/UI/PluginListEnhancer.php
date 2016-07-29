@@ -57,7 +57,7 @@ class PluginListEnhancer {
 	 * @return array Modified list of links.
 	 */
 	public function insert_manage_log_link( $links ) {
-		$settings_link = '<a href="tools.php?page=email-log">' . __( 'Log', 'email-log' ) . '</a>';
+		$settings_link = '<a href="admin.php?page=email-log">' . __( 'View Logs', 'email-log' ) . '</a>';
 		array_unshift( $links, $settings_link );
 
 		return $links;

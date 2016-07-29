@@ -2,17 +2,25 @@
 
 // TODO: Add test for `prepare_items` method
 // TODO: Add tests for other public methods
+use EmailLog\Core\UI\Page\LogListPage;
+
+class MockLogListPage extends LogListPage {
+	public function get_screen() {
+		return \WP_Screen::get( 'toplevel_page_email-log' );
+	}
+}
+
 class LogListTableTest extends \WP_UnitTestCase {
+	protected $file;
 	protected $log_list_table;
 
 	public function setUp() {
 		parent::setUp();
 
-		$args = array(
-			'screen' => 'tools_page_email-log',
-		);
-
-		$this->log_list_table = new LogListTable( $args );
+		$this->file = str_replace( 'tests/wp-tests/Core/', '', __FILE__ );
+		$page = new MockLogListPage( $this->file );
+		$page->load();
+		$this->log_list_table = new LogListTable( $page );
 	}
 
 	public function test_get_columns() {

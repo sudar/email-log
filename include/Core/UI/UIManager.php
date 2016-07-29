@@ -24,6 +24,9 @@ class UIManager {
 		$this->plugin_file = $file;
 	}
 
+	/**
+	 * Load all components and setup hooks.
+	 */
 	public function load() {
 		$this->initialize_components();
 
@@ -41,5 +44,6 @@ class UIManager {
 	 */
 	protected function initialize_components() {
 		$this->components['plugin_list_enhancer'] = new PluginListEnhancer( $this->plugin_file );
+		$this->components['log_list_page']        = new Page\LogListPage( $this->plugin_file );
 	}
 }
