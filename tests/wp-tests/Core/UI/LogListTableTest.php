@@ -4,6 +4,10 @@
 // TODO: Add tests for other public methods
 use EmailLog\Core\UI\Page\LogListPage;
 
+if ( ! class_exists( 'EmailLog\\Core\\UI\\Page\\LogListPage') ) {
+	return;
+}
+
 class MockLogListPage extends LogListPage {
 	public function get_screen() {
 		return \WP_Screen::get( 'toplevel_page_email-log' );

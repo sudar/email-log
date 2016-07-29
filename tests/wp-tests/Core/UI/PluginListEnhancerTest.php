@@ -1,5 +1,9 @@
 <?php namespace EmailLog\Core\UI;
 
+if ( ! class_exists( 'EmailLog\\Core\\UI\\PluginListEnhancer' ) ) {
+	return;
+}
+
 /**
  * Mock object for PluginListEnhancerClass.
  *
