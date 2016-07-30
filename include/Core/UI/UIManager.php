@@ -45,5 +45,6 @@ class UIManager {
 	protected function initialize_components() {
 		$this->components['plugin_list_enhancer'] = new PluginListEnhancer( $this->plugin_file );
 		$this->components['log_list_page']        = new Page\LogListPage( $this->plugin_file );
+		$this->components['addon_list_page']      = new Page\AddonListPage( $this->plugin_file );
 	}
 }
