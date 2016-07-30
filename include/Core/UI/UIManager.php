@@ -18,6 +18,11 @@ class UIManager {
 	protected $components = array();
 
 	/**
+	 * @var array Admin pages.
+	 */
+	protected $pages = array();
+
+	/**
 	 * Initialize the plugin.
 	 */
 	public function __construct( $file ) {
@@ -29,9 +34,14 @@ class UIManager {
 	 */
 	public function load() {
 		$this->initialize_components();
+		$this->initialize_pages();
 
 		foreach ( $this->components as $component ) {
 			$component->load();
+		}
+
+		foreach ( $this->pages as $page ) {
+			$page->load();
 		}
 	}
 
@@ -44,7 +54,17 @@ class UIManager {
 	 */
 	protected function initialize_components() {
 		$this->components['plugin_list_enhancer'] = new PluginListEnhancer( $this->plugin_file );
-		$this->components['log_list_page']        = new Page\LogListPage( $this->plugin_file );
-		$this->components['addon_list_page']      = new Page\AddonListPage( $this->plugin_file );
+	}
+
+	/**
+	 * Initialize Admin page Objects.
+	 *
+	 * This method may be overwritten in tests.
+	 *
+	 * @access protected
+	 */
+	protected function initialize_pages() {
+		$this->pages['log_list_page']   = new Page\LogListPage( $this->plugin_file );
+		$this->pages['addon_list_page'] = new Page\AddonListPage( $this->plugin_file );
 	}
 }
