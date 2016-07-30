@@ -1,7 +1,7 @@
 <?php namespace EmailLog\Core\UI\Page;
 
 use EmailLog\Core\DB\TableManager;
-use EmailLog\Core\UI\LogListTable;
+use EmailLog\Core\UI\ListTable\LogListTable;
 
 /**
  * Log List Page.

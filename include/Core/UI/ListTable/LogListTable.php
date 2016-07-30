@@ -1,4 +1,4 @@
-<?php namespace EmailLog\Core\UI;
+<?php namespace EmailLog\Core\UI\ListTable;
 
 use EmailLog\Core\EmailLog as EmailLog;
 

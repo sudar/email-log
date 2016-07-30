@@ -1,5 +1,7 @@
 <?php namespace EmailLog\Core\UI;
 
+use EmailLog\Core\UI\Component\PluginListEnhancer;
+
 /**
  * Admin UI Manager.
  *
@@ -13,7 +15,7 @@ class UIManager {
 	protected $plugin_file;
 
 	/**
-	 * @var array UI Components List.
+	 * @var array UI Component List.
 	 */
 	protected $components = array();
 

@@ -1,6 +1,8 @@
-<?php namespace EmailLog\Core\UI;
+<?php namespace EmailLog\Core\UI\Component;
 
-if ( ! class_exists( 'EmailLog\\Core\\UI\\PluginListEnhancer' ) ) {
+use EmailLog\Core\UI\Component\PluginListEnhancer;
+
+if ( ! class_exists( 'EmailLog\Core\UI\Components\PluginListEnhancer' ) ) {
 	return;
 }
 

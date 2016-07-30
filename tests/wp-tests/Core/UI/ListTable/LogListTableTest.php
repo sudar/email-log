@@ -1,7 +1,8 @@
-<?php namespace EmailLog\Core\UI;
+<?php namespace EmailLog\Core\UI\ListTable;
 
 // TODO: Add test for `prepare_items` method
 // TODO: Add tests for other public methods
+use EmailLog\Core\UI\ListTable\LogListTable;
 use EmailLog\Core\UI\Page\LogListPage;
 
 if ( ! class_exists( 'EmailLog\\Core\\UI\\Page\\LogListPage') ) {
