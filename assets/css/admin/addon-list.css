@@ -1,0 +1,54 @@
+.el-container {
+	width: 100%;
+}
+
+@media screen and (max-width:399px) {
+	.el-addon {
+		float: none;
+		width: 100%;
+		margin: 0 0 2% 0;
+	}
+
+	.el-addon img {
+		height: auto;
+		width: 100%;
+	}
+}
+
+@media screen and (min-width:400px) and (max-width:899px) {
+	.el-addon {
+		float: left;
+		width: 49%;
+		margin: 0 1% 2% 0;
+	}
+
+	.el-addon img {
+		height: auto;
+		width: 100%;
+	}
+
+	.el-addon:nth-child(even) {
+		float: left;
+		width: 49%;
+		margin: 0 0% 2% 1%;
+	}
+}
+
+@media screen and (min-width:900px) {
+	.el-addon {
+		float: left;
+		width: 32%;
+		margin: 0 0 2% 0;
+	}
+
+	.el-addon img {
+		height: auto;
+		width: 100%;
+	}
+
+	.el-addon:nth-child(3n-1) {
+		float: left;
+		width: 32%;
+		margin: 0 2% 2% 2%;
+	}
+}

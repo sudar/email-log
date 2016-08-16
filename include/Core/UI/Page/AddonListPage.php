@@ -44,9 +44,13 @@ class AddonListPage extends BasePage {
 	public function render_page() {
 		?>
 		<div class="wrap">
-			<h2><?php _e( 'Email Log Addons', 'email-log' ); ?></h2>
+			<h1><?php _e( 'Email Log Addons', 'email-log' ); ?></h1>
 			<?php settings_errors(); ?>
-
+			<?php
+				// Fetch the Addon's list and render.
+				$addon_controller = new \EmailLog\Core\UI\Component\AddonController( $this->plugin_file );
+				$addon_controller->render_page();
+			?>
 		</div>
 		<?php
 	}
