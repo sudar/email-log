@@ -53,7 +53,9 @@ class LogListPage extends BasePage {
 			self::PAGE_SLUG,
 			array( $this, 'render_page' ),
 			'dashicons-email-alt',
-			26.9996
+			// @todo Replace after development is completed.
+			// Modifying now since it collides with EDD plugin.
+			27.9996
 		);
 
 		$this->page = add_submenu_page(
