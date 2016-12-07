@@ -116,7 +116,7 @@ class EmailLogAutoloader {
 	/**
 	 * Add a file to be autoloaded.
 	 *
-	 * @param $filename File to be autoloaded.
+	 * @param string $filename File to be autoloaded.
 	 */
 	public function add_file( $filename ) {
 		if ( file_exists( $filename ) ) {
