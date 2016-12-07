@@ -7,6 +7,7 @@
  	<!-- Non code directories -->
 	<exclude-pattern>docs/*</exclude-pattern>
 	<exclude-pattern>dist/*</exclude-pattern>
+	<exclude-pattern>code-coverage/*</exclude-pattern>
  	<exclude-pattern>node_modules/*</exclude-pattern>
  	<exclude-pattern>test/*</exclude-pattern>
  	<exclude-pattern>tests/*</exclude-pattern>
