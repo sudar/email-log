@@ -67,3 +67,4 @@ if ( version_compare( PHP_VERSION, '5.3.0', '<' ) ) {
 
 // PHP is at least 5.3, so we can safely include namespace code
 require_once 'load-email-log.php';
+load_email_log( __FILE__ );
