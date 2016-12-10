@@ -25,11 +25,16 @@ class EmailLogger {
 	public function log_email( $mail_info ) {
 		$email_log = email_log();
 
+		$headers = '';
+		if ( isset( $mail_info['headers'] ) ) {
+			$headers = is_array( $mail_info['headers'] ) ? implode( "\n", $mail_info['headers'] ) : $mail_info['headers'];
+		}
+
 		$data = array(
 			'attachments' => ( count( $mail_info['attachments'] ) > 0 ) ? 'true' : 'false',
 			'to_email'    => is_array( $mail_info['to'] ) ? implode( ',', $mail_info['to'] ) : $mail_info['to'],
 			'subject'     => $mail_info['subject'],
-			'headers'     => is_array( $mail_info['headers'] ) ? implode( "\n", $mail_info['headers'] ) : $mail_info['headers'],
+			'headers'     => $headers,
 			'sent_date'   => current_time( 'mysql' ),
 		);
 
