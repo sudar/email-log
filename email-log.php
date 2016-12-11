@@ -43,7 +43,7 @@ if ( version_compare( PHP_VERSION, '5.3.0', '<' ) ) {
 		?>
 		<div class="error">
 			<p>
-				<?php __( 'Email Log requires at least PHP 5.3 to function properly. Please upgrade PHP or use v1.9.1 of Email Log', 'email-log' ); ?>
+				<?php _e( 'Email Log requires at least PHP 5.3 to function properly. Please upgrade PHP or use v1.9.1 of Email Log.', 'email-log' ); ?>
 			</p>
 		</div>
 		<?php
