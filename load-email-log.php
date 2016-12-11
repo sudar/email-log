@@ -13,7 +13,7 @@
  *
  * @since 2.0
  *
- * @param $plugin_file
+ * @param string $plugin_file Main plugin file.
  */
 function load_email_log( $plugin_file ) {
 	global $email_log;
@@ -43,7 +43,7 @@ function load_email_log( $plugin_file ) {
 	// `register_activation_hook` can't be called from inside any hook.
 	register_activation_hook( $plugin_file, array( $email_log->table_manager, 'on_activate' ) );
 
-	// Load the plugin
+	// Load the plugin.
 	add_action( 'wp_loaded', array( $email_log, 'load' ) );
 }
 

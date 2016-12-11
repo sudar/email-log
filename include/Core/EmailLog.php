@@ -1,7 +1,5 @@
 <?php namespace EmailLog\Core;
 
-use EmailLog\Core\DB\TableManager;
-
 /**
  * The main plugin class.
  *
@@ -10,10 +8,10 @@ use EmailLog\Core\DB\TableManager;
 class EmailLog {
 
 	/**
-	 * Version number.
+	 * Plugin Version number.
 	 *
 	 * @since Genesis
-	 * @var const VERSION
+	 * @var string
 	 */
 	const VERSION = '1.9.1';
 
@@ -21,14 +19,17 @@ class EmailLog {
 	 * Flag to track if the plugin is loaded.
 	 *
 	 * @since 2.0
+	 * @access private
 	 * @var bool
 	 */
 	private $loaded;
 
 	/**
-	 * @var string Plugin file path.
+	 * Plugin file path.
 	 *
 	 * @since 2.0
+	 * @access private
+	 * @var string
 	 */
 	private $plugin_file;
 
@@ -36,40 +37,42 @@ class EmailLog {
 	 * Filesystem directory path where translations are stored.
 	 *
 	 * @since 2.0
-	 * @var string $translations_path
+	 * @var string
 	 */
 	public $translations_path;
 
 	/**
-	 * @var object TableManager.
+	 * Database Table Manager.
 	 *
 	 * @since 2.0
+	 * @var \EmailLog\Core\DB\TableManager
 	 */
 	public $table_manager;
 
 	/**
-	 * @var object EmailLogger
+	 * Email Logger.
 	 *
 	 * @since 2.0
+	 * @var \EmailLog\Core\EmailLogger
 	 */
 	public $logger;
 
 	/**
-	 * @var object UIManager.
+	 * UI Manager.
 	 *
 	 * @since 2.0
+	 * @var \EmailLog\Core\UI\UIManager
 	 */
 	public $ui_manager;
 
-	// JS Stuff
-	const JS_HANDLE                = 'email-log';
-
-	// coloumn hooks
+	// coloumn hooks.
 	const HOOK_LOG_COLUMNS         = 'email_log_manage_log_columns';
 	const HOOK_LOG_DISPLAY_COLUMNS = 'email_log_display_log_columns';
 
 	/**
 	 * Initialize the plugin.
+	 *
+	 * @param string $file Plugin file.
 	 */
 	public function __construct( $file ) {
 		$this->plugin_file = $file;

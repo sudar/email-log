@@ -34,7 +34,7 @@ include_once plugin_dir_path( __FILE__ ) . 'include/compatibility/EmailLog.php';
 
 if ( version_compare( PHP_VERSION, '5.3.0', '<' ) ) {
 	/**
-	 * v2.0 of the Email Log plugin dropped support for PHP 5.2.
+	 * Version 2.0 of the Email Log plugin dropped support for PHP 5.2.
 	 * If you are still struck with PHP 5.2 and can't update, then use v1.9.1 of the plugin.
 	 * But note that some add-ons may not work.
 	 *
@@ -68,6 +68,6 @@ if ( version_compare( PHP_VERSION, '5.3.0', '<' ) ) {
 	return;
 }
 
-// PHP is at least 5.3, so we can safely include namespace code
+// PHP is at least 5.3, so we can safely include namespace code.
 require_once 'load-email-log.php';
 load_email_log( __FILE__ );
