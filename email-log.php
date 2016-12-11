@@ -27,7 +27,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-defined( 'ABSPATH' ) || exit; // Exit if accessed directly
+defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
+
+// Include the stub of the old `EmailLog` class, so that old add-ons don't generate a fatal error.
+include_once plugin_dir_path( __FILE__ ) . 'include/compatibility/EmailLog.php';
 
 if ( version_compare( PHP_VERSION, '5.3.0', '<' ) ) {
 	/**
