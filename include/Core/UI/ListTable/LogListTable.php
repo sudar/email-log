@@ -1,7 +1,5 @@
 <?php namespace EmailLog\Core\UI\ListTable;
 
-use EmailLog\Core\EmailLog as EmailLog;
-
 if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once ABSPATH . WPINC . '/class-wp-list-table.php';
 }
@@ -100,13 +98,19 @@ class LogListTable extends \WP_List_Table {
 	 */
 	public function get_columns() {
 		$columns = array(
-			'cb'        => '<input type="checkbox" />', //Render a checkbox instead of text
+			'cb'        => '<input type="checkbox" />', // Render a checkbox instead of text.
 			'sent_date' => __( 'Sent at', 'email-log' ),
 			'to'        => __( 'To', 'email-log' ),
 			'subject'   => __( 'Subject', 'email-log' ),
 		);
 
-		return apply_filters( EmailLog::HOOK_LOG_COLUMNS, $columns );
+		/**
+		 * Filter the email log list table columns.
+		 *
+		 * @since 2.0
+		 * @param array $columns Columns of email log list table.
+		 */
+		return apply_filters( 'email_log_manage_log_columns', $columns );
 	}
 
 	/**
@@ -130,11 +134,19 @@ class LogListTable extends \WP_List_Table {
 	 *
 	 * @access protected
 	 *
-	 * @param object $item
-	 * @param string $column_name
+	 * @param object $item        Data object.
+	 * @param string $column_name Column Name.
 	 */
 	protected function column_default( $item, $column_name ) {
-		do_action( EmailLog::HOOK_LOG_DISPLAY_COLUMNS, $column_name, $item );
+		/**
+		 * Display Email Log list table columns.
+		 *
+		 * @since 2.0
+		 *
+		 * @param string $column_name Column Name.
+		 * @param object $item        Data object.
+		 */
+		do_action( 'email_log_display_log_columns', $column_name, $item );
 	}
 
 	/**

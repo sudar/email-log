@@ -72,10 +72,6 @@ class EmailLog {
 	 */
 	public $dependency_enforcer;
 
-	// coloumn hooks.
-	const HOOK_LOG_COLUMNS         = 'email_log_manage_log_columns';
-	const HOOK_LOG_DISPLAY_COLUMNS = 'email_log_display_log_columns';
-
 	/**
 	 * Initialize the plugin.
 	 *
