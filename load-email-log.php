@@ -35,10 +35,11 @@ function load_email_log( $plugin_file ) {
 
 	$loader->register();
 
-	$email_log                = new \EmailLog\Core\EmailLog( $plugin_file );
-	$email_log->table_manager = new \EmailLog\Core\DB\TableManager();
-	$email_log->logger        = new \EmailLog\Core\EmailLogger();
-	$email_log->ui_manager    = new \EmailLog\Core\UI\UIManager( $plugin_file );
+	$email_log                      = new \EmailLog\Core\EmailLog( $plugin_file );
+	$email_log->table_manager       = new \EmailLog\Core\DB\TableManager();
+	$email_log->logger              = new \EmailLog\Core\EmailLogger();
+	$email_log->ui_manager          = new \EmailLog\Core\UI\UIManager( $plugin_file );
+	$email_log->dependency_enforcer = new \EmailLog\Addon\DependencyEnforcer();
 
 	// `register_activation_hook` can't be called from inside any hook.
 	register_activation_hook( $plugin_file, array( $email_log->table_manager, 'on_activate' ) );

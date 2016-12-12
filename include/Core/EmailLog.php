@@ -65,6 +65,13 @@ class EmailLog {
 	 */
 	public $ui_manager;
 
+	/**
+	 * Dependency Enforce.
+	 *
+	 * @var \EmailLog\Addon\DependencyEnforcer
+	 */
+	public $dependency_enforcer;
+
 	// coloumn hooks.
 	const HOOK_LOG_COLUMNS         = 'email_log_manage_log_columns';
 	const HOOK_LOG_DISPLAY_COLUMNS = 'email_log_display_log_columns';
@@ -92,6 +99,7 @@ class EmailLog {
 		$this->table_manager->load();
 		$this->logger->load();
 		$this->ui_manager->load();
+		$this->dependency_enforcer->load();
 
 		$this->loaded = true;
 	}
