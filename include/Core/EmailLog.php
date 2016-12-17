@@ -113,4 +113,13 @@ class EmailLog {
 		 */
 		do_action( 'el_loaded' );
 	}
+
+	/**
+	 * Return Email Log version.
+	 *
+	 * @return string Email Log Version.
+	 */
+	public function get_version() {
+		return self::VERSION;
+	}
 }
