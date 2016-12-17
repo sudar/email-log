@@ -32,6 +32,7 @@ function load_email_log( $plugin_file ) {
 	}
 
 	$loader->add_file( $plugin_dir . 'include/Util/helper.php' );
+	$loader->add_file( $plugin_dir . 'include/Addon/addon-helper.php' );
 
 	$loader->register();
 
