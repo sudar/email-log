@@ -110,7 +110,7 @@ class LogListTable extends \WP_List_Table {
 		 * @since 2.0
 		 * @param array $columns Columns of email log list table.
 		 */
-		return apply_filters( 'email_log_manage_log_columns', $columns );
+		return apply_filters( 'el_manage_log_columns', $columns );
 	}
 
 	/**
@@ -146,7 +146,7 @@ class LogListTable extends \WP_List_Table {
 		 * @param string $column_name Column Name.
 		 * @param object $item        Data object.
 		 */
-		do_action( 'email_log_display_log_columns', $column_name, $item );
+		do_action( 'el_display_log_columns', $column_name, $item );
 	}
 
 	/**
