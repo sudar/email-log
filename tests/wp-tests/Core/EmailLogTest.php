@@ -26,9 +26,15 @@ class EmailLogTest extends \WP_UnitTestCase {
 		                        ->getMock();
 		$ui_manager_stub->method( 'load' );
 
-		$this->email_log->table_manager = $table_manager_stub;
-		$this->email_log->logger        = $email_logger_stub;
-		$this->email_log->ui_manager    = $ui_manager_stub;
+		// Create a stub for Dependency Enforcer.
+		$dependency_enforcer_stub = $this->getMockBuilder( '\\EmailLog\\Addon\\DependencyEnforcer' )
+								->getMock();
+		$ui_manager_stub->method( 'load' );
+
+		$this->email_log->table_manager       = $table_manager_stub;
+		$this->email_log->logger              = $email_logger_stub;
+		$this->email_log->ui_manager          = $ui_manager_stub;
+		$this->email_log->dependency_enforcer = $dependency_enforcer_stub;
 	}
 
 	public function tearDown() {
