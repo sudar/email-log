@@ -66,6 +66,15 @@ class LogListPage extends BasePage {
 		);
 
 		add_action( "load-{$this->page}", array( $this, 'load_page' ) );
+
+		/**
+		 * Fires before loading log list page.
+		 *
+		 * @since 2.0
+		 *
+		 * @param string $page Page slug.
+		 */
+		do_action( 'el_load_log_list_page', $this->page );
 	}
 
 	/**
