@@ -119,7 +119,7 @@ class EmailLogAutoloader {
 	 * @param string $filename File to be autoloaded.
 	 */
 	public function add_file( $filename ) {
-		if ( file_exists( $filename ) ) {
+		if ( ! in_array( $filename, $this->files, true ) ) {
 			$this->files[] = $filename;
 		}
 	}
@@ -206,7 +206,7 @@ class EmailLogAutoloader {
 	 */
 	protected function require_file( $file ) {
 		if ( file_exists( $file ) ) {
-			require $file;
+			require_once $file;
 
 			return true;
 		}

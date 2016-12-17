@@ -100,23 +100,8 @@ class EmailLogAutoloaderTest extends \PHPUnit_Framework_TestCase {
 		$this->assertSame( $expect, $actual );
 	}
 
-	/**
-	 * Test autoloading of a file that doesn't exist.
-	 */
-	public function testFileAutoloadingFileNotExists() {
+	public function testFileIsAdded() {
 		$file_name = 'path/to/some/file';
-		$this->loader->add_file( $file_name );
-
-		$actual = in_array( $file_name, $this->loader->get_files() );
-
-		$this->assertFalse( $actual );
-	}
-
-	/**
-	 * Test autoloading of a file that exists.
-	 */
-	public function testFileAutoloadingFileExists() {
-		$file_name = dirname( __FILE__ ) . '/bootstrap.php';
 		$this->loader->add_file( $file_name );
 
 		$actual = in_array( $file_name, $this->loader->get_files() );
