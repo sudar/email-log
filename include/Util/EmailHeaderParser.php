@@ -21,6 +21,7 @@ class EmailHeaderParser {
 	 * @since 1.0
 	 *
 	 * @param array $data Headers to be joined.
+	 *
 	 * @return string Joined headers.
 	 */
 	public function join_headers( $data ) {
@@ -53,6 +54,7 @@ class EmailHeaderParser {
 	 * Return parsed headers.
 	 *
 	 * @param string $headers Headers to parse.
+	 *
 	 * @return array Parsed Headers.
 	 */
 	public function parse_headers( $headers ) {
@@ -65,15 +67,16 @@ class EmailHeaderParser {
 	 * @access private
 	 *
 	 * @param string $headers Headers to be parsed.
+	 *
 	 * @return array Parsed headers.
 	 */
 	private function parse( $headers ) {
-		$data = array();
+		$data        = array();
 		$arr_headers = explode( "\n", $headers );
 
 		foreach ( $arr_headers as $header ) {
 			$split_header = explode( ':', $header );
-			$value = $this->parse_header_line( $split_header );
+			$value        = $this->parse_header_line( $split_header );
 
 			if ( trim( $value ) != '' ) {
 				switch ( strtolower( $split_header[0] ) ) {
@@ -106,10 +109,11 @@ class EmailHeaderParser {
 	/**
 	 * Parse individual header line.
 	 *
-	 * @since 1.0
+	 * @since  1.0
 	 * @access private
 	 *
-	 * @param array   $header Header line to be parsed.
+	 * @param array $header Header line to be parsed.
+	 *
 	 * @return string         Parsed value.
 	 */
 	private function parse_header_line( $header ) {
