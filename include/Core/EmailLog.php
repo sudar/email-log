@@ -22,7 +22,7 @@ class EmailLog {
 	 * @access private
 	 * @var bool
 	 */
-	private $loaded;
+	private $loaded = false;
 
 	/**
 	 * Plugin file path.
@@ -40,6 +40,13 @@ class EmailLog {
 	 * @var string
 	 */
 	public $translations_path;
+
+	/**
+	 * Auto loader.
+	 *
+	 * @var \EmailLog\EmailLogAutoloader
+	 */
+	public $loader;
 
 	/**
 	 * Database Table Manager.

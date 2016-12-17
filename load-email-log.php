@@ -36,6 +36,7 @@ function load_email_log( $plugin_file ) {
 	$loader->register();
 
 	$email_log                      = new \EmailLog\Core\EmailLog( $plugin_file );
+	$email_log->loader              = $loader;
 	$email_log->table_manager       = new \EmailLog\Core\DB\TableManager();
 	$email_log->logger              = new \EmailLog\Core\EmailLogger();
 	$email_log->ui_manager          = new \EmailLog\Core\UI\UIManager( $plugin_file );
