@@ -13,7 +13,7 @@ class EmailLog {
 	 * @since Genesis
 	 * @var string
 	 */
-	const VERSION = '1.9.1';
+	const VERSION = '2.0.0';
 
 	/**
 	 * Flag to track if the plugin is loaded.
