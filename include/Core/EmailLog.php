@@ -105,5 +105,12 @@ class EmailLog {
 		$this->dependency_enforcer->load();
 
 		$this->loaded = true;
+
+		/**
+		 * Email Log plugin loaded.
+		 *
+		 * @since 2.0
+		 */
+		do_action( 'el_loaded' );
 	}
 }
