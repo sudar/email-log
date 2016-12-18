@@ -28,7 +28,7 @@
  *
  *      <?php
  *      // instantiate the loader
- *      $loader = new \Example\Psr4AutoloaderClass;
+ *      $loader = new \EmailLog\EmailLogAutoloader;
  *
  *      // register the autoloader
  *      $loader->register();
