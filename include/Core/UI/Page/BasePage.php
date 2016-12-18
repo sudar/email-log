@@ -40,14 +40,14 @@ abstract class BasePage {
 	/**
 	 * Setup hooks.
 	 */
-	protected function load() {
+	public function load() {
 		add_action( 'admin_menu', array( $this, 'register_page' ) );
 	}
 
 	/**
 	 * Render help tab.
 	 */
-	protected function render_help_tab() {
+	public function render_help_tab() {
 		/**
 		 * Content specified inline
 		 */
@@ -60,7 +60,8 @@ abstract class BasePage {
 			)
 		);
 
-		// Add help sidebar
+		// Add help sidebar.
+		// TODO: Change the links.
 		$this->get_screen()->set_help_sidebar(
 			'<p><strong>' . __( 'More information', 'email-log' ) . '</strong></p>' .
 			'<p><a href = "http://sudarmuthu.com/wordpress/email-log">' . __( 'Plugin Homepage/support', 'email-log' ) . '</a></p>' .
