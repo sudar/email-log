@@ -43,5 +43,6 @@
 	<rule ref="WordPress-Docs">
         <!-- Since we are using namespace, no need to include package -->
 		<exclude name="Squiz.Commenting.FileComment.MissingPackageTag"/>
+		<exclude name="Squiz.Commenting.FileComment.Missing"/>
 	</rule>
 </ruleset>
