@@ -9,7 +9,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
  */
 class AddonListRenderer {
 
-	const API_URL = 'http://wpemaillog.dev/edd-api/products/';
+	const API_URL = 'http://wpemaillog.dev/edd-api/products/?category=addon';
 	const CACHE_EXPIRY_IN_HRS = 12;
 	const CACHE_KEY = 'el_addon_list';
 
@@ -62,7 +62,7 @@ class AddonListRenderer {
 				return array();
 			}
 
-			$addons = $this->filter_addons( wp_remote_retrieve_body( $response ) );
+			$addons = $this->parse_response( wp_remote_retrieve_body( $response ) );
 
 			if ( ! empty( $addons ) ) {
 				set_transient( self::CACHE_KEY, $addons, self::CACHE_EXPIRY_IN_HRS * HOUR_IN_SECONDS );
@@ -73,28 +73,20 @@ class AddonListRenderer {
 	}
 
 	/**
-	 * Parse the response and get only the list of add-on and ignore bundles.
+	 * Parse the response and get the list of add-on.
 	 *
 	 * @param string $response API Response.
 	 *
 	 * @return array List of Add-ons.
 	 */
-	protected function filter_addons( $response ) {
+	protected function parse_response( $response ) {
 		$json = json_decode( $response, true );
 
 		if ( ! array_key_exists( 'products', $json ) ) {
 			return array();
 		}
 
-		$addons = array();
-
-		foreach ( $json['products'] as $addon ) {
-			if ( 'addon' === $addon['info']['category'][0]['slug'] ) {
-				$addons[] = $addon;
-			}
-		}
-
-		return $addons;
+		return $json['products'];
 	}
 
 	/**
