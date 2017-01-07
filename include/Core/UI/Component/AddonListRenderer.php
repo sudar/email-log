@@ -82,7 +82,7 @@ class AddonListRenderer {
 	protected function parse_response( $response ) {
 		$json = json_decode( $response, true );
 
-		if ( ! array_key_exists( 'products', $json ) ) {
+		if ( ! is_array( $json ) || ! array_key_exists( 'products', $json ) ) {
 			return array();
 		}
 
