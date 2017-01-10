@@ -9,7 +9,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
  */
 class AddonListRenderer {
 
-	const API_URL = 'http://wpemaillog.dev/edd-api/products/?category=addon';
+	const API_URL = 'https://wpemaillog.com/edd-api/products/?category=addon';
 	const CACHE_EXPIRY_IN_HRS = 12;
 	const CACHE_KEY = 'el_addon_list';
 
