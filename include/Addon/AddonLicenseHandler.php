@@ -28,7 +28,7 @@ class AddonLicenseHandler {
 	/**
 	 * Addon License field Renderer.
 	 *
-	 * @var EmailLog\UI\Addon\AddonLicenseRenderer
+	 * @var \EmailLog\UI\Addon\AddonLicenseRenderer
 	 */
 	private $renderer;
 
@@ -36,7 +36,7 @@ class AddonLicenseHandler {
 	 * AddonLicenseHandler constructor.
 	 *
 	 * @param string                                 $addon_file Add-on main file.
-	 * @param EmailLog\UI\Addon\AddonLicenseRenderer $renderer   Addon License Renderer.
+	 * @param \EmailLog\UI\Addon\AddonLicenseRenderer $renderer   Addon License Renderer.
 	 */
 	public function __construct( $addon_file, $renderer ) {
 		$this->addon_file = $addon_file;
