@@ -12,6 +12,8 @@ interface EmailLogSubscriber {
 
 	/**
 	 * This method will be called by Email Log after `wp-loaded` event.
+	 *
+	 * @return void
 	 */
 	public function load();
 }

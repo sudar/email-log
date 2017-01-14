@@ -25,6 +25,7 @@ abstract class EmailLogAddon {
 	 * Initialize add-on data.
 	 *
 	 * @access protected
+	 * @return void
 	 */
 	abstract protected function initialize();
 
