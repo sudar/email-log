@@ -122,4 +122,13 @@ class EmailLog {
 	public function get_version() {
 		return self::VERSION;
 	}
+
+	/**
+	 * Return the Email Log plugin directory path.
+	 *
+	 * @return string Plugin directory path.
+	 */
+	public function get_plugin_path() {
+		return plugin_dir_path( $this->plugin_file );
+	}
 }
