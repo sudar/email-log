@@ -80,6 +80,13 @@ class EmailLog {
 	public $dependency_enforcer;
 
 	/**
+	 * List of subscribers.
+	 *
+	 * @var array
+	 */
+	private $subscribers = array();
+
+	/**
 	 * Initialize the plugin.
 	 *
 	 * @param string $file Plugin file.
@@ -87,6 +94,28 @@ class EmailLog {
 	public function __construct( $file ) {
 		$this->plugin_file = $file;
 		$this->translations_path = dirname( plugin_basename( $this->plugin_file ) ) . '/languages/' ;
+	}
+
+	/**
+	 * Add an Email Log Subscriber.
+	 * The `load()` method of the subscribers will be called when Email Log is loaded.
+	 *
+	 * @param \EmailLog\Core\EmailLogSubscriber $subscriber Subscriber to be loaded.
+	 *
+	 * @return bool False if Email Log is already loaded or if subscriber is not of `EmailLogSubscriber` type. True otherwise.
+	 */
+	public function add_subscriber( $subscriber ) {
+		if ( $this->loaded ) {
+			return false;
+		}
+
+		if ( ! $subscriber instanceof EmailLogSubscriber ) {
+			return false;
+		}
+
+		$this->subscribers[] = $subscriber;
+
+		return true;
 	}
 
 	/**
@@ -103,6 +132,10 @@ class EmailLog {
 		$this->logger->load();
 		$this->ui_manager->load();
 		$this->dependency_enforcer->load();
+
+		foreach ( $this->subscribers as $subscriber ) {
+			$subscriber->load();
+		}
 
 		$this->loaded = true;
 
