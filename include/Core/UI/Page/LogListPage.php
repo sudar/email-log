@@ -103,6 +103,7 @@ class LogListPage extends BasePage {
 			</form>
 		</div>
 		<?php
+		$this->render_page_footer();
 	}
 
 	/**
