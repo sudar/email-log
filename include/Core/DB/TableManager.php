@@ -225,4 +225,18 @@ class TableManager {
 			add_option( self::DB_OPTION_NAME, self::DB_VERSION );
 		}
 	}
+
+	/**
+	 * Fetch log item by ID.
+	 *
+	 * @param int $id ID of the log item to be retrieved.
+	 * @return array  Log item.
+	 */
+	public function fetch_log_item_by_id( $id ) {
+		global $wpdb;
+		$table_name = $this->get_log_table_name();
+
+		$query      = $wpdb->prepare( 'SELECT * FROM ' . $table_name . ' WHERE id = %d', $id );
+		return $wpdb->get_results( $query );
+	}
 }
