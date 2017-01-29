@@ -24,6 +24,7 @@ class EmailLogger {
 	 */
 	public function log_email( $mail_info ) {
 		$email_log = email_log();
+		$mail_info = apply_filters( 'el_wp_mail_log', $mail_info );
 
 		$headers = '';
 		if ( isset( $mail_info['headers'] ) ) {
