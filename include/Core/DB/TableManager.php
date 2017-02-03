@@ -163,9 +163,18 @@ class TableManager {
 		$count_query = 'SELECT count(*) FROM ' . $table_name;
 		$query_cond  = '';
 
-		if ( isset( $request['s'] ) ) {
+		if ( isset( $request['s'] ) && $request['s'] !== '' ) {
 			$search_term = trim( esc_sql( $request['s'] ) );
-			$query_cond .= " WHERE to_email LIKE '%$search_term%' OR subject LIKE '%$search_term%' ";
+			$query_cond .= " WHERE ( to_email LIKE '%$search_term%' OR subject LIKE '%$search_term%' ) ";
+		}
+
+		if ( isset( $request['d'] ) && $request['d'] !== '' ) {
+			$search_date =  trim( esc_sql( $request['d'] ) );
+			if ( '' === $query_cond ) {
+				$query_cond .= " WHERE sent_date BETWEEN '$search_date 00:00:00' AND '$search_date 23:59:59' ";
+			} else {
+				$query_cond .= " AND sent_date BETWEEN '$search_date 00:00:00' AND '$search_date 23:59:59' ";
+			}
 		}
 
 		// Ordering parameters.

@@ -38,6 +38,8 @@ class LogListPage extends BasePage {
 		add_filter( 'set-screen-option', array( $this, 'save_screen_options' ), 10, 3 );
 
 		add_action( 'wp_ajax_display_email_message', array( $this, 'display_email_message_callback' ) );
+
+		add_action( 'admin_enqueue_scripts', array( $this, 'load_view_logs_assets' ) );
 	}
 
 	/**
@@ -264,5 +266,29 @@ class LogListPage extends BasePage {
 		}
 
 		die(); // this is required to return a proper result
+	}
+
+	/**
+	 * Loads assets on the Log List page.
+	 *
+	 * @since 2.0.0
+	 */
+	public function load_view_logs_assets( $hook ) {
+		// Don't load assets if not View Logs page.
+		if ( $hook != 'toplevel_page_email-log' ) {
+			return;
+		}
+
+		$email_log      = email_log();
+		$plugin_dir_url = plugin_dir_url( $email_log->get_plugin_file() );
+
+		wp_enqueue_style( 'el_view_logs_css', $plugin_dir_url . 'assets/css/admin/view-logs.css', array(), $email_log->get_version() );
+
+		wp_enqueue_script( 'el_jquery_ui', $plugin_dir_url . 'assets/js/admin/jquery-ui.min.js', array( 'jquery' ), $email_log->get_version(), true );
+
+		wp_enqueue_script( 'el_view_logs_js', $plugin_dir_url . 'assets/js/admin/view-logs.js', array( 'jquery' ), $email_log->get_version(), true );
+
+		wp_enqueue_style( 'el_jquery_ui_css', $plugin_dir_url . 'assets/css/admin/jquery-ui.min.css', array(), $email_log->get_version() );
+
 	}
 }
