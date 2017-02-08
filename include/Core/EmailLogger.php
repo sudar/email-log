@@ -24,6 +24,19 @@ class EmailLogger {
 	 */
 	public function log_email( $mail_info ) {
 		$email_log = email_log();
+		/**
+		 * Hook to modify wp_mail contents before Email Log plugin logs.
+		 *
+		 * @since Genesis
+		 *
+		 * @param array $mail_info {
+		 *     @type string $to
+		 *     @type string $subject
+		 *     @type string $message
+		 *     @type string $headers
+		 *     @type string $attachment
+		 * }
+		 */
 		$mail_info = apply_filters( 'el_wp_mail_log', $mail_info );
 
 		$headers = '';
