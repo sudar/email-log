@@ -243,8 +243,8 @@ class TableManager {
     /**
      * Deletes Email Logs older than the specified interval.
      *
-     * @param $interval_in_days
-     * @return int
+     * @param  int $interval_in_days    No. of days beyond which logs are to be deleted.
+     * @return int $deleted_rows_count  Count of rows deleted.
      */
 	public function delete_logs_older_than( $interval_in_days ) {
         global $wpdb;
@@ -252,6 +252,7 @@ class TableManager {
 
         $query      = $wpdb->prepare( 'DELETE FROM ' . $table_name . ' WHERE sent_date < DATE_SUB( CURDATE(), INTERVAL %d DAY )', $interval_in_days );
 
-        return $wpdb->query( $query );
+        $deleted_rows_count = $wpdb->query( $query );
+        return $deleted_rows_count;
     }
 }
