@@ -240,19 +240,20 @@ class TableManager {
 		return $wpdb->get_results( $query );
 	}
 
-    /**
-     * Deletes Email Logs older than the specified interval.
-     *
-     * @param  int $interval_in_days    No. of days beyond which logs are to be deleted.
-     * @return int $deleted_rows_count  Count of rows deleted.
-     */
+	/**
+	 * Deletes Email Logs older than the specified interval.
+	 *
+	 * @param  int $interval_in_days    No. of days beyond which logs are to be deleted.
+	 * @return int $deleted_rows_count  Count of rows deleted.
+	 */
 	public function delete_logs_older_than( $interval_in_days ) {
-        global $wpdb;
-        $table_name = $this->get_log_table_name();
+		global $wpdb;
+		$table_name = $this->get_log_table_name();
 
-        $query      = $wpdb->prepare( 'DELETE FROM ' . $table_name . ' WHERE sent_date < DATE_SUB( CURDATE(), INTERVAL %d DAY )', $interval_in_days );
+		$query      = $wpdb->prepare( 'DELETE FROM ' . $table_name . ' WHERE sent_date < DATE_SUB( CURDATE(), INTERVAL %d DAY )', $interval_in_days );
 
-        $deleted_rows_count = $wpdb->query( $query );
-        return $deleted_rows_count;
-    }
+		$deleted_rows_count = $wpdb->query( $query );
+		return $deleted_rows_count;
+	}
+
 }
