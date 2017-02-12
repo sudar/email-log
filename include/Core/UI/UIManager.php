@@ -68,5 +68,6 @@ class UIManager {
 	protected function initialize_pages() {
 		$this->pages['log_list_page']   = new Page\LogListPage( $this->plugin_file );
 		$this->pages['addon_list_page'] = new Page\AddonListPage( $this->plugin_file );
+		$this->pages['settings_page']   = new Page\SettingsPage( $this->plugin_file );
 	}
 }
