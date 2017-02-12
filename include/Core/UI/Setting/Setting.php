@@ -53,7 +53,7 @@ abstract class Setting {
 	 *
 	 * @return mixed Stored value.
 	 */
-	protected function get_value() {
+	public function get_value() {
 		return get_option( $this->section->option_name );
 	}
 
