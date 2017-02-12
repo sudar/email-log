@@ -29,9 +29,9 @@ abstract class BasePage {
 	abstract public function register_page();
 
 	/**
-	 * LogListPage constructor.
+	 * Create a new Page instance.
 	 *
-	 * @param string $file Plugin file
+	 * @param string $file Plugin file.
 	 */
 	public function __construct( $file ) {
 		$this->plugin_file = $file;
