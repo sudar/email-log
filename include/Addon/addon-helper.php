@@ -13,6 +13,8 @@
  *
  * @param string $addon_class Add-on class name.
  * @param string $addon_file  Add-on File.
+ *
+ * @return \EmailLog\Addon\EmailLogAddon Instance of the add-on.
  */
 function load_email_log_addon( $addon_class, $addon_file ) {
 	$email_log = email_log();
@@ -26,4 +28,6 @@ function load_email_log_addon( $addon_class, $addon_file ) {
 	$addon = new $addon_class( $addon_file, $license_handler );
 
 	add_action( 'el_loaded', array( $addon, 'load' ) );
+
+	return $addon;
 }
