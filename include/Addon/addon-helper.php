@@ -13,9 +13,8 @@
  *
  * @param string $addon_class Add-on class name.
  * @param string $addon_file  Add-on File.
- * @param array $args         Injecting dependency by passing required instantiated classes.
  */
-function load_email_log_addon( $addon_class, $addon_file, $args = array() ) {
+function load_email_log_addon( $addon_class, $addon_file ) {
 	$email_log = email_log();
 
 	$addon_dir = plugin_dir_path( $addon_file );
@@ -24,7 +23,7 @@ function load_email_log_addon( $addon_class, $addon_file, $args = array() ) {
 	$license_renderer = new EmailLog\Core\UI\Addon\AddonLicenseRenderer();
 	$license_handler = new EmailLog\Addon\AddonLicenseHandler( $addon_file, $license_renderer );
 
-	$addon = new $addon_class( $addon_file, $license_handler, $args );
+	$addon = new $addon_class( $addon_file, $license_handler );
 
 	add_action( 'el_loaded', array( $addon, 'load' ) );
 }
