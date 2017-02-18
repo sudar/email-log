@@ -317,18 +317,18 @@ class LogListTable extends \WP_List_Table {
 	 * Displays the search box.
 	 *
 	 * @since 2.0
-	 * @access public
 	 *
 	 * @param string $text     The 'submit' button label.
 	 * @param string $input_id ID attribute value for the search input field.
 	 */
 	public function search_box( $text, $input_id ) {
-		if ( empty( $_REQUEST['s'] ) && !$this->has_items() )
+		if ( empty( $_REQUEST['s'] ) && !$this->has_items() ) {
 			return;
+		}
 
 		$input_text_id  = $input_id . '-search-input';
 		$input_date_id  = $input_id . '-search-date-input';
-		$input_date_val = ( ! empty( $_REQUEST['d'] ) ) ? $_REQUEST['d'] : '';
+		$input_date_val = ( ! empty( $_REQUEST['d'] ) ) ? sanitize_text_field( $_REQUEST['d'] ) : '';
 
 
 		if ( ! empty( $_REQUEST['orderby'] ) )
@@ -342,8 +342,8 @@ class LogListTable extends \WP_List_Table {
 		?>
 		<p class="search-box">
 			<label class="screen-reader-text" for="<?php echo esc_attr( $input_id ); ?>"><?php echo $text; ?>:</label>
-			<input type="search" id="<?php echo esc_attr( $input_date_id ); ?>" name="d" value="<?php echo $input_date_val; ?>" placeholder="Search by date" />
-			<input type="search" id="<?php echo esc_attr( $input_text_id ); ?>" name="s" value="<?php _admin_search_query(); ?>" placeholder="Search by term" />
+			<input type="search" id="<?php echo esc_attr( $input_date_id ); ?>" name="d" value="<?php echo $input_date_val; ?>" placeholder="<?php _e( 'Search by date', 'email-log' ); ?>" />
+			<input type="search" id="<?php echo esc_attr( $input_text_id ); ?>" name="s" value="<?php _admin_search_query(); ?>" placeholder="<?php _e( 'Search by term', 'email-log' ); ?>" />
 			<?php submit_button( $text, '', '', false, array( 'id' => 'search-submit' ) ); ?>
 		</p>
 		<?php
