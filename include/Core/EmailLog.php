@@ -164,4 +164,15 @@ class EmailLog {
 	public function get_plugin_path() {
 		return plugin_dir_path( $this->plugin_file );
 	}
+
+	/**
+	 * Return the Email Log plugin file.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @return string Plugin directory path.
+	 */
+	public function get_plugin_file() {
+		return $this->plugin_file;
+	}
 }
