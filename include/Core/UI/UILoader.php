@@ -1,12 +1,14 @@
 <?php namespace EmailLog\Core\UI;
 
+use EmailLog\Core\Loadie;
+
 /**
  * Admin UI Loader.
  * Loads and initializes all admin pages and components.
  *
  * @since 2.0
  */
-class UILoader {
+class UILoader implements Loadie {
 
 	/**
 	 * Plugin filename.

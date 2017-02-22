@@ -1,11 +1,13 @@
 <?php namespace EmailLog\Core\UI\Page;
 
+use EmailLog\Core\Loadie;
+
 /**
  * Base class for all admin pages.
  *
  * @since 2.0
  */
-abstract class BasePage {
+abstract class BasePage implements Loadie {
 	/**
 	 * @var string Plugin filename.
 	 */

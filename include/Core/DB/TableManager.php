@@ -3,6 +3,8 @@
  * Handle installation and db table creation
  */
 
+use EmailLog\Core\Loadie;
+
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly
 
 /**
@@ -10,7 +12,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly
  *
  * @since 2.0
  */
-class TableManager {
+class TableManager implements Loadie {
 
 	/* Database table name */
 	const LOG_TABLE_NAME = 'email_log';

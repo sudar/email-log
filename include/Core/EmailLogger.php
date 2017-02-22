@@ -6,7 +6,7 @@
  * @package EmailLog\Core
  * @since   2.0
  */
-class EmailLogger {
+class EmailLogger implements Loadie {
 
 	/**
 	 * Load the logger.
