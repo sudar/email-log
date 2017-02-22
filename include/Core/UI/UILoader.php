@@ -1,31 +1,37 @@
 <?php namespace EmailLog\Core\UI;
 
-use EmailLog\Core\UI\Component\PluginListEnhancer;
-
 /**
- * Admin UI Manager.
+ * Admin UI Loader.
+ * Loads and initializes all admin pages and components.
  *
  * @since 2.0
  */
-class UIManager {
+class UILoader {
 
 	/**
-	 * @var string Plugin filename.
+	 * Plugin filename.
+	 *
+	 * @var string
 	 */
 	protected $plugin_file;
 
 	/**
-	 * @var array UI Component List.
+	 * UI Component List.
+	 *
+	 * @var array
 	 */
 	protected $components = array();
 
 	/**
-	 * @var array Admin pages.
+	 * List of Admin pages.
+	 * @var array
 	 */
 	protected $pages = array();
 
 	/**
-	 * Initialize the plugin.
+	 * Setup UI Loader.
+	 *
+	 * @param string $file Plugin main file.
 	 */
 	public function __construct( $file ) {
 		$this->plugin_file = $file;
@@ -55,7 +61,7 @@ class UIManager {
 	 * @access protected
 	 */
 	protected function initialize_components() {
-		$this->components['plugin_list_enhancer'] = new PluginListEnhancer( $this->plugin_file );
+		$this->components['plugin_list_enhancer'] = new Component\PluginListEnhancer( $this->plugin_file );
 	}
 
 	/**

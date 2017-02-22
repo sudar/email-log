@@ -65,12 +65,12 @@ class EmailLog {
 	public $logger;
 
 	/**
-	 * UI Manager.
+	 * UI Loader.
 	 *
 	 * @since 2.0
-	 * @var \EmailLog\Core\UI\UIManager
+	 * @var \EmailLog\Core\UI\UILoader
 	 */
-	public $ui_manager;
+	public $ui_loader;
 
 	/**
 	 * Dependency Enforce.
@@ -130,7 +130,7 @@ class EmailLog {
 
 		$this->table_manager->load();
 		$this->logger->load();
-		$this->ui_manager->load();
+		$this->ui_loader->load();
 		$this->dependency_enforcer->load();
 
 		foreach ( $this->subscribers as $subscriber ) {

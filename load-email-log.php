@@ -40,7 +40,7 @@ function load_email_log( $plugin_file ) {
 	$email_log->loader              = $loader;
 	$email_log->table_manager       = new \EmailLog\Core\DB\TableManager();
 	$email_log->logger              = new \EmailLog\Core\EmailLogger();
-	$email_log->ui_manager          = new \EmailLog\Core\UI\UIManager( $plugin_file );
+	$email_log->ui_loader           = new \EmailLog\Core\UI\UILoader( $plugin_file );
 	$email_log->dependency_enforcer = new \EmailLog\Addon\DependencyEnforcer();
 
 	// `register_activation_hook` can't be called from inside any hook.
