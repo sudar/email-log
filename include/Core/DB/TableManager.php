@@ -267,4 +267,29 @@ class TableManager implements Loadie {
 		return $deleted_rows_count;
 	}
 
+	/**
+	 * Fetch logs items to export as CSV.
+	 *
+	 * @param array $ids Optional. List of Log IDs to be fetched. Fetches all logs when param is optional.
+	 * @return array     Log items.
+	 */
+	public function fetch_log_items_to_export( $ids = array() ) {
+		global $wpdb;
+		$table_name = $this->get_log_table_name();
+
+		$ids        = array_map( 'absint', $ids );
+		$ids_list   = implode( ',', $ids );
+
+		$ids_list   = esc_sql( $ids_list );
+
+		// Can't use wpdb->prepare for the below query. If used it results in this bug
+		// https://github.com/sudar/email-log/issues/13
+
+		if ( empty( $ids ) ) {
+			return $wpdb->get_results( "SELECT * FROM $table_name", 'ARRAY_A' ); //@codingStandardsIgnoreLine
+		} else {
+			return $wpdb->get_results( "SELECT * FROM $table_name where id IN ( $ids_list )", 'ARRAY_A' ); //@codingStandardsIgnoreLine
+		}
+	}
+
 }
