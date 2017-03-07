@@ -5,12 +5,12 @@
 
 use EmailLog\Core\Loadie;
 
-defined( 'ABSPATH' ) || exit; // Exit if accessed directly
+defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 /**
  * Helper class to create table.
  *
- * @since 2.0
+ * @since 2.0.0
  */
 class TableManager implements Loadie {
 
@@ -27,20 +27,21 @@ class TableManager implements Loadie {
 	 * Setup hooks.
 	 */
 	public function load() {
-		// when a new blog is created in multisite
-		add_action( 'wpmu_new_blog', array( $this, 'on_create_blog' ), 10, 6 );
+		add_action( 'wpmu_new_blog', array( $this, 'create_table_for_new_blog' ) );
 
-		// when a blog is deleted in multisite
-		add_filter( 'wpmu_drop_tables', array( $this, 'on_delete_blog' ) );
+		add_filter( 'wpmu_drop_tables', array( $this, 'delete_table_from_deleted_blog' ) );
 	}
 
 	/**
 	 * On plugin activation, create table if needed.
+	 *
+	 * @param bool $network_wide True if the plugin was network activated.
 	 */
 	public function on_activate( $network_wide ) {
 		if ( is_multisite() && $network_wide ) {
 			// Note: if there are more than 10,000 blogs or
 			// if `wp_is_large_network` filter is set, then this may fail.
+			// TODO: Take care of the deprecated function.
 			$sites = wp_get_sites();
 
 			foreach ( $sites as $site ) {
@@ -55,8 +56,10 @@ class TableManager implements Loadie {
 
 	/**
 	 * Create email log table when a new blog is created.
+	 *
+	 * @param int $blog_id Blog Id.
 	 */
-	public function on_create_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
+	public function create_table_for_new_blog( $blog_id ) {
 		if ( is_plugin_active_for_network( 'email-log/email-log.php' ) ) {
 			switch_to_blog( $blog_id );
 			$this->create_table();
@@ -71,7 +74,7 @@ class TableManager implements Loadie {
 	 *
 	 * @return string[]  $tables Modified list of tables to be deleted.
 	 */
-	public function on_delete_blog( $tables ) {
+	public function delete_table_from_deleted_blog( $tables ) {
 		$tables[] = $this->get_log_table_name();
 
 		return $tables;
@@ -101,9 +104,9 @@ class TableManager implements Loadie {
 	}
 
 	/**
-	 * Delete log entires by ids.
+	 * Delete log entries by ids.
 	 *
-	 * @param string $ids Comma seperated list of log ids.
+	 * @param string $ids Comma separated list of log ids.
 	 *
 	 * @return false|int Number of log entries that got deleted. False on failure.
 	 */
@@ -143,9 +146,8 @@ class TableManager implements Loadie {
 		global $wpdb;
 
 		$table_name = $this->get_log_table_name();
-		$query      = $wpdb->prepare( 'SELECT message FROM ' . $table_name . ' WHERE id = %d', $id );
 
-		return $wpdb->get_var( $query );
+		return $wpdb->get_var( $wpdb->prepare( "SELECT message FROM {$table_name} WHERE id = %d", $id ) ); //@codingStandardsIgnoreLine
 	}
 
 	/**
@@ -171,7 +173,7 @@ class TableManager implements Loadie {
 		}
 
 		if ( isset( $request['d'] ) && $request['d'] !== '' ) {
-			$search_date =  trim( esc_sql( $request['d'] ) );
+			$search_date = trim( esc_sql( $request['d'] ) );
 			if ( '' === $query_cond ) {
 				$query_cond .= " WHERE sent_date BETWEEN '$search_date 00:00:00' AND '$search_date 23:59:59' ";
 			} else {
@@ -282,5 +284,4 @@ class TableManager implements Loadie {
 		$deleted_rows_count = $wpdb->query( $query );
 		return $deleted_rows_count;
 	}
-
 }
