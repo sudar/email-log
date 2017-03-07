@@ -167,6 +167,31 @@ class TableManager implements Loadie {
 	}
 
 	/**
+	 * Fetch log item by ID.
+	 *
+	 * @param array $ids Optional. Array of IDs of the log items to be retrieved.
+	 *
+	 * @return array        Log item(s).
+	 */
+	public function fetch_log_items_by_id( $ids = array() ) {
+		global $wpdb;
+		$table_name = $this->get_log_table_name();
+
+		$query = "SELECT * FROM {$table_name}";
+
+		if ( ! empty( $ids ) ) {
+			$ids = array_map( 'absint', $ids );
+
+			// Can't use wpdb->prepare for the below query. If used it results in this bug https://github.com/sudar/email-log/issues/13.
+			$ids_list = esc_sql( implode( ',', $ids ) );
+
+			$query .= " where id IN ( {$ids_list} )";
+		}
+
+		return $wpdb->get_results( $query, 'ARRAY_A' ); //@codingStandardsIgnoreLine
+	}
+
+	/**
 	 * Fetch log items.
 	 *
 	 * @param array $request         Request object.
@@ -253,35 +278,5 @@ class TableManager implements Loadie {
 
 			add_option( self::DB_OPTION_NAME, self::DB_VERSION );
 		}
-	}
-
-	/**
-	 * Fetch log item by ID.
-	 *
-	 * @param int|array $id Optional. ID or array of IDs of the log item to be retrieved.
-	 * @return array        Log item(s).
-	 */
-	public function fetch_log_item_by_id( $id = 0 ) {
-		global $wpdb;
-		$table_name = $this->get_log_table_name();
-
-		if ( 0 === $id || is_array( $id ) ) {
-			$ids        = ( ! is_array( $id ) ) ? array() : $id;
-			$ids        = array_map( 'absint', $ids );
-			$ids_list   = implode( ',', $ids );
-
-			$ids_list   = esc_sql( $ids_list );
-
-			// Can't use wpdb->prepare for the below query. If used it results in this bug
-			// https://github.com/sudar/email-log/issues/13
-
-			if ( empty( $ids ) ) {
-				return $wpdb->get_results( "SELECT * FROM $table_name", 'ARRAY_A' ); //@codingStandardsIgnoreLine
-			} else {
-				return $wpdb->get_results( "SELECT * FROM $table_name where id IN ( $ids_list )", 'ARRAY_A' ); //@codingStandardsIgnoreLine
-			}
-		}
-		$query      = $wpdb->prepare( 'SELECT * FROM ' . $table_name . ' WHERE id = %d', $id );
-		return $wpdb->get_results( $query );
 	}
 }
