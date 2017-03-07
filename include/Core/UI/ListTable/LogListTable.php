@@ -92,7 +92,7 @@ class LogListTable extends \WP_List_Table {
 	/**
 	 * Returns the list of column and title names.
 	 *
-	 * @see WP_List_Table::::single_row_columns()
+	 * @see WP_List_Table::single_row_columns()
 	 *
 	 * @return array An associative array containing column information: 'slugs'=>'Visible Titles'.
 	 */
