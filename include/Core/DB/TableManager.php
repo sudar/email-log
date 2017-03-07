@@ -110,16 +110,15 @@ class TableManager implements Loadie {
 	 *
 	 * @return false|int Number of log entries that got deleted. False on failure.
 	 */
-	public function delete_logs_by_id( $ids ) {
+	public function delete_logs( $ids ) {
 		global $wpdb;
 
-		// Can't use wpdb->prepare for the below query. If used it results in this bug
-		// https://github.com/sudar/email-log/issues/13
-
-		$ids        = esc_sql( $ids );
 		$table_name = $this->get_log_table_name();
 
-		return $wpdb->query( "DELETE FROM $table_name where id IN ( $ids )" ); //@codingStandardsIgnoreLine
+		// Can't use wpdb->prepare for the below query. If used it results in this bug // https://github.com/sudar/email-log/issues/13.
+		$ids = esc_sql( $ids );
+
+		return $wpdb->query( "DELETE FROM {$table_name} where id IN ( {$ids} )" ); //@codingStandardsIgnoreLine
 	}
 
 	/**
@@ -132,7 +131,24 @@ class TableManager implements Loadie {
 
 		$table_name = $this->get_log_table_name();
 
-		return $wpdb->query( "DELETE FROM $table_name" ); //@codingStandardsIgnoreLine
+		return $wpdb->query( "DELETE FROM {$table_name}" ); //@codingStandardsIgnoreLine
+	}
+
+	/**
+	 * Deletes Email Logs older than the specified interval.
+	 *
+	 * @param  int $interval_in_days No. of days beyond which logs are to be deleted.
+	 *
+	 * @return int $deleted_rows_count  Count of rows deleted.
+	 */
+	public function delete_logs_older_than( $interval_in_days ) {
+		global $wpdb;
+		$table_name = $this->get_log_table_name();
+
+		$query = $wpdb->prepare( "DELETE FROM {$table_name} WHERE sent_date < DATE_SUB( CURDATE(), INTERVAL %d DAY )", $interval_in_days );
+		$deleted_rows_count = $wpdb->query( $query );
+
+		return $deleted_rows_count;
 	}
 
 	/**
@@ -267,21 +283,5 @@ class TableManager implements Loadie {
 		}
 		$query      = $wpdb->prepare( 'SELECT * FROM ' . $table_name . ' WHERE id = %d', $id );
 		return $wpdb->get_results( $query );
-	}
-
-	/**
-	 * Deletes Email Logs older than the specified interval.
-	 *
-	 * @param  int $interval_in_days    No. of days beyond which logs are to be deleted.
-	 * @return int $deleted_rows_count  Count of rows deleted.
-	 */
-	public function delete_logs_older_than( $interval_in_days ) {
-		global $wpdb;
-		$table_name = $this->get_log_table_name();
-
-		$query      = $wpdb->prepare( 'DELETE FROM ' . $table_name . ' WHERE sent_date < DATE_SUB( CURDATE(), INTERVAL %d DAY )', $interval_in_days );
-
-		$deleted_rows_count = $wpdb->query( $query );
-		return $deleted_rows_count;
 	}
 }
