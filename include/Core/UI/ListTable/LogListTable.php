@@ -265,6 +265,7 @@ class LogListTable extends \WP_List_Table {
 			'delete'     => __( 'Delete', 'email-log' ),
 			'delete-all' => __( 'Delete All Logs', 'email-log' ),
 		);
+		$actions = apply_filters( 'el_bulk_actions', $actions );
 		return $actions;
 	}
 
