@@ -60,6 +60,14 @@ class EmailLog {
 	public $table_manager;
 
 	/**
+	 * Add-on Licenser.
+	 *
+	 * @since 2.0
+	 * @var \EmailLog\License\Licenser
+	 */
+	private $licenser;
+
+	/**
 	 * List of loadies.
 	 *
 	 * @var Loadie[]
@@ -81,6 +89,26 @@ class EmailLog {
 		$this->add_loadie( $table_manager );
 
 		$this->translations_path = dirname( plugin_basename( $this->plugin_file ) ) . '/languages/' ;
+	}
+
+	/**
+	 * Set Licenser.
+	 *
+	 * @param \EmailLog\License\Licenser $licenser Add-on Licenser.
+	 */
+	public function set_licenser( $licenser ) {
+		if ( $this->add_loadie( $licenser ) ) {
+			$this->licenser = $licenser;
+		}
+	}
+
+	/**
+	 * Get Licenser.
+	 *
+	 * @return \EmailLog\License\Licenser
+	 */
+	public function get_licenser() {
+		return $this->licenser;
 	}
 
 	/**
