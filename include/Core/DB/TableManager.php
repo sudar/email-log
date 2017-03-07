@@ -240,13 +240,29 @@ class TableManager implements Loadie {
 	/**
 	 * Fetch log item by ID.
 	 *
-	 * @param int $id ID of the log item to be retrieved.
-	 * @return array  Log item.
+	 * @param int|array $id Optional. ID or array of IDs of the log item to be retrieved.
+	 * @return array        Log item(s).
 	 */
-	public function fetch_log_item_by_id( $id ) {
+	public function fetch_log_item_by_id( $id = 0 ) {
 		global $wpdb;
 		$table_name = $this->get_log_table_name();
 
+		if ( 0 === $id || is_array( $id ) ) {
+			$ids        = ( ! is_array( $id ) ) ? array() : $id;
+			$ids        = array_map( 'absint', $ids );
+			$ids_list   = implode( ',', $ids );
+
+			$ids_list   = esc_sql( $ids_list );
+
+			// Can't use wpdb->prepare for the below query. If used it results in this bug
+			// https://github.com/sudar/email-log/issues/13
+
+			if ( empty( $ids ) ) {
+				return $wpdb->get_results( "SELECT * FROM $table_name", 'ARRAY_A' ); //@codingStandardsIgnoreLine
+			} else {
+				return $wpdb->get_results( "SELECT * FROM $table_name where id IN ( $ids_list )", 'ARRAY_A' ); //@codingStandardsIgnoreLine
+			}
+		}
 		$query      = $wpdb->prepare( 'SELECT * FROM ' . $table_name . ' WHERE id = %d', $id );
 		return $wpdb->get_results( $query );
 	}
@@ -265,31 +281,6 @@ class TableManager implements Loadie {
 
 		$deleted_rows_count = $wpdb->query( $query );
 		return $deleted_rows_count;
-	}
-
-	/**
-	 * Fetch logs items to export as CSV.
-	 *
-	 * @param array $ids Optional. List of Log IDs to be fetched. Fetches all logs when param is optional.
-	 * @return array     Log items.
-	 */
-	public function fetch_log_items_to_export( $ids = array() ) {
-		global $wpdb;
-		$table_name = $this->get_log_table_name();
-
-		$ids        = array_map( 'absint', $ids );
-		$ids_list   = implode( ',', $ids );
-
-		$ids_list   = esc_sql( $ids_list );
-
-		// Can't use wpdb->prepare for the below query. If used it results in this bug
-		// https://github.com/sudar/email-log/issues/13
-
-		if ( empty( $ids ) ) {
-			return $wpdb->get_results( "SELECT * FROM $table_name", 'ARRAY_A' ); //@codingStandardsIgnoreLine
-		} else {
-			return $wpdb->get_results( "SELECT * FROM $table_name where id IN ( $ids_list )", 'ARRAY_A' ); //@codingStandardsIgnoreLine
-		}
 	}
 
 }
