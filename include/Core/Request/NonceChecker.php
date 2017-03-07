@@ -5,11 +5,11 @@ use EmailLog\Core\Loadie;
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 /**
- * RequestHandler for Email Log requests.
+ * Check nonce for all Email Log requests.
  *
  * @since 2.0.0
  */
-class RequestHandler implements Loadie {
+class NonceChecker implements Loadie {
 
 	/**
 	 * Setup hooks.
@@ -17,7 +17,7 @@ class RequestHandler implements Loadie {
 	 * @inheritdoc
 	 */
 	public function load() {
-		add_action( 'admin_init', array( $this, 'handle_request' ) );
+		add_action( 'admin_init', array( $this, 'check_nonce' ) );
 	}
 
 	/**
@@ -25,7 +25,7 @@ class RequestHandler implements Loadie {
 	 * All Email Log Requests will have the `el_` prefix and
 	 * nonce would be available at `el_{action_name}_nonce`.
 	 */
-	public function handle_request() {
+	public function check_nonce() {
 		if ( ! isset( $_POST['el-action'] ) ) {
 			return;
 		}

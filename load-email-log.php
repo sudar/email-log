@@ -44,7 +44,7 @@ function load_email_log( $plugin_file ) {
 	$email_log->add_loadie( new \EmailLog\Core\UI\UILoader( $plugin_file ) );
 	$email_log->add_loadie( new \EmailLog\Addon\DependencyEnforcer() );
 
-	$email_log->add_loadie( new \EmailLog\Core\Request\RequestHandler() );
+	$email_log->add_loadie( new \EmailLog\Core\Request\NonceChecker() );
 
 	// `register_activation_hook` can't be called from inside any hook.
 	register_activation_hook( $plugin_file, array( $email_log->table_manager, 'on_activate' ) );
