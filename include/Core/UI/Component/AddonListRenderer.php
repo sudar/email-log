@@ -38,7 +38,7 @@ class AddonListRenderer {
 		wp_enqueue_style( 'el_addon_list', plugins_url( 'assets/css/admin/addon-list.css', $this->plugin_file ), array(), $email_log->get_version() );
 		?>
 		<p>
-			<?php _e( 'These extensions <em><strong>add functionality</strong></em> to your existing Email logs.', 'email-log' ); ?>
+			<?php _e( 'These add-ons additional functionality to Email Log plugin are available for purchase.', 'email-log' ); ?>
 		</p>
 
 		<div class="el-container">
@@ -55,7 +55,7 @@ class AddonListRenderer {
 	 */
 	protected function get_addons() {
 		if ( false === ( $addons = get_transient( self::CACHE_KEY ) ) ) {
-			$response = wp_remote_get( self::API_URL );
+			$response = wp_remote_get( self::API_URL, array( 'sslverify' => false ) );
 
 			if ( is_wp_error( $response ) || ! is_array( $response ) ) {
 				// TODO: Don't keep trying if the server is down.
@@ -113,13 +113,14 @@ class AddonListRenderer {
 		$addon_title       = $addon['info']['title'];
 		$addon_thumbnail   = $addon['info']['thumbnail'];
 		$addon_description = $addon['info']['excerpt'];
+		$addon_link        = $addon['info']['permalink'];
 		?>
 		<div class="el-addon">
 			<h3 class="el-addon-title">
 				<?php echo esc_html( $addon_title ); ?>
 			</h3>
 
-			<a href="#" title="<?php echo esc_attr( $addon_title ); ?>">
+			<a href="<?php echo esc_url( $addon_link ); ?>" title="<?php echo esc_attr( $addon_title ); ?>">
 				<img src="<?php echo esc_url( $addon_thumbnail ); ?>" class="attachment-showcase wp-post-image"
 					 alt="<?php echo esc_attr( $addon_title ); ?>" title="<?php echo esc_attr( $addon_title ); ?>">
 			</a>
@@ -128,7 +129,7 @@ class AddonListRenderer {
 				<?php echo esc_html( $addon_description ); ?>
 			</p>
 
-			<a href="#" class="button-secondary"><?php _e( 'Gear up!', 'email-log' ); ?></a>
+			<a href="#" class="button-secondary"><?php _e( 'Install Now', 'email-log' ); ?></a>
 		</div> <!-- .el-addon -->
 		<?php
 	}
