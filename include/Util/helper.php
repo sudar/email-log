@@ -55,3 +55,21 @@ function sanitize_email_with_name( $string ) {
 
 	return \sanitize_email( $string );
 }
+
+/**
+ * Gets the columns to export logs.
+ *
+ * If the More Fields add-on is active, additional columns are returned.
+ *
+ * @since 2.0.0
+ *
+ * @return array List of Columns to export.
+ */
+function get_log_columns_to_export() {
+
+	if ( is_plugin_active( 'email-log-more-fields/email-log-more-fields.php' ) ) {
+		return array( 'id', 'sent_date', 'to_email', 'subject', 'from', 'cc', 'bcc', 'reply-to', 'attachment' );
+	}
+
+	return array( 'id', 'sent_date', 'to_email', 'subject' );
+}

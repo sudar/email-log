@@ -146,26 +146,25 @@ class LogListPage extends BasePage {
 	}
 
 	/**
-	 * Delete log entires by id.
+	 * Delete log entries by id.
 	 *
-	 * @param array|string $ids Ids of log entires to delete.
+	 * @param array|string $ids Ids of log entries to delete.
 	 */
 	public function delete_logs_by_id( $ids ) {
 		$this->check_nonce();
 
-		if ( is_array( $ids ) ) {
-			$ids          = array_map( 'absint', $ids );
-			$selected_ids = implode( ',', $ids );
-		} else {
-			$selected_ids = absint( $ids );
+		if ( ! is_array( $ids ) ) {
+			$ids = array( $ids );
 		}
 
-		$logs_deleted = $this->get_table_manager()->delete_logs_by_id( $selected_ids );
+		$ids = array_map( 'absint', $ids );
+
+		$logs_deleted = $this->get_table_manager()->delete_logs( $ids );
 		$this->render_log_deleted_notice( $logs_deleted );
 	}
 
 	/**
-	 * Delete all log entires.
+	 * Delete all log entries.
 	 */
 	public function delete_all_logs() {
 		$this->check_nonce();
