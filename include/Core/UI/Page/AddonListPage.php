@@ -39,10 +39,19 @@ class AddonListPage extends BasePage {
 		?>
 		<div class="wrap">
 			<h1><?php _e( 'Email Log Add-ons', 'email-log' ); ?></h1>
-			<?php settings_errors(); ?>
 			<?php
-				$addon_list_renderer = new AddonListRenderer( $this->plugin_file );
-				$addon_list_renderer->render();
+			settings_errors();
+			_e( "Enter your license key to activate add-ons. If you don't have a license, then you can buy it", 'email-log' );
+
+			/**
+			 * Before add-ons are listed in the add-on list page.
+			 *
+			 * @since 2.0.0
+			 */
+			do_action( 'el_before_addon_list' );
+
+			$addon_list_renderer = new AddonListRenderer( $this->plugin_file );
+			$addon_list_renderer->render();
 			?>
 		</div>
 		<?php
