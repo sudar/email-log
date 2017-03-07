@@ -1,11 +1,13 @@
 <?php namespace EmailLog\Addon;
 
+use EmailLog\Core\Loadie;
+
 /**
  * Enforce Addon Dependency by deactivating add-ons that don't satisfy dependency.
  *
  * @since 2.0
  */
-class DependencyEnforcer {
+class DependencyEnforcer implements Loadie {
 
 	/**
 	 * Addon Dependency Map.
