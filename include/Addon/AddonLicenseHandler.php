@@ -28,7 +28,7 @@ class AddonLicenseHandler {
 	/**
 	 * Addon License field Renderer.
 	 *
-	 * @var \EmailLog\UI\Addon\AddonLicenseRenderer
+	 * @var \EmailLog\Core\UI\Addon\AddonLicenseRenderer
 	 */
 	private $renderer;
 

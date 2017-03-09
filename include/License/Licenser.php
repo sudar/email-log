@@ -21,7 +21,7 @@ final class Licenser implements Loadie {
 	 * Licenser constructor.
 	 * If the bundle_license object is not passed a new object is created.
 	 *
-	 * @param \EmailLog\License\BundleLicense $bundle_license (optional) Bundle License.
+	 * @param \EmailLog\License\BundleLicense $bundle_license Optional. Bundle License.
 	 */
 	public function __construct( $bundle_license = null ) {
 		if ( ! $bundle_license instanceof BundleLicense ) {

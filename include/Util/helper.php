@@ -31,9 +31,9 @@ function sanitize_email( $email, $multiple = true ) {
  *
  * @since 1.9
  *
- * @param $string $email Email string to be sanitized.
+ * @param string $string Email string to be sanitized.
  *
- * @return string Sanitized email.
+ * @return string        Sanitized email.
  */
 function sanitize_email_with_name( $string ) {
 	$string = trim( $string );
