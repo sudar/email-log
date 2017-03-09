@@ -73,27 +73,27 @@ abstract class BaseLicense {
 		}
 
 		switch ( $response->error ) {
-			case 'expired' :
+			case 'expired':
 				$message = sprintf(
 					__( 'Your license key expired on %s.' ),
 					date_i18n( get_option( 'date_format' ), strtotime( $response->expires, current_time( 'timestamp' ) ) )
 				);
 				break;
 
-			case 'revoked' :
+			case 'revoked':
 				$message = __( 'Your license key has been disabled.' );
 				break;
 
-			case 'missing' :
+			case 'missing':
 				$message = __( 'Your license key is invalid.' );
 				break;
 
-			case 'invalid' :
-			case 'site_inactive' :
+			case 'invalid':
+			case 'site_inactive':
 				$message = __( 'Your license is not active for this URL.' );
 				break;
 
-			case 'item_name_mismatch' :
+			case 'item_name_mismatch':
 				$message = sprintf( __( 'Your license key is not valid for %s.' ), $this->addon_name );
 				break;
 
@@ -101,7 +101,7 @@ abstract class BaseLicense {
 				$message = __( 'Your license key has reached its activation limit.' );
 				break;
 
-			default :
+			default:
 				$message = __( 'An error occurred, please try again.' );
 				break;
 		}
