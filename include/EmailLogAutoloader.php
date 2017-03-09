@@ -148,7 +148,7 @@ class EmailLogAutoloader {
 
 			// try to load a mapped file for the prefix and relative class
 			$mapped_file = $this->load_mapped_file( $prefix, $relative_class );
-			if ( $mapped_file ) {
+			if ( $mapped_file !== false ) {
 				return $mapped_file;
 			}
 
