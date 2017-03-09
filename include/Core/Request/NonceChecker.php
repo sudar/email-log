@@ -1,6 +1,7 @@
 <?php namespace EmailLog\Core\Request;
 
 use EmailLog\Core\Loadie;
+use EmailLog\Core\UI\Page\LogListPage;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
@@ -26,39 +27,53 @@ class NonceChecker implements Loadie {
 	 * nonce would be available at `el_{action_name}_nonce`.
 	 */
 	public function check_nonce() {
-		if ( ! isset( $_POST['el-action'] ) ) {
+		if ( ! isset( $_POST['el-action'] ) && ! isset( $_REQUEST['action'] ) ) {
 			return;
 		}
 
-		$action = sanitize_text_field( $_POST['el-action'] );
+		if ( isset( $_POST['el-action'] ) ) {
+			$action = sanitize_text_field( $_POST['el-action'] );
 
-		if ( ! isset( $_POST[ $action . '_nonce' ] ) ) {
-			return;
+			if ( ! isset( $_POST[ $action . '_nonce' ] ) ) {
+				return;
+			}
+
+			if ( ! wp_verify_nonce( $_POST[ $action . '_nonce' ], $action ) ) {
+				return;
+			}
 		}
 
-		if ( ! wp_verify_nonce( $_POST[ $action . '_nonce' ], $action ) ) {
-			return;
+		if ( isset( $_REQUEST['action'] ) ) {
+			$action = sanitize_text_field( $_REQUEST['action'] );
+
+			if ( 'el-log-list-' !== substr( $action, 0, 12 ) ) {
+				return;
+			}
+
+			if ( ! wp_verify_nonce( $_REQUEST[ LogListPage::DELETE_LOG_NONCE_FIELD ], LogListPage::DELETE_LOG_ACTION ) ) {
+				return;
+			}
 		}
 
 		/**
 		 * Perform `el` action.
 		 * Nonce check has already happened at this point.
 		 *
-		 * @since 2.0
+		 * @since 2.0.0
 		 *
-		 * @param string $action Action name.
-		 * @param array  $_POST  Request data.
+		 * @param string $action   Action name.
+		 * @param array  $_REQUEST Request data.
 		 */
-		do_action( 'el_action', $action, $_POST );
+		do_action( 'el_action', $action, $_REQUEST );
 
 		/**
 		 * Perform `el` action.
 		 * Nonce check has already happened at this point.
 		 *
-		 * @since 2.0
+		 * @since 2.0.0
 		 *
-		 * @param array $_POST Request data.
+		 * @param array $_REQUEST Request data.
 		 */
-		do_action( $action, $_POST );
+		do_action( $action, $_REQUEST );
 	}
 }

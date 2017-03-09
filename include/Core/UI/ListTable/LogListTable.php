@@ -167,7 +167,7 @@ class LogListTable extends \WP_List_Table {
 
 		$content_ajax_url = add_query_arg(
 			array(
-				'action'    => 'display_email_message',
+				'action'    => 'el-log-list-view-message',
 				'log_id'    => $item->id,
 				'TB_iframe' => 'true',
 				'width'     => '600',
@@ -185,7 +185,7 @@ class LogListTable extends \WP_List_Table {
 		$delete_url = add_query_arg(
 			array(
 				'page'                   => $_REQUEST['page'],
-				'action'                 => 'delete',
+				'action'                 => 'el-log-list-delete',
 				$this->_args['singular'] => $item->id,
 			)
 		);
@@ -262,24 +262,11 @@ class LogListTable extends \WP_List_Table {
 	 */
 	protected function get_bulk_actions() {
 		$actions = array(
-			'delete'     => __( 'Delete', 'email-log' ),
-			'delete-all' => __( 'Delete All Logs', 'email-log' ),
+			'el-log-list-delete'     => __( 'Delete', 'email-log' ),
+			'el-log-list-delete-all' => __( 'Delete All Logs', 'email-log' ),
 		);
 		$actions = apply_filters( 'el_bulk_actions', $actions );
 		return $actions;
-	}
-
-	/**
-	 * Handles bulk actions.
-	 *
-	 * @access protected.
-	 */
-	protected function process_bulk_action() {
-		if ( 'delete' === $this->current_action() ) {
-			$this->page->delete_logs_by_id( $_GET[ $this->_args['singular'] ] );
-		} elseif ( 'delete-all' === $this->current_action() ) {
-			$this->page->delete_all_logs();
-		}
 	}
 
 	/**
@@ -287,9 +274,6 @@ class LogListTable extends \WP_List_Table {
 	 */
 	public function prepare_items() {
 		$this->_column_headers = $this->get_column_info();
-
-		// Handle bulk actions.
-		$this->process_bulk_action();
 
 		// Get current page number.
 		$current_page_no = $this->get_pagenum();

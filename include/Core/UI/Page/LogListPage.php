@@ -37,8 +37,6 @@ class LogListPage extends BasePage {
 
 		add_filter( 'set-screen-option', array( $this, 'save_screen_options' ), 10, 3 );
 
-		add_action( 'wp_ajax_display_email_message', array( $this, 'display_email_message_callback' ) );
-
 		add_action( 'admin_enqueue_scripts', array( $this, 'load_view_logs_assets' ) );
 	}
 
@@ -146,42 +144,20 @@ class LogListPage extends BasePage {
 	}
 
 	/**
-	 * Delete log entries by id.
-	 *
-	 * @param array|string $ids Ids of log entries to delete.
+	 * Verify nonce for all bulk actions.
 	 */
-	public function delete_logs_by_id( $ids ) {
-		$this->check_nonce();
-
-		if ( ! is_array( $ids ) ) {
-			$ids = array( $ids );
+	public function check_nonce() {
+		if ( ! isset( $_REQUEST[ self::DELETE_LOG_NONCE_FIELD ] ) ) {
+			return false;
 		}
 
-		$ids = array_map( 'absint', $ids );
-
-		$logs_deleted = $this->get_table_manager()->delete_logs( $ids );
-		$this->render_log_deleted_notice( $logs_deleted );
-	}
-
-	/**
-	 * Delete all log entries.
-	 */
-	public function delete_all_logs() {
-		$this->check_nonce();
-
-		$logs_deleted = $this->get_table_manager()->delete_all_logs();
-		$this->render_log_deleted_notice( $logs_deleted );
-	}
-
-	/**
-	 * Verify nonce.
-	 */
-	protected function check_nonce() {
 		$nonce = $_REQUEST[ self::DELETE_LOG_NONCE_FIELD ];
 
 		if ( ! wp_verify_nonce( $nonce, self::DELETE_LOG_ACTION ) ) {
 			wp_die( 'Cheating, Huh? ' );
 		}
+
+		return true;
 	}
 
 	/**
@@ -207,28 +183,6 @@ class LogListPage extends BasePage {
 	}
 
 	/**
-	 * Render Logs deleted notice.
-	 *
-	 * @param int|False $logs_deleted Number of entires deleted, False otherwise.
-	 */
-	protected function render_log_deleted_notice( $logs_deleted ) {
-		$message = __( 'There was some problem in deleting the email logs', 'email-log' );
-		$type    = 'error';
-
-		if ( absint( $logs_deleted ) > 0 ) {
-			$message = sprintf( _n( '1 email log deleted.', '%s email logs deleted', $logs_deleted, 'email-log' ), $logs_deleted );
-			$type    = 'updated';
-		}
-
-		add_settings_error(
-			self::PAGE_SLUG,
-			'deleted-email-logs',
-			$message,
-			$type
-		);
-	}
-
-	/**
 	 * Saves Screen options.
 	 *
 	 * @since Genesis
@@ -245,26 +199,6 @@ class LogListPage extends BasePage {
 		} else {
 			return $status;
 		}
-	}
-
-	/**
-	 * AJAX callback for displaying email content.
-	 *
-	 * @since 1.6
-	 */
-	public function display_email_message_callback() {
-		if ( current_user_can( 'manage_options' ) ) {
-			$message = '';
-
-			$id = absint( $_GET['log_id'] );
-			if ( $id > 0 ) {
-				$message = $this->get_table_manager()->get_log_message( $id );
-			}
-
-			echo wpautop( $message );
-		}
-
-		die(); // this is required to return a proper result
 	}
 
 	/**
