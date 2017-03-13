@@ -170,7 +170,7 @@ class LogListTable extends \WP_List_Table {
 				'action'    => 'el-log-list-view-message',
 				'log_id'    => $item->id,
 				'TB_iframe' => 'true',
-				'width'     => '600',
+				'width'     => '800',
 				'height'    => '550',
 			),
 			'admin-ajax.php'
