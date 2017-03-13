@@ -152,21 +152,6 @@ class TableManager implements Loadie {
 	}
 
 	/**
-	 * Get message by log id.
-	 *
-	 * @param int $id Id of the log whose message is needed.
-	 *
-	 * @return null|string Message of the log with $id.
-	 */
-	public function get_log_message( $id ) {
-		global $wpdb;
-
-		$table_name = $this->get_log_table_name();
-
-		return $wpdb->get_var( $wpdb->prepare( "SELECT message FROM {$table_name} WHERE id = %d", $id ) ); //@codingStandardsIgnoreLine
-	}
-
-	/**
 	 * Fetch log item by ID.
 	 *
 	 * @param array $ids Optional. Array of IDs of the log items to be retrieved.
