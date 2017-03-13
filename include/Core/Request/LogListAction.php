@@ -38,23 +38,18 @@ class LogListAction implements Loadie {
 			?>
 				<table style="width: 100%;">
 					<tr style="background: #eee;">
-						<td style="padding: 5px;">Sent at:</td>
+						<td style="padding: 5px;"><?php _e( 'Sent at', 'email-log' ); ?>:</td>
 						<td style="padding: 5px;"><?php echo $log_item[0]['sent_date'] ?></td>
 					</tr>
 					<tr style="background: #eee;">
-						<td style="padding: 5px;">To:</td>
+						<td style="padding: 5px;"><?php _e( 'To', 'email-log' ); ?>:</td>
 						<td style="padding: 5px;"><?php echo $log_item[0]['to_email'] ?></td>
 					</tr>
 					<tr style="background: #eee;">
-						<td style="padding: 5px;">Sent at:</td>
-						<td style="padding: 5px;"><?php echo $log_item[0]['sent_date'] ?></td>
-					</tr>
-					<tr style="background: #eee;">
-						<td style="padding: 5px;">Subject:</td>
+						<td style="padding: 5px;"><?php _e( 'Subject', 'email-log' ); ?>:</td>
 						<td style="padding: 5px;"><?php echo $log_item[0]['subject'] ?></td>
 					</tr>
 				</table>
-				<?php echo wpautop( $log_item[0]['message'] ); ?>
 			<?php
 			$output = ob_get_clean();
 			/**
@@ -65,7 +60,8 @@ class LogListAction implements Loadie {
 			 * @param string $output   The HTML content shown in the View Message thickbox.
 			 * @param array  $log_item Array of Log item for the requested for the given ID.
 			 */
-			$output = apply_filters( 'el_manage_view_message', $output, $log_item );
+			$output  = apply_filters( 'el_manage_view_message', $output, $log_item );
+			$output .= wpautop( $log_item[0]['message'] );
 			echo $output;
 		}
 
