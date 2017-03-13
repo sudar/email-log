@@ -38,6 +38,10 @@ class LogListAction implements Loadie {
 			?>
 				<table style="width: 100%;">
 					<tr style="background: #eee;">
+						<td style="padding: 5px;">Sent at:</td>
+						<td style="padding: 5px;"><?php echo $log_item[0]['sent_date'] ?></td>
+					</tr>
+					<tr style="background: #eee;">
 						<td style="padding: 5px;">To:</td>
 						<td style="padding: 5px;"><?php echo $log_item[0]['to_email'] ?></td>
 					</tr>
@@ -53,6 +57,15 @@ class LogListAction implements Loadie {
 				<?php echo wpautop( $log_item[0]['message'] ); ?>
 			<?php
 			$output = ob_get_clean();
+			/**
+			 * Filters the message shown in the `View Message` thickbox.
+			 *
+			 * @since 2.0.0
+			 *
+			 * @param string $output   The HTML content shown in the View Message thickbox.
+			 * @param array  $log_item Array of Log item for the requested for the given ID.
+			 */
+			$output = apply_filters( 'el_manage_view_message', $output, $log_item );
 			echo $output;
 		}
 
