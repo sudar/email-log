@@ -32,10 +32,28 @@ class LogListAction implements Loadie {
 
 			$id = absint( $_GET['log_id'] );
 			if ( $id > 0 ) {
-				$message = $this->get_table_manager()->get_log_message( $id );
+				$log_item = $this->get_table_manager()->fetch_log_items_by_id( array( $id ) );
 			}
-
-			echo wpautop( $message );
+			ob_start();
+			?>
+				<table style="width: 100%;">
+					<tr style="background: #eee;">
+						<td style="padding: 5px;">To:</td>
+						<td style="padding: 5px;"><?php echo $log_item[0]['to_email'] ?></td>
+					</tr>
+					<tr style="background: #eee;">
+						<td style="padding: 5px;">Sent at:</td>
+						<td style="padding: 5px;"><?php echo $log_item[0]['sent_date'] ?></td>
+					</tr>
+					<tr style="background: #eee;">
+						<td style="padding: 5px;">Subject:</td>
+						<td style="padding: 5px;"><?php echo $log_item[0]['subject'] ?></td>
+					</tr>
+				</table>
+				<?php echo wpautop( $log_item[0]['message'] ); ?>
+			<?php
+			$output = ob_get_clean();
+			echo $output;
 		}
 
 		die(); // this is required to return a proper result
