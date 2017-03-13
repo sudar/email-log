@@ -15,7 +15,7 @@ class LogListAction implements Loadie {
 	 * @inheritdoc
 	 */
 	public function load() {
-		add_action( 'wp_ajax_el-log-list-view-message', array( $this, 'display_email_message_callback' ) );
+		add_action( 'wp_ajax_el-log-list-view-message', array( $this, 'view_log_message' ) );
 
 		add_action( 'el-log-list-delete', array( $this, 'delete_logs' ) );
 		add_action( 'el-log-list-delete-all', array( $this, 'delete_all_logs' ) );
@@ -26,46 +26,55 @@ class LogListAction implements Loadie {
 	 *
 	 * @since 1.6
 	 */
-	public function display_email_message_callback() {
+	public function view_log_message() {
 		if ( current_user_can( 'manage_options' ) ) {
-			$message = '';
-
 			$id = absint( $_GET['log_id'] );
+
 			if ( $id > 0 ) {
-				$log_item = $this->get_table_manager()->fetch_log_items_by_id( array( $id ) );
+				$log_items = $this->get_table_manager()->fetch_log_items_by_id( array( $id ) );
+				if ( count( $log_items ) > 0 ) {
+					$log_item = $log_items[0];
+
+					ob_start();
+					?>
+					<table style="width: 100%;">
+						<tr style="background: #eee;">
+							<td style="padding: 5px;"><?php _e( 'Sent at', 'email-log' ); ?>:</td>
+							<td style="padding: 5px;"><?php echo $log_item['sent_date'] ?></td>
+						</tr>
+						<tr style="background: #eee;">
+							<td style="padding: 5px;"><?php _e( 'To', 'email-log' ); ?>:</td>
+							<td style="padding: 5px;"><?php echo $log_item['to_email'] ?></td>
+						</tr>
+						<tr style="background: #eee;">
+							<td style="padding: 5px;"><?php _e( 'Subject', 'email-log' ); ?>:</td>
+							<td style="padding: 5px;"><?php echo $log_item['subject'] ?></td>
+						</tr>
+
+						<?php
+					   /**
+						* After the headers are displayed in the View Message thickbox.
+					    * This action can be used to add additional headers.
+						*
+						* @since 2.0.0
+						*
+						* @param array $log_item Log item that is getting rendered.
+						*/
+						do_action( 'el_view_log_after_headers', $log_item );
+						?>
+
+					</table>
+
+					<?php
+					echo wpautop( $log_item['message'] );
+
+					$output = ob_get_clean();
+					echo $output;
+				}
 			}
-			ob_start();
-			?>
-				<table style="width: 100%;">
-					<tr style="background: #eee;">
-						<td style="padding: 5px;"><?php _e( 'Sent at', 'email-log' ); ?>:</td>
-						<td style="padding: 5px;"><?php echo $log_item[0]['sent_date'] ?></td>
-					</tr>
-					<tr style="background: #eee;">
-						<td style="padding: 5px;"><?php _e( 'To', 'email-log' ); ?>:</td>
-						<td style="padding: 5px;"><?php echo $log_item[0]['to_email'] ?></td>
-					</tr>
-					<tr style="background: #eee;">
-						<td style="padding: 5px;"><?php _e( 'Subject', 'email-log' ); ?>:</td>
-						<td style="padding: 5px;"><?php echo $log_item[0]['subject'] ?></td>
-					</tr>
-				</table>
-			<?php
-			$output = ob_get_clean();
-			/**
-			 * Filters the message shown in the `View Message` thickbox.
-			 *
-			 * @since 2.0.0
-			 *
-			 * @param string $output   The HTML content shown in the View Message thickbox.
-			 * @param array  $log_item Array of Log item for the requested for the given ID.
-			 */
-			$output  = apply_filters( 'el_manage_view_message', $output, $log_item );
-			$output .= wpautop( $log_item[0]['message'] );
-			echo $output;
 		}
 
-		die(); // this is required to return a proper result
+		die(); // this is required to return a proper result.
 	}
 
 	/**
