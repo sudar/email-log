@@ -13,7 +13,8 @@
     "**/.*"
   ],
   "dependencies": {
-    "jquery-ui": "^1.12.1"
+    "jquery-ui": "^1.12.1",
+    "insertionQuery": "^1.0.4"
   },
   "devDependencies": {}
 }

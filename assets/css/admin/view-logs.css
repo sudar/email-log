@@ -3,3 +3,12 @@
 	height: 28px;
 	margin: 0 4px 0 0;
 }
+
+#tabs {
+	margin-top: 10px;
+}
+
+.tabs-text-textarea {
+	height: 100%;
+	width: 100%;
+}
