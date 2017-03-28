@@ -65,9 +65,20 @@ class LogListAction implements Loadie {
 
 					</table>
 
-					<?php
-					echo wpautop( $log_item['message'] );
+					<div id="tabs">
+						<ul>
+							<li><a href="#tabs-1"><?php _e( 'HTML', 'email-log' ); ?></a></li>
+							<li><a href="#tabs-2"><?php _e( 'Text', 'email-log' ); ?></a></li>
+						</ul>
+						<div id="tabs-1">
+							<?php echo wpautop( $log_item['message'] ); ?>
+						</div>
+						<div id="tabs-2">
+							<textarea class="tabs-text-textarea"><?php echo esc_textarea( $log_item['message'] ); ?></textarea>
+						</div>
+					</div>
 
+					<?php
 					$output = ob_get_clean();
 					echo $output;
 				}
