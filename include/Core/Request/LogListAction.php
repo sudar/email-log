@@ -74,7 +74,7 @@ class LogListAction implements Loadie {
 							<?php echo wpautop( $log_item['message'] ); ?>
 						</div>
 						<div id="tabs-2">
-							<textarea class="tabs-text-textarea"><?php echo htmlspecialchars_decode( $log_item['message'] ); ?></textarea>
+							<textarea class="tabs-text-textarea"><?php echo esc_textarea( $log_item['message'] ); ?></textarea>
 						</div>
 					</div>
 
