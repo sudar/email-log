@@ -12,3 +12,7 @@
 	height: 100%;
 	width: 100%;
 }
+
+#tabs-1, #tabs-2 {
+	height: 375px;
+}
