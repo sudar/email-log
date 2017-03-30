@@ -13,7 +13,8 @@
 	width: 100%;
 }
 
-#tabs-1, #tabs-2 {
+#tabs-1,
+#tabs-2 {
 	height: 335px;
 }
 
@@ -37,5 +38,5 @@
 }
 
 #TB_ajaxContent {
-	padding-bottom: 10px !important;
+	padding-bottom: 10px !important; /* Override the default Thickbox css values. */
 }
