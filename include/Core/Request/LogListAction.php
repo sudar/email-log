@@ -78,6 +78,10 @@ class LogListAction implements Loadie {
 						</div>
 					</div>
 
+					<div id="view-message-footer">
+						<a href="#" id="thickbox-footer-close"><?php _e( 'Close', 'email-log' ); ?></a>
+					</div>
+
 					<?php
 					$output = ob_get_clean();
 					echo $output;

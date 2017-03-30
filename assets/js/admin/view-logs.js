@@ -6,6 +6,11 @@
 			changeYear: true,
 			dateFormat: 'yy-mm-dd'
 		});
+
+		$( document ).on('click', '#thickbox-footer-close', function( event ) {
+			event.preventDefault();
+			tb_remove();
+		});
 	});
 
 	var tabsInsertedEvent = 'tabs_elem_inserted';
