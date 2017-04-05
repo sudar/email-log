@@ -27,7 +27,20 @@ class LogListAction implements Loadie {
 	 * @since 1.6
 	 */
 	public function view_log_message() {
-		if ( current_user_can( 'manage_options' ) ) {
+
+		$user_capability = 'manage_options';
+
+		/**
+		 * Filters the User capability to View Email Log content.
+		 *
+		 * Refer User Capabilities at
+		 * @link https://codex.wordpress.org/Roles_and_Capabilities#Capabilities
+		 *
+		 * @param string $user_capability User capability to view Log content.
+		 */
+		$view_content_user_capability = apply_filters( 'view_content_user_capability', $user_capability );
+
+		if ( current_user_can( $view_content_user_capability ) ) {
 			$id = absint( $_GET['log_id'] );
 
 			if ( $id > 0 ) {
