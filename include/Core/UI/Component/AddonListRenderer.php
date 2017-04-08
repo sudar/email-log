@@ -37,9 +37,6 @@ class AddonListRenderer {
 
 		wp_enqueue_style( 'el_addon_list', plugins_url( 'assets/css/admin/addon-list.css', $this->plugin_file ), array(), $email_log->get_version() );
 		?>
-		<p>
-			<?php _e( 'These add-ons additional functionality to Email Log plugin are available for purchase.', 'email-log' ); ?>
-		</p>
 
 		<div class="el-container">
 			<?php $this->render_addons(); ?>

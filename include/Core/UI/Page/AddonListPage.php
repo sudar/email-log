@@ -39,10 +39,14 @@ class AddonListPage extends BasePage {
 		?>
 		<div class="wrap">
 			<h1><?php _e( 'Email Log Add-ons', 'email-log' ); ?></h1>
-			<?php
-			settings_errors();
-			_e( "Enter your license key to activate add-ons. If you don't have a license, then you can buy it", 'email-log' );
+			<?php settings_errors(); ?>
 
+			<p>
+				<?php _e( 'These add-ons provide additional functionality to Email Log plugin and are available for purchase.', 'email-log' ); ?>
+				<?php _e( 'If your license includes the add-ons below, you will be able to install them from here with one-click.', 'email-log' ); ?>
+			</p>
+
+			<?php
 			/**
 			 * Before add-ons are listed in the add-on list page.
 			 *

@@ -2,6 +2,13 @@
 	width: 100%;
 }
 
+.el-addon {
+	background: #FFF;
+	border: 1px solid #ccc;
+	box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+	padding: 1%;
+}
+
 @media screen and (max-width:399px) {
 	.el-addon {
 		float: none;
@@ -18,7 +25,7 @@
 @media screen and (min-width:400px) and (max-width:899px) {
 	.el-addon {
 		float: left;
-		width: 49%;
+		width: 48%;
 		margin: 0 1% 2% 0;
 	}
 
@@ -29,7 +36,7 @@
 
 	.el-addon:nth-child(even) {
 		float: left;
-		width: 49%;
+		width: 48%;
 		margin: 0 0% 2% 1%;
 	}
 }
@@ -37,7 +44,7 @@
 @media screen and (min-width:900px) {
 	.el-addon {
 		float: left;
-		width: 32%;
+		width: 30%;
 		margin: 0 0 2% 0;
 	}
 
@@ -48,7 +55,24 @@
 
 	.el-addon:nth-child(3n-1) {
 		float: left;
-		width: 32%;
-		margin: 0 2% 2% 2%;
+		width: 30%;
+		margin: 0 1.5% 2% 1.5%;
 	}
+}
+
+.bundle-license {
+	margin-bottom: 3%;
+}
+
+.bundle-license .notice-warning {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.bundle-license .el-license {
+	font-size: 1.7em;
+}
+
+.bundle-license .button {
+	margin-top: 2px;
 }

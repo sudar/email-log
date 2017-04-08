@@ -51,22 +51,41 @@ final class Licenser implements Loadie {
 	public function render_bundle_license_form() {
 		$action = 'el_bundle_license_activate';
 		$action_text = __( 'Activate', 'email-log' );
+		$button_class = 'button-primary';
 
 		if ( $this->bundle_license->is_active() ) {
 			$action = 'el_bundle_license_deactivate';
 			$action_text = __( 'Deactivate', 'email-log' );
+			$button_class = '';
 		}
 		?>
-		<form method="post">
-			<div class="el-license">
-				<input type="text" name="el-license" title="<?php _e( 'Email Log Bundle License Key', 'email-log' ); ?>"
-				       value="<?php echo esc_attr( $this->bundle_license->get_license_key() ); ?>">
-				<input type="hidden" name="el-action" value="<?php echo esc_attr( $action ); ?>">
-				<input type="submit" value="<?php echo esc_attr( $action_text ); ?>">
-			</div>
 
-			<?php wp_nonce_field( $action, $action . '_nonce' ); ?>
-		</form>
+		<div class="bundle-license">
+			<?php if ( ! $this->bundle_license->is_active() ) : ?>
+				<p class="notice notice-warning">
+					<?php
+						printf(
+							__( "Enter your license key to activate add-ons. If you don't have a license, then you can <a href='%s' target='_blank'>buy it</a>", 'email-log' ),
+							'https://wpemaillog.com'
+						);
+					?>
+				</p>
+			<?php endif; ?>
+
+			<form method="post">
+				<input type="text" name="el-license" class="el-license" size="40"
+				       title="<?php _e( 'Email Log Bundle License Key', 'email-log' ); ?>"
+				       placeholder="<?php _e( 'Email Log Bundle License Key', 'email-log' ); ?>"
+					   value="<?php echo esc_attr( $this->bundle_license->get_license_key() ); ?>">
+
+				<input type="submit" class="button button-large <?php echo sanitize_html_class( $button_class ); ?>"
+					   value="<?php echo esc_attr( $action_text ); ?>">
+
+				<input type="hidden" name="el-action" value="<?php echo esc_attr( $action ); ?>">
+
+				<?php wp_nonce_field( $action, $action . '_nonce' ); ?>
+			</form>
+		</div>
 		<?php
 	}
 
