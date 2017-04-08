@@ -101,7 +101,7 @@ final class Licenser implements Loadie {
 
 		try {
 			$this->bundle_license->activate();
-			$message = __( 'License successfully activated', 'email-log' );
+			$message = __( 'Your license has been activated. You can now install add-ons, will receive automatic updates and access to email support.', 'email-log' );
 			$type = 'updated';
 		} catch ( \Exception $e ) {
 			$message = $e->getMessage();
@@ -117,7 +117,7 @@ final class Licenser implements Loadie {
 	public function deactivate_bundle_license() {
 		try {
 			$this->bundle_license->deactivate();
-			$message = __( 'License successfully deactivated', 'email-log' );
+			$message = __( 'Your license has been deactivated. You will not receive automatic updates.', 'email-log' );
 			$type = 'updated';
 		} catch ( \Exception $e ) {
 			$message = $e->getMessage();
