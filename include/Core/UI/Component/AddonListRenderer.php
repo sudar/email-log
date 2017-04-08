@@ -55,7 +55,7 @@ class AddonListRenderer {
 	 */
 	protected function get_addons() {
 		if ( false === ( $addons = get_transient( self::CACHE_KEY ) ) ) {
-			$response = wp_remote_get( self::API_URL, array( 'sslverify' => false ) );
+			$response = wp_remote_get( self::API_URL );
 
 			if ( is_wp_error( $response ) || ! is_array( $response ) ) {
 				// TODO: Don't keep trying if the server is down.

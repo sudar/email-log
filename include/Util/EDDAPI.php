@@ -62,7 +62,6 @@ class EDDAPI {
 	protected function call_edd_api( $params ) {
 		$response = wp_remote_post( $this->store_url, array(
 			'timeout'   => 15,
-			'sslverify' => false,
 			'body'      => $params,
 		) );
 
