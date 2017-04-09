@@ -53,7 +53,7 @@ final class Licenser implements Loadie {
 		$action_text = __( 'Activate', 'email-log' );
 		$button_class = 'button-primary';
 
-		if ( $this->bundle_license->is_active() ) {
+		if ( $this->is_bundle_license_active() ) {
 			$action = 'el_bundle_license_deactivate';
 			$action_text = __( 'Deactivate', 'email-log' );
 			$button_class = '';
@@ -61,7 +61,7 @@ final class Licenser implements Loadie {
 		?>
 
 		<div class="bundle-license">
-			<?php if ( ! $this->bundle_license->is_active() ) : ?>
+			<?php if ( ! $this->is_bundle_license_active() ) : ?>
 				<p class="notice notice-warning">
 					<?php
 						printf(
@@ -125,5 +125,14 @@ final class Licenser implements Loadie {
 		}
 
 		add_settings_error( 'bundle-license', 'bundle-license', $message, $type );
+	}
+
+	/**
+	 * Is the bundle license active?
+	 *
+	 * @return bool True, if Bundle License is active, False otherwise.
+	 */
+	public function is_bundle_license_active() {
+		return $this->bundle_license->is_active();
 	}
 }
