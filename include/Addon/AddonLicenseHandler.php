@@ -1,7 +1,5 @@
 <?php namespace EmailLog\Addon;
 
-use EmailLog\Core\UI\Component\AddonLicenseRenderer;
-
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 /**
