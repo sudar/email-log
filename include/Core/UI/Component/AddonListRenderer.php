@@ -90,6 +90,9 @@ class AddonListRenderer {
 	 * Render the add-on list or display an error if the list can't be retrieved.
 	 */
 	protected function render_addons() {
+		$email_log = email_log();
+		$bundle_license_active = $email_log->get_licenser()->is_bundle_license_active();
+
 		$addons = $this->get_addons();
 
 		if ( empty( $addons ) ) {
@@ -97,20 +100,23 @@ class AddonListRenderer {
 		}
 
 		foreach ( $addons as $addon ) {
-			$this->render_addon( $addon );
+			$this->render_addon( $addon, $bundle_license_active );
 		}
 	}
 
 	/**
 	 * Renders an individual addon.
 	 *
-	 * @param array $addon Details about an add-on.
+	 * @param array $addon                 Details about an add-on.
+	 * @param bool  $bundle_license_active Is the Bundle license active?
 	 */
-	protected function render_addon( $addon ) {
+	protected function render_addon( $addon, $bundle_license_active ) {
 		$addon_title       = $addon['info']['title'];
 		$addon_thumbnail   = $addon['info']['thumbnail'];
 		$addon_description = $addon['info']['excerpt'];
 		$addon_link        = $addon['info']['permalink'];
+		$addon_slug        = 'email-log-' . $addon['info']['slug'];
+		$addon_file        = sprintf( '%1$s/%1$s.php', $addon_slug );
 		?>
 		<div class="el-addon">
 			<h3 class="el-addon-title">
@@ -126,7 +132,37 @@ class AddonListRenderer {
 				<?php echo esc_html( $addon_description ); ?>
 			</p>
 
-			<a href="#" class="button-secondary"><?php _e( 'Install Now', 'email-log' ); ?></a>
+			<?php
+			if ( $bundle_license_active ) {
+				$installed_plugins  = array_keys( get_plugins() );
+
+				if ( in_array( $addon_file, $installed_plugins, true ) ) {
+					$actions = '<a disabled class="button button-secondary">' . _x( 'Installed', 'Installed on website but not activated', 'email-log' );
+					if ( is_plugin_active( $addon_file ) ) {
+						$actions .= ' &amp; ' . _x( 'Activated', 'Installed and activated on website', 'email-log' ) . '</a>';
+					} else {
+						$activate_url = wp_nonce_url( network_admin_url( 'plugins.php?action=activate&amp;plugin=' . $addon_file ), 'activate-plugin_' . $addon_file );
+						$actions .= sprintf( '</a> <a class="button button-primary" href="%s">%s</a>', $activate_url, _x( 'Activate', 'Enable addon so it may be used', 'email-log' ) );
+					}
+				} else {
+					// TODO: Make sure WordPress core can handle add-on installation.
+					$install_url = wp_nonce_url( network_admin_url( 'update.php?action=install-plugin&plugin=' . $addon_slug ), 'install-plugin_' . $addon_slug );
+					$actions     = sprintf( '<a class="button button-primary" href="%s">%s</a>', $install_url, _x( 'Install', 'Download and activate addon', 'email-log' ) );
+				}
+
+				// TODO: Link correct download url.
+				$download_url = '';
+				$actions .= sprintf( ' <a class="button button-secondary" href="%s">%s</a>', $download_url, _x( 'Download', 'Download to your computer', 'email-log' ) );
+			} else {
+				$actions = sprintf(
+					'<a disabled class="button-secondary" title="%s" href="#">%s</a>',
+					__( 'You need an active license to install the add-on', 'email-log' ),
+					_x( 'Install', 'Download and activate addon', 'email-log' )
+				);
+			}
+
+			echo $actions;
+			?>
 		</div> <!-- .el-addon -->
 		<?php
 	}
