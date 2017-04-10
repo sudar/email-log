@@ -1,6 +1,5 @@
 <?php namespace EmailLog\License;
 
-use EmailLog\Core\EmailLog;
 use EmailLog\Util\EDDAPI;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
@@ -27,7 +26,7 @@ abstract class BaseLicense {
 	 *
 	 * @return bool True if license is active, False otherwise.
 	 */
-	abstract public function is_active();
+	abstract public function is_valid();
 
 	/**
 	 * Get the license key.
@@ -60,13 +59,31 @@ abstract class BaseLicense {
 	}
 
 	/**
+	 * Set add-on name.
+	 *
+	 * @param string $addon_name Add-on Name.
+	 */
+	public function set_addon_name( $addon_name ) {
+		$this->addon_name = $addon_name;
+	}
+
+	/**
+	 * Get the add-on name.
+	 *
+	 * @return string Add-on name.
+	 */
+	public function get_addon_name() {
+		return $this->addon_name;
+	}
+
+	/**
 	 * Activate License by calling EDD API.
 	 *
 	 * @return object API Response JSON Object.
 	 * @throws \Exception In case of communication errors or License Issues.
 	 */
 	public function activate() {
-		$response = $this->edd_api->activate_license( $this->get_license_key(), $this->addon_name );
+		$response = $this->edd_api->activate_license( $this->get_license_key(), $this->get_addon_name() );
 
 		if ( $response->success && 'valid' === $response->license ) {
 			return $response;
@@ -94,7 +111,7 @@ abstract class BaseLicense {
 				break;
 
 			case 'item_name_mismatch':
-				$message = sprintf( __( 'Your license key is not valid for %s.' ), $this->addon_name );
+				$message = sprintf( __( 'Your license key is not valid for %s.' ), $this->get_addon_name() );
 				break;
 
 			case 'no_activations_left':
@@ -116,7 +133,7 @@ abstract class BaseLicense {
 	 * @throws \Exception In case of communication errors.
 	 */
 	public function deactivate() {
-		$response = $this->edd_api->deactivate_license( $this->get_license_key(), $this->addon_name );
+		$response = $this->edd_api->deactivate_license( $this->get_license_key(), $this->get_addon_name() );
 
 		if ( $response->success && 'deactivated' === $response->license ) {
 			return $response;
@@ -128,6 +145,23 @@ abstract class BaseLicense {
 				break;
 		}
 
+		throw new \Exception( $message );
+	}
+
+	/**
+	 * Get version information by calling EDD API.
+	 *
+	 * @return object API Response JSON Object.
+	 * @throws \Exception In case of communication errors.
+	 */
+	public function get_version() {
+		$response = $this->edd_api->get_version( $this->get_license_key(), $this->get_addon_name() );
+
+		if ( isset( $response->new_version ) && ! isset( $response->msg ) ) {
+			return $response;
+		}
+
+		$message = __( 'An error occurred, please try again', 'email-log' ) . $response->error;
 		throw new \Exception( $message );
 	}
 }

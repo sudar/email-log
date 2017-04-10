@@ -15,6 +15,11 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
  */
 final class Licenser implements Loadie {
 
+	/**
+	 * Bundle License object.
+	 *
+	 * @var \EmailLog\License\BundleLicense
+	 */
 	private $bundle_license;
 
 	/**
@@ -53,7 +58,7 @@ final class Licenser implements Loadie {
 		$action_text = __( 'Activate', 'email-log' );
 		$button_class = 'button-primary';
 
-		if ( $this->is_bundle_license_active() ) {
+		if ( $this->is_bundle_license_valid() ) {
 			$action = 'el_bundle_license_deactivate';
 			$action_text = __( 'Deactivate', 'email-log' );
 			$button_class = '';
@@ -61,7 +66,7 @@ final class Licenser implements Loadie {
 		?>
 
 		<div class="bundle-license">
-			<?php if ( ! $this->is_bundle_license_active() ) : ?>
+			<?php if ( ! $this->is_bundle_license_valid() ) : ?>
 				<p class="notice notice-warning">
 					<?php
 						printf(
@@ -128,11 +133,56 @@ final class Licenser implements Loadie {
 	}
 
 	/**
-	 * Is the bundle license active?
+	 * Is the bundle license valid?
 	 *
 	 * @return bool True, if Bundle License is active, False otherwise.
 	 */
-	public function is_bundle_license_active() {
-		return $this->bundle_license->is_active();
+	public function is_bundle_license_valid() {
+		return $this->bundle_license->is_valid();
+	}
+
+	/**
+	 * Is the add-on license valid?
+	 *
+	 * @param string $addon_name Addon Name.
+	 *
+	 * @return bool True if license is valid, False otherwise.
+	 */
+	public function is_addon_license_valid( $addon_name ) {
+		if ( $this->is_bundle_license_valid() ) {
+			return true;
+		}
+
+		// TODO: Handle individual license.
+		return false;
+	}
+
+	/**
+	 * Get the license key of an add-on.
+	 *
+	 * @param string $addon_name Addon.
+	 *
+	 * @return bool|string License key if found, False otherwise.
+	 */
+	public function get_addon_license_key( $addon_name ) {
+		if ( ! $this->is_bundle_license_valid() ) {
+			return false;
+		}
+
+		return $this->bundle_license->get_addon_license_key( $addon_name );
+	}
+
+	public function get_addon_download_url( $addon_name ) {
+		$license_key = $this->get_addon_license_key( $addon_name );
+
+		if ( false === $license_key ) {
+			return '';
+		}
+
+		$license = new License();
+		$license->set_license_key( $license_key );
+		$license->set_addon_name( $addon_name );
+
+		return $license->get_download_url();
 	}
 }

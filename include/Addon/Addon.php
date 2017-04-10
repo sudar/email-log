@@ -9,7 +9,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
  */
 class Addon {
 
-	private $title;
+	private $name;
 	private $thumbnail;
 	private $description;
 	private $link;
@@ -22,7 +22,7 @@ class Addon {
 	 * @param array $data Data array.
 	 */
 	public function __construct( $data ) {
-		$this->title       = $data['info']['title'];
+		$this->name        = $data['info']['title'];
 		$this->thumbnail   = $data['info']['thumbnail'];
 		$this->description = $data['info']['excerpt'];
 		$this->link        = $data['info']['permalink'];
@@ -36,11 +36,11 @@ class Addon {
 	public function render() {
 		?>
 		<div class="el-addon">
-			<h3 class="el-addon-title"> <?php echo esc_html( $this->title ); ?> </h3>
+			<h3 class="el-addon-title"> <?php echo esc_html( $this->name ); ?> </h3>
 
-			<a href="<?php echo esc_url( $this->link ); ?>" title="<?php echo esc_attr( $this->title ); ?>">
+			<a href="<?php echo esc_url( $this->link ); ?>" title="<?php echo esc_attr( $this->name ); ?>">
 				<img src="<?php echo esc_url( $this->thumbnail ); ?>" class="attachment-showcase wp-post-image"
-					 alt="<?php echo esc_attr( $this->title ); ?>" title="<?php echo esc_attr( $this->title ); ?>">
+				     alt="<?php echo esc_attr( $this->name ); ?>" title="<?php echo esc_attr( $this->name ); ?>">
 			</a>
 
 			<p> <?php echo esc_html( $this->description ); ?> </p>
@@ -72,10 +72,7 @@ class Addon {
 	 * @return string Action links.
 	 */
 	protected function get_actions() {
-		$email_log             = email_log();
-		$bundle_license_active = $email_log->get_licenser()->is_bundle_license_active();
-
-		if ( ! $bundle_license_active ) {
+		if ( ! $this->is_license_valid() ) {
 			return sprintf(
 				'<a disabled class="button-secondary" title="%s" href="#">%s</a>',
 				__( 'You need an active license to install the add-on', 'email-log' ),
@@ -96,7 +93,7 @@ class Addon {
 			$actions = sprintf( '<a class="button button-primary" href="%s">%s</a>', $this->get_install_url(), _x( 'Install', 'Download and activate addon', 'email-log' ) );
 		}
 
-		$actions .= sprintf( ' <a class="button button-secondary" href="%s">%s</a>', $this->get_download_url(), _x( 'Download', 'Download to your computer', 'email-log' ) );
+		$actions .= sprintf( ' <a class="button button-secondary" target="_blank" href="%s">%s</a>', $this->get_download_url(), _x( 'Download', 'Download to your computer', 'email-log' ) );
 
 		return $actions;
 	}
@@ -137,6 +134,30 @@ class Addon {
 	 * @return string Download url for add-on.
 	 */
 	protected function get_download_url() {
-		return '';
+		$email_log = email_log();
+
+		return $email_log->get_licenser()->get_addon_download_url( $this->name );
+	}
+
+	/**
+	 * Is the license of this add-on valid?
+	 *
+	 * @return bool True if valid, False otherwise.
+	 */
+	protected function is_license_valid() {
+		$email_log = email_log();
+
+		return $email_log->get_licenser()->is_addon_license_valid( $this->name );
+	}
+
+	/**
+	 * Get license key if the add-on has a valid license.
+	 *
+	 * @return bool|string License key if found, False otherwise.
+	 */
+	protected function get_license_key() {
+		$email_log = email_log();
+
+		return $email_log->get_licenser()->get_addon_license_key( $this->name );
 	}
 }

@@ -34,7 +34,12 @@ class BundleLicense extends BaseLicense {
 		$this->clear();
 	}
 
-	public function is_active() {
+	/**
+	 * Is the license valid?
+	 *
+	 * @return bool True if valid, False otherwise.
+	 */
+	public function is_valid() {
 		if ( empty( $this->data ) ) {
 			return false;
 		}
@@ -46,12 +51,36 @@ class BundleLicense extends BaseLicense {
 		return false;
 	}
 
+	/**
+	 * Return bundle license key.
+	 *
+	 * @return string Bundle License key, if found.
+	 */
 	public function get_license_key() {
 		if ( empty( $this->data ) ) {
 			return $this->license_key;
 		}
 
 		return $this->data->bundle_license_key;
+	}
+
+	/**
+	 * Get the license key of an add-on from Bundle.
+	 *
+	 * @param string $addon_name Add-on name.
+	 *
+	 * @return bool|string False if no license key is found, otherwise license key.
+	 */
+	public function get_addon_license_key( $addon_name ) {
+		if ( empty( $this->data ) ) {
+			return false;
+		}
+
+		if ( ! isset( $this->data->bundled_licenses->{$addon_name} ) ) {
+			return false;
+		}
+
+		return $this->data->bundled_licenses->{$addon_name}->license_key;
 	}
 
 	/**
