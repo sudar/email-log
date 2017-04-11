@@ -121,5 +121,7 @@ class SettingsPage extends BasePage {
 
 		</div>
 		<?php
+
+		$this->render_page_footer();
 	}
 }

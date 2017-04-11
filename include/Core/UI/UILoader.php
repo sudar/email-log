@@ -2,6 +2,8 @@
 
 use EmailLog\Core\Loadie;
 
+defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
+
 /**
  * Admin UI Loader.
  * Loads and initializes all admin pages and components.
@@ -9,13 +11,6 @@ use EmailLog\Core\Loadie;
  * @since 2.0
  */
 class UILoader implements Loadie {
-
-	/**
-	 * Plugin filename.
-	 *
-	 * @var string
-	 */
-	protected $plugin_file;
 
 	/**
 	 * UI Component List.
@@ -26,21 +21,15 @@ class UILoader implements Loadie {
 
 	/**
 	 * List of Admin pages.
-	 * @var array
+	 *
+	 * @var \EmailLog\Core\UI\Page\BasePage[]
 	 */
 	protected $pages = array();
 
 	/**
-	 * Setup UI Loader.
-	 *
-	 * @param string $file Plugin main file.
-	 */
-	public function __construct( $file ) {
-		$this->plugin_file = $file;
-	}
-
-	/**
 	 * Load all components and setup hooks.
+	 *
+	 * @inheritdoc
 	 */
 	public function load() {
 		$this->initialize_components();
@@ -63,7 +52,7 @@ class UILoader implements Loadie {
 	 * @access protected
 	 */
 	protected function initialize_components() {
-		$this->components['plugin_list_enhancer'] = new Component\PluginListEnhancer( $this->plugin_file );
+		$this->components['admin_ui_enhancer'] = new Component\AdminUIEnhancer();
 	}
 
 	/**
@@ -74,8 +63,8 @@ class UILoader implements Loadie {
 	 * @access protected
 	 */
 	protected function initialize_pages() {
-		$this->pages['log_list_page']   = new Page\LogListPage( $this->plugin_file );
-		$this->pages['addon_list_page'] = new Page\AddonListPage( $this->plugin_file );
-		$this->pages['settings_page']   = new Page\SettingsPage( $this->plugin_file );
+		$this->pages['log_list_page']   = new Page\LogListPage();
+		$this->pages['addon_list_page'] = new Page\AddonListPage();
+		$this->pages['settings_page']   = new Page\SettingsPage();
 	}
 }

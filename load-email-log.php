@@ -41,7 +41,7 @@ function load_email_log( $plugin_file ) {
 	$email_log->set_licenser( new \EmailLog\License\Licenser() );
 
 	$email_log->add_loadie( new \EmailLog\Core\EmailLogger() );
-	$email_log->add_loadie( new \EmailLog\Core\UI\UILoader( $plugin_file ) );
+	$email_log->add_loadie( new \EmailLog\Core\UI\UILoader() );
 	$email_log->add_loadie( new \EmailLog\Addon\DependencyEnforcer() );
 
 	$email_log->add_loadie( new \EmailLog\Core\Request\NonceChecker() );

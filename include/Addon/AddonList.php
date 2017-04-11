@@ -1,4 +1,4 @@
-<?php namespace EmailLog\Core\UI\Component;
+<?php namespace EmailLog\Addon;
 
 use EmailLog\Addon\Addon;
 
@@ -9,35 +9,16 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
  *
  * @since 2.0.0
  */
-class AddonListRenderer {
+class AddonList {
 
 	const API_URL = 'https://wpemaillog.com/edd-api/products/?category=addon';
 	const CACHE_EXPIRY_IN_HRS = 12;
 	const CACHE_KEY = 'el_addon_list';
 
 	/**
-	 * Plugin File.
-	 *
-	 * @var string
-	 */
-	private $plugin_file;
-
-	/**
-	 * Create a new instance with the passed in plugin file.
-	 *
-	 * @param string $plugin_file Plugin File.
-	 */
-	public function __construct( $plugin_file ) {
-		$this->plugin_file = $plugin_file;
-	}
-
-	/**
 	 * Setup page to render the list of add-ons.
 	 */
 	public function render() {
-		$email_log = email_log();
-
-		wp_enqueue_style( 'el_addon_list', plugins_url( 'assets/css/admin/addon-list.css', $this->plugin_file ), array(), $email_log->get_version() );
 		?>
 
 		<div class="el-container">
@@ -52,7 +33,7 @@ class AddonListRenderer {
 	 *
 	 * @return Addon[] List of add-ons, empty array if API call fails.
 	 */
-	protected function get_addons() {
+	public function get_addons() {
 		if ( false === ( $addons = get_transient( self::CACHE_KEY ) ) ) {
 			$response = wp_remote_get( self::API_URL );
 

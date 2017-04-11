@@ -1,6 +1,6 @@
 <?php namespace EmailLog\Core\UI\Page;
 
-use EmailLog\Core\UI\Component\AddonListRenderer;
+use EmailLog\Addon\AddonList;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
@@ -30,6 +30,7 @@ class AddonListPage extends BasePage {
 		);
 
 		add_action( "load-{$this->page}", array( $this, 'render_help_tab' ) );
+		add_action( "load-{$this->page}", array( $this, 'enqueue_assets' ) );
 	}
 
 	/**
@@ -54,10 +55,21 @@ class AddonListPage extends BasePage {
 			 */
 			do_action( 'el_before_addon_list' );
 
-			$addon_list_renderer = new AddonListRenderer( $this->plugin_file );
-			$addon_list_renderer->render();
+			$addon_list = new AddonList();
+			$addon_list->render();
 			?>
 		</div>
 		<?php
+
+		$this->render_page_footer();
+	}
+
+	/**
+	 * Enqueue static assets needed for this page.
+	 */
+	public function enqueue_assets() {
+		$email_log = email_log();
+
+		wp_enqueue_style( 'el_addon_list', plugins_url( 'assets/css/admin/addon-list.css', $email_log->get_plugin_file() ), array(), $email_log->get_version() );
 	}
 }

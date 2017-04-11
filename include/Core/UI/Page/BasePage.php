@@ -2,24 +2,26 @@
 
 use EmailLog\Core\Loadie;
 
+defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
+
 /**
- * Base class for all admin pages.
+ * Base class for all Email Log admin pages.
  *
- * @since 2.0
+ * @since 2.0.0
  */
 abstract class BasePage implements Loadie {
-	/**
-	 * @var string Plugin filename.
-	 */
-	protected $plugin_file;
 
 	/**
-	 * @var string Current page.
+	 * Current page.
+	 *
+	 * @var string
 	 */
 	protected $page;
 
 	/**
-	 * @var \WP_Screen Current screen.
+	 * Current screen.
+	 *
+	 * @var \WP_Screen
 	 */
 	protected $screen;
 
@@ -31,16 +33,9 @@ abstract class BasePage implements Loadie {
 	abstract public function register_page();
 
 	/**
-	 * Create a new Page instance.
+	 * Setup hooks related to pages.
 	 *
-	 * @param string $file Plugin file.
-	 */
-	public function __construct( $file ) {
-		$this->plugin_file = $file;
-	}
-
-	/**
-	 * Setup hooks.
+	 * @inheritdoc
 	 */
 	public function load() {
 		add_action( 'admin_menu', array( $this, 'register_page' ) );
@@ -48,6 +43,8 @@ abstract class BasePage implements Loadie {
 
 	/**
 	 * Render help tab.
+	 *
+	 * TODO: Change links used in this function.
 	 */
 	public function render_help_tab() {
 		/**
@@ -82,27 +79,6 @@ abstract class BasePage implements Loadie {
 		 * @since 1.8
 		 */
 		do_action( 'el_admin_footer' );
-
-		// Display credits in Footer
-		add_action( 'in_admin_footer', array( $this, 'add_footer_links' ) );
-	}
-
-	/**
-	 * Adds Footer links.
-	 *
-	 * @since Genesis
-	 *
-	 * @see   Function relied on
-	 * @link  http://striderweb.com/nerdaphernalia/2008/06/give-your-wordpress-plugin-credit/
-	 */
-	public function add_footer_links() {
-		$plugin_data = get_plugin_data( $this->plugin_file );
-		printf(
-			'%1$s ' . __( 'plugin', 'email-log' ) . ' | ' . __( 'Version', 'email-log' ) . ' %2$s | ' . __( 'by', 'email-log' ) . ' %3$s<br />',
-			$plugin_data['Title'],
-			$plugin_data['Version'],
-			$plugin_data['Author']
-		);
 	}
 
 	/**

@@ -1,6 +1,6 @@
 <?php namespace EmailLog\Core\UI\Component;
 
-use EmailLog\Core\UI\Component\PluginListEnhancer;
+use EmailLog\Core\UI\Component\AdminUIEnhancer;
 
 if ( ! class_exists( 'EmailLog\Core\UI\Components\PluginListEnhancer' ) ) {
 	return;
@@ -11,7 +11,7 @@ if ( ! class_exists( 'EmailLog\Core\UI\Components\PluginListEnhancer' ) ) {
  *
  * We need a mock object, since we need to access plugin basename.
  */
-class MockPluginListEnhancerClass extends PluginListEnhancer {
+class MockAdminUIEnhancerClass extends AdminUIEnhancer {
 	public function get_plugin_basename() {
 		return $this->plugin_basename;
 	}
@@ -31,7 +31,7 @@ class PluginListEnhancerTest extends \PHPUnit_Framework_TestCase {
 		parent::setUp();
 		$this->file = str_replace( 'tests/wp-tests/Core/UI/', '', __FILE__ );
 
-		$this->plugin_list_enhancer = new MockPluginListEnhancerClass( $this->file );
+		$this->plugin_list_enhancer = new MockAdminUIEnhancerClass( $this->file );
 	}
 
 	public function test_plugin_basename() {
