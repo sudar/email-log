@@ -156,7 +156,7 @@ class LogListAction implements Loadie {
 	/**
 	 * Get TableManager instance.
 	 *
-	 * @return TableManager TableManager instance.
+	 * @return \EmailLog\Core\DB\TableManager TableManager instance.
 	 */
 	protected function get_table_manager() {
 		$email_log = email_log();
