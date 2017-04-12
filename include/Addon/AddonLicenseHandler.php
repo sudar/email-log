@@ -67,14 +67,13 @@ class AddonLicenseHandler {
 	}
 
 	/**
-	 * Setup up Add-on auto-updater user EDD library.
+	 * Setup up Add-on auto-updater using EDD library.
 	 */
 	public function setup_updater() {
-		// TODO: Hook the license key.
-		$license_key = '';
+		$email_log = email_log();
+		$license_key = $email_log->get_licenser()->get_addon_license_key( $this->addon_name );
 
 		if ( ! class_exists( 'EDD_SL_Plugin_Updater' ) ) {
-			$email_log = email_log();
 			require_once $email_log->get_plugin_path() . 'include/libraries/EDD_SL_Plugin_Updater.php';
 		}
 
