@@ -133,7 +133,7 @@ class Addon {
 	 *
 	 * @return string Download url for add-on.
 	 */
-	protected function get_download_url() {
+	public function get_download_url() {
 		$email_log = email_log();
 
 		return $email_log->get_licenser()->get_addon_download_url( $this->name );

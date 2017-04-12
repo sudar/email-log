@@ -16,6 +16,26 @@ class AddonList {
 	const CACHE_KEY = 'el_addon_list';
 
 	/**
+	 * Add-on list.
+	 *
+	 * @var Addon[]
+	 */
+	protected $addons;
+
+	/**
+	 * Create a list of add-ons.
+	 *
+	 * @param Addon[] $addons List of Add-ons. If not passed, they will be automatically loaded.
+	 */
+	public function __construct( $addons = null ) {
+		if ( null === $addons ) {
+			$addons = $this->get_addons();
+		}
+
+		$this->addons = $addons;
+	}
+
+	/**
 	 * Setup page to render the list of add-ons.
 	 */
 	public function render() {
@@ -33,7 +53,7 @@ class AddonList {
 	 *
 	 * @return Addon[] List of add-ons, empty array if API call fails.
 	 */
-	public function get_addons() {
+	protected function get_addons() {
 		if ( false === ( $addons = get_transient( self::CACHE_KEY ) ) ) {
 			$response = wp_remote_get( self::API_URL );
 
@@ -80,7 +100,8 @@ class AddonList {
 		$addons = array();
 
 		foreach ( $products as $product ) {
-			$addons[] = new Addon( $product );
+			$addon = new Addon( $product );
+			$addons[ $addon->slug ] = $addon;
 		}
 
 		return $addons;
@@ -90,13 +111,11 @@ class AddonList {
 	 * Render the add-on list or display an error if the list can't be retrieved.
 	 */
 	protected function render_addons() {
-		$addons = $this->get_addons();
-
-		if ( empty( $addons ) ) {
+		if ( empty( $this->addons ) ) {
 			$this->render_empty_list();
 		}
 
-		foreach ( $addons as $addon ) {
+		foreach ( $this->addons as $addon ) {
 			$addon->render();
 		}
 	}
@@ -115,5 +134,20 @@ class AddonList {
 			?>
 		</span>
 		<?php
+	}
+
+	/**
+	 * Get an add-on by slug.
+	 *
+	 * @param string $slug Add-on slug.
+	 *
+	 * @return bool|\EmailLog\Addon\Addon Add-on if found, False otherwise.
+	 */
+	public function get_addon_by_slug( $slug ) {
+		if ( array_key_exists( $slug, $this->addons ) ) {
+			return $this->addons[ $slug ];
+		}
+
+		return false;
 	}
 }
