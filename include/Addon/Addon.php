@@ -73,11 +73,19 @@ class Addon {
 	 */
 	protected function get_actions() {
 		if ( ! $this->is_license_valid() ) {
-			return sprintf(
-				'<a disabled class="button-secondary" title="%s" href="#">%s</a>',
-				__( 'You need an active license to install the add-on', 'email-log' ),
-				_x( 'Install', 'Download and activate addon', 'email-log' )
-			);
+			if ( $this->is_installed() ) {
+				return sprintf(
+					'<a disabled class="button-secondary" title="%s" href="#">%s</a>',
+					__( 'You need an active license to install the add-on', 'email-log' ),
+					_x( 'Activate License to Use', 'Download and activate addon', 'email-log' )
+				);
+			} else {
+				return sprintf(
+					'<a disabled class="button-secondary" title="%s" href="#">%s</a>',
+					__( 'You need an active license to install the add-on', 'email-log' ),
+					_x( 'Activate License to Install', 'Download and activate addon', 'email-log' )
+				);
+			}
 		}
 
 		if ( $this->is_installed() ) {
