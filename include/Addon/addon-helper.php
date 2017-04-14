@@ -22,10 +22,8 @@ function load_email_log_addon( $addon_class, $addon_file ) {
 	$addon_dir = plugin_dir_path( $addon_file );
 	$email_log->loader->add_namespace( 'EmailLog', $addon_dir . 'include' );
 
-	$license_renderer = new EmailLog\Core\UI\Addon\AddonLicenseRenderer();
-	$license_handler = new EmailLog\Addon\AddonLicenseHandler( $addon_file, $license_renderer );
-
-	$addon = new $addon_class( $addon_file, $license_handler );
+	$addon_updater = new \EmailLog\Addon\AddonUpdater( $addon_file );
+	$addon = new $addon_class( $addon_file, $addon_updater );
 
 	add_action( 'el_loaded', array( $addon, 'load' ) );
 

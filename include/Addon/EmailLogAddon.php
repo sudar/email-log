@@ -15,11 +15,11 @@ abstract class EmailLogAddon {
 	protected $addon_author = 'Sudar Muthu';
 
 	/**
-	 * Addon License Handler.
+	 * Addon Updater.
 	 *
-	 * @var EmailLog\Addon\AddonLicenseHandler.
+	 * @var \EmailLog\Addon\AddonUpdater.
 	 */
-	private $license_handler;
+	private $updater;
 
 	/**
 	 * Initialize add-on data.
@@ -32,22 +32,23 @@ abstract class EmailLogAddon {
 	/**
 	 * Construct a new EmailLogAddon instance.
 	 *
-	 * @param string                             $addon_file      Addon main file.
-	 * @param EmailLog\Addon\AddonLicenseHandler $license_handler Addon License Handler.
+	 * @param string                       $addon_file Addon main file.
+	 * @param \EmailLog\Addon\AddonUpdater $updater    Addon Updater.
 	 */
-	public function __construct( $addon_file, $license_handler ) {
-		$this->addon_file      = $addon_file;
-		$this->license_handler = $license_handler;
+	public function __construct( $addon_file, $updater ) {
+		$this->addon_file = $addon_file;
+		$this->updater    = $updater;
 
 		$this->initialize();
 	}
 
 	/**
 	 * Load the add-on and setup hooks.
-	 * This method is called on `wp-loaded` hook.
+	 *
+	 * @inheritdoc
 	 */
 	public function load() {
-		$this->license_handler->set_addon_data( $this->addon_name, $this->addon_version, $this->addon_author );
-		$this->license_handler->load();
+		$this->updater->set_addon_data( $this->addon_name, $this->addon_version, $this->addon_author );
+		$this->updater->load();
 	}
 }

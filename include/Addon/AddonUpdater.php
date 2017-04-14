@@ -3,11 +3,12 @@
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 /**
- * Addon License Handler.
+ * Add-on Updater.
+ * Auto updates add-on based on EDD SL API.
  *
  * @since 2.0.0
  */
-class AddonLicenseHandler {
+class AddonUpdater {
 
 	const STORE_URL = 'https://wpemaillog.com';
 
@@ -24,21 +25,12 @@ class AddonLicenseHandler {
 	private $updater;
 
 	/**
-	 * Addon License field Renderer.
+	 * Create a new instance of AddonUpdater.
 	 *
-	 * @var \EmailLog\Core\UI\Addon\AddonLicenseRenderer
+	 * @param string $addon_file Add-on main file.
 	 */
-	private $renderer;
-
-	/**
-	 * AddonLicenseHandler constructor.
-	 *
-	 * @param string                                       $addon_file Add-on main file.
-	 * @param \EmailLog\Core\UI\Addon\AddonLicenseRenderer $renderer   Addon License Renderer.
-	 */
-	public function __construct( $addon_file, $renderer ) {
+	public function __construct( $addon_file ) {
 		$this->addon_file = $addon_file;
-		$this->renderer = $renderer;
 	}
 
 	/**
@@ -52,8 +44,6 @@ class AddonLicenseHandler {
 		$this->addon_name    = $addon_name;
 		$this->addon_version = $addon_version;
 		$this->addon_author  = $addon_author;
-
-		$this->renderer->set_addon_data( $addon_name, $addon_version );
 	}
 
 	/**
@@ -62,8 +52,6 @@ class AddonLicenseHandler {
 	 */
 	public function load() {
 		add_action( 'admin_init', array( $this, 'setup_updater' ) );
-
-		$this->renderer->load();
 	}
 
 	/**
