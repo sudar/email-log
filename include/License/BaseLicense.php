@@ -1,6 +1,6 @@
 <?php namespace EmailLog\License;
 
-use EmailLog\Util\EDDAPI;
+use EmailLog\Addon\API\EDDAPI;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
@@ -17,7 +17,7 @@ abstract class BaseLicense {
 	/**
 	 * EDD API Wrapper.
 	 *
-	 * @var \EmailLog\Util\EDDAPI
+	 * @var \EmailLog\Addon\API\EDDAPI
 	 */
 	protected $edd_api;
 
@@ -39,7 +39,7 @@ abstract class BaseLicense {
 	 * Construct a new License object.
 	 * If the API Wrapper is not provided, then a new one is initialized.
 	 *
-	 * @param \EmailLog\Util\EDDAPI $edd_api (Optional) EDD API Wrapper instance. Default is null.
+	 * @param \EmailLog\Addon\API\EDDAPI $edd_api (Optional) EDD API Wrapper instance. Default is null.
 	 */
 	public function __construct( $edd_api = null ) {
 		if ( is_null( $edd_api ) ) {

@@ -1,4 +1,4 @@
-<?php namespace EmailLog\Util;
+<?php namespace EmailLog\Addon\API;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
