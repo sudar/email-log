@@ -19,6 +19,11 @@ class EmailLog {
 	const VERSION = '2.0.0';
 
 	/**
+	 * Email Log Store URL.
+	 */
+	const STORE_URL = 'https://wpemaillog.com';
+
+	/**
 	 * Flag to track if the plugin is loaded.
 	 *
 	 * @since 2.0
@@ -186,5 +191,16 @@ class EmailLog {
 	 */
 	public function get_plugin_file() {
 		return $this->plugin_file;
+	}
+
+	/**
+	 * Get Email Log Store URL.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @return string Store URL
+	 */
+	public function get_store_url() {
+		return self::STORE_URL;
 	}
 }

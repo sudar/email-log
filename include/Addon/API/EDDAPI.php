@@ -9,7 +9,28 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
  */
 class EDDAPI {
 
-	protected $store_url = 'https://wpemaillog.com';
+	/**
+	 * Store URL.
+	 * EDD and EDD SL plugins should be installed there.
+	 *
+	 * @var string
+	 */
+	protected $store_url;
+
+	/**
+	 * EDDAPI constructor.
+	 * If store url is not passed it is read from config.
+	 *
+	 * @param string|null $store_url Store URL.
+	 */
+	public function __construct( $store_url = null ) {
+		if ( null === $store_url ) {
+			$email_log = email_log();
+			$store_url = $email_log->get_store_url();
+		}
+
+		$this->store_url = $store_url;
+	}
 
 	/**
 	 * Activate License.
