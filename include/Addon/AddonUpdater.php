@@ -1,5 +1,7 @@
 <?php namespace EmailLog\Addon;
 
+use EmailLog\Addon\API\EDDUpdater;
+
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 /**
@@ -10,19 +12,10 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
  */
 class AddonUpdater {
 
-	const STORE_URL = 'https://wpemaillog.com';
-
 	private $addon_file;
 	private $addon_name;
 	private $addon_version;
 	private $addon_author;
-
-	/**
-	 * Instance of EDD Plugin Updater.
-	 *
-	 * @var \EDD_SL_Plugin_Updater
-	 */
-	private $updater;
 
 	/**
 	 * Create a new instance of AddonUpdater.
@@ -61,16 +54,14 @@ class AddonUpdater {
 		$email_log = email_log();
 		$license_key = $email_log->get_licenser()->get_addon_license_key( $this->addon_name );
 
-		if ( ! class_exists( 'EDD_SL_Plugin_Updater' ) ) {
-			require_once $email_log->get_plugin_path() . 'include/libraries/EDD_SL_Plugin_Updater.php';
-		}
-
-		$this->updater = new \EDD_SL_Plugin_Updater( self::STORE_URL, $this->addon_file, array(
+		$updater = new EDDUpdater( $email_log->get_store_url(), $this->addon_file, array(
 				'version'   => $this->addon_version,
 				'license'   => $license_key,
 				'item_name' => $this->addon_name,
 				'author'    => $this->addon_author,
 			)
 		);
+
+		$email_log->get_licenser()->add_updater( $updater );
 	}
 }

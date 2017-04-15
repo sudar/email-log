@@ -1,6 +1,6 @@
 <?php namespace EmailLog\License;
 
-use EmailLog\Core\EmailLog;
+use EmailLog\Addon\API\EDDUpdater;
 use EmailLog\Core\Loadie;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
@@ -21,6 +21,13 @@ final class Licenser implements Loadie {
 	 * @var \EmailLog\License\BundleLicense
 	 */
 	private $bundle_license;
+
+	/**
+	 * List of Add-on updaters.
+	 *
+	 * @var \EmailLog\Addon\API\EDDUpdater[]
+	 */
+	private $updaters = array();
 
 	/**
 	 * Licenser constructor.
@@ -51,16 +58,27 @@ final class Licenser implements Loadie {
 	}
 
 	/**
+	 * Add an Add-on Updater.
+	 *
+	 * @param \EmailLog\Addon\API\EDDUpdater $updater Add-on Updater.
+	 */
+	public function add_updater( $updater ) {
+		if ( $updater instanceof EDDUpdater ) {
+			$this->updaters[ $updater->get_slug() ] = $updater;
+		}
+	}
+
+	/**
 	 * Render the Bundle License Form.
 	 */
 	public function render_bundle_license_form() {
-		$action = 'el_bundle_license_activate';
-		$action_text = __( 'Activate', 'email-log' );
+		$action       = 'el_bundle_license_activate';
+		$action_text  = __( 'Activate', 'email-log' );
 		$button_class = 'button-primary';
 
 		if ( $this->is_bundle_license_valid() ) {
-			$action = 'el_bundle_license_deactivate';
-			$action_text = __( 'Deactivate', 'email-log' );
+			$action       = 'el_bundle_license_deactivate';
+			$action_text  = __( 'Deactivate', 'email-log' );
 			$button_class = '';
 		}
 		?>
@@ -69,10 +87,10 @@ final class Licenser implements Loadie {
 			<?php if ( ! $this->is_bundle_license_valid() ) : ?>
 				<p class="notice notice-warning">
 					<?php
-						printf(
-							__( "Enter your license key to activate add-ons. If you don't have a license, then you can <a href='%s' target='_blank'>buy it</a>", 'email-log' ),
-							'https://wpemaillog.com'
-						);
+					printf(
+						__( "Enter your license key to activate add-ons. If you don't have a license, then you can <a href='%s' target='_blank'>buy it</a>", 'email-log' ),
+						'https://wpemaillog.com'
+					);
 					?>
 				</p>
 			<?php endif; ?>
@@ -81,10 +99,10 @@ final class Licenser implements Loadie {
 				<input type="text" name="el-license" class="el-license" size="40"
 				       title="<?php _e( 'Email Log Bundle License Key', 'email-log' ); ?>"
 				       placeholder="<?php _e( 'Email Log Bundle License Key', 'email-log' ); ?>"
-					   value="<?php echo esc_attr( $this->bundle_license->get_license_key() ); ?>">
+				       value="<?php echo esc_attr( $this->bundle_license->get_license_key() ); ?>">
 
 				<input type="submit" class="button button-large <?php echo sanitize_html_class( $button_class ); ?>"
-					   value="<?php echo esc_attr( $action_text ); ?>">
+				       value="<?php echo esc_attr( $action_text ); ?>">
 
 				<input type="hidden" name="el-action" value="<?php echo esc_attr( $action ); ?>">
 
@@ -107,10 +125,10 @@ final class Licenser implements Loadie {
 		try {
 			$this->bundle_license->activate();
 			$message = __( 'Your license has been activated. You can now install add-ons, will receive automatic updates and access to email support.', 'email-log' );
-			$type = 'updated';
+			$type    = 'updated';
 		} catch ( \Exception $e ) {
 			$message = $e->getMessage();
-			$type = 'error';
+			$type    = 'error';
 		}
 
 		add_settings_error( 'bundle-license', 'bundle-license', $message, $type );
@@ -123,10 +141,10 @@ final class Licenser implements Loadie {
 		try {
 			$this->bundle_license->deactivate();
 			$message = __( 'Your license has been deactivated. You will not receive automatic updates.', 'email-log' );
-			$type = 'updated';
+			$type    = 'updated';
 		} catch ( \Exception $e ) {
 			$message = $e->getMessage();
-			$type = 'error';
+			$type    = 'error';
 		}
 
 		add_settings_error( 'bundle-license', 'bundle-license', $message, $type );
@@ -172,17 +190,18 @@ final class Licenser implements Loadie {
 		return $this->bundle_license->get_addon_license_key( $addon_name );
 	}
 
-	public function get_addon_download_url( $addon_name ) {
-		$license_key = $this->get_addon_license_key( $addon_name );
-
-		if ( false === $license_key ) {
-			return '';
+	/**
+	 * Get the Download URL of an add-on.
+	 *
+	 * @param string $addon_slug Add-on slug.
+	 *
+	 * @return string Download URL.
+	 */
+	public function get_addon_download_url( $addon_slug ) {
+		if ( isset( $this->updaters[ $addon_slug ] ) ) {
+			return $this->updaters[ $addon_slug ]->get_download_url();
 		}
 
-		$license = new License();
-		$license->set_license_key( $license_key );
-		$license->set_addon_name( $addon_name );
-
-		return $license->get_download_url();
+		return '';
 	}
 }
