@@ -1,7 +1,5 @@
 <?php namespace EmailLog\Addon;
 
-use EmailLog\Addon\Addon;
-
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 /**
@@ -11,7 +9,6 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
  */
 class AddonList {
 
-	const API_URL = 'https://wpemaillog.com/edd-api/products/?category=addon';
 	const CACHE_EXPIRY_IN_HRS = 12;
 	const CACHE_KEY = 'el_addon_list';
 
@@ -23,16 +20,30 @@ class AddonList {
 	protected $addons;
 
 	/**
+	 * Store URL.
+	 *
+	 * @var string
+	 */
+	protected $store_url;
+
+	/**
 	 * Create a list of add-ons.
 	 *
-	 * @param Addon[] $addons List of Add-ons. If not passed, they will be automatically loaded.
+	 * @param Addon[]     $addons    List of Add-ons. If not passed, they will be automatically loaded.
+	 * @param null|string $store_url Store url.
 	 */
-	public function __construct( $addons = null ) {
+	public function __construct( $addons = null, $store_url = null ) {
 		if ( null === $addons ) {
 			$addons = $this->get_addons();
 		}
 
+		if ( null === $store_url ) {
+			$email_log = email_log();
+			$store_url = $email_log->get_store_url();
+		}
+
 		$this->addons = $addons;
+		$this->store_url = $store_url;
 	}
 
 	/**
@@ -55,7 +66,7 @@ class AddonList {
 	 */
 	protected function get_addons() {
 		if ( false === ( $addons = get_transient( self::CACHE_KEY ) ) ) {
-			$response = wp_remote_get( self::API_URL );
+			$response = wp_remote_get( $this->get_api_url() );
 
 			if ( is_wp_error( $response ) || ! is_array( $response ) ) {
 				// TODO: Don't keep trying if the server is down.
@@ -149,5 +160,14 @@ class AddonList {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Get API URL.
+	 *
+	 * @return string API URL.
+	 */
+	protected function get_api_url() {
+		return $this->store_url . '/edd-api/products/?category=addon';
 	}
 }
