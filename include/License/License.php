@@ -27,19 +27,4 @@ class License extends BaseLicense {
 	public function get_license_key() {
 		return $this->license_key;
 	}
-
-	/**
-	 * Get the download url for the add-on.
-	 *
-	 * @return string Download url.
-	 */
-	public function get_download_url() {
-		try {
-			$response = $this->get_version();
-		} catch ( \Exception $e ) {
-			return '';
-		}
-
-		return $response->download_link;
-	}
 }
