@@ -9,22 +9,18 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
  */
 class License extends BaseLicense {
 
-	/**
-	 * Is the license activated and valid?
-	 *
-	 * @return bool True if license is active, False otherwise.
-	 */
 	public function is_valid() {
 		// TODO: Implement is_valid() method.
 		return false;
 	}
 
 	/**
-	 * Get the license key.
+	 * Option name in which individual license data is stored.
+	 * This method should be called only after setting the add-on name.
 	 *
-	 * @return string License Key.
+	 * @return string Option name.
 	 */
-	public function get_license_key() {
-		return $this->license_key;
+	protected function get_option_name() {
+		return 'el_license' . mdf5( $this->get_addon_name() );
 	}
 }

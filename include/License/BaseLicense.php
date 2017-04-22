@@ -13,6 +13,7 @@ abstract class BaseLicense {
 
 	protected $addon_name;
 	protected $license_key;
+	protected $license_data;
 
 	/**
 	 * EDD API Wrapper.
@@ -29,11 +30,11 @@ abstract class BaseLicense {
 	abstract public function is_valid();
 
 	/**
-	 * Get the license key.
+	 * Get the option name in which license data will be stored.
 	 *
-	 * @return string License Key.
+	 * @return string Option name.
 	 */
-	abstract public function get_license_key();
+	abstract protected function get_option_name();
 
 	/**
 	 * Construct a new License object.
@@ -59,6 +60,15 @@ abstract class BaseLicense {
 	}
 
 	/**
+	 * Get the license key.
+	 *
+	 * @return string License Key.
+	 */
+	public function get_license_key() {
+		return $this->license_key;
+	}
+
+	/**
 	 * Set add-on name.
 	 *
 	 * @param string $addon_name Add-on Name.
@@ -78,6 +88,7 @@ abstract class BaseLicense {
 
 	/**
 	 * Activate License by calling EDD API.
+	 * The license data returned by API is stored in an option.
 	 *
 	 * @return object API Response JSON Object.
 	 * @throws \Exception In case of communication errors or License Issues.
@@ -86,6 +97,7 @@ abstract class BaseLicense {
 		$response = $this->edd_api->activate_license( $this->get_license_key(), $this->get_addon_name() );
 
 		if ( $response->success && 'valid' === $response->license ) {
+			$this->store( $response );
 			return $response;
 		}
 
@@ -128,6 +140,7 @@ abstract class BaseLicense {
 
 	/**
 	 * Deactivate the license by calling EDD API.
+	 * The stored license data will be cleared.
 	 *
 	 * @return object API Response JSON object.
 	 * @throws \Exception In case of communication errors.
@@ -136,6 +149,7 @@ abstract class BaseLicense {
 		$response = $this->edd_api->deactivate_license( $this->get_license_key(), $this->get_addon_name() );
 
 		if ( $response->success && 'deactivated' === $response->license ) {
+			$this->clear();
 			return $response;
 		}
 
@@ -150,6 +164,7 @@ abstract class BaseLicense {
 
 	/**
 	 * Get version information by calling EDD API.
+	 * // TODO: Currently not used. Will be removed eventually.
 	 *
 	 * @return object API Response JSON Object.
 	 * @throws \Exception In case of communication errors.
@@ -163,5 +178,34 @@ abstract class BaseLicense {
 
 		$message = __( 'An error occurred, please try again', 'email-log' ) . $response->error;
 		throw new \Exception( $message );
+	}
+
+	/**
+	 * Load the license data from DB option.
+	 */
+	public function load() {
+		$this->license_data = get_option( $this->get_option_name(), null );
+	}
+
+	/**
+	 * Store License data in DB option.
+	 *
+	 * @access protected
+	 *
+	 * @param object $license_data License data.
+	 */
+	protected function store( $license_data ) {
+		$this->license_data = $license_data;
+		update_option( $this->get_option_name(), $license_data );
+	}
+
+	/**
+	 * Clear stored license data.
+	 *
+	 * @access protected
+	 */
+	protected function clear() {
+		unset( $this->license_data );
+		delete_option( $this->get_option_name() );
 	}
 }
