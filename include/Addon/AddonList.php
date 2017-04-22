@@ -33,17 +33,49 @@ class AddonList {
 	 * @param null|string $store_url Store url.
 	 */
 	public function __construct( $addons = null, $store_url = null ) {
-		if ( null === $addons ) {
-			$addons = $this->get_addons();
-		}
-
 		if ( null === $store_url ) {
 			$email_log = email_log();
 			$store_url = $email_log->get_store_url();
 		}
+		$this->store_url = $store_url;
+
+		if ( null === $addons ) {
+			$addons = $this->get_addons();
+		}
 
 		$this->addons = $addons;
-		$this->store_url = $store_url;
+	}
+
+	/**
+	 * Get an add-on by slug.
+	 *
+	 * @param string $slug Add-on slug.
+	 *
+	 * @return bool|\EmailLog\Addon\Addon Add-on if found, False otherwise.
+	 */
+	public function get_addon_by_slug( $slug ) {
+		if ( array_key_exists( $slug, $this->addons ) ) {
+			return $this->addons[ $slug ];
+		}
+
+		return false;
+	}
+
+	/**
+	 * Get all add-ons that are not active (either not installed or not activated).
+	 *
+	 * @return \EmailLog\Addon\Addon[] List of inactive add-ons.
+	 */
+	public function get_inactive_addons() {
+		$inactive_addons = array();
+
+		foreach ( $this->addons as $addon ) {
+			if ( ! $addon->is_active() ) {
+				$inactive_addons[] = $addon;
+			}
+		}
+
+		return $inactive_addons;
 	}
 
 	/**
@@ -145,21 +177,6 @@ class AddonList {
 			?>
 		</span>
 		<?php
-	}
-
-	/**
-	 * Get an add-on by slug.
-	 *
-	 * @param string $slug Add-on slug.
-	 *
-	 * @return bool|\EmailLog\Addon\Addon Add-on if found, False otherwise.
-	 */
-	public function get_addon_by_slug( $slug ) {
-		if ( array_key_exists( $slug, $this->addons ) ) {
-			return $this->addons[ $slug ];
-		}
-
-		return false;
 	}
 
 	/**

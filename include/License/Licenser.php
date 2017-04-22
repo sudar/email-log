@@ -1,5 +1,6 @@
 <?php namespace EmailLog\License;
 
+use EmailLog\Addon\AddonList;
 use EmailLog\Addon\API\EDDUpdater;
 use EmailLog\Core\Loadie;
 
@@ -30,17 +31,31 @@ final class Licenser implements Loadie {
 	private $updaters = array();
 
 	/**
+	 * List of add-ons.
+	 *
+	 * @var \EmailLog\Addon\AddonList
+	 */
+	private $addon_list;
+
+	/**
 	 * Licenser constructor.
 	 * If the bundle_license object is not passed a new object is created.
+	 * If the addon_list object is not passed a new object is created.
 	 *
-	 * @param \EmailLog\License\BundleLicense $bundle_license Optional. Bundle License.
+	 * @param null|\EmailLog\License\BundleLicense $bundle_license Optional. Bundle License.
+	 * @param null|\EmailLog\Addon\AddonList       $addon_list     Optional. Add-on List.
 	 */
-	public function __construct( $bundle_license = null ) {
+	public function __construct( $bundle_license = null, $addon_list = null ) {
 		if ( ! $bundle_license instanceof BundleLicense ) {
 			$bundle_license = new BundleLicense();
 		}
 
+		if ( ! $addon_list instanceof AddonList ) {
+			$addon_list = new AddonList();
+		}
+
 		$this->bundle_license = $bundle_license;
+		$this->addon_list = $addon_list;
 	}
 
 	/**
@@ -66,6 +81,15 @@ final class Licenser implements Loadie {
 		if ( $updater instanceof EDDUpdater ) {
 			$this->updaters[ $updater->get_slug() ] = $updater;
 		}
+	}
+
+	/**
+	 * Get list of add-ons.
+	 *
+	 * @return \EmailLog\Addon\AddonList Add-on List.
+	 */
+	public function get_addon_list() {
+		return $this->addon_list;
 	}
 
 	/**

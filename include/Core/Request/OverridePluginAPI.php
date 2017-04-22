@@ -1,12 +1,15 @@
 <?php namespace EmailLog\Core\Request;
 
 use EmailLog\Addon\AddonList;
+use EmailLog\Addon\API\EDDUpdater;
 use EmailLog\Core\Loadie;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 /**
- * Override WordPress Plugin API and inject add-on urls.
+ * Override WordPress Plugin API.
+ * This is already done by EDD_SL_Plugin_Updater for Active add-on
+ * and this class does it for all in active or yet to be installed add-ons.
  *
  * @since 2.0.0
  */
@@ -18,36 +21,28 @@ class OverridePluginAPI implements Loadie {
 	 * @inheritdoc
 	 */
 	public function load() {
-		add_filter( 'plugins_api', array( $this, 'inject_addon_install_resource' ), 10, 3 );
+		add_action( 'admin_init', array( $this, 'setup_updaters_for_inactive_addons' ) );
 	}
 
 	/**
-	 * Inject add-on install resource into WordPress plugin API.
-	 *
-	 * @param  object|bool $res    Plugin resource object or boolean false.
-	 * @param  string      $action The API call being performed.
-	 * @param  object      $args   Arguments for the API call being performed.
-	 *
-	 * @return \stdClass Processed resource.
+	 * Setup updaters for all in-active addons.
 	 */
-	public function inject_addon_install_resource( $res, $action, $args ) {
-		if ( 'plugin_information' !== $action || empty( $args->slug ) ) {
-			return $res;
+	public function setup_updaters_for_inactive_addons() {
+		$email_log = email_log();
+		$inactive_addons = $email_log->get_licenser()->get_addon_list()->get_inactive_addons();
+
+		foreach ( $inactive_addons as $inactive_addon ) {
+			$license_key = $email_log->get_licenser()->get_addon_license_key( $inactive_addon->name );
+
+			$updater = new EDDUpdater( $email_log->get_store_url(), $inactive_addon->file, array(
+					'version'   => $inactive_addon->get_version(),
+					'license'   => $license_key,
+					'item_name' => $inactive_addon->name,
+					'author'    => $inactive_addon->author,
+				)
+			);
+
+			$email_log->get_licenser()->add_updater( $updater );
 		}
-
-		$addon_list = new AddonList();
-		$addon = $addon_list->get_addon_by_slug( $args->slug );
-
-		if ( ! $addon ) {
-			return $res;
-		}
-
-		$res                = new stdClass();
-		$res->name          = 'Email Log - ' . $addon->name;
-		$res->version       = ''; // TODO: Implement Version.
-		$res->download_link = $addon->get_download_url();
-		$res->tested        = false; // TODO: Implement tested up to.
-
-		return $res;
 	}
 }

@@ -6,15 +6,26 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
  * Encapsulate Add-on Data.
  *
  * @since 2.0.0
+ *
+ * @property-read string $name
+ * @property-read string $version
+ * @property-read string $thumbnail
+ * @property-read string $description
+ * @property-read string $link
+ * @property-read string $slug
+ * @property-read string $file
+ * @property-read string $author
  */
 class Addon {
 
 	private $name;
+	private $version;
 	private $thumbnail;
 	private $description;
 	private $link;
 	private $slug;
 	private $file;
+	private $author;
 
 	/**
 	 * Construct Addon object from data array.
@@ -23,11 +34,13 @@ class Addon {
 	 */
 	public function __construct( $data ) {
 		$this->name        = $data['info']['title'];
+		$this->version     = $data['info']['version'];
 		$this->thumbnail   = $data['info']['thumbnail'];
 		$this->description = $data['info']['excerpt'];
 		$this->link        = $data['info']['permalink'];
 		$this->slug        = 'email-log-' . $data['info']['slug'];
-		$this->file        = sprintf( '%1$s/%1$s.php', $this->slug );
+		$this->file         = sprintf( '%1$s/%1$s.php', $this->slug );
+		$this->author      = 'Sudar Muthu';
 	}
 
 	/**
@@ -91,7 +104,7 @@ class Addon {
 		if ( $this->is_installed() ) {
 			$actions = '<a disabled class="button button-secondary">' . _x( 'Installed', 'Installed on website but not activated', 'email-log' );
 
-			if ( is_plugin_active( $this->file ) ) {
+			if ( $this->is_active() ) {
 				$actions .= ' &amp; ' . _x( 'Activated', 'Installed and activated on website', 'email-log' ) . '</a>';
 			} else {
 				$actions .= sprintf( '</a> <a class="button button-primary" href="%s">%s</a>', $this->get_activate_url(), _x( 'Activate', 'Enable addon so it may be used', 'email-log' ) );
@@ -111,14 +124,40 @@ class Addon {
 	 *
 	 * @return bool True, if installed. False otherwise.
 	 */
-	protected function is_installed() {
+	public function is_installed() {
 		$installed_plugins = array_keys( get_plugins() );
 
 		return in_array( $this->file, $installed_plugins, true );
 	}
 
 	/**
-	 * Get teh activate url for the add-on.
+	 * Get the version of the add-on.
+	 * If the add-on is installed then it returns the installed version,
+	 * otherwise returns the latest add-on version from server.
+	 *
+	 * @return string Add-on version.
+	 */
+	public function get_version() {
+		if ( ! $this->is_installed() ) {
+			return $this->version;
+		}
+
+		$plugins_data = get_plugins();
+
+		return $plugins_data[ $this->file ]['Version'];
+	}
+
+	/**
+	 * Is the add-on active?
+	 *
+	 * @return bool True if the add-on is active, False otherwise.
+	 */
+	public function is_active() {
+		return is_plugin_active( $this->file );
+	}
+
+	/**
+	 * Get the activate url for the add-on.
 	 *
 	 * @return string Activate url with nonce.
 	 */

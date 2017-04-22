@@ -1,7 +1,5 @@
 <?php namespace EmailLog\Core\UI\Page;
 
-use EmailLog\Addon\AddonList;
-
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 /**
@@ -55,8 +53,8 @@ class AddonListPage extends BasePage {
 			 */
 			do_action( 'el_before_addon_list' );
 
-			$addon_list = new AddonList();
-			$addon_list->render();
+			$email_log = email_log();
+			$email_log->get_licenser()->get_addon_list()->render();
 			?>
 		</div>
 		<?php
