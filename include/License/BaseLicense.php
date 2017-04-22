@@ -97,6 +97,8 @@ abstract class BaseLicense {
 		$response = $this->edd_api->activate_license( $this->get_license_key(), $this->get_addon_name() );
 
 		if ( $response->success && 'valid' === $response->license ) {
+			$response->license_key = $this->get_license_key();
+
 			$this->store( $response );
 			return $response;
 		}
@@ -205,7 +207,8 @@ abstract class BaseLicense {
 	 * @access protected
 	 */
 	protected function clear() {
-		unset( $this->license_data );
+		$this->license_data = null;
+		$this->license_key = null;
 		delete_option( $this->get_option_name() );
 	}
 }

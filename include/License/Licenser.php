@@ -70,6 +70,9 @@ final class Licenser implements Loadie {
 
 		add_action( 'el_bundle_license_activate', array( $this, 'activate_bundle_license' ) );
 		add_action( 'el_bundle_license_deactivate', array( $this, 'deactivate_bundle_license' ) );
+
+		add_action( 'el_license_activate', array( $this, 'activate_addon_license' ) );
+		add_action( 'el_license_deactivate', array( $this, 'deactivate_addon_license' ) );
 	}
 
 	/**
@@ -184,19 +187,57 @@ final class Licenser implements Loadie {
 	}
 
 	/**
-	 * Is the add-on license valid?
+	 * Activate individual add-on License.
 	 *
-	 * @param string $addon_name Addon Name.
-	 *
-	 * @return bool True if license is valid, False otherwise.
+	 * @param array $request Request Array.
 	 */
-	public function is_addon_license_valid( $addon_name ) {
-		if ( $this->is_bundle_license_valid() ) {
-			return true;
+	public function activate_addon_license( $request ) {
+		$license_key = sanitize_text_field( $request['el-license'] );
+		$addon_name  = sanitize_text_field( $request['el-addon'] );
+
+		$license = $this->addon_list->get_addon_by_name( $addon_name )->get_license();
+		$license->set_license_key( $license_key );
+
+		try {
+			$license->activate();
+			$message = sprintf(
+				__( 'Your license for %s has been activated. You will receive automatic updates and access to email support.', 'email-log' ),
+				$addon_name
+			);
+			$type    = 'updated';
+		} catch ( \Exception $e ) {
+			$message = $e->getMessage();
+			$type    = 'error';
 		}
 
-		// TODO: Handle individual license.
-		return false;
+		add_settings_error( 'addon-license', 'addon-license', $message, $type );
+	}
+
+	/**
+	 * Deactivate individual add-on License.
+	 *
+	 * @param array $request Request Array.
+	 */
+	public function deactivate_addon_license( $request ) {
+		$license_key = sanitize_text_field( $request['el-license'] );
+		$addon_name  = sanitize_text_field( $request['el-addon'] );
+
+		$license = $this->addon_list->get_addon_by_name( $addon_name )->get_license();
+		$license->set_license_key( $license_key );
+
+		try {
+			$license->deactivate();
+			$message = sprintf(
+				__( 'Your license for %s has been deactivated. You will not receive automatic updates.', 'email-log' ),
+				$addon_name
+			);
+			$type    = 'updated';
+		} catch ( \Exception $e ) {
+			$message = $e->getMessage();
+			$type    = 'error';
+		}
+
+		add_settings_error( 'addon-license', 'addon-license', $message, $type );
 	}
 
 	/**
@@ -207,11 +248,11 @@ final class Licenser implements Loadie {
 	 * @return bool|string License key if found, False otherwise.
 	 */
 	public function get_addon_license_key( $addon_name ) {
-		if ( ! $this->is_bundle_license_valid() ) {
-			return false;
+		if ( $this->is_bundle_license_valid() ) {
+			return $this->bundle_license->get_addon_license_key( $addon_name );
 		}
 
-		return $this->bundle_license->get_addon_license_key( $addon_name );
+		return $this->addon_list->get_addon_by_name( $addon_name )->get_addon_license_key();
 	}
 
 	/**

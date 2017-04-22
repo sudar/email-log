@@ -10,8 +10,19 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 class License extends BaseLicense {
 
 	public function is_valid() {
-		// TODO: Implement is_valid() method.
-		return false;
+		if ( ! $this->license_data instanceof \stdClass || ! isset( $this->license_data->license ) ) {
+			return false;
+		}
+
+		return ( 'valid' === $this->license_data->license );
+	}
+
+	public function get_license_key() {
+		if ( empty( $this->license_data ) ) {
+			return parent::get_license_key();
+		}
+
+		return $this->license_data->license_key;
 	}
 
 	/**
@@ -21,6 +32,6 @@ class License extends BaseLicense {
 	 * @return string Option name.
 	 */
 	protected function get_option_name() {
-		return 'el_license' . mdf5( $this->get_addon_name() );
+		return 'el_license_' . md5( $this->get_addon_name() );
 	}
 }
