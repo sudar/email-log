@@ -69,5 +69,6 @@ class AddonListPage extends BasePage {
 		$email_log = email_log();
 
 		wp_enqueue_style( 'el_addon_list', plugins_url( 'assets/css/admin/addon-list.css', $email_log->get_plugin_file() ), array(), $email_log->get_version() );
+		wp_enqueue_script( 'el_addon_list', plugins_url( 'assets/js/admin/addon-list.js', $email_log->get_plugin_file() ), array( 'jquery' ), $email_log->get_version(), true );
 	}
 }

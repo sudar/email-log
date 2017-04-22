@@ -106,22 +106,17 @@ class Addon {
 	 * @return string Action links.
 	 */
 	protected function print_actions() {
-		// bundle license is active
-		// print valid actions
 		if ( $this->has_valid_bundle_license() ) {
 			$this->print_valid_actions();
 			return;
 		}
 
-		// if valid, print valid actions
-		// if not, print invalid actions
 		if ( ! $this->has_valid_addon_license() ) {
 			$this->print_invalid_actions();
 		} else {
 			$this->print_valid_actions();
 		}
 
-		// print individual form
 		$this->render_individual_license();
 	}
 
@@ -157,7 +152,7 @@ class Addon {
 		}
 
 		printf(
-			'<a disabled class="button-secondary" title="%s" href="#">%s</a>',
+			'<a disabled class="button-secondary disabled" title="%s" href="#">%s</a>',
 			__( 'You need an active license to install the add-on', 'email-log' ),
 			$label
 		);
@@ -170,15 +165,22 @@ class Addon {
 		$action       = 'el_license_activate';
 		$action_text  = __( 'Activate', 'email-log' );
 		$button_class = 'button-primary';
+		$dashicon     = 'down';
+		$license_wrap = 'hidden';
 
 		if ( $this->has_valid_addon_license() ) {
 			$action       = 'el_license_deactivate';
 			$action_text  = __( 'Deactivate', 'email-log' );
 			$button_class = '';
+			$dashicon     = 'up';
+			$license_wrap = '';
 		}
 		?>
 
-		<div class="individual-license">
+		<span class="el-expander dashicons dashicons-arrow-<?php echo sanitize_html_class( $dashicon ); ?>"
+			title="<?php _e( 'Individual add-on license', 'email-log' ); ?>"></span>
+
+		<div class="individual-license <?php echo sanitize_html_class( $license_wrap ); ?>">
 			<form method="post">
 				<input type="text" name="el-license" class="el-license" size="36"
 				       title="<?php _e( 'Email Log License Key', 'email-log' ); ?>"

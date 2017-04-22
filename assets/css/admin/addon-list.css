@@ -7,13 +7,17 @@
 	border: 1px solid #ccc;
 	box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
 	padding: 1%;
+	margin-bottom: 2%;
 }
 
-@media screen and (max-width:399px) {
+.el-container .disabled {
+	cursor: not-allowed !important;
+}
+
+@media screen and (max-width:989px) {
 	.el-addon {
 		float: none;
-		width: 100%;
-		margin: 0 0 2% 0;
+		width: 95%;
 	}
 
 	.el-addon img {
@@ -22,11 +26,10 @@
 	}
 }
 
-@media screen and (min-width:400px) and (max-width:899px) {
+@media screen and (min-width:990px) and (max-width:1199px) {
 	.el-addon {
 		float: left;
-		width: 48%;
-		margin: 0 1% 2% 0;
+		width: 45%;
 	}
 
 	.el-addon img {
@@ -35,17 +38,14 @@
 	}
 
 	.el-addon:nth-child(even) {
-		float: left;
-		width: 48%;
-		margin: 0 0% 2% 1%;
+		margin-left: 1%;
 	}
 }
 
-@media screen and (min-width:900px) {
+@media screen and (min-width:1200px) {
 	.el-addon {
 		float: left;
 		width: 30%;
-		margin: 0 0 2% 0;
 	}
 
 	.el-addon img {
@@ -54,9 +54,12 @@
 	}
 
 	.el-addon:nth-child(3n-1) {
-		float: left;
-		width: 30%;
-		margin: 0 1.5% 2% 1.5%;
+		margin-left: 1.5%;
+		margin-right: 1.5%;
+	}
+
+	.el-addon:nth-child(3n+1) {
+		clear: both;
 	}
 }
 
@@ -75,4 +78,19 @@
 
 .bundle-license .button {
 	margin-top: 2px;
+}
+
+.individual-license {
+	padding-top: 10px;
+}
+
+.individual-license .button {
+	margin-top: -2px;
+}
+
+.el-expander {
+	float: right;
+	font-size: 40px;
+	margin-top: -5px;
+	margin-right: 10px;
 }
