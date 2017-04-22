@@ -10,7 +10,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 class AddonList {
 
 	const CACHE_EXPIRY_IN_HRS = 12;
-	const CACHE_KEY = 'el_addon_list';
+	const CACHE_KEY = 'el_addon_data';
 
 	/**
 	 * Add-on list.
@@ -47,15 +47,15 @@ class AddonList {
 	}
 
 	/**
-	 * Get an add-on by slug.
+	 * Get an add-on by name.
 	 *
-	 * @param string $slug Add-on slug.
+	 * @param string $name Add-on name.
 	 *
 	 * @return bool|\EmailLog\Addon\Addon Add-on if found, False otherwise.
 	 */
-	public function get_addon_by_slug( $slug ) {
-		if ( array_key_exists( $slug, $this->addons ) ) {
-			return $this->addons[ $slug ];
+	public function get_addon_by_name( $name ) {
+		if ( array_key_exists( $name, $this->addons ) ) {
+			return $this->addons[ $name ];
 		}
 
 		return false;
@@ -97,7 +97,7 @@ class AddonList {
 	 * @return Addon[] List of add-ons, empty array if API call fails.
 	 */
 	protected function get_addons() {
-		if ( false === ( $addons = get_transient( self::CACHE_KEY ) ) ) {
+		if ( false === ( $json = get_transient( self::CACHE_KEY ) ) ) {
 			$response = wp_remote_get( $this->get_api_url() );
 
 			if ( is_wp_error( $response ) || ! is_array( $response ) ) {
@@ -105,31 +105,31 @@ class AddonList {
 				return array();
 			}
 
-			$addons = $this->parse_response( wp_remote_retrieve_body( $response ) );
+			$json = json_decode( wp_remote_retrieve_body( $response ), true );
 
-			if ( ! empty( $addons ) ) {
-				set_transient( self::CACHE_KEY, $addons, self::CACHE_EXPIRY_IN_HRS * HOUR_IN_SECONDS );
+			if ( ! is_array( $json ) ) {
+				return array();
 			}
+
+			set_transient( self::CACHE_KEY, $json, self::CACHE_EXPIRY_IN_HRS * HOUR_IN_SECONDS );
 		}
 
-		return $addons;
+		return $this->parse_response( $json );
 	}
 
 	/**
 	 * Parse the response and get the list of add-on.
 	 *
-	 * @param string $response API Response.
+	 * @param array $data JSON Data array.
 	 *
 	 * @return array List of Add-ons.
 	 */
-	protected function parse_response( $response ) {
-		$json = json_decode( $response, true );
-
-		if ( ! is_array( $json ) || ! array_key_exists( 'products', $json ) ) {
+	protected function parse_response( $data ) {
+		if ( ! array_key_exists( 'products', $data ) ) {
 			return array();
 		}
 
-		return $this->build_addon_list( $json['products'] );
+		return $this->build_addon_list( $data['products'] );
 	}
 
 	/**
@@ -144,7 +144,7 @@ class AddonList {
 
 		foreach ( $products as $product ) {
 			$addon = new Addon( $product );
-			$addons[ $addon->slug ] = $addon;
+			$addons[ $addon->name ] = $addon;
 		}
 
 		return $addons;
