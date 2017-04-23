@@ -27,7 +27,7 @@ class TableManagerTest extends \WP_UnitTestCase {
 		$table_name = $this->table_manager->get_log_table_name();
 		$expected = array_merge( $tables, array( $table_name ) );
 
-		$actual = $this->table_manager->on_delete_blog( $tables );
+		$actual = $this->table_manager->delete_table_from_deleted_blog( $tables );
 
 		$this->assertEquals( $expected, $actual );
 	}

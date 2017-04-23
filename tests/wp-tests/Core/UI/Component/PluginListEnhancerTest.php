@@ -45,7 +45,7 @@ class PluginListEnhancerTest extends \PHPUnit_Framework_TestCase {
 		$links  = array();
 		$plugin = 'some-other-plugin';
 
-		$actual = $this->plugin_list_enhancer->insert_addon_link( $links, $plugin );
+		$actual = $this->plugin_list_enhancer->insert_addon_store_link( $links, $plugin );
 
 		$this->assertcount( count( $links ), $actual );
 	}
@@ -54,7 +54,7 @@ class PluginListEnhancerTest extends \PHPUnit_Framework_TestCase {
 		$links  = array();
 		$plugin = $this->plugin_list_enhancer->get_plugin_basename();
 
-		$actual = $this->plugin_list_enhancer->insert_addon_link( $links, $plugin );
+		$actual = $this->plugin_list_enhancer->insert_addon_store_link( $links, $plugin );
 
 		$this->assertcount( count( $links ) + 1, $actual );
 	}
@@ -62,7 +62,7 @@ class PluginListEnhancerTest extends \PHPUnit_Framework_TestCase {
 	public function test_link_is_inserted() {
 		$links = array();
 
-		$actual = $this->plugin_list_enhancer->insert_manage_log_link( $links );
+		$actual = $this->plugin_list_enhancer->insert_view_logs_link( $links );
 
 		$this->assertCount( count( $links ) + 1, $actual );
 	}
