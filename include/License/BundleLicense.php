@@ -27,11 +27,7 @@ class BundleLicense extends BaseLicense {
 			return false;
 		}
 
-		if ( 'valid' === $this->license_data->license ) {
-			return true;
-		}
-
-		return false;
+		return ( 'valid' === $this->license_data->license );
 	}
 
 	/**
