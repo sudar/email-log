@@ -17,6 +17,11 @@ class License extends BaseLicense {
 		return ( 'valid' === $this->license_data->license );
 	}
 
+	/**
+	 * Get License key.
+	 *
+	 * @return null|string License key.
+	 */
 	public function get_license_key() {
 		if ( empty( $this->license_data ) ) {
 			return parent::get_license_key();

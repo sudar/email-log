@@ -29,8 +29,8 @@ class AddonList {
 	/**
 	 * Create a list of add-ons.
 	 *
-	 * @param Addon[]     $addons    List of Add-ons. If not passed, they will be automatically loaded.
-	 * @param null|string $store_url Store url.
+	 * @param Addon[]|null $addons    List of Add-ons. If not passed, they will be automatically loaded.
+	 * @param string|null  $store_url Store url.
 	 */
 	public function __construct( $addons = null, $store_url = null ) {
 		if ( null === $store_url ) {
@@ -51,7 +51,7 @@ class AddonList {
 	 *
 	 * @param string $name Add-on name.
 	 *
-	 * @return bool|\EmailLog\Addon\Addon Add-on if found, False otherwise.
+	 * @return \EmailLog\Addon\Addon|false Add-on if found, False otherwise.
 	 */
 	public function get_addon_by_name( $name ) {
 		if ( array_key_exists( $name, $this->addons ) ) {

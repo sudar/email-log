@@ -118,11 +118,12 @@ class LogListTable extends \WP_List_Table {
 	 *
 	 * @access protected
 	 *
-	 * @return array An associative array containing all the columns that should be sortable: 'slugs'=>array('data_values',bool).
+	 * @return array<string,array<string|boolean>> An associative array containing all the columns
+	 * that should be sortable: 'slugs'=>array('data_values',bool).
 	 */
 	protected function get_sortable_columns() {
 		$sortable_columns = array(
-			'sent_date'   => array( 'sent_date', true ), //true means it's already sorted
+			'sent_date'   => array( 'sent_date', true ), // true means it's already sorted.
 			'to'          => array( 'to_email', false ),
 			'subject'     => array( 'subject', false ),
 		);

@@ -40,7 +40,7 @@ abstract class BaseLicense {
 	 * Construct a new License object.
 	 * If the API Wrapper is not provided, then a new one is initialized.
 	 *
-	 * @param \EmailLog\Addon\API\EDDAPI $edd_api (Optional) EDD API Wrapper instance. Default is null.
+	 * @param \EmailLog\Addon\API\EDDAPI|null $edd_api (Optional) EDD API Wrapper instance. Default is null.
 	 */
 	public function __construct( $edd_api = null ) {
 		if ( is_null( $edd_api ) ) {
@@ -62,7 +62,7 @@ abstract class BaseLicense {
 	/**
 	 * Get the license key.
 	 *
-	 * @return string License Key.
+	 * @return string|null License Key.
 	 */
 	public function get_license_key() {
 		return $this->license_key;

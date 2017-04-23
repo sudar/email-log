@@ -35,9 +35,9 @@ class Addon {
 	/**
 	 * Construct Addon object from data array.
 	 *
-	 * @param array                     $data      Data array.
-	 * @param \EmailLog\License\License $license   Add-on License.
-	 * @param \EmailLog\Core\EmailLog   $email_log Email Log instance.
+	 * @param array                          $data      Data array.
+	 * @param \EmailLog\License\License|null $license   Add-on License.
+	 * @param \EmailLog\Core\EmailLog|null   $email_log Email Log instance.
 	 */
 	public function __construct( $data, $license = null, $email_log = null ) {
 		$this->parse_data( $data );
@@ -102,8 +102,6 @@ class Addon {
 
 	/**
 	 * Get action links for add-ons.
-	 *
-	 * @return string Action links.
 	 */
 	protected function print_actions() {
 		if ( $this->has_valid_bundle_license() ) {

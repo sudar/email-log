@@ -28,7 +28,7 @@ abstract class BasePage implements Loadie {
 	/**
 	 * Register page.
 	 *
-	 * @abstract
+	 * @return void
 	 */
 	abstract public function register_page();
 

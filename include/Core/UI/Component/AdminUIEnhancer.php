@@ -28,7 +28,7 @@ class AdminUIEnhancer {
 	/**
 	 * Initialize the component and store the plugin basename.
 	 *
-	 * @param string $file Plugin file.
+	 * @param string|null $file Plugin file.
 	 */
 	public function __construct( $file = null ) {
 		if ( null === $file ) {

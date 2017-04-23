@@ -17,7 +17,7 @@ abstract class EmailLogAddon {
 	/**
 	 * Addon Updater.
 	 *
-	 * @var \EmailLog\Addon\AddonUpdater.
+	 * @var \EmailLog\Addon\AddonUpdater
 	 */
 	private $updater;
 
@@ -33,7 +33,7 @@ abstract class EmailLogAddon {
 	 * Construct a new EmailLogAddon instance.
 	 *
 	 * @param string                       $addon_file Addon main file.
-	 * @param \EmailLog\Addon\AddonUpdater $updater    Addon Updater.
+	 * @param \EmailLog\Addon\AddonUpdater $updater   Addon Updater.
 	 */
 	public function __construct( $addon_file, $updater ) {
 		$this->addon_file = $addon_file;
