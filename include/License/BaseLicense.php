@@ -168,10 +168,10 @@ abstract class BaseLicense {
 			return $response;
 		}
 
-		switch ( $response->error ) {
-			default:
-				$message = __( 'An error occurred, please try again', 'email-log' ) . $response->error;
-				break;
+		$message = __( 'An error occurred, please try again.', 'email-log' );
+
+		if ( isset( $response->error ) ) {
+			$message .= ' ' . $response->error;
 		}
 
 		throw new \Exception( $message );
