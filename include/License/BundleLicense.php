@@ -48,15 +48,6 @@ class BundleLicense extends BaseLicense {
 	}
 
 	/**
-	 * Get the expiry date of the license.
-	 *
-	 * @return string Expiry date in `yyyy-mm-dd hh:mm:ss` format.
-	 */
-	public function get_expiry_date() {
-		return $this->license_data->expires;
-	}
-
-	/**
 	 * The option name in which the bundle license data will be stored.
 	 *
 	 * @return string Option name.

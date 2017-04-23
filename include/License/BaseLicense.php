@@ -87,6 +87,19 @@ abstract class BaseLicense {
 	}
 
 	/**
+	 * Get the expiry date of the license.
+	 *
+	 * @return string|false Expiry date in `yyyy-mm-dd hh:mm:ss` format if license is valid, False otherwise.
+	 */
+	public function get_expiry_date() {
+		if ( ! empty( $this->license_data ) && isset( $this->license_data->expires ) ) {
+			return $this->license_data->expires;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Activate License by calling EDD API.
 	 * The license data returned by API is stored in an option.
 	 *
