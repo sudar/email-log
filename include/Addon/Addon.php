@@ -167,6 +167,7 @@ class Addon {
 		$button_class = 'button-primary';
 		$dashicon     = 'down';
 		$license_wrap = 'hidden';
+		$expires = '';
 
 		if ( $this->has_valid_addon_license() ) {
 			$action       = 'el_license_deactivate';
@@ -174,6 +175,9 @@ class Addon {
 			$button_class = '';
 			$dashicon     = 'up';
 			$license_wrap = '';
+
+			$expiry_date = date( 'F d, Y', strtotime( $this->get_license()->get_expiry_date() ) );
+			$expires = sprintf( __( 'Your license expires on %s', 'email-log' ), $expiry_date );
 		}
 		?>
 
@@ -184,11 +188,13 @@ class Addon {
 			<form method="post">
 				<input type="text" name="el-license" class="el-license" size="36"
 				       title="<?php _e( 'Email Log License Key', 'email-log' ); ?>"
-				       placeholder="<?php _e( 'Email Log License Key', 'email-log' ); ?>"
+				       placeholder="<?php echo esc_attr( sprintf( __( '%s Add-on License Key', 'email-log' ), $this->name ) ); ?>"
 				       value="<?php echo esc_attr( $this->get_addon_license_key() ); ?>">
 
 				<input type="submit" class="button button-large <?php echo sanitize_html_class( $button_class ); ?>"
 				       value="<?php echo esc_attr( $action_text ); ?>">
+
+				<p class="expires"><?php echo esc_html( $expires ); ?></p>
 
 				<input type="hidden" name="el-addon" value="<?php echo esc_attr( $this->name ); ?>">
 				<input type="hidden" name="el-action" value="<?php echo esc_attr( $action ); ?>">
