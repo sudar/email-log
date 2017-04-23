@@ -102,11 +102,14 @@ final class Licenser implements Loadie {
 		$action       = 'el_bundle_license_activate';
 		$action_text  = __( 'Activate', 'email-log' );
 		$button_class = 'button-primary';
+		$expires = '';
 
 		if ( $this->is_bundle_license_valid() ) {
 			$action       = 'el_bundle_license_deactivate';
 			$action_text  = __( 'Deactivate', 'email-log' );
 			$button_class = '';
+			$expiry_date = date( 'F d, Y', strtotime( $this->get_bundle_license_expiry_date() ) );
+			$expires = sprintf( __( 'Your license expires on %s', 'email-log' ), $expiry_date );
 		}
 		?>
 
@@ -124,12 +127,14 @@ final class Licenser implements Loadie {
 
 			<form method="post">
 				<input type="text" name="el-license" class="el-license" size="40"
-				       title="<?php _e( 'Email Log Bundle License Key', 'email-log' ); ?>"
-				       placeholder="<?php _e( 'Email Log Bundle License Key', 'email-log' ); ?>"
-				       value="<?php echo esc_attr( $this->bundle_license->get_license_key() ); ?>">
+					   title="<?php _e( 'Email Log Bundle License Key', 'email-log' ); ?>"
+					   placeholder="<?php _e( 'Email Log Bundle License Key', 'email-log' ); ?>"
+					   value="<?php echo esc_attr( $this->bundle_license->get_license_key() ); ?>">
 
 				<input type="submit" class="button button-large <?php echo sanitize_html_class( $button_class ); ?>"
-				       value="<?php echo esc_attr( $action_text ); ?>">
+					   value="<?php echo esc_attr( $action_text ); ?>">
+
+				<p class="expires"><?php echo esc_html( $expires ); ?></p>
 
 				<input type="hidden" name="el-action" value="<?php echo esc_attr( $action ); ?>">
 
@@ -184,6 +189,15 @@ final class Licenser implements Loadie {
 	 */
 	public function is_bundle_license_valid() {
 		return $this->bundle_license->is_valid();
+	}
+
+	/**
+	 * Get the expiry date of the Bundle License.
+	 *
+	 * @return string Expiry date.
+	 */
+	protected function get_bundle_license_expiry_date() {
+		return $this->bundle_license->get_expiry_date();
 	}
 
 	/**

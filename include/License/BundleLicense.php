@@ -10,6 +10,11 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
  */
 class BundleLicense extends BaseLicense {
 
+	/**
+	 * For Bundle the add-on name is hardcoded.
+	 *
+	 * @var string Add-on name.
+	 */
 	protected $addon_name = 'Email Log Bundle';
 
 	/**
@@ -40,6 +45,15 @@ class BundleLicense extends BaseLicense {
 		}
 
 		return $this->license_data->bundle_license_key;
+	}
+
+	/**
+	 * Get the expiry date of the license.
+	 *
+	 * @return string Expiry date in `yyyy-mm-dd hh:mm:ss` format.
+	 */
+	public function get_expiry_date() {
+		return $this->license_data->expires;
 	}
 
 	/**

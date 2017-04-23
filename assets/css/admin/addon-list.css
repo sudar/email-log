@@ -80,6 +80,11 @@
 	margin-top: 2px;
 }
 
+.bundle-license .expires {
+	margin-left: 5px;
+	margin-top: 5px;
+}
+
 .individual-license {
 	padding-top: 10px;
 }
