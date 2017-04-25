@@ -1,6 +1,6 @@
 <?php namespace EmailLog\Addon;
 
-use EmailLog\License\License;
+use EmailLog\Addon\License\AddonLicense;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
@@ -35,15 +35,15 @@ class Addon {
 	/**
 	 * Construct Addon object from data array.
 	 *
-	 * @param array                          $data      Data array.
-	 * @param \EmailLog\License\License|null $license   Add-on License.
-	 * @param \EmailLog\Core\EmailLog|null   $email_log Email Log instance.
+	 * @param array                                     $data      Data array.
+	 * @param \EmailLog\Addon\License\AddonLicense|null $license   Add-on License.
+	 * @param \EmailLog\Core\EmailLog|null              $email_log Email Log instance.
 	 */
 	public function __construct( $data, $license = null, $email_log = null ) {
 		$this->parse_data( $data );
 
 		if ( null === $license ) {
-			$license = new License();
+			$license = new AddonLicense();
 			$license->set_addon_name( $this->name );
 			$license->load();
 		}
@@ -94,7 +94,7 @@ class Addon {
 	/**
 	 * Get Add-on License object.
 	 *
-	 * @return \EmailLog\License\License License object.
+	 * @return \EmailLog\Addon\License\AddonLicense License object.
 	 */
 	public function get_license() {
 		return $this->license;

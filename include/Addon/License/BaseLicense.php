@@ -1,4 +1,4 @@
-<?php namespace EmailLog\License;
+<?php namespace EmailLog\Addon\License;
 
 use EmailLog\Addon\API\EDDAPI;
 

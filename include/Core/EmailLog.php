@@ -68,7 +68,7 @@ class EmailLog {
 	 * Add-on Licenser.
 	 *
 	 * @since 2.0
-	 * @var \EmailLog\License\Licenser
+	 * @var \EmailLog\Addon\License\Licenser
 	 */
 	private $licenser;
 
@@ -99,7 +99,7 @@ class EmailLog {
 	/**
 	 * Set Licenser.
 	 *
-	 * @param \EmailLog\License\Licenser $licenser Add-on Licenser.
+	 * @param \EmailLog\Addon\License\Licenser $licenser Add-on Licenser.
 	 */
 	public function set_licenser( $licenser ) {
 		if ( $this->add_loadie( $licenser ) ) {
@@ -110,7 +110,7 @@ class EmailLog {
 	/**
 	 * Get Licenser.
 	 *
-	 * @return \EmailLog\License\Licenser
+	 * @return \EmailLog\Addon\License\Licenser
 	 */
 	public function get_licenser() {
 		return $this->licenser;

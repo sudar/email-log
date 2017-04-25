@@ -1,4 +1,4 @@
-<?php namespace EmailLog\License;
+<?php namespace EmailLog\Addon\License;
 
 use EmailLog\Addon\AddonList;
 use EmailLog\Addon\API\EDDUpdater;
@@ -19,7 +19,7 @@ final class Licenser implements Loadie {
 	/**
 	 * Bundle License object.
 	 *
-	 * @var \EmailLog\License\BundleLicense
+	 * @var \EmailLog\Addon\License\BundleLicense
 	 */
 	private $bundle_license;
 
@@ -42,8 +42,8 @@ final class Licenser implements Loadie {
 	 * If the bundle_license object is not passed a new object is created.
 	 * If the addon_list object is not passed a new object is created.
 	 *
-	 * @param null|\EmailLog\License\BundleLicense $bundle_license Optional. Bundle License.
-	 * @param null|\EmailLog\Addon\AddonList       $addon_list     Optional. Add-on List.
+	 * @param null|\EmailLog\Addon\License\BundleLicense $bundle_license Optional. Bundle License.
+	 * @param null|\EmailLog\Addon\AddonList             $addon_list     Optional. Add-on List.
 	 */
 	public function __construct( $bundle_license = null, $addon_list = null ) {
 		if ( ! $bundle_license instanceof BundleLicense ) {

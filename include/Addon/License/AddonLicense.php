@@ -1,4 +1,4 @@
-<?php namespace EmailLog\License;
+<?php namespace EmailLog\Addon\License;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
@@ -7,7 +7,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
  *
  * @since 2.0.0
  */
-class License extends BaseLicense {
+class AddonLicense extends BaseLicense {
 
 	public function is_valid() {
 		if ( ! $this->license_data instanceof \stdClass || ! isset( $this->license_data->license ) ) {

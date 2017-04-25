@@ -38,7 +38,7 @@ function load_email_log( $plugin_file ) {
 
 	$email_log = new \EmailLog\Core\EmailLog( $plugin_file, $loader, new \EmailLog\Core\DB\TableManager() );
 
-	$email_log->set_licenser( new \EmailLog\License\Licenser() );
+	$email_log->set_licenser( new \EmailLog\Addon\License\Licenser() );
 
 	$email_log->add_loadie( new \EmailLog\Core\EmailLogger() );
 	$email_log->add_loadie( new \EmailLog\Core\UI\UILoader() );
