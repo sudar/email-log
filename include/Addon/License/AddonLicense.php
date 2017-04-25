@@ -20,7 +20,7 @@ class AddonLicense extends BaseLicense {
 	/**
 	 * Get License key.
 	 *
-	 * @return null|string License key.
+	 * @return string|null License key.
 	 */
 	public function get_license_key() {
 		if ( empty( $this->license_data ) ) {

@@ -194,7 +194,7 @@ final class Licenser implements Loadie {
 	/**
 	 * Get the expiry date of the Bundle License.
 	 *
-	 * @return string Expiry date.
+	 * @return string|false Expiry date, False if license is not valid.
 	 */
 	protected function get_bundle_license_expiry_date() {
 		return $this->bundle_license->get_expiry_date();

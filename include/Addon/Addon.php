@@ -289,7 +289,7 @@ class Addon {
 	/**
 	 * Get license key if the add-on has a valid license.
 	 *
-	 * @return bool|string License key if found, False otherwise.
+	 * @return string|null License key if found, null otherwise.
 	 */
 	public function get_addon_license_key() {
 		return $this->get_license()->get_license_key();
