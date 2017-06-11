@@ -111,17 +111,35 @@ wpmandrill plugin has a bug that prevents this plugin from logging the content o
 ![](screenshot-1.png)
 The above screenshot shows how the logged emails will be displayed by the Plugin
 
+![](screenshot-1-a.png)
+The above screenshot shows the HTML version (if available) of the logged email that you choose to view
+
+![](screenshot-1-b.png)
+The above screenshot shows how you can search logged emails by date
+
+![](screenshot-1-c.png)
+The above screenshot shows how the logged emails will be displayed by the Plugin
+
 ![](screenshot-2.png)
 This screenshot shows how you can configure the email display screen. You can choose the fields and the number of emails per page
 
 ![](screenshot-3.png)
-This screenshot shows the additional fields that will be added by the [more fields](http://sudarmuthu.com/wordpress/email-log/pro-addons#more-fields-addon) addon
+This screenshot shows the additional fields that will be added by the [more fields](https://wpemaillog.com/addons/more-fields/) addon
 
 ![](screenshot-4.png)
-The above screenshot shows how the logged emails will be displayed by the Plugin after you install the [more fields](http://sudarmuthu.com/wordpress/email-log/pro-addons#more-fields-addon) addon
+The above screenshot shows how the logged emails will be displayed by the Plugin after you install the [more fields](https://wpemaillog.com/addons/more-fields/) addon
 
 ![](screenshot-5.png)
-This screenshot shows the settings page of [forward email](http://sudarmuthu.com/wordpress/email-log/pro-addons#forward-email-addon) addon
+This screenshot shows the settings page of [forward email](https://wpemaillog.com/addons/forward-email/) addon
+
+![](screenshot-6.png)
+This screenshot shows the settings page of [Auto Delete Logs](https://wpemaillog.com/addons/auto-delete-logs/) addon
+
+![](screenshot-7.png)
+The above screenshot shows how you can export email logs after you install the [Export Logs](https://wpemaillog.com/addons/auto-delete-logs/) addon
+
+![](screenshot-8.png)
+The above screenshot shows how you can resend email after you install the [Resend Email](https://wpemaillog.com/addons/auto-delete-logs/) addon
 
 ## Readme Generator ##
 
