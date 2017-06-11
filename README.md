@@ -58,8 +58,8 @@ If you are looking for ideas, then you can start with one of the following TODO 
 
 The following are the features that I am thinking of adding to the Plugin, when I get some free time. If you have any feature request or want to increase the priority of a particular feature, then let me know.
 
-- Add option to automatically delete the logs periodically
-- Add an option to export logs as csv file
+- <strike>Add option to automatically delete the logs periodically</strike>. Done in Auto Delete Logs Add-on
+- <strike>Add an option to export logs as csv file</strike>. Done in Export Logs Add-on
 - <strike>Add the ability to resend the emails</strike>. Done in Resend Email Add-on
 - <strike>Make it MU compatible</strike>. Done in v1.7
 
@@ -115,10 +115,10 @@ The above screenshot shows how the logged emails will be displayed by the Plugin
 The above screenshot shows the HTML version (if available) of the logged email that you choose to view
 
 ![](screenshot-1-b.png)
-The above screenshot shows how you can search logged emails by date
+The above screenshot shows the text version of the logged email that you choose to view
 
 ![](screenshot-1-c.png)
-The above screenshot shows how the logged emails will be displayed by the Plugin
+The above screenshot shows how you can search logged emails by date
 
 ![](screenshot-2.png)
 This screenshot shows how you can configure the email display screen. You can choose the fields and the number of emails per page
