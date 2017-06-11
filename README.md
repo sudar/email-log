@@ -58,8 +58,8 @@ If you are looking for ideas, then you can start with one of the following TODO 
 
 The following are the features that I am thinking of adding to the Plugin, when I get some free time. If you have any feature request or want to increase the priority of a particular feature, then let me know.
 
-- Add option to automatically delete the logs periodically
-- Add an option to export logs as csv file
+- <strike>Add option to automatically delete the logs periodically</strike>. Done in Auto Delete Logs Add-on
+- <strike>Add an option to export logs as csv file</strike>. Done in Export Logs Add-on
 - <strike>Add the ability to resend the emails</strike>. Done in Resend Email Add-on
 - <strike>Make it MU compatible</strike>. Done in v1.7
 
@@ -111,17 +111,35 @@ wpmandrill plugin has a bug that prevents this plugin from logging the content o
 ![](screenshot-1.png)
 The above screenshot shows how the logged emails will be displayed by the Plugin
 
+![](screenshot-1-a.png)
+The above screenshot shows the HTML version (if available) of the logged email that you choose to view
+
+![](screenshot-1-b.png)
+The above screenshot shows the text version of the logged email that you choose to view
+
+![](screenshot-1-c.png)
+The above screenshot shows how you can search logged emails by date
+
 ![](screenshot-2.png)
 This screenshot shows how you can configure the email display screen. You can choose the fields and the number of emails per page
 
 ![](screenshot-3.png)
-This screenshot shows the additional fields that will be added by the [more fields](http://sudarmuthu.com/wordpress/email-log/pro-addons#more-fields-addon) addon
+This screenshot shows the additional fields that will be added by the [more fields](https://wpemaillog.com/addons/more-fields/) addon
 
 ![](screenshot-4.png)
-The above screenshot shows how the logged emails will be displayed by the Plugin after you install the [more fields](http://sudarmuthu.com/wordpress/email-log/pro-addons#more-fields-addon) addon
+The above screenshot shows how the logged emails will be displayed by the Plugin after you install the [more fields](https://wpemaillog.com/addons/more-fields/) addon
 
 ![](screenshot-5.png)
-This screenshot shows the settings page of [forward email](http://sudarmuthu.com/wordpress/email-log/pro-addons#forward-email-addon) addon
+This screenshot shows the settings page of [forward email](https://wpemaillog.com/addons/forward-email/) addon
+
+![](screenshot-6.png)
+This screenshot shows the settings page of [Auto Delete Logs](https://wpemaillog.com/addons/auto-delete-logs/) addon
+
+![](screenshot-7.png)
+The above screenshot shows how you can export email logs after you install the [Export Logs](https://wpemaillog.com/addons/auto-delete-logs/) addon
+
+![](screenshot-8.png)
+The above screenshot shows how you can resend email after you install the [Resend Email](https://wpemaillog.com/addons/auto-delete-logs/) addon
 
 ## Readme Generator ##
 
