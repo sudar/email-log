@@ -16,6 +16,7 @@
 #tabs-1,
 #tabs-2 {
 	height: 335px;
+	overflow: auto;
 }
 
 #view-message-footer {
@@ -39,4 +40,5 @@
 
 #TB_ajaxContent {
 	padding-bottom: 10px !important; /* Override the default Thickbox css values. */
+	overflow: hidden !important; /* Override the default Thickbox css values. */
 }
