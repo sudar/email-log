@@ -16,6 +16,7 @@
 #tabs-1,
 #tabs-2 {
 	height: 335px;
+	overflow: auto;
 }
 
 #view-message-footer {
