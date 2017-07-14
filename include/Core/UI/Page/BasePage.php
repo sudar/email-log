@@ -63,9 +63,9 @@ abstract class BasePage implements Loadie {
 		// TODO: Change the links.
 		$this->get_screen()->set_help_sidebar(
 			'<p><strong>' . __( 'More information', 'email-log' ) . '</strong></p>' .
-			'<p><a href = "http://sudarmuthu.com/wordpress/email-log">' . __( 'Plugin Homepage/support', 'email-log' ) . '</a></p>' .
-			'<p><a href = "http://sudarmuthu.com/blog">' . __( "Plugin author's blog", 'email-log' ) . '</a></p>' .
-			'<p><a href = "http://sudarmuthu.com/wordpress/">' . __( "Other Plugin's by Author", 'email-log' ) . '</a></p>'
+			'<p><a href = "https://wpemaillog.com/">' . __( 'Plugin Homepage', 'email-log' ) . '</a></p>' .
+			'<p><a href = "https://wpemaillog.com/support/">' . __( "Plugin Support", 'email-log' ) . '</a></p>' .
+			'<p><a href = "https://wpemaillog.com/store/">' . __( "Plugin Addons", 'email-log' ) . '</a></p>'
 		);
 	}
 
