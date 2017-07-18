@@ -51,8 +51,10 @@ function load_email_log( $plugin_file ) {
 	// `register_activation_hook` can't be called from inside any hook.
 	register_activation_hook( $plugin_file, array( $email_log->table_manager, 'on_activate' ) );
 
-	// Load the plugin.
-	add_action( 'wp_loaded', array( $email_log, 'load' ) );
+	// Ideally the plugin should be loaded in a later event like `init` or `wp_loaded`.
+	// But some plugins like EDD are sending emails in `init` event itself,
+	// which won't be logged if the plugin is loaded in `wp_loaded` or `init`.
+	add_action( 'plugins_loaded', array( $email_log, 'load' ) );
 }
 
 /**
