@@ -47,25 +47,31 @@ abstract class BasePage implements Loadie {
 	 * TODO: Change links used in this function.
 	 */
 	public function render_help_tab() {
-		/**
-		 * Content specified inline
-		 */
+		$content = '<p>' .
+					__( 'Email Log is a WordPress plugin that allows you to easily log and view all emails sent from WordPress.', 'email-log' ) .
+				'</p>' .
+				'<p>' .
+					__( 'You can view the logged emails from the View Logs screen.', 'email-log' ) .
+					sprintf( __( 'Check the <a href="%s">documentation about the View Logs screen</a> for more details.', 'email-log' ), 'https://wpemaillog.com/docs/view-logged-email/' ) .
+				'</p>' .
+				'<p>' .
+					sprintf( __( 'You can perform advanced actions like re-sending email, automatically forwarding emails or export logs with our <a href="%s">premium plugins</a>.', 'email-log' ), 'https://wpemaillog.com/store/' ) .
+				'</p>';
+
 		$this->get_screen()->add_help_tab(
 			array(
 				'title'    => __( 'About Plugin', 'email-log' ),
 				'id'       => 'about_tab',
-				'content'  => '<p>' . __( 'Email Log WordPress Plugin, allows you to log all emails that are sent through WordPress.', 'email-log' ) . '</p>',
+				'content'  => $content,
 				'callback' => false,
 			)
 		);
 
-		// Add help sidebar.
-		// TODO: Change the links.
 		$this->get_screen()->set_help_sidebar(
 			'<p><strong>' . __( 'More information', 'email-log' ) . '</strong></p>' .
-			'<p><a href = "https://wpemaillog.com/">' . __( 'Plugin Homepage', 'email-log' ) . '</a></p>' .
-			'<p><a href = "https://wpemaillog.com/support/">' . __( "Plugin Support", 'email-log' ) . '</a></p>' .
-			'<p><a href = "https://wpemaillog.com/store/">' . __( "Plugin Addons", 'email-log' ) . '</a></p>'
+			'<p><a href = "https://wpemaillog.com/docs/">' . __( 'Documentation', 'email-log' ) . '</a></p>' .
+			'<p><a href = "https://wpemaillog.com/support/">' . __( 'Support', 'email-log' ) . '</a></p>' .
+			'<p><a href = "https://wpemaillog.com/store/">' . __( 'Add-ons', 'email-log' ) . '</a></p>'
 		);
 	}
 
