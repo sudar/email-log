@@ -43,8 +43,6 @@ abstract class BasePage implements Loadie {
 
 	/**
 	 * Render help tab.
-	 *
-	 * TODO: Change links used in this function.
 	 */
 	public function render_help_tab() {
 		$content = '<p>' .
