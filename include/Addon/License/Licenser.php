@@ -119,7 +119,7 @@ final class Licenser implements Loadie {
 					<?php
 					printf(
 						__( "Enter your license key to activate add-ons. If you don't have a license, then you can <a href='%s' target='_blank'>buy it</a>", 'email-log' ),
-						'https://wpemaillog.com'
+						'https://wpemaillog.com/store/?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=notice&utm_content=buy-it'
 					);
 					?>
 				</p>

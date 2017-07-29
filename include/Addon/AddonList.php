@@ -172,7 +172,7 @@ class AddonList {
 			<?php
 				printf(
 					__( 'We are not able to retrieve the add-on list now. Please visit the <a href="%s">add-on page</a> to view the add-ons.', 'email-log' ), // @codingStandardsIgnoreLine
-					'https://wpemaillog.com/addons'
+					'https://wpemaillog.com/store/?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=addon-grid-failed'
 				);
 			?>
 		</span>

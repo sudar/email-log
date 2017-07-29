@@ -46,8 +46,8 @@ class LogListTable extends \WP_List_Table {
 		if ( 'top' == $which ) {
 			// The code that goes before the table is here.
 			echo '<span id = "el-pro-msg">';
-			_e( 'More fields are available in Pro addon. ', 'email-log' );
-			echo '<a href = "http://sudarmuthu.com/out/buy-email-log-more-fields-addon" style = "color:red">';
+			_e( 'Additional fields are available in Pro add-on. ', 'email-log' );
+			echo '<a href="https://wpemaillog.com/addons/more-fields/?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=inline&utm_content=mf" style="color:red">';
 			_e( 'Buy Now', 'email-log' );
 			echo '</a>';
 			echo '</span>';
