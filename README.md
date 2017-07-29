@@ -96,19 +96,19 @@ Meanwhile, I have added a hack to handle this condition in v1.7.3 of my plugin. 
 
 ## Screenshots ##
 
-![](screenshot-1.png)
+![](assets-wp-repo/screenshot-1.png)
 The above screenshot shows how the logged emails will be displayed by the Plugin
 
-![](screenshot-2.png)
+![](assets-wp-repo/screenshot-2.png)
 This screenshot shows how you can configure the email display screen. You can choose the fields and the number of emails per page
 
-![](screenshot-3.png)
+![](assets-wp-repo/screenshot-3.png)
 The above screenshot shows the HTML version (if available) of the logged email that you choose to view
 
-![](screenshot-4.png)
+![](assets-wp-repo/screenshot-4.png)
 The above screenshot shows the text version of the logged email that you choose to view
 
-![](screenshot-5.png)
+![](assets-wp-repo/screenshot-5.png)
 The above screenshot shows how you can search logged emails by date
 
 ## Readme Generator ##
