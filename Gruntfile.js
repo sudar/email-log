@@ -21,7 +21,10 @@ module.exports = function( grunt ) {
 						src: [
 							'**',
 							'!dist/**',
+							'!AUTHORS.md',
 							'!assets-wp-repo/**',
+							'!code-coverage/**',
+							'!codeception.yml',
 							'!node_modules/**',
 							'!assets/vendor/**',
 							'!assets/js/src/**',
@@ -29,13 +32,16 @@ module.exports = function( grunt ) {
 							'!Gruntfile.js',
 							'!bower.json',
 							'!package.json',
+							'!composer.json',
+							'!composer.lock',
 							'!phpcs.xml',
 							'!phpdoc.dist.xml',
 							'!phpunit.xml.dist',
 							'!bin/**',
 							'!tests/**',
 							'!.idea/**',
-							'!tags'
+							'!tags',
+							'!vendor/**'
 						],
 						dest: 'dist/'
 					}
