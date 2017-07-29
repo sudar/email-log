@@ -52,41 +52,6 @@ class LogListTable extends \WP_List_Table {
 			echo '</a>';
 			echo '</span>';
 		}
-
-		if ( 'bottom' == $which ) {
-			// The code that goes after the table is here.
-			echo '<p>&nbsp;</p>';
-			echo '<p>&nbsp;</p>';
-
-			echo '<p>';
-			_e( 'The following are the list of pro addons that are currently available for purchase.', 'email-log' );
-			echo '</p>';
-
-			echo '<ul style="list-style:disc; padding-left:35px">';
-
-			echo '<li>';
-			echo '<strong>', __( 'Email Log - Resend Email', 'email-log' ), '</strong>', ' - ';
-			echo __( 'Adds the ability to resend email from logs.', 'email-log' );
-			echo ' <a href = "http://sudarmuthu.com/wordpress/email-log/pro-addons#resend-email-addon">', __( 'More Info', 'email-log' ), '</a>.';
-			echo ' <a href = "http://sudarmuthu.com/out/buy-email-log-resend-email-addon">', __( 'Buy now', 'email-log' ), '</a>';
-			echo '</li>';
-
-			echo '<li>';
-			echo '<strong>', __( 'Email Log - More fields', 'email-log' ), '</strong>', ' - ';
-			echo __( 'Adds more fields (From, CC, BCC, Reply To, Attachment) to the logs page.', 'email-log' );
-			echo ' <a href = "http://sudarmuthu.com/wordpress/email-log/pro-addons#more-fields-addon">', __( 'More Info', 'email-log' ), '</a>.';
-			echo ' <a href = "http://sudarmuthu.com/out/buy-email-log-more-fields-addon">', __( 'Buy now', 'email-log' ), '</a>';
-			echo '</li>';
-
-			echo '<li>';
-			echo '<strong>', __( 'Email Log - Forward Email', 'email-log' ), '</strong>', ' - ';
-			echo __( 'This addon allows you to send a copy of all emails send from WordPress to another email address', 'email-log' );
-			echo ' <a href = "http://sudarmuthu.com/wordpress/email-log/pro-addons#forward-email-addon">', __( 'More Info', 'email-log' ), '</a>.';
-			echo ' <a href = "http://sudarmuthu.com/out/buy-email-log-forward-email-addon">', __( 'Buy now', 'email-log' ), '</a>';
-			echo '</li>';
-
-			echo '</ul>';
-		}
 	}
 
 	/**
