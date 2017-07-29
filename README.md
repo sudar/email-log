@@ -1,8 +1,8 @@
 # Email Log #
 **Contributors:** sudar  
 **Tags:** email, log, log email, resend email, multisite  
-**Requires at least:** 3.3  
-**Tested up to:** 4.5.2  
+**Requires at least:** 4.0  
+**Tested up to:** 4.8  
 **Stable tag:** 1.9.1  
 [![Build Status](https://scrutinizer-ci.com/g/sudar/email-log/badges/build.png?b=master)](https://scrutinizer-ci.com/g/sudar/email-log/build-status/master) [![Code Coverage](https://scrutinizer-ci.com/g/sudar/email-log/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/sudar/email-log/?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/sudar/email-log/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/sudar/email-log/?branch=master) [![License](https://img.shields.io/badge/license-GPL--2.0%2B-red.svg)](https://wordpress.org/about/license/)
 
