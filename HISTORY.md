@@ -1,5 +1,11 @@
 ## Changelog ##
 
+### v2.0.0 - (2017-08-04) ###
+- New: Ability to filter logs by date.
+- New: Ability to filter logs by name.
+- New: Complete rewrite for better performance.
+- Docs: Dropped support for PHP 5.2
+
 ### v1.9.1 - (2016-07-02) - (Dev time: 0.5 hour) ###
 - Fix: Only allow users with `manage_option` capability to view email content.
 
@@ -132,6 +138,9 @@
 - Initial Release
 
 ## Upgrade Notice ##
+
+### 2.0.0 ###
+Ability to search logs by date. Dropped support to PHP 5.2
 
 ### 1.9.1 ###
 - Fixed a minor security issue that allowed unprevilleged users to view content of logged emails
