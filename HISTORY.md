@@ -1,5 +1,9 @@
 ## Changelog ##
 
+### v2.0.1 - (2017-08-04) ###
+- Fix: Fixed a JavaScript issue in view logs page.
+- Fix: Fixed a race condition between plugin and add-ons.
+
 ### v2.0.0 - (2017-08-04) ###
 - New: Ability to filter logs by date.
 - New: Ability to filter logs by name.
@@ -138,6 +142,9 @@
 - Initial Release
 
 ## Upgrade Notice ##
+
+### 2.0.0 ###
+Fixed a JavaScript issue that was introduced in v2.0.0
 
 ### 2.0.0 ###
 Ability to search logs by date. Dropped support to PHP 5.2
