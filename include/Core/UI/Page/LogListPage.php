@@ -58,8 +58,8 @@ class LogListPage extends BasePage {
 
 		$this->page = add_submenu_page(
 			self::PAGE_SLUG,
-			__( 'View Logs', 'bulk-delete' ),
-			__( 'View Logs', 'bulk-delete' ),
+			__( 'View Logs', 'email-log'),
+			__( 'View Logs', 'email-log'),
 			'manage_options',
 			self::PAGE_SLUG,
 			array( $this, 'render_page' )
