@@ -54,7 +54,7 @@ function load_email_log( $plugin_file ) {
 	// Ideally the plugin should be loaded in a later event like `init` or `wp_loaded`.
 	// But some plugins like EDD are sending emails in `init` event itself,
 	// which won't be logged if the plugin is loaded in `wp_loaded` or `init`.
-	add_action( 'plugins_loaded', array( $email_log, 'load' ) );
+	add_action( 'plugins_loaded', array( $email_log, 'load' ), 101 );
 }
 
 /**
