@@ -54,6 +54,10 @@ As [recommended by Ozh][1], the Plugin has an uninstall hook which will clean up
 
  [1]: http://sudarmuthu.com/blog/2009/10/07/lessons-from-wordpress-plugin-competition.html
 
+### Email Log Documentation
+
+The documentation on using the plugin and its add-ons can be found in [Email Log](https://wpemaillog.com/docs/) website.
+
 ### Development
 
 The development of the Plugin happens over at [github](http://github.com/sudar/email-log).
