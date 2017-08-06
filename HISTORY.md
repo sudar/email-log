@@ -2,6 +2,7 @@
 
 ### v2.0.1 - (2017-08-04) ###
 - Fix: Fixed a JavaScript issue in view logs page.
+- Fix: Fixed a CSS issue in view logs page.
 - Fix: Fixed a race condition between plugin and add-ons.
 
 ### v2.0.0 - (2017-08-04) ###
