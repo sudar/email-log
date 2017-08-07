@@ -50,6 +50,12 @@ module.exports = function( grunt ) {
 					}
 				]
 			}
+		},
+		watch: {
+			all: {
+				files: ['**', '!dist/**'],
+				tasks: ['build']
+			}
 		}
 	} );
 
