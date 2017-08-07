@@ -16,7 +16,7 @@ class EmailLog {
 	 * @since Genesis
 	 * @var string
 	 */
-	const VERSION = '2.0.1';
+	const VERSION = '2.0.2';
 
 	/**
 	 * Email Log Store URL.
