@@ -29,6 +29,7 @@ module.exports = function( grunt ) {
 							'!assets/vendor/**',
 							'assets/vendor/insertionQuery/insQ.min.js',
 							'assets/vendor/jquery-ui/jquery-ui.min.js',
+							'assets/vendor/jquery-ui/themes/base/jquery-ui.min.css',
 							'!assets/js/src/**',
 							'!assets/css/src/**',
 							'!Gruntfile.js',
@@ -48,6 +49,12 @@ module.exports = function( grunt ) {
 						dest: 'dist/'
 					}
 				]
+			}
+		},
+		watch: {
+			all: {
+				files: ['**', '!dist/**'],
+				tasks: ['build']
 			}
 		}
 	} );

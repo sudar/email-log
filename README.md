@@ -3,7 +3,7 @@
 **Tags:** email, log, log email, resend email, multisite  
 **Requires at least:** 4.0  
 **Tested up to:** 4.8  
-**Stable tag:** 2.0.1  
+**Stable tag:** 2.0.2  
 [![Build Status](https://scrutinizer-ci.com/g/sudar/email-log/badges/build.png?b=master)](https://scrutinizer-ci.com/g/sudar/email-log/build-status/master) [![Code Coverage](https://scrutinizer-ci.com/g/sudar/email-log/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/sudar/email-log/?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/sudar/email-log/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/sudar/email-log/?branch=master) [![License](https://img.shields.io/badge/license-GPL--2.0%2B-red.svg)](https://wordpress.org/about/license/)
 
 Log and view all outgoing emails from WordPress. Works with WordPress Multisite as well.
@@ -53,6 +53,10 @@ This can be extremely useful when you want to debug by analyzing the emails that
 As [recommended by Ozh][1], the Plugin has an uninstall hook which will clean up the database when the Plugin is uninstalled.
 
  [1]: http://sudarmuthu.com/blog/2009/10/07/lessons-from-wordpress-plugin-competition.html
+
+### Documentation
+
+You can find fully searchable documentation about using the plugin in the [doc section of the Email Log](https://wpemaillog.com/docs/) website.
 
 ### Development
 
