@@ -1,5 +1,8 @@
 ## Changelog ##
 
+### v2.0.2 - (2017-08-07) ###
+- Fix: Renamed include/util directory to correct case. This caused issues in some install.
+
 ### v2.0.1 - (2017-08-04) ###
 - Fix: Fixed a JavaScript issue in view logs page.
 - Fix: Fixed a CSS issue in view logs page.
@@ -144,7 +147,10 @@
 
 ## Upgrade Notice ##
 
-### 2.0.0 ###
+### 2.0.2 ###
+Fixed the case of the Util directory. This caused issues in some install.
+
+### 2.0.1 ###
 Fixed a JavaScript issue that was introduced in v2.0.0
 
 ### 2.0.0 ###
