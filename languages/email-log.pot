@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the Email Log package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Email Log 2.0.1\n"
+"Project-Id-Version: Email Log 2.0.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/email-log\n"
-"POT-Creation-Date: 2017-08-04 17:42:38+00:00\n"
+"POT-Creation-Date: 2017-08-07 12:11:26+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -401,7 +401,7 @@ msgstr ""
 msgid "Support"
 msgstr ""
 
-#. #-#-#-#-#  email-log.pot (Email Log 2.0.1)  #-#-#-#-#
+#. #-#-#-#-#  email-log.pot (Email Log 2.0.2)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 #: dist/include/Core/UI/Page/LogListPage.php:50
 #: dist/include/Core/UI/Page/LogListPage.php:51
@@ -540,12 +540,12 @@ msgid ""
 "Specify the list of email addresses to which the emails should be forwarded."
 msgstr ""
 
-#: tmp_addon/ForwardEmailSetting.php:33 tmp_addon/MoreFieldsAddon.php:46
+#: tmp_addon/ForwardEmailSetting.php:33 tmp_addon/MoreFieldsAddon.php:62
 #: tmp_addon/ResendEmailAddon.php:113
 msgid "CC"
 msgstr ""
 
-#: tmp_addon/ForwardEmailSetting.php:34 tmp_addon/MoreFieldsAddon.php:47
+#: tmp_addon/ForwardEmailSetting.php:34 tmp_addon/MoreFieldsAddon.php:63
 #: tmp_addon/ResendEmailAddon.php:117
 msgid "BCC"
 msgstr ""
@@ -554,15 +554,15 @@ msgstr ""
 msgid "You can enter multiple email address by separating them with comma."
 msgstr ""
 
-#: tmp_addon/MoreFieldsAddon.php:45 tmp_addon/ResendEmailAddon.php:109
+#: tmp_addon/MoreFieldsAddon.php:61 tmp_addon/ResendEmailAddon.php:109
 msgid "From"
 msgstr ""
 
-#: tmp_addon/MoreFieldsAddon.php:48 tmp_addon/ResendEmailAddon.php:121
+#: tmp_addon/MoreFieldsAddon.php:64 tmp_addon/ResendEmailAddon.php:121
 msgid "Reply To"
 msgstr ""
 
-#: tmp_addon/MoreFieldsAddon.php:49
+#: tmp_addon/MoreFieldsAddon.php:65
 msgid "Attachment"
 msgstr ""
 
