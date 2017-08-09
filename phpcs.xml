@@ -36,9 +36,8 @@
 	</rule>
 
 	<!-- PHP Compatibility -->
-	<config name="testVersion" value="5.3-7.1"/>
+	<config name="testVersion" value="5.3-7.2"/>
 	<rule ref="PHPCompatibility">
-		<exclude name="PHPCompatibility.PHP.DefaultTimezoneRequired"/>
 	</rule>
 
 	<!--Docs-->
