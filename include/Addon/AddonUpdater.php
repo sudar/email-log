@@ -51,6 +51,10 @@ class AddonUpdater {
 	 * Setup up Add-on auto-updater using EDD library.
 	 */
 	public function setup_updater() {
+		if ( function_exists( 'wp_doing_ajax' ) && wp_doing_ajax() ) {
+			return;
+		}
+
 		$email_log = email_log();
 		$license_key = $email_log->get_licenser()->get_addon_license_key( $this->addon_name );
 

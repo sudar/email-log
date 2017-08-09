@@ -1,5 +1,8 @@
 ## Changelog ##
 
+### v2.1.0 - In Development ###
+- Tweak: Performance improvements.
+
 ### v2.0.2 - (2017-08-07) ###
 - Fix: Renamed include/util directory to correct case. This caused issues in some install.
 
