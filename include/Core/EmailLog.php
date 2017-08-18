@@ -65,6 +65,14 @@ class EmailLog {
 	public $table_manager;
 
 	/**
+	 * Email Log Plugins Setting.
+	 *
+	 * @since 2.1.0
+	 * @var \EmailLog\Core\UI\Setting\Setting
+	 */
+	public $setting;
+
+	/**
 	 * Add-on Licenser.
 	 *
 	 * @since 2.0

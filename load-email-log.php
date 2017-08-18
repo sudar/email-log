@@ -37,6 +37,7 @@ function load_email_log( $plugin_file ) {
 	$loader->register();
 
 	$email_log = new \EmailLog\Core\EmailLog( $plugin_file, $loader, new \EmailLog\Core\DB\TableManager() );
+	$email_log->setting = new EmailLog\Core\UI\Setting\EmailLogSetting();
 
 	$email_log->set_licenser( new \EmailLog\Addon\License\Licenser() );
 
