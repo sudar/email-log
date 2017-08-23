@@ -3,6 +3,7 @@
 ### v2.1.0 - In Development ###
 - Tweak: Performance improvements.
 - Fix: Handle cases where there is a quote in front of email address.
+- Fix: Handle cases where array passed to `wp_mail` may not contain all the required fields.
 
 ### v2.0.2 - (2017-08-07) ###
 - Fix: Renamed include/util directory to correct case. This caused issues in some install.
