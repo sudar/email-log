@@ -170,6 +170,13 @@ class EmailLog {
 		 * @since 2.0
 		 */
 		do_action( 'el_loaded' );
+
+		/**
+		 * Shows the Email Log only to allowed User roles set in the Plugin's settings page.
+		 *
+		 * @since 2.1.0
+		 */
+		add_action( 'admin_init', array( $this, 'remove_email_log_menu_by_user_role' ) );
 	}
 
 	/**
@@ -210,5 +217,14 @@ class EmailLog {
 	 */
 	public function get_store_url() {
 		return self::STORE_URL;
+	}
+
+	/**
+	 * Shows the Email Log only to allowed User roles set in the Plugin's settings page.
+	 */
+	public function remove_email_log_menu_by_user_role() {
+		if ( ! \EmailLog\Util\can_current_user_email_log() ) {
+			remove_menu_page( 'email-log' );
+		}
 	}
 }

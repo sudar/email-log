@@ -93,7 +93,7 @@ class EmailLogSetting extends Setting {
 			}
 		}
 	?>
-		<p><?php _e( '<em><strong>Note:</strong> Administrators cannot be disabled.</em>', 'email-log' ); ?></p>
+		<p><?php _e( '<em><strong>Note:</strong> Administrator role cannot be disabled.</em>', 'email-log' ); ?></p>
 	<?php
 }
 
