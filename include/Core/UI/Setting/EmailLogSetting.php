@@ -24,7 +24,7 @@ class EmailLogSetting extends Setting {
 		$fields = array();
 
 		$email_log_fields = array(
-			'capability'  => __( 'Capability', 'email-log' ),
+			'allowed_user_roles'  => __( 'Allowed User Roles', 'email-log' ),
 		);
 
 		foreach ( $email_log_fields as $field_id => $label ) {
@@ -45,7 +45,7 @@ class EmailLogSetting extends Setting {
 	 */
 	public function render() {
 	?>
-		<p><?php _e( 'Users with the following capability can view Email Logs. The default capability is \'<strong>manage_options</strong>\'.', 'email-log' ); ?></p>
+		<p><?php _e( 'Users with the following <strong>User Roles</strong> can view Email Logs. The default User Role is \'<strong>administrator</strong>\'.', 'email-log' ); ?></p>
 	<?php
 	}
 
@@ -62,7 +62,9 @@ class EmailLogSetting extends Setting {
 		}
 
 		foreach ( $values as $key => $value ) {
-			$values[ $key ] = sanitize_text_field( $value );
+			if ( $key === 'allowed_user_roles' ) {
+				$values[ $key ] = array_map( 'sanitize_text_field', $values[ $key ] );
+			}
 		}
 
 		return $values;
@@ -74,40 +76,38 @@ class EmailLogSetting extends Setting {
 	 * @param array $args
 	 */
 	public function render_email_log_capability_field( $args ) {
-		$option         = $this->get_value();
-		$admin_role_set = get_role( 'administrator' )->capabilities;
-		$el_capability  = '';
+		$option          = $this->get_value();
+		$option          = $option[ $args['id'] ];
+		$available_roles = get_editable_roles();
+		foreach( $available_roles as $role ) {
+			if ( trim( $role['name'] ) === 'Administrator' ) {
 	?>
-		<select name="<?php echo esc_attr( $this->section->option_name . '[' . $args['id'] . ']' ); ?>">
+			<p><input type="checkbox" name="<?php echo esc_attr( $this->section->option_name . '[' . $args['id'] . '][]' ); ?>" value="<?php echo trim( $role['name'] ); ?>" checked="checked" /> <?php echo trim( $role['name'] ); ?>
+			</p>
 	<?php
-		foreach( $admin_role_set as $capability => $grant ) {
-			if ( ( false === $option && 'manage_options' === $capability ) ||
-				 ( $option[ $args['id'] ] === $capability ) ) {
-				$selected      = 'selected="selected"';
-				$el_capability = $capability;
+			} else {
+	?>
+			<p><input type="checkbox" name="<?php echo esc_attr( $this->section->option_name . '[' . $args['id'] . '][]' ); ?>" value="<?php echo trim( $role['name'] ); ?>" <?php $this->checked_array( $option, trim( $role['name'] ) ); ?> /> <?php echo trim( $role['name'] ); ?>
+			</p>
+	<?php
 			}
-	?>
-			<option value="<?php echo $capability; ?>" <?php echo isset( $selected ) ? $selected : ''; ?>><?php echo $capability; ?></option>
-	<?php
-			unset( $selected );
-			}
-	?>
-		</select>
-	<?php
-		if ( isset( $el_capability ) && ! empty( $el_capability ) ) {
-			$this->modify_view_log_capability( $el_capability );
 		}
-	}
+	?>
+		<p><?php _e( '<em><strong>Note:</strong> Administrators cannot be disabled.</em>', 'email-log' ); ?></p>
+	<?php
+}
 
 	/**
-	 * Sets the capability to view the Email Log content.
+	 * Checks the Checkbox when values are present in a given array.
 	 *
-	 * Uses the Email Log API to set capability. Refer
-	 * @link https://wpemaillog.com/docs/developer-docs/el_view_email_log_capability/
+	 * Use this function in Checkbox fields.
 	 *
-	 * @param string $capability
+	 * @param array $values   List of all possible values.
+	 * @param string $current The current value to be checked.
 	 */
-	protected function modify_view_log_capability( $capability ) {
-		apply_filters( 'el_view_email_log_capability', $capability );
+	public function checked_array( $values, $current ) {
+		if ( in_array( $current, $values ) ) {
+			echo "checked='checked'";
+		}
 	}
 }
