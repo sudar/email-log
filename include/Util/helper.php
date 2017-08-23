@@ -40,10 +40,8 @@ function sanitize_email_with_name( $string ) {
 
 	$bracket_pos = strpos( $string, '<' );
 	if ( false !== $bracket_pos ) {
-		// Text before the bracketed email is the name.
 		if ( $bracket_pos > 0 ) {
 			$name = substr( $string, 0, $bracket_pos );
-			$name = str_replace( '"', '', $name );
 			$name = trim( $name );
 
 			$email = substr( $string, $bracket_pos + 1 );
