@@ -266,7 +266,13 @@ final class Licenser implements Loadie {
 			return $this->bundle_license->get_addon_license_key( $addon_name );
 		}
 
-		return $this->addon_list->get_addon_by_name( $addon_name )->get_addon_license_key();
+		$addon = $this->addon_list->get_addon_by_name( $addon_name );
+
+		if ( ! $addon ) {
+			return false;
+		}
+
+		return $addon->get_addon_license_key();
 	}
 
 	/**
