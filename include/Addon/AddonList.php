@@ -93,19 +93,22 @@ class AddonList {
 
 	/**
 	 * Retrieve the list of add-ons by calling the store API.
+	 * If the store API is down, then read the data from the local JSON file.
 	 *
 	 * @return Addon[] List of add-ons, empty array if API call fails.
 	 */
 	protected function get_addons() {
-		if ( false === ( $json = get_transient( self::CACHE_KEY ) ) ) {
+		$json = get_transient( self::CACHE_KEY );
+		if ( false === $json ) {
 			$response = wp_remote_get( $this->get_api_url() );
 
 			if ( is_wp_error( $response ) || ! is_array( $response ) ) {
-				// TODO: Don't keep trying if the server is down.
-				return array();
+				$json_string = $this->get_addon_data_from_local_file();
+			} else {
+				$json_string = wp_remote_retrieve_body( $response );
 			}
 
-			$json = json_decode( wp_remote_retrieve_body( $response ), true );
+			$json = json_decode( $json_string, true );
 
 			if ( ! is_array( $json ) ) {
 				return array();
@@ -186,5 +189,20 @@ class AddonList {
 	 */
 	protected function get_api_url() {
 		return $this->store_url . '/edd-api/products/?category=addon';
+	}
+
+	/**
+	 * Read the add-on data from the local data file.
+	 *
+	 * @since 2.1
+	 *
+	 * @return false|string JSON file content, False on failure.
+	 */
+	private function get_addon_data_from_local_file() {
+		$email_log = email_log();
+
+		$local_json_file_path = $email_log->get_plugin_path() . 'data/products.json';
+
+		return file_get_contents( $local_json_file_path );
 	}
 }
