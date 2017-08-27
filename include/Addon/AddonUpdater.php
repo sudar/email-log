@@ -51,12 +51,14 @@ class AddonUpdater {
 	 * Setup up Add-on auto-updater using EDD library.
 	 */
 	public function setup_updater() {
-		if ( function_exists( 'wp_doing_ajax' ) && wp_doing_ajax() ) {
+		$email_log = email_log();
+		$licenser = $email_log->get_licenser();
+
+		if ( is_null( $licenser ) ) {
 			return;
 		}
 
-		$email_log = email_log();
-		$license_key = $email_log->get_licenser()->get_addon_license_key( $this->addon_name );
+		$license_key = $licenser->get_addon_license_key( $this->addon_name );
 
 		$updater = new EDDUpdater( $email_log->get_store_url(), $this->addon_file, array(
 				'version'   => $this->addon_version,
@@ -66,6 +68,6 @@ class AddonUpdater {
 			)
 		);
 
-		$email_log->get_licenser()->add_updater( $updater );
+		$licenser->add_updater( $updater );
 	}
 }

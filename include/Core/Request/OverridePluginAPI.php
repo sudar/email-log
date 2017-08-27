@@ -29,12 +29,21 @@ class OverridePluginAPI implements Loadie {
 	 */
 	public function setup_updaters_for_inactive_addons() {
 		$email_log = email_log();
-		$inactive_addons = $email_log->get_licenser()->get_addon_list()->get_inactive_addons();
+		$licenser = $email_log->get_licenser();
+
+		if ( is_null( $licenser ) ) {
+			return;
+		}
+
+		$inactive_addons = $licenser->get_addon_list()->get_inactive_addons();
 
 		foreach ( $inactive_addons as $inactive_addon ) {
-			$license_key = $email_log->get_licenser()->get_addon_license_key( $inactive_addon->name );
+			$license_key = $licenser->get_addon_license_key( $inactive_addon->name );
 
-			$updater = new EDDUpdater( $email_log->get_store_url(), $inactive_addon->file, array(
+			$updater = new EDDUpdater(
+				$email_log->get_store_url(),
+				$inactive_addon->file,
+				array(
 					'version'   => $inactive_addon->get_version(),
 					'license'   => $license_key,
 					'item_name' => $inactive_addon->name,
@@ -42,7 +51,7 @@ class OverridePluginAPI implements Loadie {
 				)
 			);
 
-			$email_log->get_licenser()->add_updater( $updater );
+			$licenser->add_updater( $updater );
 		}
 	}
 }

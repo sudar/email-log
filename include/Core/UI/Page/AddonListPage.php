@@ -54,7 +54,10 @@ class AddonListPage extends BasePage {
 			do_action( 'el_before_addon_list' );
 
 			$email_log = email_log();
-			$email_log->get_licenser()->get_addon_list()->render();
+			$licenser = $email_log->get_licenser();
+			if ( ! is_null( $licenser ) ) {
+				$licenser->get_addon_list()->render();
+			}
 			?>
 		</div>
 		<?php

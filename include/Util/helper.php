@@ -71,3 +71,22 @@ function get_log_columns_to_export() {
 
 	return array( 'id', 'sent_date', 'to_email', 'subject' );
 }
+
+/**
+ * Is it an admin request and not an ajax request.
+ *
+ * @since 2.1
+ *
+ * @return bool True if admin non ajax request, False otherwise.
+ */
+function is_admin_non_ajax_request() {
+	if ( function_exists( 'wp_doing_ajax' ) && wp_doing_ajax() ) {
+		return false;
+	}
+
+	if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+		return false;
+	}
+
+	return is_admin();
+}

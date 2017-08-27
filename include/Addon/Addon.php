@@ -266,7 +266,13 @@ class Addon {
 	 * @return string Download url for add-on.
 	 */
 	public function get_download_url() {
-		return $this->email_log->get_licenser()->get_addon_download_url( $this->slug );
+		$licenser = $this->email_log->get_licenser();
+
+		if ( is_null( $licenser ) ) {
+			return '';
+		}
+
+		return $licenser->get_addon_download_url( $this->slug );
 	}
 
 	/**
@@ -275,7 +281,13 @@ class Addon {
 	 * @return bool True if valid, False otherwise.
 	 */
 	protected function has_valid_bundle_license() {
-		return $this->email_log->get_licenser()->is_bundle_license_valid();
+		$licenser = $this->email_log->get_licenser();
+
+		if ( is_null( $licenser ) ) {
+			return false;
+		}
+
+		return $licenser->is_bundle_license_valid();
 	}
 
 	/**
