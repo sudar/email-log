@@ -39,7 +39,7 @@ class LogListAction implements Loadie {
 		 */
 		$view_email_log_capability = apply_filters( 'el_view_email_log_capability', 'manage_options' );
 
-		if ( current_user_can( $view_email_log_capability ) ) {
+		if ( \EmailLog\Util\can_current_user_email_log() ) {
 			$id = absint( $_GET['log_id'] );
 
 			if ( $id > 0 ) {

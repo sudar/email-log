@@ -73,3 +73,29 @@ function get_log_columns_to_export() {
 
 	return array( 'id', 'sent_date', 'to_email', 'subject' );
 }
+
+/**
+ * Returns TRUE if the User is Administrator or the User's role is allowed in Plugin's settings page.
+ *
+ * @since 2.1.0
+ *
+ * @return bool
+ */
+function can_current_user_email_log() {
+	$return_value = false;
+
+	$option = get_option( 'el_email_log' );
+	if ( ! current_user_can( 'administrator' ) ) {
+		if ( $option && is_array( $option ) && array_key_exists( 'allowed_user_roles', $option ) ) {
+			$user               = wp_get_current_user();
+			$allowed_user_roles = $option['allowed_user_roles'];
+			$allowed_user_roles = array_map( 'strtolower', $allowed_user_roles );
+			$matched_role       = array_intersect( (array) $user->roles, $allowed_user_roles );
+			if ( is_array( $matched_role ) && ! empty( $matched_role ) ) {
+				$return_value = true;
+			}
+		}
+	}
+
+	return $return_value;
+}
