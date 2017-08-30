@@ -83,9 +83,11 @@ function get_log_columns_to_export() {
  */
 function can_current_user_email_log() {
 	$return_value = false;
+	$option       = get_option( 'el_email_log' );
 
-	$option = get_option( 'el_email_log' );
-	if ( ! current_user_can( 'administrator' ) ) {
+	if ( current_user_can( 'administrator' ) ) {
+		$return_value = true;
+	} elseif ( ! is_admin() && ! current_user_can( 'administrator' ) ) {
 		if ( $option && is_array( $option ) && array_key_exists( 'allowed_user_roles', $option ) ) {
 			$user               = wp_get_current_user();
 			$allowed_user_roles = $option['allowed_user_roles'];
