@@ -25,7 +25,7 @@ class EmailLogSetting extends Setting {
 
 		$email_log_fields = array(
 			'allowed_user_roles' => __( 'Allowed User Roles', 'email-log' ),
-			'retain_email_logs'  => __( 'Retain Email Logs', 'email-log' ),
+			'remove_email_logs'  => __( 'Remove Data on Uninstall?', 'email-log' ),
 		);
 
 		foreach ( $email_log_fields as $field_id => $label ) {
@@ -64,7 +64,7 @@ class EmailLogSetting extends Setting {
 		foreach ( $values as $key => $value ) {
 			if ( $key === 'allowed_user_roles' ) {
 				$values[ $key ] = array_map( 'sanitize_text_field', $values[ $key ] );
-			} elseif ( $key === 'retain_email_logs' ) {
+			} elseif ( $key === 'remove_email_logs' ) {
 				$values[ $key ] = sanitize_text_field( $value );
 			}
 		}
@@ -94,13 +94,13 @@ class EmailLogSetting extends Setting {
 				}
 			}
 			?>
-			<p><?php _e( '<em><strong>Note:</strong> Users with the following <strong>User Roles</strong> can view Email Logs. The default User Role is \'<strong>administrator</strong>\'.', 'email-log' ); ?></p>
-			<p><?php _e( 'Administrator role cannot be disabled.</em>', 'email-log' ); ?></p>
+			<p><?php _e( '<small><strong>Note:</strong> Users with the above <strong>User Roles</strong> can view Email Logs. The default User Role is \'<strong>administrator</strong>\'.</small>', 'email-log' ); ?>
+			<?php _e( '<small>Administrator role cannot be disabled.</small>', 'email-log' ); ?></p>
 			<?php
-		} elseif ( 'retain_email_logs' === $args['id'] ) {
+		} elseif ( 'remove_email_logs' === $args['id'] ) {
 ?>
-			<input type="checkbox" name="<?php echo esc_attr( $this->section->option_name . '[' . $args['id'] . ']' ); ?>" value="true" <?php checked( 'true', $option[ $args['id'] ] ); ?> /> <?php _e( 'Keep Email Log entries when you delete the Email Log plugin.', 'email-log' ) ?>
-            <p><?php _e( '<em><em><strong>Note:</strong> You can access the logs again, by installing the Email Log plugin anytime.</em>', 'email-log' ); ?></p>
+			<input type="checkbox" name="<?php echo esc_attr( $this->section->option_name . '[' . $args['id'] . ']' ); ?>" value="true" <?php checked( 'true', $option[ $args['id'] ] ); ?> /> <?php _e( 'Check this box if you would like to completely remove all of its data when the plugin is deleted.', 'email-log' ) ?>
+            <p><?php _e( '<small><strong>Note:</strong> You can also export the Email Logs using our <a href="https://wpemaillog.com/addons/export-logs/" rel="noopener noreferrer" target="_blank">Export Logs</a> add-on.</small>', 'email-log' ); ?></p>
 <?php
 		}
 }

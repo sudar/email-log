@@ -41,8 +41,9 @@ function email_log_delete_table() {
 
 	if ( $wpdb->get_var( "SHOW TABLES LIKE '{$table_name}'" ) == $table_name ) {
 		if ( ! empty( $retain_email_log ) &&
-		     is_array( $retain_email_log ) &&
-		     ! array_key_exists( 'retain_email_logs', $retain_email_log ) ) {
+			 is_array( $retain_email_log ) &&
+			 array_key_exists( 'remove_email_logs', $retain_email_log ) &&
+			 'true' === strtolower( $retain_email_log['remove_email_logs'] ) ) {
 			// If table is present, drop it
 			$wpdb->query( "DROP TABLE $table_name" );
 		}
