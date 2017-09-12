@@ -90,3 +90,47 @@ function is_admin_non_ajax_request() {
 
 	return is_admin();
 }
+
+/**
+ * Returns TRUE if the User is Administrator or the User's role is allowed in Plugin's settings page.
+ *
+ * @since 2.1.0
+ *
+ * @return bool
+ */
+function can_current_user_view_email_log() {
+	$option       = get_option( 'el_email_log_core' );
+
+	if ( current_user_can( 'administrator' ) ) {
+		return true;
+	}
+
+	$user               = wp_get_current_user();
+	$allowed_user_roles = $option['allowed_user_roles'];
+	$allowed_user_roles = array_map( 'strtolower', $allowed_user_roles );
+	$matched_role       = array_intersect( (array) $user->roles, $allowed_user_roles );
+
+	if ( is_array( $option ) &&
+		 array_key_exists( 'allowed_user_roles', $option ) &&
+		 is_array( $matched_role ) && ! empty( $matched_role ) ) {
+			return true;
+	}
+
+	return false;
+}
+
+/**
+ * Checks the Checkbox when values are present in a given array.
+ *
+ * Use this function in Checkbox fields.
+ *
+ * @since 2.1.0
+ *
+ * @param array $values   List of all possible values.
+ * @param string $current The current value to be checked.
+ */
+function checked_array( $values, $current ) {
+	if ( in_array( $current, $values ) ) {
+		echo "checked='checked'";
+	}
+}
