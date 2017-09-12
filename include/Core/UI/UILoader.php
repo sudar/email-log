@@ -53,7 +53,7 @@ class UILoader implements Loadie {
 	 */
 	protected function initialize_components() {
 		$this->components['admin_ui_enhancer'] = new Component\AdminUIEnhancer();
-		$this->components['core_settings'] = new Setting\EmailLogSetting();
+		$this->components['core_settings'] = new Setting\CoreSetting();
 	}
 
 	/**

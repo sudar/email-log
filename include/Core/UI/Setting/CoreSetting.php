@@ -10,7 +10,7 @@ use EmailLog\Core\UI\Setting\SettingField;
  *
  * @since 2.1.0
  */
-class EmailLogSetting extends Setting {
+class CoreSetting extends Setting {
 
 	/**
 	 * Implement `initialize()` method.
