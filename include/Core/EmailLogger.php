@@ -43,7 +43,7 @@ class EmailLogger implements Loadie {
 		// See https://wordpress.org/support/topic/illegal-string-offset-attachments/
 		$mail_info = wp_parse_args( $mail_info, array(
 			'attachments' => array(),
-			'to_email'    => '',
+			'to'          => '',
 			'subject'     => '',
 			'headers'     => '',
 		) );
