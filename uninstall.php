@@ -34,7 +34,7 @@ if ( is_multisite() ) {
 function email_log_delete_table() {
 	global $wpdb;
 
-	$retain_email_log = get_option( 'el_email_log' );
+	$retain_email_log = get_option( 'el_email_log_core' );
 
 	// This is hardcoded on purpose, since the entire plugin is not loaded during uninstall.
 	$table_name = $wpdb->prefix . 'email_log';
@@ -42,8 +42,8 @@ function email_log_delete_table() {
 	if ( $wpdb->get_var( "SHOW TABLES LIKE '{$table_name}'" ) == $table_name ) {
 		if ( ! empty( $retain_email_log ) &&
 			 is_array( $retain_email_log ) &&
-			 array_key_exists( 'remove_email_logs', $retain_email_log ) &&
-			 'true' === strtolower( $retain_email_log['remove_email_logs'] ) ) {
+			 array_key_exists( 'remove_on_uninstall', $retain_email_log ) &&
+			 'true' === strtolower( $retain_email_log['remove_on_uninstall'] ) ) {
 			// If table is present, drop it
 			$wpdb->query( "DROP TABLE $table_name" );
 		}
@@ -51,5 +51,5 @@ function email_log_delete_table() {
 
 	// Delete the options.
 	delete_option( 'email-log-db' );
-	delete_option( 'el_email_log' );
+	delete_option( 'el_email_log_core' );
 }

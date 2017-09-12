@@ -83,7 +83,7 @@ function get_log_columns_to_export() {
  */
 function can_current_user_view_email_log() {
 	$return_value = false;
-	$option       = get_option( 'el_email_log' );
+	$option       = get_option( 'el_email_log_core' );
 
 	if ( current_user_can( 'administrator' ) ) {
 		$return_value = true;

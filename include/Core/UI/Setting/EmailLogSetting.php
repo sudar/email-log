@@ -10,7 +10,7 @@ class EmailLogSetting extends Setting {
 	protected function initialize() {
 		$this->section->id          = 'email-log';
 		$this->section->title       = __( 'Email Log Settings', 'email-log' );
-		$this->section->option_name = 'el_email_log';
+		$this->section->option_name = 'el_email_log_core';
 
 		$this->load();
 	}
