@@ -1,20 +1,13 @@
 <?php
 namespace EmailLog\Core\UI\Setting;
-use EmailLog\Core\UI\Setting\SettingField;
 
 /**
- * Class EmailLogSetting
- * @package EmailLog\Core\UI\Setting
- *
- * All Email Log Core settings are handled.
+ * All Email Log Core settings.
  *
  * @since 2.1.0
  */
 class CoreSetting extends Setting {
 
-	/**
-	 * Implement `initialize()` method.
-	 */
 	protected function initialize() {
 		$this->section->id          = 'email-log';
 		$this->section->title       = __( 'Email Log Settings', 'email-log' );
@@ -50,13 +43,6 @@ class CoreSetting extends Setting {
 	<?php
 	}
 
-	/**
-	 * Implement `sanitize()` method.
-	 *
-	 * @param mixed $values {@inheritDoc}
-	 *
-	 * @return mixed $values {@inheritDoc}
-	 */
 	public function sanitize( $values ) {
 		if ( ! is_array( $values ) ) {
 			return array();

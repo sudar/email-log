@@ -32,8 +32,8 @@ abstract class EmailLogAddon {
 	/**
 	 * Construct a new EmailLogAddon instance.
 	 *
-	 * @param string                       $addon_file Addon main file.
-	 * @param \EmailLog\Addon\AddonUpdater $updater   Addon Updater.
+	 * @param string                            $addon_file Addon main file.
+	 * @param \EmailLog\Addon\AddonUpdater|null $updater    Addon Updater.
 	 */
 	public function __construct( $addon_file, $updater = null ) {
 		$this->addon_file = $addon_file;
