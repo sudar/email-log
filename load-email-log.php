@@ -37,7 +37,6 @@ function load_email_log( $plugin_file ) {
 	$loader->register();
 
 	$email_log = new \EmailLog\Core\EmailLog( $plugin_file, $loader, new \EmailLog\Core\DB\TableManager() );
-	$email_log->setting = new EmailLog\Core\UI\Setting\EmailLogSetting();
 
 	$email_log->set_licenser( new \EmailLog\Addon\License\Licenser() );
 
@@ -48,6 +47,7 @@ function load_email_log( $plugin_file ) {
 	$email_log->add_loadie( new \EmailLog\Core\Request\NonceChecker() );
 	$email_log->add_loadie( new \EmailLog\Core\Request\LogListAction() );
 	$email_log->add_loadie( new \EmailLog\Core\Request\OverridePluginAPI() );
+	$email_log->add_loadie( new EmailLog\Core\UI\Setting\EmailLogSetting() );
 
 	// `register_activation_hook` can't be called from inside any hook.
 	register_activation_hook( $plugin_file, array( $email_log->table_manager, 'on_activate' ) );
