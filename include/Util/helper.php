@@ -61,7 +61,7 @@ function sanitize_email_with_name( $string ) {
  *
  * @since 2.0.0
  *
- * @return array List of Columns to export.
+ * @return string[] List of Columns to export.
  */
 function get_log_columns_to_export() {
 
