@@ -130,6 +130,10 @@ function can_current_user_view_email_log() {
  * @param string $current The current value to be checked.
  */
 function checked_array( $values, $current ) {
+	if ( ! is_array( $values ) ) {
+		return;
+	}
+
 	if ( in_array( $current, $values ) ) {
 		echo "checked='checked'";
 	}
