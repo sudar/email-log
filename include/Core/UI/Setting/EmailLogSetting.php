@@ -15,11 +15,6 @@ class EmailLogSetting extends Setting {
 		$this->load();
 	}
 
-	/**
-	 * Implement `get_fields()` method.
-	 *
-	 * @return array
-	 */
 	public function get_fields() {
 		$fields = array();
 
@@ -41,9 +36,6 @@ class EmailLogSetting extends Setting {
 		return $fields;
 	}
 
-	/**
-	 * Implement `render()` method.
-	 */
 	public function render() {
 	?>
 		<p><?php _e( 'Email Log Settings lets you control who can view Email Logs and lets you keep the Email Logs when you delete the plugin.', 'email-log' ); ?></p>
