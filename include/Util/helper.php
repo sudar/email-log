@@ -81,7 +81,7 @@ function get_log_columns_to_export() {
  *
  * @return bool
  */
-function can_current_user_email_log() {
+function can_current_user_view_email_log() {
 	$return_value = false;
 	$option       = get_option( 'el_email_log' );
 

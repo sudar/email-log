@@ -223,7 +223,7 @@ class EmailLog {
 	 * Shows the Email Log only to allowed User roles set in the Plugin's settings page.
 	 */
 	public function remove_email_log_menu_by_user_role() {
-		if ( ! \EmailLog\Util\can_current_user_email_log() ) {
+		if ( ! \EmailLog\Util\can_current_user_view_email_log() ) {
 			remove_menu_page( 'email-log' );
 		}
 	}
