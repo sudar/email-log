@@ -27,19 +27,7 @@ class LogListAction implements Loadie {
 	 * @since 1.6
 	 */
 	public function view_log_message() {
-		/**
-		 * Filters the User capability to View Email Log content.
-		 *
-		 * Refer User Capabilities at
-		 * @link https://codex.wordpress.org/Roles_and_Capabilities#Capabilities
-		 *
-		 * @since 2.0.0
-		 *
-		 * @param string $user_capability User capability to view Log content.
-		 */
-		$view_email_log_capability = apply_filters( 'el_view_email_log_capability', 'manage_options' );
-
-		if ( current_user_can( $view_email_log_capability ) ) {
+		if ( \EmailLog\Util\can_current_user_view_email_log() ) {
 			$id = absint( $_GET['log_id'] );
 
 			if ( $id > 0 ) {
