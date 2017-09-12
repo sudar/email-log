@@ -79,7 +79,7 @@ class EmailLogSetting extends Setting {
 				<?php
 			} else {
 				?>
-				<p><input type="checkbox" name="<?php echo esc_attr( $this->section->option_name . '[' . $args['id'] . '][]' ); ?>" value="<?php echo trim( $role['name'] ); ?>" <?php $this->checked_array( $option[ $args['id'] ], trim( $role['name'] ) ); ?> /> <?php echo trim( $role['name'] ); ?>
+				<p><input type="checkbox" name="<?php echo esc_attr( $this->section->option_name . '[' . $args['id'] . '][]' ); ?>" value="<?php echo trim( $role['name'] ); ?>" <?php \EmailLog\Util\checked_array( $option[ $args['id'] ], trim( $role['name'] ) ); ?> /> <?php echo trim( $role['name'] ); ?>
 				</p>
 				<?php
 			}
@@ -101,19 +101,5 @@ class EmailLogSetting extends Setting {
 		<input type="checkbox" name="<?php echo esc_attr( $this->section->option_name . '[' . $args['id'] . ']' ); ?>" value="true" <?php checked( 'true', $option[ $args['id'] ] ); ?> /> <?php _e( 'Check this box if you would like to completely remove all of its data when the plugin is deleted.', 'email-log' ) ?>
 		<p><?php _e( '<small><strong>Note:</strong> You can also export the Email Logs using our <a href="https://wpemaillog.com/addons/export-logs/" rel="noopener noreferrer" target="_blank">Export Logs</a> add-on.</small>', 'email-log' ); ?></p>
 <?php
-	}
-
-	/**
-	 * Checks the Checkbox when values are present in a given array.
-	 *
-	 * Use this function in Checkbox fields.
-	 *
-	 * @param array $values   List of all possible values.
-	 * @param string $current The current value to be checked.
-	 */
-	public function checked_array( $values, $current ) {
-		if ( in_array( $current, $values ) ) {
-			echo "checked='checked'";
-		}
 	}
 }

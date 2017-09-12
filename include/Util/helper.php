@@ -101,3 +101,19 @@ function can_current_user_view_email_log() {
 
 	return $return_value;
 }
+
+/**
+ * Checks the Checkbox when values are present in a given array.
+ *
+ * Use this function in Checkbox fields.
+ *
+ * @since 2.1.0
+ *
+ * @param array $values   List of all possible values.
+ * @param string $current The current value to be checked.
+ */
+function checked_array( $values, $current ) {
+	if ( in_array( $current, $values ) ) {
+		echo "checked='checked'";
+	}
+}
