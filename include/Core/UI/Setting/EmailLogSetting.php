@@ -2,6 +2,14 @@
 namespace EmailLog\Core\UI\Setting;
 use EmailLog\Core\UI\Setting\SettingField;
 
+/**
+ * Class EmailLogSetting
+ * @package EmailLog\Core\UI\Setting
+ *
+ * All Email Log Core settings are handled.
+ *
+ * @since 2.1.0
+ */
 class EmailLogSetting extends Setting {
 
 	/**
