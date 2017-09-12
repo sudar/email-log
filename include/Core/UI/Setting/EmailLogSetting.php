@@ -61,6 +61,8 @@ class EmailLogSetting extends Setting {
 		if ( ! is_array( $values ) ) {
 			return array();
 		}
+
+		// TODO: Dissect sanitization methods to have separate methods for each field.
 		foreach ( $values as $key => $value ) {
 			if ( $key === 'allowed_user_roles' ) {
 				$values[ $key ] = array_map( 'sanitize_text_field', $values[ $key ] );
