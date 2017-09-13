@@ -22,7 +22,7 @@ function _manually_load_plugin() {
 }
 
 // Check if the tests are running. Only load the plugin if they aren't.
-if ( ! $_uninstall_test_lib_exists || ! running_wp_plugin_uninstall_tests() ) {
+if ( ! running_wp_plugin_uninstall_tests() ) {
 	tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 }
 

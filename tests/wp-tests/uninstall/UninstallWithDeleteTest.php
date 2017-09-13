@@ -7,9 +7,9 @@ if ( ! class_exists( '\\WP_Plugin_Uninstall_UnitTestCase' ) ) {
 /**
  * Plugin uninstall test case.
  *
- * @group uninstall
+ * @group uninstall-delete
  */
-class UninstallWithoutDeleteTest extends \WP_Plugin_Uninstall_UnitTestCase {
+class UninstallWithDeleteTest extends \WP_Plugin_Uninstall_UnitTestCase {
 	/**
 	 * The full path to the main plugin file.
 	 *
@@ -27,9 +27,9 @@ class UninstallWithoutDeleteTest extends \WP_Plugin_Uninstall_UnitTestCase {
 	}
 
 	/**
-	 * Test installation and uninstallation without deleting table.
+	 * Test installation and uninstallation with deleting table.
 	 */
-	public function test_uninstall_without_deleting_table() {
+	public function test_uninstall_with_deleting_table() {
 		global $wpdb;
 
 		/*
@@ -42,15 +42,19 @@ class UninstallWithoutDeleteTest extends \WP_Plugin_Uninstall_UnitTestCase {
 		// Check that an option was added to the database.
 		$this->assertEquals( '0.1', get_option( 'email-log-db' ) );
 
-		/*
-		 * Now, test that it uninstalls itself properly.
-		 * By default table should not be deleted.
-		 */
+		// add the option that will delete the table during uninstall.
+		$value = array(
+			'allowed_user_roles'  => array(),
+			'remove_on_uninstall' => 'true',
+		);
+		update_option( 'email-log-core', $value );
 
-		// You must call this to perform uninstallation.
 		$this->uninstall();
 
 		// Check that the table was deleted.
-		$this->assertTableExists( $wpdb->prefix . 'email_log' );
+		$this->assertTableNotExists( $wpdb->prefix . 'email_log' );
+
+		// Check that all options with a prefix was deleted.
+		$this->assertNoOptionsWithPrefix( 'email-log' );
 	}
 }
