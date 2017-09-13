@@ -14,7 +14,7 @@ class CoreSetting extends Setting {
 	protected function initialize() {
 		$this->section->id          = 'email-log-core';
 		$this->section->title       = __( 'Core Email Log Settings', 'email-log' );
-		$this->section->option_name = 'el_email_log_core';
+		$this->section->option_name = 'email-log-core';
 
 		$this->section->field_labels = array(
 			'allowed_user_roles'  => __( 'Allowed User Roles', 'email-log' ),
