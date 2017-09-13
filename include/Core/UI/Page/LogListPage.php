@@ -30,6 +30,13 @@ class LogListPage extends BasePage {
 	const DELETE_LOG_ACTION = 'el-delete-email-log';
 
 	/**
+	 * Capability to manage email logs.
+	 *
+	 * @since 2.1.0
+	 */
+	const CAPABILITY = 'manage_email_logs';
+
+	/**
 	 * Setup hooks.
 	 */
 	public function load() {
@@ -49,7 +56,7 @@ class LogListPage extends BasePage {
 		add_menu_page(
 			__( 'Email Log', 'email-log' ),
 			__( 'Email Log', 'email-log' ),
-			'manage_options',
+			self::CAPABILITY,
 			self::PAGE_SLUG,
 			array( $this, 'render_page' ),
 			'dashicons-email-alt',
@@ -60,7 +67,7 @@ class LogListPage extends BasePage {
 			self::PAGE_SLUG,
 			__( 'View Logs', 'email-log'),
 			__( 'View Logs', 'email-log'),
-			'manage_options',
+			self::CAPABILITY,
 			self::PAGE_SLUG,
 			array( $this, 'render_page' )
 		);
@@ -81,6 +88,10 @@ class LogListPage extends BasePage {
 	 * Render page.
 	 */
 	public function render_page() {
+		if ( ! current_user_can( self::CAPABILITY ) ) {
+			return;
+		}
+
 		add_thickbox();
 
 		$this->log_list_table->prepare_items();

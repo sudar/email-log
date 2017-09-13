@@ -1,6 +1,7 @@
 <?php namespace EmailLog\Core\Request;
 
 use EmailLog\Core\Loadie;
+use EmailLog\Core\UI\Page\LogListPage;
 
 /**
  * Actions performed in Log List.
@@ -27,69 +28,73 @@ class LogListAction implements Loadie {
 	 * @since 1.6
 	 */
 	public function view_log_message() {
-		if ( \EmailLog\Util\can_current_user_view_email_log() ) {
-			$id = absint( $_GET['log_id'] );
-
-			if ( $id > 0 ) {
-				$log_items = $this->get_table_manager()->fetch_log_items_by_id( array( $id ) );
-				if ( count( $log_items ) > 0 ) {
-					$log_item = $log_items[0];
-
-					ob_start();
-					?>
-					<table style="width: 100%;">
-						<tr style="background: #eee;">
-							<td style="padding: 5px;"><?php _e( 'Sent at', 'email-log' ); ?>:</td>
-							<td style="padding: 5px;"><?php echo $log_item['sent_date'] ?></td>
-						</tr>
-						<tr style="background: #eee;">
-							<td style="padding: 5px;"><?php _e( 'To', 'email-log' ); ?>:</td>
-							<td style="padding: 5px;"><?php echo $log_item['to_email'] ?></td>
-						</tr>
-						<tr style="background: #eee;">
-							<td style="padding: 5px;"><?php _e( 'Subject', 'email-log' ); ?>:</td>
-							<td style="padding: 5px;"><?php echo $log_item['subject'] ?></td>
-						</tr>
-
-						<?php
-					   /**
-						* After the headers are displayed in the View Message thickbox.
-					    * This action can be used to add additional headers.
-						*
-						* @since 2.0.0
-						*
-						* @param array $log_item Log item that is getting rendered.
-						*/
-						do_action( 'el_view_log_after_headers', $log_item );
-						?>
-
-					</table>
-
-					<div id="tabs">
-						<ul>
-							<li><a href="#tabs-1"><?php _e( 'HTML', 'email-log' ); ?></a></li>
-							<li><a href="#tabs-2"><?php _e( 'Text', 'email-log' ); ?></a></li>
-						</ul>
-						<div id="tabs-1">
-							<?php echo $log_item['message']; ?>
-						</div>
-						<div id="tabs-2">
-							<textarea class="tabs-text-textarea"><?php echo esc_textarea( $log_item['message'] ); ?></textarea>
-						</div>
-					</div>
-
-					<div id="view-message-footer">
-						<a href="#" id="thickbox-footer-close"><?php _e( 'Close', 'email-log' ); ?></a>
-					</div>
-
-					<?php
-					$output = ob_get_clean();
-					echo $output;
-				}
-			}
+		if ( ! current_user_can( LogListPage::CAPABILITY ) ) {
+			wp_die();
 		}
 
-		die(); // this is required to return a proper result.
+		$id = absint( $_GET['log_id'] );
+
+		if ( $id <= 0 ) {
+			wp_die();
+		}
+
+		$log_items = $this->get_table_manager()->fetch_log_items_by_id( array( $id ) );
+		if ( count( $log_items ) > 0 ) {
+			$log_item = $log_items[0];
+
+			ob_start();
+			?>
+			<table style="width: 100%;">
+				<tr style="background: #eee;">
+					<td style="padding: 5px;"><?php _e( 'Sent at', 'email-log' ); ?>:</td>
+					<td style="padding: 5px;"><?php echo $log_item['sent_date'] ?></td>
+				</tr>
+				<tr style="background: #eee;">
+					<td style="padding: 5px;"><?php _e( 'To', 'email-log' ); ?>:</td>
+					<td style="padding: 5px;"><?php echo $log_item['to_email'] ?></td>
+				</tr>
+				<tr style="background: #eee;">
+					<td style="padding: 5px;"><?php _e( 'Subject', 'email-log' ); ?>:</td>
+					<td style="padding: 5px;"><?php echo $log_item['subject'] ?></td>
+				</tr>
+
+				<?php
+			   /**
+				* After the headers are displayed in the View Message thickbox.
+				* This action can be used to add additional headers.
+				*
+				* @since 2.0.0
+				*
+				* @param array $log_item Log item that is getting rendered.
+				*/
+				do_action( 'el_view_log_after_headers', $log_item );
+				?>
+
+			</table>
+
+			<div id="tabs">
+				<ul>
+					<li><a href="#tabs-1"><?php _e( 'HTML', 'email-log' ); ?></a></li>
+					<li><a href="#tabs-2"><?php _e( 'Text', 'email-log' ); ?></a></li>
+				</ul>
+				<div id="tabs-1">
+					<?php echo $log_item['message']; ?>
+				</div>
+				<div id="tabs-2">
+					<textarea class="tabs-text-textarea"><?php echo esc_textarea( $log_item['message'] ); ?></textarea>
+				</div>
+			</div>
+
+			<div id="view-message-footer">
+				<a href="#" id="thickbox-footer-close"><?php _e( 'Close', 'email-log' ); ?></a>
+			</div>
+
+			<?php
+			$output = ob_get_clean();
+			echo $output;
+		}
+
+		wp_die(); // this is required to return a proper result.
 	}
 
 	/**

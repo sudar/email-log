@@ -7,6 +7,8 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
  * Ideally each add-on may have a different setting section.
  *
  * @see add_settings_section()
+ *
+ * @since 2.0.0
  */
 class SettingSection {
 
@@ -36,6 +38,24 @@ class SettingSection {
 	 * @var SettingField[]
 	 */
 	public $fields = array();
+
+	/**
+	 * Default value of the fields.
+	 *
+	 * @var array
+	 *
+	 * @since 2.1.0
+	 */
+	public $default_value = array();
+
+	/**
+	 * Field labels.
+	 *
+	 * @var array
+	 *
+	 * @since 2.1.0
+	 */
+	public $field_labels = array();
 
 	/**
 	 * Add a field to the section.

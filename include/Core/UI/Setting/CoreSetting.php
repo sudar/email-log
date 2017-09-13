@@ -1,5 +1,8 @@
-<?php
-namespace EmailLog\Core\UI\Setting;
+<?php namespace EmailLog\Core\UI\Setting;
+
+use EmailLog\Core\UI\Page\LogListPage;
+
+defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 /**
  * All Email Log Core settings.
@@ -9,81 +12,85 @@ namespace EmailLog\Core\UI\Setting;
 class CoreSetting extends Setting {
 
 	protected function initialize() {
-		$this->section->id          = 'email-log';
-		$this->section->title       = __( 'Email Log Settings', 'email-log' );
+		$this->section->id          = 'email-log-core';
+		$this->section->title       = __( 'Core Email Log Settings', 'email-log' );
 		$this->section->option_name = 'el_email_log_core';
 
-		$this->load();
-	}
-
-	public function get_fields() {
-		$fields = array();
-
-		$email_log_fields = array(
+		$this->section->field_labels = array(
 			'allowed_user_roles'  => __( 'Allowed User Roles', 'email-log' ),
 			'remove_on_uninstall' => __( 'Remove Data on Uninstall?', 'email-log' ),
 		);
 
-		foreach ( $email_log_fields as $field_id => $label ) {
-			$field           = new SettingField();
-			$field->id       = $field_id;
-			$field->title    = $label;
-			$field->args     = array( 'id' => $field_id );
-			$field->callback = array( $this,'render_' . $field_id . '_settings' );
+		$this->section->default_value = array(
+			'allowed_user_roles'  => array(),
+			'remove_on_uninstall' => '',
+		);
 
-			$fields[] = $field;
-		}
-
-		return $fields;
+		$this->load();
 	}
 
-	public function render() {
-	?>
-		<p><?php _e( 'Email Log Settings lets you control who can view Email Logs and lets you keep the Email Logs when you delete the plugin.', 'email-log' ); ?></p>
-	<?php
-	}
+	/**
+	 * Override `load` method so that the core settings are displayed first.
+	 *
+	 * @inheritdoc
+	 */
+	public function load() {
+		add_filter( 'el_setting_sections', array( $this, 'register' ), 9 );
 
-	public function sanitize( $values ) {
-		if ( ! is_array( $values ) ) {
-			return array();
-		}
-
-		// TODO: Dissect sanitization methods to have separate methods for each field.
-		foreach ( $values as $key => $value ) {
-			if ( $key === 'allowed_user_roles' ) {
-				$values[ $key ] = array_map( 'sanitize_text_field', $values[ $key ] );
-			} elseif ( $key === 'remove_on_uninstall' ) {
-				$values[ $key ] = sanitize_text_field( $value );
-			}
-		}
-		return $values;
+		add_action( 'update_option_' . $this->section->option_name, array( $this, 'allowed_user_roles_changed'), 10, 2 );
 	}
 
 	/**
 	 * Renders the Email Log `Allowed User Roles` settings.
 	 *
-	 * @param array $args
+	 * @param array $args Arguments.
 	 */
 	public function render_allowed_user_roles_settings( $args ) {
-		$option          = $this->get_value();
+		$option         = $this->get_value();
+		$selected_roles = $option[ $args['id'] ];
+
+		$field_name = $this->section->option_name . '[' . $args['id'] . '][]';
+
 		$available_roles = get_editable_roles();
-		foreach( $available_roles as $role ) {
-			if ( trim( $role['name'] ) === 'Administrator' ) {
-				?>
-				<p><input type="checkbox" name="<?php echo esc_attr( $this->section->option_name . '[' . $args['id'] . '][]' ); ?>" value="<?php echo trim( $role['name'] ); ?>" checked="checked" /> <?php echo trim( $role['name'] ); ?>
-				</p>
-				<?php
-			} else {
-				?>
-				<p><input type="checkbox" name="<?php echo esc_attr( $this->section->option_name . '[' . $args['id'] . '][]' ); ?>" value="<?php echo trim( $role['name'] ); ?>" <?php \EmailLog\Util\checked_array( $option[ $args['id'] ], trim( $role['name'] ) ); ?> /> <?php echo trim( $role['name'] ); ?>
-				</p>
-				<?php
-			}
-		}
+		unset( $available_roles['administrator'] );
 		?>
-		<p><?php _e( '<small><strong>Note:</strong> Users with the above <strong>User Roles</strong> can view Email Logs. The default User Role is \'<strong>administrator</strong>\'.</small>', 'email-log' ); ?>
-		<?php _e( '<small>Administrator role cannot be disabled.</small>', 'email-log' ); ?></p>
+
+		<p>
+			<input type="checkbox" checked disabled><?php _e( 'Administrator', 'email-log' ); ?>
+		</p>
+
+		<?php foreach ( $available_roles as $role_id => $role ) : ?>
+			<p>
+				<input type="checkbox" name="<?php echo esc_attr( $field_name ); ?>" value="<?php echo esc_attr( $role_id ); ?>"
+					<?php \EmailLog\Util\checked_array( $selected_roles, $role_id ); ?>>
+
+				<?php echo $role['name']; ?>
+			</p>
+		<?php endforeach; ?>
+
+		<p>
+			<em>
+				<?php _e( '<strong>Note:</strong> Users with the above User Roles can view Email Logs.', 'email-log' ); ?>
+				<?php _e( 'Administrator role always has access and cannot be disabled.', 'email-log' ); ?>
+			</em>
+		</p>
+
 		<?php
+	}
+
+	/**
+	 * Sanitize allowed user roles setting.
+	 *
+	 * @param array $roles User selected user roles.
+	 *
+	 * @return array Sanitized user roles.
+	 */
+	public function sanitize_allowed_user_roles( $roles ) {
+		if ( ! is_array( $roles ) ) {
+			return array();
+		}
+
+		return array_map( 'sanitize_text_field', $roles );
 	}
 
 	/**
@@ -92,10 +99,66 @@ class CoreSetting extends Setting {
 	 * @param array $args
 	 */
 	public function render_remove_on_uninstall_settings( $args ) {
-		$option          = $this->get_value();
-?>
-		<input type="checkbox" name="<?php echo esc_attr( $this->section->option_name . '[' . $args['id'] . ']' ); ?>" value="true" <?php checked( 'true', $option[ $args['id'] ] ); ?> /> <?php _e( 'Check this box if you would like to completely remove all of its data when the plugin is deleted.', 'email-log' ) ?>
-		<p><?php _e( '<small><strong>Note:</strong> You can also export the Email Logs using our <a href="https://wpemaillog.com/addons/export-logs/" rel="noopener noreferrer" target="_blank">Export Logs</a> add-on.</small>', 'email-log' ); ?></p>
-<?php
+		$option      = $this->get_value();
+		$remove_data = $option[ $args['id'] ];
+
+		$field_name = $this->section->option_name . '[' . $args['id'] . ']';
+		?>
+
+		<input type="checkbox" name="<?php echo esc_attr( $field_name ); ?>" value="true" <?php checked( 'true', $remove_data ); ?>>
+		<?php _e( 'Check this box if you would like to completely remove all of its data when the plugin is deleted.', 'email-log' ) ?>
+
+		<p>
+			<em>
+				<?php _e( '<strong>Note:</strong> You can also export the Email Logs using our <a href="https://wpemaillog.com/addons/export-logs/" rel="noopener noreferrer" target="_blank">Export Logs</a> add-on.', 'email-log' ); ?>
+			</em>
+		</p>
+
+		<?php
+	}
+
+	/**
+	 * Sanitize Remove on uninstall value.
+	 *
+	 * @param string $value User entered value.
+	 *
+	 * @return string Sanitized value.
+	 */
+	public function sanitize_remove_on_uninstall( $value ) {
+		return sanitize_text_field( $value );
+	}
+
+	/**
+	 * Change user role capabilities when the allowed user role list is changed.
+	 *
+	 * @param array $old_value Old Value.
+	 * @param array $new_value New Value.
+	 */
+	public function allowed_user_roles_changed( $old_value, $new_value ) {
+		$old_roles = $old_value['allowed_user_roles'];
+		if ( ! is_array( $old_roles ) ) {
+			$old_roles = array( $old_roles );
+		}
+
+		$new_roles = $new_value['allowed_user_roles'];
+		if ( ! is_array( $new_roles ) ) {
+			$new_roles = array( $new_roles );
+		}
+
+		foreach ( $old_roles as $old_role ) {
+			$role = get_role( $old_role );
+
+			if ( ! is_null( $role ) ) {
+				$role->remove_cap( LogListPage::CAPABILITY );
+			}
+		}
+
+		foreach ( $new_roles as $new_role ) {
+			$role = get_role( $new_role );
+
+			if ( ! is_null( $role ) ) {
+				$role->add_cap( LogListPage::CAPABILITY );
+			}
+		}
 	}
 }

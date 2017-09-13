@@ -46,7 +46,7 @@ class NonceChecker implements Loadie {
 		if ( isset( $_REQUEST['action'] ) ) {
 			$action = sanitize_text_field( $_REQUEST['action'] );
 
-			if ( 'el-log-list-' !== substr( $action, 0, 12 ) ) {
+			if ( 'el-log-list-delete' !== substr( $action, 0, 18 ) ) {
 				return;
 			}
 
