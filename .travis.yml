@@ -43,7 +43,7 @@ install:
   - |
     if [[ $TRAVIS_PHP_VERSION == 5.6 ]]; then
       # Run composer install only for PHP 5.6
-      # composer is used for testing Unintall and Codeception
+      # composer is used for running phpcs and testing Unintall and Codeception
       composer install
     fi
 
@@ -68,6 +68,9 @@ script:
         # Run uninstall tests in PHP 5.6
         phpunit --group=uninstall-delete
         phpunit --group=uninstall
+
+        # Run PHPCompatibility code sniffs.
+        bash bin/phpcs.sh
       fi
     fi
 
