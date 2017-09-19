@@ -1,6 +1,6 @@
 <?php
 /**
- * Uninstall page for Email Log Plugin to clean up db.
+ * Uninstall page for Email Log Plugin to clean up all plugin data.
  *
  * This file is named uninstall.php since WordPress requires that name.
  */
@@ -17,21 +17,24 @@ if ( is_multisite() ) {
 
 	foreach ( $sites as $site ) {
 		switch_to_blog( $site['blog_id'] );
-		email_log_delete_table();
+		email_log_delete_db_data();
 		restore_current_blog();
 	}
 } else {
-	email_log_delete_table();
+	email_log_delete_db_data();
 }
 
 /**
- * Delete email log table and db option
+ * Delete all email log data from db.
  *
+ * The data include email log table, options, capability and add-on license data.
+ *
+ * TODO: Delete add-on license keys.
  * @since 1.7
  *
  * @global object $wpdb
  */
-function email_log_delete_table() {
+function email_log_delete_db_data() {
 	global $wpdb;
 
 	$remove_data_on_uninstall = false;
@@ -54,6 +57,13 @@ function email_log_delete_table() {
 		delete_option( 'email-log-db' );
 		delete_option( 'email-log-core' );
 
-		// TODO: Delete add-on license keys.
+		$roles = get_editable_roles();
+		foreach ( $roles as $role_name => $role_obj ) {
+			$role = get_role( $role_name );
+
+			if ( ! is_null( $role ) ) {
+				$role->remove_cap( 'manage_email_logs' );
+			}
+		}
 	}
 }

@@ -56,5 +56,16 @@ class UninstallWithDeleteTest extends \WP_Plugin_Uninstall_UnitTestCase {
 
 		// Check that all options with a prefix was deleted.
 		$this->assertNoOptionsWithPrefix( 'email-log' );
+
+		// check the capability has been removed from all user roles.
+		$roles = get_editable_roles();
+		foreach ( $roles as $role_name => $role_obj ) {
+			$role = get_role( $role_name );
+
+			if ( ! is_null( $role ) ) {
+				$this->assertFalse( $role->has_cap( 'manage_email_logs' ), 'Capability is not cleaned up' );
+			}
+		}
+
 	}
 }
