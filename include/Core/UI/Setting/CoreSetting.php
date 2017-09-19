@@ -135,14 +135,21 @@ class CoreSetting extends Setting {
 	 * @param array $new_value New Value.
 	 */
 	public function allowed_user_roles_changed( $old_value, $new_value ) {
-		$old_roles = $old_value['allowed_user_roles'];
-		if ( ! is_array( $old_roles ) ) {
-			$old_roles = array( $old_roles );
+		$old_roles = array();
+		$new_roles = array();
+
+		if ( array_key_exists( 'allowed_user_roles', $old_value ) ) {
+			$old_roles = $old_value['allowed_user_roles'];
+			if ( ! is_array( $old_roles ) ) {
+				$old_roles = array( $old_roles );
+			}
 		}
 
-		$new_roles = $new_value['allowed_user_roles'];
-		if ( ! is_array( $new_roles ) ) {
-			$new_roles = array( $new_roles );
+		if ( array_key_exists( 'allowed_user_roles', $new_value ) ) {
+			$new_roles = $new_value['allowed_user_roles'];
+			if ( ! is_array( $new_roles ) ) {
+				$new_roles = array( $new_roles );
+			}
 		}
 
 		foreach ( $old_roles as $old_role ) {
