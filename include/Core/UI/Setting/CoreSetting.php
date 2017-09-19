@@ -110,7 +110,10 @@ class CoreSetting extends Setting {
 
 		<p>
 			<em>
-				<?php _e( '<strong>Note:</strong> You can also export the Email Logs using our <a href="https://wpemaillog.com/addons/export-logs/" rel="noopener noreferrer" target="_blank">Export Logs</a> add-on.', 'email-log' ); ?>
+				<?php printf(
+					__( '<strong>Note:</strong> You can also export the Email Logs using our <a href="%s" rel="noopener noreferrer" target="_blank">Export Logs</a> add-on.', 'email-log' ),
+					'https://wpemaillog.com/addons/export-logs/?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=settings&utm_content=el'
+				); ?>
 			</em>
 		</p>
 
