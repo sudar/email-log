@@ -29,7 +29,6 @@ if ( is_multisite() ) {
  *
  * The data include email log table, options, capability and add-on license data.
  *
- * TODO: Delete add-on license keys.
  * @since 1.7
  *
  * @global object $wpdb
@@ -65,5 +64,8 @@ function email_log_delete_db_data() {
 				$role->remove_cap( 'manage_email_logs' );
 			}
 		}
+
+		delete_option( 'el_bundle_license' );
+		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE 'el_license_%'" );
 	}
 }

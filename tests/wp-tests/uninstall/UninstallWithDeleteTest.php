@@ -67,5 +67,8 @@ class UninstallWithDeleteTest extends \WP_Plugin_Uninstall_UnitTestCase {
 			}
 		}
 
+		// check whether the license options got deleted.
+		$this->assertNoOptionsWithPrefix( 'el_bundle_license' );
+		$this->assertNoOptionsWithPrefix( 'el_license_' );
 	}
 }

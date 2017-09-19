@@ -4,6 +4,7 @@
 - New: GUI option to choose the user roles that can access email logs.
 - New: GUI option to delete email log table when the plugin is uninstalled.
 - Tweak: Performance improvements.
+- Tweak: Delete all traces of the plugin from DB if the user chooses to destroy data during uninstall.
 - Fix: Handle cases where there is a quote in front of email address.
 - Fix: Handle cases where array passed to `wp_mail` may not contain all the required fields.
 
