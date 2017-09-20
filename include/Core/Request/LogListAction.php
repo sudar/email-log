@@ -20,6 +20,7 @@ class LogListAction implements Loadie {
 
 		add_action( 'el-log-list-delete', array( $this, 'delete_logs' ) );
 		add_action( 'el-log-list-delete-all', array( $this, 'delete_all_logs' ) );
+		add_action( 'el-log-list-manage-user-roles-changed', array( $this, 'update_capabilities_for_user_roles' ), 10, 2 );
 	}
 
 	/**
@@ -122,6 +123,34 @@ class LogListAction implements Loadie {
 	public function delete_all_logs() {
 		$logs_deleted = $this->get_table_manager()->delete_all_logs();
 		$this->render_log_deleted_notice( $logs_deleted );
+	}
+
+	/**
+	 * Update user role capabilities when the allowed user role list is changed.
+	 *
+	 * The capability will be removed from old user roles and added to new user roles.
+	 *
+	 * @since 2.1.0
+	 *
+	 * @param array $old_roles Old user roles.
+	 * @param array $new_roles New user roles.
+	 */
+	public function update_capabilities_for_user_roles( $old_roles, $new_roles ) {
+		foreach ( $old_roles as $old_role ) {
+			$role = get_role( $old_role );
+
+			if ( ! is_null( $role ) ) {
+				$role->remove_cap( LogListPage::CAPABILITY );
+			}
+		}
+
+		foreach ( $new_roles as $new_role ) {
+			$role = get_role( $new_role );
+
+			if ( ! is_null( $role ) ) {
+				$role->add_cap( LogListPage::CAPABILITY );
+			}
+		}
 	}
 
 	/**

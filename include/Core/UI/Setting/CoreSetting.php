@@ -1,7 +1,5 @@
 <?php namespace EmailLog\Core\UI\Setting;
 
-use EmailLog\Core\UI\Page\LogListPage;
-
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 /**
@@ -37,7 +35,8 @@ class CoreSetting extends Setting {
 	public function load() {
 		add_filter( 'el_setting_sections', array( $this, 'register' ), 9 );
 
-		add_action( 'update_option_' . $this->section->option_name, array( $this, 'allowed_user_roles_changed'), 10, 2 );
+		add_action( 'add_option_' . $this->section->option_name, array( $this, 'allowed_user_roles_added' ), 10, 2 );
+		add_action( 'update_option_' . $this->section->option_name, array( $this, 'allowed_user_roles_changed' ), 10, 2 );
 	}
 
 	/**
@@ -132,43 +131,57 @@ class CoreSetting extends Setting {
 	}
 
 	/**
+	 * Allowed user role list option is added.
+	 *
+	 * @param string $option Option name.
+	 * @param array  $value  Option value.
+	 */
+	public function allowed_user_roles_added( $option, $value ) {
+		$this->allowed_user_roles_changed( array(), $value );
+	}
+
+	/**
+	 * Allowed user role list option was update.
+	 *
 	 * Change user role capabilities when the allowed user role list is changed.
 	 *
 	 * @param array $old_value Old Value.
 	 * @param array $new_value New Value.
 	 */
 	public function allowed_user_roles_changed( $old_value, $new_value ) {
-		$old_roles = array();
-		$new_roles = array();
+		$old_roles = $this->get_user_roles( $old_value );
+		$new_roles = $this->get_user_roles( $new_value );
 
-		if ( array_key_exists( 'allowed_user_roles', $old_value ) ) {
-			$old_roles = $old_value['allowed_user_roles'];
-			if ( ! is_array( $old_roles ) ) {
-				$old_roles = array( $old_roles );
-			}
+		/**
+		 * The user roles who can manage email log list is changed.
+		 *
+		 * @since 2.1.0
+		 *
+		 * @param array $old_roles Old user roles.
+		 * @param array $new_roles New user roles.
+		 */
+		do_action( 'el-log-list-manage-user-roles-changed', $old_roles, $new_roles );
+	}
+
+	/**
+	 * Get User roles from option value.
+	 *
+	 * @access protected
+	 *
+	 * @param array $option Option value
+	 *
+	 * @return array User roles.
+	 */
+	protected function get_user_roles( $option ) {
+		if ( ! array_key_exists( 'allowed_user_roles', $option ) ) {
+			return array();
 		}
 
-		if ( array_key_exists( 'allowed_user_roles', $new_value ) ) {
-			$new_roles = $new_value['allowed_user_roles'];
-			if ( ! is_array( $new_roles ) ) {
-				$new_roles = array( $new_roles );
-			}
+		$user_roles = $option['allowed_user_roles'];
+		if ( ! is_array( $user_roles ) ) {
+			$user_roles = array( $user_roles );
 		}
 
-		foreach ( $old_roles as $old_role ) {
-			$role = get_role( $old_role );
-
-			if ( ! is_null( $role ) ) {
-				$role->remove_cap( LogListPage::CAPABILITY );
-			}
-		}
-
-		foreach ( $new_roles as $new_role ) {
-			$role = get_role( $new_role );
-
-			if ( ! is_null( $role ) ) {
-				$role->add_cap( LogListPage::CAPABILITY );
-			}
-		}
+		return $user_roles;
 	}
 }
