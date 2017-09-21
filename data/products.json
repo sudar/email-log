@@ -6,7 +6,7 @@
                 "slug": "more-fields",
                 "title": "More Fields",
                 "create_date": "2017-03-07 11:50:43",
-                "modified_date": "2017-08-05 00:02:08",
+                "modified_date": "2017-09-21 10:02:24",
                 "status": "publish",
                 "link": "http:\/\/wpemaillog.com\/?post_type=download&p=18",
                 "content": "More Fields add-on shows additional fields about the email in the email log list page. The following are the additional fields that are added by this add-on.\r\n<ul>\r\n \t<li>From<\/li>\r\n \t<li>CC<\/li>\r\n \t<li>BCC<\/li>\r\n \t<li>Reply To<\/li>\r\n \t<li>Attachment<\/li>\r\n<\/ul>\r\nThese additional fields will allow you to see more information about the logged email.\r\n<h3>Screenshots<\/h3>\r\n[gallery columns=\"2\" ids=\"974,975\"]",
@@ -28,7 +28,7 @@
                 ],
                 "tags": false,
                 "permalink": "https:\/\/wpemaillog.com\/addons\/more-fields\/",
-                "version": "2.0.0"
+                "version": "2.0.1"
             },
             "pricing": {
                 "singlesite": "19.00",
@@ -37,7 +37,7 @@
             },
             "licensing": {
                 "enabled": true,
-                "version": "2.0.0",
+                "version": "2.0.1",
                 "exp_unit": "years",
                 "exp_length": "1"
             }
@@ -48,7 +48,7 @@
                 "slug": "resend-email",
                 "title": "Resend Email",
                 "create_date": "2017-03-07 11:40:25",
-                "modified_date": "2017-08-09 09:32:34",
+                "modified_date": "2017-09-21 09:46:59",
                 "status": "publish",
                 "link": "http:\/\/wpemaillog.com\/?post_type=download&p=16",
                 "content": "Resend Email add-on allows you to resend the entire email directly from the email log. Before re-sending the email, this\u00a0add-on allows you to modify the different fields before re-sending the email.\r\n<h3>Screenshots<\/h3>\r\n[gallery ids=\"980,981,982,983,984\"]",
@@ -70,7 +70,7 @@
                 ],
                 "tags": false,
                 "permalink": "https:\/\/wpemaillog.com\/addons\/resend-email\/",
-                "version": "2.0.1"
+                "version": "2.0.2"
             },
             "pricing": {
                 "singlesite": "19.00",
@@ -79,7 +79,7 @@
             },
             "licensing": {
                 "enabled": true,
-                "version": "2.0.1",
+                "version": "2.0.2",
                 "exp_unit": "years",
                 "exp_length": "1"
             }
@@ -90,7 +90,7 @@
                 "slug": "forward-email",
                 "title": "Forward Email",
                 "create_date": "2017-03-07 11:30:56",
-                "modified_date": "2017-08-05 00:09:19",
+                "modified_date": "2017-09-21 09:26:45",
                 "status": "publish",
                 "link": "http:\/\/wpemaillog.com\/?post_type=download&p=20",
                 "content": "Forward Email add-on allows you to send a copy of all the emails send from WordPress, to another email address. The add-on allows you to choose whether you want to forward through to, cc or bcc fields. This can be extremely useful when you want to debug by analyzing the emails that are sent from WordPress.\r\n<h3>Screenshots<\/h3>\r\n[gallery ids=\"987,988,989\"]",
@@ -112,7 +112,7 @@
                 ],
                 "tags": false,
                 "permalink": "https:\/\/wpemaillog.com\/addons\/forward-email\/",
-                "version": "2.0.0"
+                "version": "2.0.1"
             },
             "pricing": {
                 "singlesite": "19.00",
@@ -121,7 +121,7 @@
             },
             "licensing": {
                 "enabled": true,
-                "version": "2.0.0",
+                "version": "2.0.1",
                 "exp_unit": "years",
                 "exp_length": "1"
             }
@@ -211,5 +211,5 @@
             }
         }
     ],
-    "request_speed": 0.00990605354309082
+    "request_speed": 0.0049359798431396484
 }
