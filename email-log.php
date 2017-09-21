@@ -5,7 +5,7 @@
  * Description: Logs every email sent through WordPress
  * Donate Link: http://sudarmuthu.com/if-you-wanna-thank-me
  * Author: Sudar
- * Version: 2.0.2
+ * Version: 2.1.0
  * Author URI: http://sudarmuthu.com/
  * Text Domain: email-log
  * Domain Path: languages/
@@ -46,7 +46,8 @@ if ( version_compare( PHP_VERSION, '5.3.0', '<' ) ) {
 		?>
 		<div class="error">
 			<p>
-				<?php printf(
+				<?php
+				printf(
 					__( 'Email Log requires at least PHP 5.3 to function properly. Please upgrade PHP or use <a href="%s">v1.9.1 of Email Log</a>.', 'email-log' ), // @codingStandardsIgnoreLine
 					'https://downloads.wordpress.org/plugin/email-log.1.9.1.zip'
 				);

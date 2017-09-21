@@ -7,14 +7,9 @@ if ( ! class_exists( '\\WP_Plugin_Uninstall_UnitTestCase' ) ) {
 /**
  * Plugin uninstall test case.
  *
- * @group uninstall
+ * @group uninstall-delete
  */
-class UninstallTest extends \WP_Plugin_Uninstall_UnitTestCase {
-
-	//
-	// Protected properties.
-	//
-
+class UninstallWithDeleteTest extends \WP_Plugin_Uninstall_UnitTestCase {
 	/**
 	 * The full path to the main plugin file.
 	 *
@@ -22,29 +17,19 @@ class UninstallTest extends \WP_Plugin_Uninstall_UnitTestCase {
 	 */
 	protected $plugin_file;
 
-	//
-	// Public methods.
-	//
-
 	/**
 	 * Set up for the tests.
 	 */
 	public function setUp() {
-
-		// You must set the path to your plugin here.
-		// This should be the path relative to the plugin directory on the test site.
-		// You will need to copy or symlink your plugin's folder there if it isn't
-		// already.
 		$this->plugin_file = 'email-log/email-log.php';
 
-		// Don't forget to call the parent's setUp(), or the plugin won't get installed.
 		parent::setUp();
 	}
 
 	/**
-	 * Test installation and uninstallation.
+	 * Test installation and uninstallation with deleting table.
 	 */
-	public function test_uninstall() {
+	public function test_uninstall_with_deleting_table() {
 		global $wpdb;
 
 		/*
@@ -57,11 +42,13 @@ class UninstallTest extends \WP_Plugin_Uninstall_UnitTestCase {
 		// Check that an option was added to the database.
 		$this->assertEquals( '0.1', get_option( 'email-log-db' ) );
 
-		/*
-		 * Now, test that it uninstalls itself properly.
-		 */
+		// add the option that will delete the table during uninstall.
+		$value = array(
+			'allowed_user_roles'  => array(),
+			'remove_on_uninstall' => 'true',
+		);
+		update_option( 'email-log-core', $value );
 
-		// You must call this to perform uninstallation.
 		$this->uninstall();
 
 		// Check that the table was deleted.
@@ -69,5 +56,19 @@ class UninstallTest extends \WP_Plugin_Uninstall_UnitTestCase {
 
 		// Check that all options with a prefix was deleted.
 		$this->assertNoOptionsWithPrefix( 'email-log' );
+
+		// check the capability has been removed from all user roles.
+		$roles = get_editable_roles();
+		foreach ( $roles as $role_name => $role_obj ) {
+			$role = get_role( $role_name );
+
+			if ( ! is_null( $role ) ) {
+				$this->assertFalse( $role->has_cap( 'manage_email_logs' ), 'Capability is not cleaned up' );
+			}
+		}
+
+		// check whether the license options got deleted.
+		$this->assertNoOptionsWithPrefix( 'el_bundle_license' );
+		$this->assertNoOptionsWithPrefix( 'el_license_' );
 	}
 }

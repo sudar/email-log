@@ -32,10 +32,10 @@ abstract class EmailLogAddon {
 	/**
 	 * Construct a new EmailLogAddon instance.
 	 *
-	 * @param string                       $addon_file Addon main file.
-	 * @param \EmailLog\Addon\AddonUpdater $updater   Addon Updater.
+	 * @param string                            $addon_file Addon main file.
+	 * @param \EmailLog\Addon\AddonUpdater|null $updater    Addon Updater.
 	 */
-	public function __construct( $addon_file, $updater ) {
+	public function __construct( $addon_file, $updater = null ) {
 		$this->addon_file = $addon_file;
 		$this->updater    = $updater;
 
@@ -48,6 +48,10 @@ abstract class EmailLogAddon {
 	 * @inheritdoc
 	 */
 	public function load() {
+		if ( is_null( $this->updater ) ) {
+			return;
+		}
+
 		$this->updater->set_addon_data( $this->addon_name, $this->addon_version, $this->addon_author );
 		$this->updater->load();
 	}

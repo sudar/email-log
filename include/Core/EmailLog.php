@@ -16,7 +16,7 @@ class EmailLog {
 	 * @since Genesis
 	 * @var string
 	 */
-	const VERSION = '2.0.2';
+	const VERSION = '2.1.0';
 
 	/**
 	 * Email Log Store URL.
@@ -66,11 +66,12 @@ class EmailLog {
 
 	/**
 	 * Add-on Licenser.
+	 * For non-admin requests it will not be set.
 	 *
 	 * @since 2.0
 	 * @var \EmailLog\Addon\License\Licenser
 	 */
-	private $licenser;
+	private $licenser = null;
 
 	/**
 	 * List of loadies.
@@ -110,7 +111,7 @@ class EmailLog {
 	/**
 	 * Get Licenser.
 	 *
-	 * @return \EmailLog\Addon\License\Licenser
+	 * @return null|\EmailLog\Addon\License\Licenser
 	 */
 	public function get_licenser() {
 		return $this->licenser;

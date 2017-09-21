@@ -15,6 +15,7 @@
 	<groups>
 		<exclude>
 			<group>uninstall</group>
+			<group>uninstall-delete</group>
 		</exclude>
 	</groups>
 

@@ -68,6 +68,15 @@ class SanitizeEmailTest extends \WP_UnitTestCase {
 		$this->assertEquals( $expected, $actual );
 	}
 
+	function test_multiple_email_with_name_and_quotes() {
+		$multiple_emails = '"Sudar Muthu" <sudar@sudarmuthu.com>, "Muthu"<muthu@sudarmuthu.com>';
+
+		$expected = '"Sudar Muthu" <sudar@sudarmuthu.com>, "Muthu" <muthu@sudarmuthu.com>';
+		$actual   = sanitize_email( $multiple_emails );
+
+		$this->assertEquals( $expected, $actual );
+	}
+
 	function test_multiple_email_with_name_returns_first() {
 		$multiple_emails = 'Sudar Muthu <sudar@sudarmuthu.com>, Muthu <muthu@sudarmuthu.com>';
 
