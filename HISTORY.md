@@ -1,6 +1,6 @@
 ## Changelog ##
 
-### v2.1.0 - In Development ###
+### v2.1.0 - (2017-09-21) ###
 - New: GUI option to choose the user roles that can access email logs.
 - New: GUI option to delete email log table when the plugin is uninstalled.
 - Tweak: Performance improvements.
@@ -154,6 +154,9 @@
 - Initial Release
 
 ## Upgrade Notice ##
+
+### 2.1.0 ###
+GUI option to choose who can access email logs and performance improvements.
 
 ### 2.0.2 ###
 Fixed the case of the Util directory. This caused issues in some install.
