@@ -1,6 +1,7 @@
 # Email Log #
 **Contributors:** sudar  
 **Tags:** email, log, log email, resend email, multisite  
+**Requires PHP:** 5.3  
 **Requires at least:** 4.0  
 **Tested up to:** 4.8  
 **Stable tag:** 2.0.2  
