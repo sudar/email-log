@@ -264,4 +264,21 @@ class TableManager implements Loadie {
 			add_option( self::DB_OPTION_NAME, self::DB_VERSION );
 		}
 	}
+
+	/**
+	 * Fetch logs count.
+	 *
+	 * @return string The first cell from the query resultset.
+	 */
+	public function fetch_logs_count() {
+		global $wpdb;
+		$table_name = $this->get_log_table_name();
+
+		$query       = 'SELECT count(*) FROM ' . $table_name . '_copy';
+
+		// Find total number of items.
+		$total_items = $wpdb->get_var( $query );
+
+		return $total_items;
+	}
 }
