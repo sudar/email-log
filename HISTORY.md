@@ -1,6 +1,7 @@
 ## Changelog ##
 
 ### v2.2.0 - (In Development) ###
+- New: Dashboard Widget that display summary about email logs.
 - Tweak: Performance improvements in add-on license code.
 
 ### v2.1.0 - (2017-09-21) ###
