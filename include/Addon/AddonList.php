@@ -188,7 +188,7 @@ class AddonList {
 	 * @return string API URL.
 	 */
 	protected function get_api_url() {
-		return $this->store_url . '/edd-api/products/?category=addon';
+		return $this->store_url . '/json/products.json';
 	}
 
 	/**
