@@ -1,6 +1,7 @@
 ## Changelog ##
 
 ### v2.2.0 - (In Development) ###
+- Tweak: Performance improvements in add-on license code.
 
 ### v2.1.0 - (2017-09-21) ###
 - New: GUI option to choose the user roles that can access email logs.
