@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the Email Log package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Email Log 2.1.0\n"
+"Project-Id-Version: Email Log 2.2.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/email-log\n"
-"POT-Creation-Date: 2017-09-21 05:15:48+00:00\n"
+"POT-Creation-Date: 2017-10-09 14:20:46+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -275,6 +275,20 @@ msgstr ""
 msgid "by"
 msgstr ""
 
+#: dist/include/Core/UI/Component/DashboardWidget.php:29
+#: include/Core/UI/Component/DashboardWidget.php:29
+msgid "Email Logs Summary"
+msgstr ""
+
+#: dist/include/Core/UI/Component/DashboardWidget.php:43
+#: include/Core/UI/Component/DashboardWidget.php:43
+msgid "Total number of emails logged"
+msgstr ""
+
+#: dist/include/Core/UI/Component/DashboardWidget.php:47
+msgid "<a href=\"%s\">Click here</a> to view Email Logs."
+msgstr ""
+
 #: dist/include/Core/UI/ListTable/LogListTable.php:49
 #: include/Core/UI/ListTable/LogListTable.php:49
 msgid "Additional fields are available in Pro add-on. "
@@ -401,7 +415,7 @@ msgstr ""
 msgid "Support"
 msgstr ""
 
-#. #-#-#-#-#  email-log.pot (Email Log 2.1.0)  #-#-#-#-#
+#. #-#-#-#-#  email-log.pot (Email Log 2.2.0)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 #: dist/include/Core/UI/Page/LogListPage.php:57
 #: dist/include/Core/UI/Page/LogListPage.php:58
@@ -508,6 +522,18 @@ msgstr ""
 #: dist/include/libraries/EDD_SL_Plugin_Updater.php:399
 #: include/libraries/EDD_SL_Plugin_Updater.php:399
 msgid "Error"
+msgstr ""
+
+#: include/Core/UI/Component/DashboardWidget.php:47
+msgid "<a href=\"%s\">Email Logs</a>"
+msgstr ""
+
+#: include/Core/UI/Component/DashboardWidget.php:48
+msgid "<a href=\"%s\">Settings</a>"
+msgstr ""
+
+#: include/Core/UI/Component/DashboardWidget.php:49
+msgid "<a href=\"%s\">Addons</a>"
 msgstr ""
 
 #: tmp_addon/AutoDeleteLogsSetting.php:15
