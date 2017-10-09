@@ -43,9 +43,11 @@ class DashboardWidget implements Loadie {
 			<?php _e( 'Total number of emails logged' , 'email-log' ); ?>: <strong><?php echo absint( $logs_count ); ?></strong>
 		</p>
 
-		<p>
-			<?php printf( __( '<a href="%s">Click here</a> to view Email Logs.', 'email-log' ), 'admin.php?page=email-log' ); ?>
-		</p>
+		<ul class="subsubsub" style="float: none">
+			<li><?php printf( __( '<a href="%s">Email Logs</a>', 'email-log' ), 'admin.php?page=email-log' ); ?> <span style="color: #ddd"> | </span></li>
+			<li><?php printf( __( '<a href="%s">Settings</a>', 'email-log' ), 'admin.php?page=email-log-settings' ); ?> <span style="color: #ddd"> | </span></li>
+			<li><?php printf( __( '<a href="%s">Addons</a>', 'email-log' ), 'admin.php?page=email-log-addons' ); ?></li>
+		</ul>
 
 		<?php
 	}
