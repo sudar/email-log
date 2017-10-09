@@ -1,5 +1,9 @@
 ## Changelog ##
 
+### v2.2.0 - (2017-10-09) ###
+- New: Dashboard Widget that display summary about email logs.
+- Tweak: Performance improvements in add-on license code.
+
 ### v2.1.0 - (2017-09-21) ###
 - New: GUI option to choose the user roles that can access email logs.
 - New: GUI option to delete email log table when the plugin is uninstalled.
@@ -154,6 +158,9 @@
 - Initial Release
 
 ## Upgrade Notice ##
+
+### 2.2.0 ###
+Added a Dashboard Widget that display summary information about email logs.
 
 ### 2.1.0 ###
 GUI option to choose who can access email logs and performance improvements.

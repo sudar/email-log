@@ -145,7 +145,7 @@ class TableManager implements Loadie {
 		global $wpdb;
 		$table_name = $this->get_log_table_name();
 
-		$query = $wpdb->prepare( "DELETE FROM {$table_name} WHERE sent_date < DATE_SUB( CURDATE(), INTERVAL %d DAY )", $interval_in_days );
+		$query              = $wpdb->prepare( "DELETE FROM {$table_name} WHERE sent_date < DATE_SUB( CURDATE(), INTERVAL %d DAY )", $interval_in_days );
 		$deleted_rows_count = $wpdb->query( $query );
 
 		return $deleted_rows_count;
@@ -195,7 +195,7 @@ class TableManager implements Loadie {
 
 		if ( isset( $request['s'] ) && $request['s'] !== '' ) {
 			$search_term = trim( esc_sql( $request['s'] ) );
-			$query_cond .= " WHERE ( to_email LIKE '%$search_term%' OR subject LIKE '%$search_term%' ) ";
+			$query_cond  .= " WHERE ( to_email LIKE '%$search_term%' OR subject LIKE '%$search_term%' ) ";
 		}
 
 		if ( isset( $request['d'] ) && $request['d'] !== '' ) {
@@ -221,7 +221,7 @@ class TableManager implements Loadie {
 
 		// Adjust the query to take pagination into account.
 		if ( ! empty( $current_page_no ) && ! empty( $per_page ) ) {
-			$offset = ( $current_page_no - 1 ) * $per_page;
+			$offset     = ( $current_page_no - 1 ) * $per_page;
 			$query_cond .= ' LIMIT ' . (int) $offset . ',' . (int) $per_page;
 		}
 
@@ -263,5 +263,18 @@ class TableManager implements Loadie {
 
 			add_option( self::DB_OPTION_NAME, self::DB_VERSION );
 		}
+	}
+
+	/**
+	 * Get the total number of email logs.
+	 *
+	 * @return int Total email log count
+	 */
+	public function get_logs_count() {
+		global $wpdb;
+
+		$query = 'SELECT count(*) FROM ' . $this->get_log_table_name();
+
+		return $wpdb->get_var( $query );
 	}
 }
