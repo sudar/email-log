@@ -75,19 +75,21 @@ class LogListAction implements Loadie {
 
 			<div id="tabs">
 				<ul>
-					<li><a href="#tabs-1"><?php _e( 'HTML', 'email-log' ); ?></a></li>
-					<li><a href="#tabs-2"><?php _e( 'Text', 'email-log' ); ?></a></li>
+					<li><a href="#tabs-text"><?php _e( 'Raw Email Content', 'email-log' ); ?></a></li>
+					<li><a href="#tabs-preview"><?php _e( 'Preview Content as HTML', 'email-log' ); ?></a></li>
 				</ul>
-				<div id="tabs-1">
-					<?php echo $log_item['message']; ?>
-				</div>
-				<div id="tabs-2">
+
+				<div id="tabs-text">
 					<textarea class="tabs-text-textarea"><?php echo esc_textarea( $log_item['message'] ); ?></textarea>
+				</div>
+
+				<div id="tabs-preview">
+					<?php echo $log_item['message']; ?>
 				</div>
 			</div>
 
 			<div id="view-message-footer">
-				<a href="#" id="thickbox-footer-close"><?php _e( 'Close', 'email-log' ); ?></a>
+				<a href="#" class="button action" id="thickbox-footer-close"><?php _e( 'Close', 'email-log' ); ?></a>
 			</div>
 
 			<?php
