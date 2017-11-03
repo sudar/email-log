@@ -32,7 +32,6 @@ enabled:
   - no_empty_comment
   - no_empty_phpdoc
   - no_empty_statement
-  - no_extra_block_blank_lines
   - no_extra_consecutive_blank_lines
   - no_leading_namespace_whitespace
   - no_php4_constructor
