@@ -5,6 +5,8 @@
  * Some of these functions would be used the addons.
  */
 
+defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
+
 /**
  * Perform additional sanitation of emails.
  *
