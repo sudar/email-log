@@ -33,7 +33,7 @@ class AdminUIEnhancer {
 	public function __construct( $file = null ) {
 		if ( null === $file ) {
 			$email_log = email_log();
-			$file = $email_log->get_plugin_file();
+			$file      = $email_log->get_plugin_file();
 		}
 
 		$this->plugin_file     = $file;
@@ -43,7 +43,7 @@ class AdminUIEnhancer {
 	/**
 	 * Setup hooks.
 	 *
-	 * @inheritdoc
+	 *
 	 */
 	public function load() {
 		add_filter( 'plugin_row_meta', array( $this, 'insert_addon_store_link' ), 10, 2 );
@@ -97,7 +97,6 @@ class AdminUIEnhancer {
 	 * Adds Footer links.
 	 *
 	 * @since Genesis
-	 *
 	 * @see   Function relied on
 	 * @link  http://striderweb.com/nerdaphernalia/2008/06/give-your-wordpress-plugin-credit/
 	 */

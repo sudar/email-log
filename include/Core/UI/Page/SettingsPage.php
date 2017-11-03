@@ -72,6 +72,7 @@ class SettingsPage extends BasePage {
 		 * SectionSection to the array.
 		 *
 		 * @since 2.0.0
+		 *
 		 * @param \EmailLog\Core\UI\Setting\SettingSection[] List of SettingSections.
 		 */
 		return apply_filters( 'el_setting_sections', array() );

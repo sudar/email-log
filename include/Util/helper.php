@@ -4,7 +4,6 @@
  * Email Log Helper functions.
  * Some of these functions would be used the addons.
  */
-
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 /**
@@ -35,7 +34,7 @@ function sanitize_email( $email, $multiple = true ) {
  *
  * @param string $string Email string to be sanitized.
  *
- * @return string        Sanitized email.
+ * @return string Sanitized email.
  */
 function sanitize_email_with_name( $string ) {
 	$string = trim( $string );
@@ -100,7 +99,7 @@ function is_admin_non_ajax_request() {
  *
  * @since 2.1.0
  *
- * @param array $values   List of all possible values.
+ * @param array  $values  List of all possible values.
  * @param string $current The current value to be checked.
  */
 function checked_array( $values, $current ) {

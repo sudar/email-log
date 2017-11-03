@@ -3,7 +3,7 @@
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 /**
- * Wrapper for EDD API
+ * Wrapper for EDD API.
  *
  * @since 2.0.0
  */
@@ -94,10 +94,11 @@ class EDDAPI {
 	 *
 	 * @param array $params Parameters for request.
 	 *
-	 * @return object API Response in JSON.
 	 * @throws \Exception If there is any error while making the request.
 	 *
 	 * TODO: Make the errors more user friendly and provide links to support.
+	 *
+	 * @return object API Response in JSON.
 	 */
 	protected function call_edd_api( $params ) {
 		$response = wp_remote_post( $this->store_url, array(

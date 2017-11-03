@@ -3,7 +3,7 @@
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 /**
- * Addon List Page
+ * Addon List Page.
  *
  * @since 2.0
  */
@@ -54,7 +54,7 @@ class AddonListPage extends BasePage {
 			do_action( 'el_before_addon_list' );
 
 			$email_log = email_log();
-			$licenser = $email_log->get_licenser();
+			$licenser  = $email_log->get_licenser();
 			if ( ! is_null( $licenser ) ) {
 				$licenser->get_addon_list()->render();
 			}
