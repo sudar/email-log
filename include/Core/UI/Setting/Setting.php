@@ -24,8 +24,8 @@ abstract class Setting {
 
 		$this->initialize();
 
-		$this->section->fields = $this->get_fields();
-		$this->section->callback = array( $this, 'render' );
+		$this->section->fields            = $this->get_fields();
+		$this->section->callback          = array( $this, 'render' );
 		$this->section->sanitize_callback = array( $this, 'sanitize' );
 	}
 
@@ -98,7 +98,7 @@ abstract class Setting {
 			return array();
 		}
 
-		$values = wp_parse_args( $values, $this->section->default_value );
+		$values           = wp_parse_args( $values, $this->section->default_value );
 		$sanitized_values = array();
 
 		foreach ( $this->section->field_labels as $field_id => $label ) {

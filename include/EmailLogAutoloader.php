@@ -48,7 +48,6 @@
  *
  *      <?php
  *      new \Foo\Bar\Qux\QuuxTest;
- *
  * @since 2.0
  */
 class EmailLogAutoloader {
@@ -129,8 +128,8 @@ class EmailLogAutoloader {
 	 *
 	 * @param string $class The fully-qualified class name.
 	 *
-	 * @return string|false The mapped file name on success, or boolean false on
-	 * failure.
+	 * @return false|string The mapped file name on success, or boolean false on
+	 *                      failure.
 	 */
 	public function load_class( $class ) {
 		// the current namespace prefix
@@ -168,7 +167,7 @@ class EmailLogAutoloader {
 	 * @param string $relative_class The relative class name.
 	 *
 	 * @return false|string Boolean false if no mapped file can be loaded, or the
-	 * name of the mapped file that was loaded.
+	 *                      name of the mapped file that was loaded.
 	 */
 	protected function load_mapped_file( $prefix, $relative_class ) {
 		// are there any base directories for this namespace prefix?

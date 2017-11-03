@@ -61,6 +61,7 @@ class DependencyEnforcer implements Loadie {
 	 * Deactivate outdated active add-ons.
 	 *
 	 * @access private
+	 *
 	 * @return array List of add-ons (name and version) that got deactivated.
 	 */
 	private function deactivate_outdated_active_addons() {
@@ -79,6 +80,7 @@ class DependencyEnforcer implements Loadie {
 	 * Get the list of add-ons that are outdated and are active.
 	 *
 	 * @access private
+	 *
 	 * @return array List of outdated and active add-ons.
 	 */
 	private function get_outdated_active_addons() {

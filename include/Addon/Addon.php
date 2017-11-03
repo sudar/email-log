@@ -107,6 +107,7 @@ class Addon {
 	protected function print_actions() {
 		if ( $this->has_valid_bundle_license() ) {
 			$this->print_valid_actions();
+
 			return;
 		}
 
@@ -166,7 +167,7 @@ class Addon {
 		$button_class = 'button-primary';
 		$dashicon     = 'down';
 		$license_wrap = 'hidden';
-		$expires = '';
+		$expires      = '';
 
 		if ( $this->has_valid_addon_license() ) {
 			$action       = 'el_license_deactivate';
@@ -176,7 +177,7 @@ class Addon {
 			$license_wrap = '';
 
 			$expiry_date = date( 'F d, Y', strtotime( $this->get_license()->get_expiry_date() ) );
-			$expires = sprintf( __( 'Your license expires on %s', 'email-log' ), $expiry_date );
+			$expires     = sprintf( __( 'Your license expires on %s', 'email-log' ), $expiry_date );
 		}
 		?>
 

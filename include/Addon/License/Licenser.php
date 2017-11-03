@@ -42,8 +42,8 @@ final class Licenser implements Loadie {
 	 * If the bundle_license object is not passed a new object is created.
 	 * If the addon_list object is not passed a new object is created.
 	 *
-	 * @param null|\EmailLog\Addon\License\BundleLicense $bundle_license Optional. Bundle License.
-	 * @param null|\EmailLog\Addon\AddonList             $addon_list     Optional. Add-on List.
+	 * @param \EmailLog\Addon\License\BundleLicense|null $bundle_license Optional. Bundle License.
+	 * @param \EmailLog\Addon\AddonList|null             $addon_list     Optional. Add-on List.
 	 */
 	public function __construct( $bundle_license = null, $addon_list = null ) {
 		if ( ! $bundle_license instanceof BundleLicense ) {
@@ -55,7 +55,7 @@ final class Licenser implements Loadie {
 		}
 
 		$this->bundle_license = $bundle_license;
-		$this->addon_list = $addon_list;
+		$this->addon_list     = $addon_list;
 	}
 
 	/**
@@ -102,14 +102,14 @@ final class Licenser implements Loadie {
 		$action       = 'el_bundle_license_activate';
 		$action_text  = __( 'Activate', 'email-log' );
 		$button_class = 'button-primary';
-		$expires = '';
+		$expires      = '';
 
 		if ( $this->is_bundle_license_valid() ) {
 			$action       = 'el_bundle_license_deactivate';
 			$action_text  = __( 'Deactivate', 'email-log' );
 			$button_class = '';
-			$expiry_date = date( 'F d, Y', strtotime( $this->get_bundle_license_expiry_date() ) );
-			$expires = sprintf( __( 'Your license expires on %s', 'email-log' ), $expiry_date );
+			$expiry_date  = date( 'F d, Y', strtotime( $this->get_bundle_license_expiry_date() ) );
+			$expires      = sprintf( __( 'Your license expires on %s', 'email-log' ), $expiry_date );
 		}
 		?>
 
@@ -194,7 +194,7 @@ final class Licenser implements Loadie {
 	/**
 	 * Get the expiry date of the Bundle License.
 	 *
-	 * @return string|false Expiry date, False if license is not valid.
+	 * @return false|string Expiry date, False if license is not valid.
 	 */
 	protected function get_bundle_license_expiry_date() {
 		return $this->bundle_license->get_expiry_date();
@@ -218,7 +218,7 @@ final class Licenser implements Loadie {
 				__( 'Your license for %s has been activated. You will receive automatic updates and access to email support.', 'email-log' ),
 				$addon_name
 			);
-			$type    = 'updated';
+			$type = 'updated';
 		} catch ( \Exception $e ) {
 			$message = $e->getMessage();
 			$type    = 'error';
@@ -245,7 +245,7 @@ final class Licenser implements Loadie {
 				__( 'Your license for %s has been deactivated. You will not receive automatic updates.', 'email-log' ),
 				$addon_name
 			);
-			$type    = 'updated';
+			$type = 'updated';
 		} catch ( \Exception $e ) {
 			$message = $e->getMessage();
 			$type    = 'error';

@@ -52,7 +52,7 @@ class AddonUpdater {
 	 */
 	public function setup_updater() {
 		$email_log = email_log();
-		$licenser = $email_log->get_licenser();
+		$licenser  = $email_log->get_licenser();
 
 		if ( is_null( $licenser ) ) {
 			return;

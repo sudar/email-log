@@ -30,7 +30,7 @@ class OverridePluginAPI implements Loadie {
 	 */
 	public function setup_updaters_for_inactive_addons() {
 		$email_log = email_log();
-		$licenser = $email_log->get_licenser();
+		$licenser  = $email_log->get_licenser();
 
 		if ( is_null( $licenser ) ) {
 			return;
@@ -64,9 +64,9 @@ class OverridePluginAPI implements Loadie {
 	 *
 	 * @since 2.1.0
 	 *
-	 * @param object  $response API Response.
-	 * @param  string $action   Action name.
-	 * @param array   $args     Arguments for the function.
+	 * @param object $response API Response.
+	 * @param string $action   Action name.
+	 * @param array  $args     Arguments for the function.
 	 *
 	 * @return object Modified API response.
 	 */

@@ -7,7 +7,6 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
  * Ideally each add-on may have a different setting section.
  *
  * @see add_settings_section()
- *
  * @since 2.0.0
  */
 class SettingSection {
