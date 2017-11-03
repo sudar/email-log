@@ -5,7 +5,6 @@
  *
  * @author Sudar
  */
-
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly
 
 /**
@@ -114,7 +113,7 @@ class EmailHeaderParser {
 	 *
 	 * @param array $header Header line to be parsed.
 	 *
-	 * @return string         Parsed value.
+	 * @return string Parsed value.
 	 */
 	private function parse_header_line( $header ) {
 		$value = '';

@@ -60,14 +60,14 @@ class LogListAction implements Loadie {
 				</tr>
 
 				<?php
-			   /**
-				* After the headers are displayed in the View Message thickbox.
-				* This action can be used to add additional headers.
-				*
-				* @since 2.0.0
-				*
-				* @param array $log_item Log item that is getting rendered.
-				*/
+				/**
+				 * After the headers are displayed in the View Message thickbox.
+				 * This action can be used to add additional headers.
+				 *
+				 * @since 2.0.0
+				 *
+				 * @param array $log_item Log item that is getting rendered.
+				 */
 				do_action( 'el_view_log_after_headers', $log_item );
 				?>
 
@@ -112,7 +112,7 @@ class LogListAction implements Loadie {
 			$ids = array( $ids );
 		}
 
-		$ids = array_map( 'absint', $ids );
+		$ids     = array_map( 'absint', $ids );
 		$id_list = implode( ',', $ids );
 
 		$logs_deleted = $this->get_table_manager()->delete_logs( $id_list );
@@ -158,7 +158,7 @@ class LogListAction implements Loadie {
 	/**
 	 * Render Logs deleted notice.
 	 *
-	 * @param int|False $logs_deleted Number of entries deleted, False otherwise.
+	 * @param false|int $logs_deleted Number of entries deleted, False otherwise.
 	 */
 	protected function render_log_deleted_notice( $logs_deleted ) {
 		$message = __( 'There was some problem in deleting the email logs', 'email-log' );
