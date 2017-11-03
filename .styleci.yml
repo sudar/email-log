@@ -81,3 +81,5 @@ finder:
     - "tests"
   name:
     - "*.php"
+  not-name:
+    - "EmailLogger.php"
