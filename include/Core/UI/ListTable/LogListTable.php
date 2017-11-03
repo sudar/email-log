@@ -22,7 +22,7 @@ class LogListTable extends \WP_List_Table {
 	 *
 	 * We use the parent reference to set some default configs.
 	 *
-	 * @param mixed $page
+	 * @param \EmailLog\Core\UI\Page\LogListPage $page
 	 * @param mixed $args
 	 */
 	public function __construct( $page, $args = array() ) {
