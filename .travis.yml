@@ -25,9 +25,6 @@ env:
 
 matrix:
   include:
-    # Only run HHVM against trunk.
-    - php: hhvm
-      env: WP_VERSION=nightly
     # Only run nightly against trunk.
     - php: nightly
       env: WP_VERSION=nightly
@@ -35,7 +32,6 @@ matrix:
     - php: 5.3
       env: WP_VERSION=latest WP_MULTISITE=1
   allow_failures:
-      - php: hhvm
       - php: nightly
   fast_finish: true
 
