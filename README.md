@@ -4,8 +4,8 @@
 **Requires PHP:** 5.3  
 **Requires at least:** 4.0  
 **Tested up to:** 4.9  
-**Stable tag:** 2.2.0  
-[![Build Status](https://scrutinizer-ci.com/g/sudar/email-log/badges/build.png?b=master)](https://scrutinizer-ci.com/g/sudar/email-log/build-status/master) [![Code Coverage](https://scrutinizer-ci.com/g/sudar/email-log/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/sudar/email-log/?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/sudar/email-log/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/sudar/email-log/?branch=master) [![License](https://img.shields.io/badge/license-GPL--2.0%2B-red.svg)](https://wordpress.org/about/license/)
+**Stable tag:** 2.2.1  
+[![Build Status](https://scrutinizer-ci.com/g/sudar/email-log/badges/build.png?b=master)](https://scrutinizer-ci.com/g/sudar/email-log/build-status/master) [![Code Coverage](https://scrutinizer-ci.com/g/sudar/email-log/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/sudar/email-log/?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/sudar/email-log/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/sudar/email-log/?branch=master) [![StyleCI](https://styleci.io/repos/7374859/shield?branch=dev/2.2.1)](https://styleci.io/repos/7374859) [![License](https://img.shields.io/badge/license-GPL--2.0%2B-red.svg)](https://wordpress.org/about/license/)
 
 Log and view all outgoing emails from WordPress. Works with WordPress Multisite as well.
 
@@ -24,12 +24,13 @@ While viewing the logs, the emails can be filtered or sorted based on the date, 
 ### Deleting logged emails
 
 In the admin interface, all the logged emails can be delete in bulk or can also be selectively deleted based on date, email and subject.
+If you want to automatically delete the email logs after some days, then you can use the [Auto Delete Logs](https://wpemaillog.com/addons/auto-delete-logs/?utm_campaign=Upsell&utm_medium=wporg&utm_source=readme&utm_content=dl) add-on.
 
 ### Resend email (Pro addon)
 
 You can [buy the Resend email pro add-on](https://wpemaillog.com/addons/resend-email/?utm_campaign=Upsell&utm_medium=wporg&utm_source=readme&utm_content=re),
 which allows you to resend the email directly from the email log.
-The add-on allows you to modify the different fields before resending the email.
+The add-on allows you to modify the different fields of the email before resending it.
 
 ### More Fields (Pro addon)
 
@@ -45,13 +46,17 @@ which shows additional fields in the email log page. The following are the addit
 ### Forward email (Pro addon)
 
 You can [buy the Forward email pro add-on](https://wpemaillog.com/addons/more-fields/?utm_campaign=Upsell&utm_medium=wporg&utm_source=readme&utm_content=fe),
-which allows you to send a copy of all the emails send from WordPress, to another email address.
+which allows you to send a copy of all the emails send from WordPress to another email address.
 The addon allows you to choose whether you want to forward through to, cc or bcc fields.
 This can be extremely useful when you want to debug by analyzing the emails that are sent from WordPress.
 
+### Export email logs (Pro addon)
+
+You can buy the [Export Email Logs add-on](https://wpemaillog.com/addons/export-logs/?utm_campaign=Upsell&utm_medium=wporg&utm_source=readme&utm_content=el), which allows you to export the email logs as a csv file for further processing or record keeping.
+
 ### Cleaning up db on uninstall
 
-As [recommended by Ozh][1], the Plugin has an uninstall hook which will clean up the database when the Plugin is uninstalled.
+As [recommended by Ozh][1], the Plugin has an uninstall hook which will clean up the database and options when the Plugin is uninstalled.
 
  [1]: http://sudarmuthu.com/blog/2009/10/07/lessons-from-wordpress-plugin-competition.html
 

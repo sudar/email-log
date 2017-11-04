@@ -12,7 +12,7 @@
  * @deprecated 2.0
  */
 class EmailLog {
-	const HOOK_LOG_COLUMNS = '';
+	const HOOK_LOG_COLUMNS         = '';
 	const HOOK_LOG_DISPLAY_COLUMNS = '';
-	const FILTER_NAME = '';
+	const FILTER_NAME              = '';
 }

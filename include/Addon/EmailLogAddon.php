@@ -10,9 +10,9 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 abstract class EmailLogAddon {
 
 	protected $addon_file;
-	protected $addon_name = '';
+	protected $addon_name    = '';
 	protected $addon_version = '';
-	protected $addon_author = 'Sudar Muthu';
+	protected $addon_author  = 'Sudar Muthu';
 
 	/**
 	 * Addon Updater.
@@ -25,6 +25,7 @@ abstract class EmailLogAddon {
 	 * Initialize add-on data.
 	 *
 	 * @access protected
+	 *
 	 * @return void
 	 */
 	abstract protected function initialize();
@@ -45,7 +46,7 @@ abstract class EmailLogAddon {
 	/**
 	 * Load the add-on and setup hooks.
 	 *
-	 * @inheritdoc
+	 *
 	 */
 	public function load() {
 		if ( is_null( $this->updater ) ) {

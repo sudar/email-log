@@ -7,6 +7,7 @@
  *
  * @since 2.0
  */
+defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 /**
  * Load Email Log plugin.
@@ -72,6 +73,7 @@ function load_email_log( $plugin_file ) {
  * @since 2.0
  *
  * @global \EmailLog\Core\EmailLog $email_log
+ *
  * @return \EmailLog\Core\EmailLog
  */
 function email_log() {

@@ -10,7 +10,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 class AddonList {
 
 	const CACHE_EXPIRY_IN_HRS = 12;
-	const CACHE_KEY = 'el_addon_data';
+	const CACHE_KEY           = 'el_addon_data';
 
 	/**
 	 * Add-on list.
@@ -146,7 +146,7 @@ class AddonList {
 		$addons = array();
 
 		foreach ( $products as $product ) {
-			$addon = new Addon( $product );
+			$addon                  = new Addon( $product );
 			$addons[ $addon->name ] = $addon;
 		}
 

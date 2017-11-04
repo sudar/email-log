@@ -26,9 +26,9 @@ class EDDUpdater extends \EDD_SL_Plugin_Updater {
 	/**
 	 * Extract add-on slug alone and then pass everything to parent.
 	 *
-	 * @param string     $_api_url    The URL pointing to the custom API endpoint.
+	 * @param string     $_api_url     The URL pointing to the custom API endpoint.
 	 * @param string     $_plugin_file Path to the plugin file.
-	 * @param array|null $_api_data   Optional data to send with API calls.
+	 * @param array|null $_api_data    Optional data to send with API calls.
 	 */
 	public function __construct( $_api_url, $_plugin_file, $_api_data = null ) {
 		$this->addon_slug = basename( $_plugin_file, '.php' );
@@ -72,7 +72,7 @@ class EDDUpdater extends \EDD_SL_Plugin_Updater {
 	 * @return string Download url.
 	 */
 	public function get_download_url() {
-		$args = new \stdClass();
+		$args       = new \stdClass();
 		$args->slug = $this->addon_slug;
 
 		$response = $this->plugins_api_filter( null, 'plugin_information', $args );

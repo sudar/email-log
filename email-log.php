@@ -5,12 +5,12 @@
  * Description: Logs every email sent through WordPress
  * Donate Link: http://sudarmuthu.com/if-you-wanna-thank-me
  * Author: Sudar
- * Version: 2.2.0
+ * Version: 2.2.1
  * Author URI: http://sudarmuthu.com/
  * Text Domain: email-log
  * Domain Path: languages/
  * === RELEASE NOTES ===
- * Check readme file for full release notes
+ * Check readme file for full release notes.
  */
 
 /**
@@ -24,9 +24,8 @@
  * GNU General Public License for more details.
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA.
  */
-
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 // Include the stub of the old `EmailLog` class, so that old add-ons don't generate a fatal error.
@@ -39,7 +38,6 @@ if ( version_compare( PHP_VERSION, '5.3.0', '<' ) ) {
 	 * But note that some add-ons may not work.
 	 *
 	 * @see   http://sudarmuthu.com/blog/why-i-am-dropping-support-for-php-5-2-in-my-wordpress-plugins/
-	 *
 	 * @since 2.0
 	 */
 	function email_log_compatibility_notice() {

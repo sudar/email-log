@@ -1,8 +1,8 @@
 <?php namespace EmailLog\Core\DB;
-/**
- * Handle installation and db table creation
- */
 
+/**
+ * Handle installation and db table creation.
+ */
 use EmailLog\Core\Loadie;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
@@ -70,9 +70,9 @@ class TableManager implements Loadie {
 	/**
 	 * Add email log table to the list of tables deleted when a blog is deleted.
 	 *
-	 * @param  array $tables List of tables to be deleted.
+	 * @param array $tables List of tables to be deleted.
 	 *
-	 * @return string[]  $tables Modified list of tables to be deleted.
+	 * @return string[] $tables Modified list of tables to be deleted.
 	 */
 	public function delete_table_from_deleted_blog( $tables ) {
 		$tables[] = $this->get_log_table_name();
@@ -137,7 +137,7 @@ class TableManager implements Loadie {
 	/**
 	 * Deletes Email Logs older than the specified interval.
 	 *
-	 * @param  int $interval_in_days No. of days beyond which logs are to be deleted.
+	 * @param int $interval_in_days No. of days beyond which logs are to be deleted.
 	 *
 	 * @return int $deleted_rows_count  Count of rows deleted.
 	 */
@@ -156,7 +156,7 @@ class TableManager implements Loadie {
 	 *
 	 * @param array $ids Optional. Array of IDs of the log items to be retrieved.
 	 *
-	 * @return array        Log item(s).
+	 * @return array Log item(s).
 	 */
 	public function fetch_log_items_by_id( $ids = array() ) {
 		global $wpdb;
@@ -195,7 +195,7 @@ class TableManager implements Loadie {
 
 		if ( isset( $request['s'] ) && $request['s'] !== '' ) {
 			$search_term = trim( esc_sql( $request['s'] ) );
-			$query_cond  .= " WHERE ( to_email LIKE '%$search_term%' OR subject LIKE '%$search_term%' ) ";
+			$query_cond .= " WHERE ( to_email LIKE '%$search_term%' OR subject LIKE '%$search_term%' ) ";
 		}
 
 		if ( isset( $request['d'] ) && $request['d'] !== '' ) {
@@ -221,7 +221,7 @@ class TableManager implements Loadie {
 
 		// Adjust the query to take pagination into account.
 		if ( ! empty( $current_page_no ) && ! empty( $per_page ) ) {
-			$offset     = ( $current_page_no - 1 ) * $per_page;
+			$offset = ( $current_page_no - 1 ) * $per_page;
 			$query_cond .= ' LIMIT ' . (int) $offset . ',' . (int) $per_page;
 		}
 
@@ -258,7 +258,7 @@ class TableManager implements Loadie {
 				PRIMARY KEY  (id)
 			) ' . $charset_collate . ' ;';
 
-			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 			dbDelta( $sql );
 
 			add_option( self::DB_OPTION_NAME, self::DB_VERSION );

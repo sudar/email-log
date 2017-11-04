@@ -89,7 +89,7 @@ abstract class BaseLicense {
 	/**
 	 * Get the expiry date of the license.
 	 *
-	 * @return string|false Expiry date in `yyyy-mm-dd hh:mm:ss` format if license is valid, False otherwise.
+	 * @return false|string Expiry date in `yyyy-mm-dd hh:mm:ss` format if license is valid, False otherwise.
 	 */
 	public function get_expiry_date() {
 		if ( ! empty( $this->license_data ) && isset( $this->license_data->expires ) ) {
@@ -103,8 +103,9 @@ abstract class BaseLicense {
 	 * Activate License by calling EDD API.
 	 * The license data returned by API is stored in an option.
 	 *
-	 * @return object API Response JSON Object.
 	 * @throws \Exception In case of communication errors or License Issues.
+	 *
+	 * @return object API Response JSON Object.
 	 */
 	public function activate() {
 		$response = $this->edd_api->activate_license( $this->get_license_key(), $this->get_addon_name() );
@@ -113,6 +114,7 @@ abstract class BaseLicense {
 			$response->license_key = $this->get_license_key();
 
 			$this->store( $response );
+
 			return $response;
 		}
 
@@ -157,14 +159,16 @@ abstract class BaseLicense {
 	 * Deactivate the license by calling EDD API.
 	 * The stored license data will be cleared.
 	 *
-	 * @return object API Response JSON object.
 	 * @throws \Exception In case of communication errors.
+	 *
+	 * @return object API Response JSON object.
 	 */
 	public function deactivate() {
 		$response = $this->edd_api->deactivate_license( $this->get_license_key(), $this->get_addon_name() );
 
 		if ( $response->success && 'deactivated' === $response->license ) {
 			$this->clear();
+
 			return $response;
 		}
 
@@ -181,8 +185,9 @@ abstract class BaseLicense {
 	 * Get version information by calling EDD API.
 	 * // TODO: Currently not used. Will be removed eventually.
 	 *
-	 * @return object API Response JSON Object.
 	 * @throws \Exception In case of communication errors.
+	 *
+	 * @return object API Response JSON Object.
 	 */
 	public function get_version() {
 		$response = $this->edd_api->get_version( $this->get_license_key(), $this->get_addon_name() );
@@ -192,6 +197,7 @@ abstract class BaseLicense {
 		}
 
 		$message = __( 'An error occurred, please try again', 'email-log' ) . $response->error;
+
 		throw new \Exception( $message );
 	}
 
@@ -221,7 +227,7 @@ abstract class BaseLicense {
 	 */
 	protected function clear() {
 		$this->license_data = null;
-		$this->license_key = null;
+		$this->license_key  = null;
 		delete_option( $this->get_option_name() );
 	}
 }

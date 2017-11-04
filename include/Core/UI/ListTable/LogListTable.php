@@ -21,6 +21,9 @@ class LogListTable extends \WP_List_Table {
 	 * Set up a constructor that references the parent constructor.
 	 *
 	 * We use the parent reference to set some default configs.
+	 *
+	 * @param \EmailLog\Core\UI\Page\LogListPage $page
+	 * @param mixed                              $args
 	 */
 	public function __construct( $page, $args = array() ) {
 		$this->page = $page;
@@ -73,6 +76,7 @@ class LogListTable extends \WP_List_Table {
 		 * Filter the email log list table columns.
 		 *
 		 * @since 2.0
+		 *
 		 * @param array $columns Columns of email log list table.
 		 */
 		return apply_filters( 'el_manage_log_columns', $columns );
@@ -83,15 +87,16 @@ class LogListTable extends \WP_List_Table {
 	 *
 	 * @access protected
 	 *
-	 * @return array<string,array<string|boolean>> An associative array containing all the columns
-	 * that should be sortable: 'slugs'=>array('data_values',bool).
+	 * @return array<string,array<boolean|string>> An associative array containing all the columns
+	 *                                             that should be sortable: 'slugs'=>array('data_values',bool).
 	 */
 	protected function get_sortable_columns() {
 		$sortable_columns = array(
-			'sent_date'   => array( 'sent_date', true ), // true means it's already sorted.
-			'to'          => array( 'to_email', false ),
-			'subject'     => array( 'subject', false ),
+			'sent_date' => array( 'sent_date', true ), // true means it's already sorted.
+			'to'        => array( 'to_email', false ),
+			'subject'   => array( 'subject', false ),
 		);
+
 		return $sortable_columns;
 	}
 
@@ -120,8 +125,9 @@ class LogListTable extends \WP_List_Table {
 	 *
 	 * @access protected
 	 *
-	 * @param  object $item Current item object.
-	 * @return string       Markup to be displayed for the column.
+	 * @param object $item Current item object.
+	 *
+	 * @return string Markup to be displayed for the column.
 	 */
 	protected function column_sent_date( $item ) {
 		$email_date = mysql2date(
@@ -133,10 +139,10 @@ class LogListTable extends \WP_List_Table {
 
 		$content_ajax_url = add_query_arg(
 			array(
-				'action'    => 'el-log-list-view-message',
-				'log_id'    => $item->id,
-				'width'     => '800',
-				'height'    => '550',
+				'action' => 'el-log-list-view-message',
+				'log_id' => $item->id,
+				'width'  => '800',
+				'height' => '550',
 			),
 			'admin-ajax.php'
 		);
@@ -166,8 +172,8 @@ class LogListTable extends \WP_List_Table {
 		 *
 		 * @since 1.8
 		 *
-		 * @param array $actions List of actions.
-		 * @param object $item The current log item.
+		 * @param array  $actions List of actions.
+		 * @param object $item    The current log item.
 		 */
 		$actions = apply_filters( 'el_row_actions', $actions, $item );
 
@@ -184,6 +190,7 @@ class LogListTable extends \WP_List_Table {
 	 * @access protected
 	 *
 	 * @param object $item
+	 *
 	 * @return string
 	 */
 	protected function column_to( $item ) {
@@ -196,6 +203,7 @@ class LogListTable extends \WP_List_Table {
 	 * @access protected
 	 *
 	 * @param object $item
+	 *
 	 * @return string
 	 */
 	protected function column_subject( $item ) {
@@ -208,6 +216,7 @@ class LogListTable extends \WP_List_Table {
 	 * @access protected
 	 *
 	 * @param object $item
+	 *
 	 * @return string
 	 */
 	protected function column_cb( $item ) {
@@ -231,6 +240,7 @@ class LogListTable extends \WP_List_Table {
 			'el-log-list-delete-all' => __( 'Delete All Logs', 'email-log' ),
 		);
 		$actions = apply_filters( 'el_bulk_actions', $actions );
+
 		return $actions;
 	}
 
@@ -275,7 +285,6 @@ class LogListTable extends \WP_List_Table {
 		$input_text_id  = $input_id . '-search-input';
 		$input_date_id  = $input_id . '-search-date-input';
 		$input_date_val = ( ! empty( $_REQUEST['d'] ) ) ? sanitize_text_field( $_REQUEST['d'] ) : '';
-
 
 		if ( ! empty( $_REQUEST['orderby'] ) )
 			echo '<input type="hidden" name="orderby" value="' . esc_attr( $_REQUEST['orderby'] ) . '" />';
