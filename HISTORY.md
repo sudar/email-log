@@ -1,5 +1,8 @@
 ## Changelog ##
 
+### v2.2.1 - (2017-11-04) ###
+- Tweak: Improved the UX of the view email content screen.
+
 ### v2.2.0 - (2017-10-09) ###
 - New: Dashboard Widget that display summary about email logs.
 - Tweak: Performance improvements in add-on license code.
@@ -158,6 +161,9 @@
 - Initial Release
 
 ## Upgrade Notice ##
+
+### 2.2.1 ###
+Improved the UX of the view email content screen.
 
 ### 2.2.0 ###
 Added a Dashboard Widget that display summary information about email logs.
