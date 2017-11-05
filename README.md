@@ -1,11 +1,11 @@
 # Email Log #
-**Contributors:** sudar  
-**Tags:** email, log, log email, resend email, multisite  
-**Requires PHP:** 5.3  
-**Requires at least:** 4.0  
-**Tested up to:** 4.9  
-**Stable tag:** 2.2.1  
-[![Build Status](https://scrutinizer-ci.com/g/sudar/email-log/badges/build.png?b=master)](https://scrutinizer-ci.com/g/sudar/email-log/build-status/master) [![Code Coverage](https://scrutinizer-ci.com/g/sudar/email-log/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/sudar/email-log/?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/sudar/email-log/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/sudar/email-log/?branch=master) [![StyleCI](https://styleci.io/repos/7374859/shield?branch=dev/2.2.1)](https://styleci.io/repos/7374859) [![License](https://img.shields.io/badge/license-GPL--2.0%2B-red.svg)](https://wordpress.org/about/license/)
+**Contributors:** sudar
+**Tags:** email, log, log email, resend email, multisite
+**Requires PHP:** 5.3
+**Requires at least:** 4.0
+**Tested up to:** 4.9
+**Stable tag:** 2.2.1
+[![Build Status](https://scrutinizer-ci.com/g/sudar/email-log/badges/build.png?b=master)](https://scrutinizer-ci.com/g/sudar/email-log/build-status/master) [![Code Coverage](https://scrutinizer-ci.com/g/sudar/email-log/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/sudar/email-log/?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/sudar/email-log/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/sudar/email-log/?branch=master) [![StyleCI](https://styleci.io/repos/7374859/shield?branch=master)](https://styleci.io/repos/7374859) [![License](https://img.shields.io/badge/license-GPL--2.0%2B-red.svg)](https://wordpress.org/about/license/)
 
 Log and view all outgoing emails from WordPress. Works with WordPress Multisite as well.
 
