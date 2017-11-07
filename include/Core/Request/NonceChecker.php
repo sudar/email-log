@@ -46,11 +46,15 @@ class NonceChecker implements Loadie {
 		if ( isset( $_REQUEST['action'] ) ) {
 			$action = sanitize_text_field( $_REQUEST['action'] );
 
-			if ( 'el-log-list-delete' !== substr( $action, 0, 18 ) ) {
+			if ( 'el-log-list-' !== substr( $action, 0, 12 ) ) {
 				return;
 			}
 
-			if ( ! wp_verify_nonce( $_REQUEST[ LogListPage::DELETE_LOG_NONCE_FIELD ], LogListPage::DELETE_LOG_ACTION ) ) {
+			if ( ! isset( $_REQUEST[ LogListPage::LOG_LIST_ACTION_NONCE_FIELD ] ) ) {
+				return;
+			}
+
+			if ( ! wp_verify_nonce( $_REQUEST[ LogListPage::LOG_LIST_ACTION_NONCE_FIELD ], LogListPage::LOG_LIST_ACTION_NONCE ) ) {
 				return;
 			}
 		}

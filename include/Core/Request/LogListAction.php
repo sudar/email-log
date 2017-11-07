@@ -84,7 +84,7 @@ class LogListAction implements Loadie {
 				</div>
 
 				<div id="tabs-preview">
-					<?php echo $log_item['message']; ?>
+					<?php echo wp_kses_post( $log_item['message'] ); ?>
 				</div>
 			</div>
 

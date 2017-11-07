@@ -1,5 +1,9 @@
 ## Changelog ##
 
+### v2.2.2 - (2017-11-07) ###
+- Tweak: Improved the way nonce checks are performed.
+- Fix: Escaped the email content before showing it in preview.
+
 ### v2.2.1 - (2017-11-04) ###
 - Tweak: Improved the UX of the view email content screen.
 
@@ -161,6 +165,9 @@
 - Initial Release
 
 ## Upgrade Notice ##
+
+### 2.2.2 ###
+Improved the way nonce checks are done. No visible changes from functionality perspective.
 
 ### 2.2.1 ###
 Improved the UX of the view email content screen.
