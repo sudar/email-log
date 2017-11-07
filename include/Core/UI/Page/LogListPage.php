@@ -155,23 +155,6 @@ class LogListPage extends BasePage {
 	}
 
 	/**
-	 * Verify nonce for all bulk actions.
-	 */
-	public function check_nonce() {
-		if ( ! isset( $_REQUEST[ self::DELETE_LOG_NONCE_FIELD ] ) ) {
-			return false;
-		}
-
-		$nonce = $_REQUEST[ self::DELETE_LOG_NONCE_FIELD ];
-
-		if ( ! wp_verify_nonce( $nonce, self::DELETE_LOG_ACTION ) ) {
-			wp_die( 'Cheating, Huh? ' );
-		}
-
-		return true;
-	}
-
-	/**
 	 * Get nonce args.
 	 *
 	 * @return array Nonce args.
