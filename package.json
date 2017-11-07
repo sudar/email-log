@@ -2,7 +2,7 @@
   "name": "email-log",
   "title": "Email Log",
   "description": "Email Log is a WordPress Plugin that logs every email sent through WordPress.",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "homepage": "https://wpemaillog.com",
   "license": "GPLv2+",
   "author": {
