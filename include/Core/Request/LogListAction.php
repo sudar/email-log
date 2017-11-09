@@ -48,15 +48,15 @@ class LogListAction implements Loadie {
 			<table style="width: 100%;">
 				<tr style="background: #eee;">
 					<td style="padding: 5px;"><?php _e( 'Sent at', 'email-log' ); ?>:</td>
-					<td style="padding: 5px;"><?php echo $log_item['sent_date'] ?></td>
+					<td style="padding: 5px;"><?php echo esc_html( $log_item['sent_date'] ); ?></td>
 				</tr>
 				<tr style="background: #eee;">
 					<td style="padding: 5px;"><?php _e( 'To', 'email-log' ); ?>:</td>
-					<td style="padding: 5px;"><?php echo $log_item['to_email'] ?></td>
+					<td style="padding: 5px;"><?php echo esc_html( $log_item['to_email'] ); ?></td>
 				</tr>
 				<tr style="background: #eee;">
 					<td style="padding: 5px;"><?php _e( 'Subject', 'email-log' ); ?>:</td>
-					<td style="padding: 5px;"><?php echo $log_item['subject'] ?></td>
+					<td style="padding: 5px;"><?php echo esc_html( $log_item['subject'] ); ?></td>
 				</tr>
 
 				<?php
