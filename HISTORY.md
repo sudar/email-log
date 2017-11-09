@@ -1,5 +1,8 @@
 ## Changelog ##
 
+### v2.2.3 - (2017-11-09) ###
+- Fix: Escaped all the fields while displaying email details in popup.
+
 ### v2.2.2 - (2017-11-07) ###
 - Tweak: Improved the way nonce checks are performed.
 - Fix: Escaped the email content before showing it in preview.
@@ -165,6 +168,9 @@
 - Initial Release
 
 ## Upgrade Notice ##
+
+### 2.2.3 ###
+Improved the security of the plugin by escaping all the fields before displaying them.
 
 ### 2.2.2 ###
 Improved the way nonce checks are done. No visible changes from functionality perspective.
