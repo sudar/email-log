@@ -15,13 +15,26 @@ if ( ! class_exists( 'EDD_SL_Plugin_Updater' ) ) {
 class EDDUpdater extends \EDD_SL_Plugin_Updater {
 
 	/**
-	 * Add-on slug.
+	 * The name part of the add-on file without .php extension.
+	 *
 	 * The base class already has a slug property but it is private.
 	 * So we have to create a duplicate to handle that.
 	 *
 	 * @var string
 	 */
 	protected $addon_slug;
+
+	/**
+	 * Directory and filename of the add-on.
+	 *
+	 * The base class already has a slug property but it is private.
+	 * So we have to create a duplicate to handle that.
+	 *
+	 * @since 2.2.4
+	 *
+	 * @var string
+	 */
+	protected $addon_name;
 
 	/**
 	 * Extract add-on slug alone and then pass everything to parent.
@@ -32,6 +45,7 @@ class EDDUpdater extends \EDD_SL_Plugin_Updater {
 	 */
 	public function __construct( $_api_url, $_plugin_file, $_api_data = null ) {
 		$this->addon_slug = basename( $_plugin_file, '.php' );
+		$this->addon_name = plugin_basename( $_plugin_file );
 
 		parent::__construct( $_api_url, $_plugin_file, $_api_data );
 	}
@@ -48,7 +62,7 @@ class EDDUpdater extends \EDD_SL_Plugin_Updater {
 
 		$installed_plugins = array_keys( get_plugins() );
 
-		if ( in_array( $this->addon_slug, $installed_plugins, true ) ) {
+		if ( in_array( $this->get_name(), $installed_plugins, true ) ) {
 			return;
 		}
 
@@ -58,6 +72,8 @@ class EDDUpdater extends \EDD_SL_Plugin_Updater {
 	/**
 	 * Get add-on slug.
 	 *
+	 * The name part of the add-on file without .php extension.
+	 *
 	 * @return string Add-on slug.
 	 */
 	public function get_slug() {
@@ -65,7 +81,21 @@ class EDDUpdater extends \EDD_SL_Plugin_Updater {
 	}
 
 	/**
+	 * Get the add-on name.
+	 *
+	 * Directory and filename of the add-on.
+	 *
+	 * @since 2.2.4
+	 *
+	 * @return string Add-on name.
+	 */
+	public function get_name() {
+		return $this->addon_name;
+	}
+
+	/**
 	 * Get Download URL.
+	 *
 	 * We can't call `api_request` method directly since it is declared as private in parent class.
 	 * So we call the `plugins_api_filter` method instead.
 	 *
@@ -73,7 +103,7 @@ class EDDUpdater extends \EDD_SL_Plugin_Updater {
 	 */
 	public function get_download_url() {
 		$args       = new \stdClass();
-		$args->slug = $this->addon_slug;
+		$args->slug = $this->get_slug();
 
 		$response = $this->plugins_api_filter( null, 'plugin_information', $args );
 
