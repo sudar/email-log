@@ -1,5 +1,8 @@
 ## Changelog ##
 
+### v2.2.4 - (2017-11-23) ###
+- Tweak: Tweaks to how the license is handled.
+
 ### v2.2.3 - (2017-11-09) ###
 - Fix: Escaped all the fields while displaying email details in popup.
 

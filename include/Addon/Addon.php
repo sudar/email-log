@@ -124,6 +124,8 @@ class Addon {
 	 * Print actions that are available when the license is valid.
 	 */
 	protected function print_valid_actions() {
+		$actions = '';
+
 		if ( $this->is_installed() ) {
 			$actions = '<a disabled class="button button-secondary">' . _x( 'Installed', 'Installed on website but not activated', 'email-log' );
 
@@ -132,20 +134,38 @@ class Addon {
 			} else {
 				$actions .= sprintf( '</a> <a class="button button-primary" href="%s">%s</a>', $this->get_activate_url(), _x( 'Activate', 'Enable addon so it may be used', 'email-log' ) );
 			}
-		} else {
-			$actions = sprintf( '<a class="button button-primary" href="%s">%s</a>', $this->get_install_url(), _x( 'Install', 'Download and activate addon', 'email-log' ) );
 		}
 
-		$actions .= sprintf( ' <a class="button button-secondary" target="_blank" href="%s">%s</a>', $this->get_download_url(), _x( 'Download', 'Download to your computer', 'email-log' ) );
+		$actions .= sprintf(
+			' <a class="button button-secondary" target="_blank" onclick="%s" href="%s">%s</a>',
+			$this->get_download_button_js(),
+			$this->get_download_url(),
+			_x( 'Download', 'Download to your computer', 'email-log' )
+		);
 
 		echo $actions;
+	}
+
+	/**
+	 * Return the JavaScript that shows the message when the Download button is clicked.
+	 *
+	 * @since 2.2.4
+	 *
+	 * @return string JavaScript.
+	 */
+	protected function get_download_button_js() {
+		ob_start();
+		?>
+		javascript:alert( 'You will now be able to download the zip file. Once the zip file is downloaded, upload it from the plugin page to install the add-on.' );
+		<?php
+		return ob_get_clean();
 	}
 
 	/**
 	 * Print actions that are available when the license is not valid.
 	 */
 	protected function print_invalid_actions() {
-		$label = _x( 'Activate License to Install', 'Download and activate addon', 'email-log' );
+		$label = _x( 'Activate License to Download', 'Download add-on', 'email-log' );
 
 		if ( $this->is_installed() ) {
 			$label = _x( 'Activate License to Use', 'Download and activate addon', 'email-log' );
@@ -153,7 +173,7 @@ class Addon {
 
 		printf(
 			'<a disabled class="button-secondary disabled" title="%s" href="#">%s</a>',
-			__( 'You need an active license to install the add-on', 'email-log' ),
+			__( 'You need an active license to use the add-on', 'email-log' ),
 			$label
 		);
 	}

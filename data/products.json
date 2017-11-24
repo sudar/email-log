@@ -174,7 +174,7 @@
                 "slug": "export-logs",
                 "title": "Export Logs",
                 "create_date": "2017-03-07 11:20:12",
-                "modified_date": "2017-07-15 09:13:51",
+                "modified_date": "2017-11-08 23:46:42",
                 "status": "publish",
                 "link": "https:\/\/wpemaillog.com\/?post_type=download&p=308",
                 "content": "Export Logs add-on allows you to export the logged email logs as a csv file. The exported logs can be used for further processing or for record keeping.\r\n<h3>Screenshots<\/h3>\r\n[gallery ids=\"965,966,967,968\"]",
@@ -196,7 +196,7 @@
                 ],
                 "tags": false,
                 "permalink": "https:\/\/wpemaillog.com\/addons\/export-logs\/",
-                "version": "1.0.0"
+                "version": "1.1.0"
             },
             "pricing": {
                 "singlesite": "19.00",
@@ -205,11 +205,11 @@
             },
             "licensing": {
                 "enabled": true,
-                "version": "1.0.0",
+                "version": "1.1.0",
                 "exp_unit": "years",
                 "exp_length": "1"
             }
         }
     ],
-    "request_speed": 0.0049359798431396484
+    "request_speed": 0.010409116744995117
 }

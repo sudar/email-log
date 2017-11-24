@@ -45,8 +45,6 @@ abstract class EmailLogAddon {
 
 	/**
 	 * Load the add-on and setup hooks.
-	 *
-	 *
 	 */
 	public function load() {
 		if ( is_null( $this->updater ) ) {
