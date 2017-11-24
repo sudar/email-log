@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the Email Log package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Email Log 2.2.3\n"
+"Project-Id-Version: Email Log 2.2.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/email-log\n"
-"POT-Creation-Date: 2017-11-09 17:23:02+00:00\n"
+"POT-Creation-Date: 2017-11-24 10:18:37+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -30,69 +30,64 @@ msgid ""
 "after sometime. If the problem persists contact support."
 msgstr ""
 
-#: dist/include/Addon/Addon.php:128 include/Addon/Addon.php:128
+#: dist/include/Addon/Addon.php:130 include/Addon/Addon.php:130
 msgctxt "Installed on website but not activated"
 msgid "Installed"
 msgstr ""
 
-#: dist/include/Addon/Addon.php:131 include/Addon/Addon.php:131
+#: dist/include/Addon/Addon.php:133 include/Addon/Addon.php:133
 msgctxt "Installed and activated on website"
 msgid "Activated"
 msgstr ""
 
-#: dist/include/Addon/Addon.php:133 include/Addon/Addon.php:133
+#: dist/include/Addon/Addon.php:135 include/Addon/Addon.php:135
 msgctxt "Enable addon so it may be used"
 msgid "Activate"
 msgstr ""
 
-#: dist/include/Addon/Addon.php:136 include/Addon/Addon.php:136
-msgctxt "Download and activate addon"
-msgid "Install"
-msgstr ""
-
-#: dist/include/Addon/Addon.php:139 include/Addon/Addon.php:139
+#: dist/include/Addon/Addon.php:143 include/Addon/Addon.php:143
 msgctxt "Download to your computer"
 msgid "Download"
 msgstr ""
 
-#: dist/include/Addon/Addon.php:148 include/Addon/Addon.php:148
-msgctxt "Download and activate addon"
-msgid "Activate License to Install"
+#: dist/include/Addon/Addon.php:168 include/Addon/Addon.php:168
+msgctxt "Download add-on"
+msgid "Activate License to Download"
 msgstr ""
 
-#: dist/include/Addon/Addon.php:151 include/Addon/Addon.php:151
+#: dist/include/Addon/Addon.php:171 include/Addon/Addon.php:171
 msgctxt "Download and activate addon"
 msgid "Activate License to Use"
 msgstr ""
 
-#: dist/include/Addon/Addon.php:156 include/Addon/Addon.php:156
-msgid "You need an active license to install the add-on"
+#: dist/include/Addon/Addon.php:176 include/Addon/Addon.php:176
+msgid "You need an active license to use the add-on"
 msgstr ""
 
-#: dist/include/Addon/Addon.php:166 dist/include/Addon/License/Licenser.php:103
-#: include/Addon/Addon.php:166 include/Addon/License/Licenser.php:103
+#: dist/include/Addon/Addon.php:186 dist/include/Addon/License/Licenser.php:103
+#: include/Addon/Addon.php:186 include/Addon/License/Licenser.php:103
 msgid "Activate"
 msgstr ""
 
-#: dist/include/Addon/Addon.php:174 dist/include/Addon/License/Licenser.php:109
-#: include/Addon/Addon.php:174 include/Addon/License/Licenser.php:109
+#: dist/include/Addon/Addon.php:194 dist/include/Addon/License/Licenser.php:109
+#: include/Addon/Addon.php:194 include/Addon/License/Licenser.php:109
 msgid "Deactivate"
 msgstr ""
 
-#: dist/include/Addon/Addon.php:180 dist/include/Addon/License/Licenser.php:112
-#: include/Addon/Addon.php:180 include/Addon/License/Licenser.php:112
+#: dist/include/Addon/Addon.php:200 dist/include/Addon/License/Licenser.php:112
+#: include/Addon/Addon.php:200 include/Addon/License/Licenser.php:112
 msgid "Your license expires on %s"
 msgstr ""
 
-#: dist/include/Addon/Addon.php:185 include/Addon/Addon.php:185
+#: dist/include/Addon/Addon.php:205 include/Addon/Addon.php:205
 msgid "Individual add-on license"
 msgstr ""
 
-#: dist/include/Addon/Addon.php:190 include/Addon/Addon.php:190
+#: dist/include/Addon/Addon.php:210 include/Addon/Addon.php:210
 msgid "Email Log License Key"
 msgstr ""
 
-#: dist/include/Addon/Addon.php:191 include/Addon/Addon.php:191
+#: dist/include/Addon/Addon.php:211 include/Addon/Addon.php:211
 msgid "%s Add-on License Key"
 msgstr ""
 
@@ -426,7 +421,7 @@ msgstr ""
 msgid "Support"
 msgstr ""
 
-#. #-#-#-#-#  email-log.pot (Email Log 2.2.3)  #-#-#-#-#
+#. #-#-#-#-#  email-log.pot (Email Log 2.2.4)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 #: dist/include/Core/UI/Page/LogListPage.php:57
 #: dist/include/Core/UI/Page/LogListPage.php:58
