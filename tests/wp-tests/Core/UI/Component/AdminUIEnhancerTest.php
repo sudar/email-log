@@ -1,8 +1,6 @@
 <?php namespace EmailLog\Core\UI\Component;
 
-use EmailLog\Core\UI\Component\AdminUIEnhancer;
-
-if ( ! class_exists( 'EmailLog\Core\UI\Components\PluginListEnhancer' ) ) {
+if ( ! class_exists( 'EmailLog\Core\UI\Component\AdminUIEnhancer' ) ) {
 	return;
 }
 
@@ -22,7 +20,7 @@ class MockAdminUIEnhancerClass extends AdminUIEnhancer {
  *
  * @since 2.0
  */
-class PluginListEnhancerTest extends \PHPUnit_Framework_TestCase {
+class AdminUIEnhancerTest extends \PHPUnit_Framework_TestCase {
 
 	protected $file;
 	protected $plugin_list_enhancer;
