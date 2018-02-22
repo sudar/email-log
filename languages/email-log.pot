@@ -1,14 +1,14 @@
-# Copyright (C) 2017 Email Log
+# Copyright (C) 2018 Email Log
 # This file is distributed under the same license as the Email Log package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Email Log 2.2.4\n"
+"Project-Id-Version: Email Log 2.2.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/email-log\n"
-"POT-Creation-Date: 2017-11-24 10:18:37+00:00\n"
+"POT-Creation-Date: 2018-02-22 11:06:34+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2017-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2018-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
@@ -65,17 +65,17 @@ msgid "You need an active license to use the add-on"
 msgstr ""
 
 #: dist/include/Addon/Addon.php:186 dist/include/Addon/License/Licenser.php:103
-#: include/Addon/Addon.php:186 include/Addon/License/Licenser.php:103
+#: include/Addon/Addon.php:186 include/Addon/License/Licenser.php:104
 msgid "Activate"
 msgstr ""
 
 #: dist/include/Addon/Addon.php:194 dist/include/Addon/License/Licenser.php:109
-#: include/Addon/Addon.php:194 include/Addon/License/Licenser.php:109
+#: include/Addon/Addon.php:194 include/Addon/License/Licenser.php:110
 msgid "Deactivate"
 msgstr ""
 
 #: dist/include/Addon/Addon.php:200 dist/include/Addon/License/Licenser.php:112
-#: include/Addon/Addon.php:200 include/Addon/License/Licenser.php:112
+#: include/Addon/Addon.php:200 include/Addon/License/Licenser.php:113
 msgid "Your license expires on %s"
 msgstr ""
 
@@ -152,7 +152,7 @@ msgid "An error occurred, please try again"
 msgstr ""
 
 #: dist/include/Addon/License/Licenser.php:121
-#: include/Addon/License/Licenser.php:121
+#: include/Addon/License/Licenser.php:122
 msgid ""
 "Enter your license key to activate add-ons. If you don't have a license, "
 "then you can <a href='%s' target='_blank'>buy it</a>"
@@ -160,33 +160,33 @@ msgstr ""
 
 #: dist/include/Addon/License/Licenser.php:130
 #: dist/include/Addon/License/Licenser.php:131
-#: include/Addon/License/Licenser.php:130
 #: include/Addon/License/Licenser.php:131
+#: include/Addon/License/Licenser.php:132
 msgid "Email Log Bundle License Key"
 msgstr ""
 
 #: dist/include/Addon/License/Licenser.php:159
-#: include/Addon/License/Licenser.php:159
+#: include/Addon/License/Licenser.php:182
 msgid ""
 "Your license has been activated. You can now install add-ons, will receive "
 "automatic updates and access to email support."
 msgstr ""
 
 #: dist/include/Addon/License/Licenser.php:175
-#: include/Addon/License/Licenser.php:175
+#: include/Addon/License/Licenser.php:198
 msgid ""
 "Your license has been deactivated. You will not receive automatic updates."
 msgstr ""
 
 #: dist/include/Addon/License/Licenser.php:218
-#: include/Addon/License/Licenser.php:218
+#: include/Addon/License/Licenser.php:241
 msgid ""
 "Your license for %s has been activated. You will receive automatic updates "
 "and access to email support."
 msgstr ""
 
 #: dist/include/Addon/License/Licenser.php:245
-#: include/Addon/License/Licenser.php:245
+#: include/Addon/License/Licenser.php:268
 msgid ""
 "Your license for %s has been deactivated. You will not receive automatic "
 "updates."
@@ -195,14 +195,14 @@ msgstr ""
 #: dist/include/Core/Request/LogListAction.php:50
 #: dist/include/Core/UI/ListTable/LogListTable.php:70
 #: include/Core/Request/LogListAction.php:50
-#: include/Core/UI/ListTable/LogListTable.php:70
+#: include/Core/UI/ListTable/LogListTable.php:69
 msgid "Sent at"
 msgstr ""
 
 #: dist/include/Core/Request/LogListAction.php:54
 #: dist/include/Core/UI/ListTable/LogListTable.php:71
 #: include/Core/Request/LogListAction.php:54
-#: include/Core/UI/ListTable/LogListTable.php:71
+#: include/Core/UI/ListTable/LogListTable.php:70
 #: tmp_addon/ForwardEmailSetting.php:32
 msgid "To"
 msgstr ""
@@ -210,7 +210,7 @@ msgstr ""
 #: dist/include/Core/Request/LogListAction.php:58
 #: dist/include/Core/UI/ListTable/LogListTable.php:72
 #: include/Core/Request/LogListAction.php:58
-#: include/Core/UI/ListTable/LogListTable.php:72
+#: include/Core/UI/ListTable/LogListTable.php:71
 msgid "Subject"
 msgstr ""
 
@@ -296,54 +296,53 @@ msgid "<a href=\"%s\">Addons</a>"
 msgstr ""
 
 #: dist/include/Core/UI/ListTable/LogListTable.php:52
-#: include/Core/UI/ListTable/LogListTable.php:52
 msgid "Additional fields are available in Pro add-on. "
 msgstr ""
 
 #: dist/include/Core/UI/ListTable/LogListTable.php:54
-#: include/Core/UI/ListTable/LogListTable.php:54
+#: include/Addon/License/Licenser.php:163
 msgid "Buy Now"
 msgstr ""
 
 #: dist/include/Core/UI/ListTable/LogListTable.php:134
-#: include/Core/UI/ListTable/LogListTable.php:134
+#: include/Core/UI/ListTable/LogListTable.php:133
 msgid "%s @ %s"
 msgstr ""
 
 #: dist/include/Core/UI/ListTable/LogListTable.php:152
-#: include/Core/UI/ListTable/LogListTable.php:152
+#: include/Core/UI/ListTable/LogListTable.php:151
 msgid "Email Content"
 msgstr ""
 
 #: dist/include/Core/UI/ListTable/LogListTable.php:153
-#: include/Core/UI/ListTable/LogListTable.php:153
+#: include/Core/UI/ListTable/LogListTable.php:152
 msgid "View Content"
 msgstr ""
 
 #: dist/include/Core/UI/ListTable/LogListTable.php:167
 #: dist/include/Core/UI/ListTable/LogListTable.php:239
-#: include/Core/UI/ListTable/LogListTable.php:167
-#: include/Core/UI/ListTable/LogListTable.php:239
+#: include/Core/UI/ListTable/LogListTable.php:166
+#: include/Core/UI/ListTable/LogListTable.php:238
 msgid "Delete"
 msgstr ""
 
 #: dist/include/Core/UI/ListTable/LogListTable.php:240
-#: include/Core/UI/ListTable/LogListTable.php:240
+#: include/Core/UI/ListTable/LogListTable.php:239
 msgid "Delete All Logs"
 msgstr ""
 
 #: dist/include/Core/UI/ListTable/LogListTable.php:273
-#: include/Core/UI/ListTable/LogListTable.php:273
+#: include/Core/UI/ListTable/LogListTable.php:272
 msgid "Your email log is empty"
 msgstr ""
 
 #: dist/include/Core/UI/ListTable/LogListTable.php:300
-#: include/Core/UI/ListTable/LogListTable.php:300
+#: include/Core/UI/ListTable/LogListTable.php:299
 msgid "Search by date"
 msgstr ""
 
 #: dist/include/Core/UI/ListTable/LogListTable.php:301
-#: include/Core/UI/ListTable/LogListTable.php:301
+#: include/Core/UI/ListTable/LogListTable.php:300
 msgid "Search by term"
 msgstr ""
 
@@ -421,7 +420,7 @@ msgstr ""
 msgid "Support"
 msgstr ""
 
-#. #-#-#-#-#  email-log.pot (Email Log 2.2.4)  #-#-#-#-#
+#. #-#-#-#-#  email-log.pot (Email Log 2.2.5)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 #: dist/include/Core/UI/Page/LogListPage.php:57
 #: dist/include/Core/UI/Page/LogListPage.php:58
@@ -528,6 +527,14 @@ msgstr ""
 #: dist/include/libraries/EDD_SL_Plugin_Updater.php:399
 #: include/libraries/EDD_SL_Plugin_Updater.php:399
 msgid "Error"
+msgstr ""
+
+#: include/Addon/License/Licenser.php:155
+msgid "Additional fields are available through More Fields add-on. "
+msgstr ""
+
+#: include/Addon/License/Licenser.php:159
+msgid "Install it"
 msgstr ""
 
 #: tmp_addon/AutoDeleteLogsSetting.php:15
