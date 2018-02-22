@@ -1,5 +1,8 @@
 ## Changelog ##
 
+### v2.2.5 - (2018-02-21) ###
+- Tweak: Show Dashboard Widget only if the user can view email logs.
+
 ### v2.2.4 - (2017-11-23) ###
 - Tweak: Tweaks to how the license is handled.
 
