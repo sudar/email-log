@@ -1,5 +1,8 @@
 ## Changelog ##
 
+### v2.2.5 - (2018-02-22) ###
+- Tweak: Show Dashboard Widget only if the user can view email logs.
+
 ### v2.2.4 - (2017-11-23) ###
 - Tweak: Tweaks to how the license is handled.
 
@@ -171,6 +174,9 @@
 - Initial Release
 
 ## Upgrade Notice ##
+
+### 2.2.5 ###
+Hide Dashboard Widget for users who can't view email logs.
 
 ### 2.2.3 ###
 Improved the security of the plugin by escaping all the fields before displaying them.

@@ -47,13 +47,12 @@ class LogListTable extends \WP_List_Table {
 	 */
 	protected function extra_tablenav( $which ) {
 		if ( 'top' == $which ) {
-			// The code that goes before the table is here.
-			echo '<span id = "el-pro-msg">';
-			_e( 'Additional fields are available in Pro add-on. ', 'email-log' );
-			echo '<a href="https://wpemaillog.com/addons/more-fields/?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=inline&utm_content=mf" style="color:red">';
-			_e( 'Buy Now', 'email-log' );
-			echo '</a>';
-			echo '</span>';
+			/**
+			 * Triggered before the logs list table is displayed.
+			 *
+			 * @since 2.2.5
+			 */
+			do_action( 'el_before_logs_list_table' );
 		}
 	}
 

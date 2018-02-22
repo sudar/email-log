@@ -1,6 +1,7 @@
 <?php namespace EmailLog\Core\UI;
 
 use EmailLog\Core\Loadie;
+use EmailLog\Core\UI\Page\LogListPage;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
@@ -52,9 +53,12 @@ class UILoader implements Loadie {
 	 * @access protected
 	 */
 	protected function initialize_components() {
-		$this->components['admin_ui_enhancer'] = new Component\AdminUIEnhancer();
-		$this->components['core_settings']     = new Setting\CoreSetting();
-		$this->components['dashboard_widget']  = new Component\DashboardWidget();
+		$this->components['core_settings'] = new Setting\CoreSetting();
+
+		if ( current_user_can( LogListPage::CAPABILITY ) ) {
+			$this->components['admin_ui_enhancer'] = new Component\AdminUIEnhancer();
+			$this->components['dashboard_widget']  = new Component\DashboardWidget();
+		}
 	}
 
 	/**
