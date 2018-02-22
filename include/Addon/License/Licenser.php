@@ -67,6 +67,7 @@ final class Licenser implements Loadie {
 		$this->bundle_license->load();
 
 		add_action( 'el_before_addon_list', array( $this, 'render_bundle_license_form' ) );
+		add_action( 'el_before_logs_list_table', array( $this, 'render_more_fields_addon_upsell_message' ) );
 
 		add_action( 'el_bundle_license_activate', array( $this, 'activate_bundle_license' ) );
 		add_action( 'el_bundle_license_deactivate', array( $this, 'deactivate_bundle_license' ) );
@@ -142,6 +143,28 @@ final class Licenser implements Loadie {
 			</form>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Renders Upsell message for More Fields add-on.
+	 *
+	 * @since 2.2.5
+	 */
+	public function render_more_fields_addon_upsell_message() {
+		echo '<span id = "el-pro-msg">';
+		_e( 'Additional fields are available through More Fields add-on. ', 'email-log' );
+
+		if ( $this->is_bundle_license_valid() ) {
+			echo '<a href="admin.php?page=email-log-addons">';
+			_e( 'Install it', 'email-log' );
+			echo '</a>';
+		} else {
+			echo '<a href="https://wpemaillog.com/addons/more-fields/?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=inline&utm_content=mf" style="color:red">';
+			_e( 'Buy Now', 'email-log' );
+			echo '</a>';
+		}
+
+		echo '</span>';
 	}
 
 	/**
