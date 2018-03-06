@@ -29,7 +29,7 @@ class DashboardWidget implements Loadie {
 		if( isset($options['dashboard_widget_status']) )
 			$dashboard_status = $options['dashboard_widget_status'];
 
-		if( ! $dashboard_status ) { 
+		if( ! $dashboard_status ) {
 			wp_add_dashboard_widget(
 				'email_log_dashboard_widget',
 				__( 'Email Logs Summary', 'email-log' ),
