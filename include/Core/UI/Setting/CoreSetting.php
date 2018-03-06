@@ -15,14 +15,14 @@ class CoreSetting extends Setting {
 		$this->section->option_name = 'email-log-core';
 
 		$this->section->field_labels = array(
-			'allowed_user_roles'  => __( 'Allowed User Roles', 'email-log' ),
-			'remove_on_uninstall' => __( 'Remove Data on Uninstall?', 'email-log' ),
+			'allowed_user_roles'      => __( 'Allowed User Roles', 'email-log' ),
+			'remove_on_uninstall'     => __( 'Remove Data on Uninstall?', 'email-log' ),
 			'dashboard_widget_status' => __( 'Disable Dashboard Widget' ),
 		);
 
 		$this->section->default_value = array(
-			'allowed_user_roles'  => array(),
-			'remove_on_uninstall' => '',
+			'allowed_user_roles'      => array(),
+			'remove_on_uninstall'     => '',
 			'dashboard_widget_status' => false,
 		);
 
