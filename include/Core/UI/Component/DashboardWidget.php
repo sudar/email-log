@@ -40,7 +40,7 @@ class DashboardWidget implements Loadie {
 		?>
 
 		<p>
-			<?php _e( 'Total number of emails logged' , 'email-log' ); ?>: <strong><?php echo absint( $logs_count ); ?></strong>
+			<?php _e( 'Total number of emails logged' , 'email-log' ); ?>: <strong><?php echo number_format( absint( $logs_count ), 0, ',', ',' ); ?></strong>
 		</p>
 
 		<ul class="subsubsub" style="float: none">
