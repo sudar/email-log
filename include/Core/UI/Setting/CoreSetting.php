@@ -17,11 +17,13 @@ class CoreSetting extends Setting {
 		$this->section->field_labels = array(
 			'allowed_user_roles'  => __( 'Allowed User Roles', 'email-log' ),
 			'remove_on_uninstall' => __( 'Remove Data on Uninstall?', 'email-log' ),
+			'dashboard_widget_status' => __( 'Disable Dashboard Widget' ),
 		);
 
 		$this->section->default_value = array(
 			'allowed_user_roles'  => array(),
 			'remove_on_uninstall' => '',
+			'dashboard_widget_status' => false,
 		);
 
 		$this->load();
@@ -183,5 +185,31 @@ class CoreSetting extends Setting {
 		}
 
 		return $user_roles;
+	}
+
+	/**
+	 * Renders the Email Log `Remove Data on Uninstall?` settings.
+	 *
+	 * @param array $args
+	 */
+	public function render_dashboard_widget_status_settings( $args ) {
+		$option      = $this->get_value();
+		$remove_data = $option[ $args['id'] ];
+
+		$field_name = $this->section->option_name . '[' . $args['id'] . ']';
+		?>
+
+		<input type="checkbox" name="<?php echo esc_attr( $field_name ); ?>" value="true" <?php checked( 'true', $remove_data ); ?>>
+		<?php _e( 'Check this box if you would like to disable dashboard widget.', 'email-log' ) ?>
+
+		<p>
+			<em>
+				<?php printf(
+					__( '<strong>Note:</strong> Each users can also disable dashboard widget using screen options', 'email-log' )
+				); ?>
+			</em>
+		</p>
+
+		<?php
 	}
 }
