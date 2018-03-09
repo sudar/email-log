@@ -17,13 +17,13 @@ class CoreSetting extends Setting {
 		$this->section->field_labels = array(
 			'allowed_user_roles'      => __( 'Allowed User Roles', 'email-log' ),
 			'remove_on_uninstall'     => __( 'Remove Data on Uninstall?', 'email-log' ),
-			'dashboard_widget_status' => __( 'Disable Dashboard Widget' ),
+			'hide_dashboard_widget' => __( 'Disable Dashboard Widget', 'email-log' ),
 		);
 
 		$this->section->default_value = array(
 			'allowed_user_roles'      => array(),
 			'remove_on_uninstall'     => '',
-			'dashboard_widget_status' => false,
+			'hide_dashboard_widget' => false,
 		);
 
 		$this->load();
@@ -192,7 +192,7 @@ class CoreSetting extends Setting {
 	 *
 	 * @param array $args
 	 */
-	public function render_dashboard_widget_status_settings( $args ) {
+	public function render_hide_dashboard_widget_settings( $args ) {
 		$option      = $this->get_value();
 		$remove_data = $option[ $args['id'] ];
 

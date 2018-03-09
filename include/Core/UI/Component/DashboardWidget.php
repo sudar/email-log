@@ -26,8 +26,8 @@ class DashboardWidget implements Loadie {
 	public function register() {
 		$dashboard_status = false;
 		$options          = get_option( 'email-log-core' );
-		if( isset($options['dashboard_widget_status']) )
-			$dashboard_status = $options['dashboard_widget_status'];
+		if( isset($options['hide_dashboard_widget']) )
+			$dashboard_status = $options['hide_dashboard_widget'];
 
 		if( ! $dashboard_status ) {
 			wp_add_dashboard_widget(
