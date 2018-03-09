@@ -17,13 +17,13 @@ class CoreSetting extends Setting {
 		$this->section->field_labels = array(
 			'allowed_user_roles'      => __( 'Allowed User Roles', 'email-log' ),
 			'remove_on_uninstall'     => __( 'Remove Data on Uninstall?', 'email-log' ),
-			'hide_dashboard_widget' => __( 'Disable Dashboard Widget', 'email-log' ),
+			'hide_dashboard_widget'   => __( 'Disable Dashboard Widget', 'email-log' ),
 		);
 
 		$this->section->default_value = array(
 			'allowed_user_roles'      => array(),
 			'remove_on_uninstall'     => '',
-			'hide_dashboard_widget' => false,
+			'hide_dashboard_widget'   => false,
 		);
 
 		$this->load();
