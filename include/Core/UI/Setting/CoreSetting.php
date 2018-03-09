@@ -193,7 +193,7 @@ class CoreSetting extends Setting {
 	 * @param array $args
 	 */
 	public function render_hide_dashboard_widget_settings( $args ) {
-		$option      = $this->get_value();
+		$option                = $this->get_value();
 		$hide_dashboard_widget = $option[ $args['id'] ];
 
 		$field_name = $this->section->option_name . '[' . $args['id'] . ']';

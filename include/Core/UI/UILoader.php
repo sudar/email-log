@@ -54,8 +54,8 @@ class UILoader implements Loadie {
 	 */
 	protected function initialize_components() {
 		$this->components['core_settings'] = new Setting\CoreSetting();
-		$dashboard_status = false;
-		$options          = get_option( 'email-log-core' );
+		$dashboard_status                  = false;
+		$options                           = get_option( 'email-log-core' );
 		if( isset($options['hide_dashboard_widget']) ){
 			$dashboard_status = $options['hide_dashboard_widget'];
 		}
