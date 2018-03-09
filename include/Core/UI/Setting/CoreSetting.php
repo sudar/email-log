@@ -194,12 +194,12 @@ class CoreSetting extends Setting {
 	 */
 	public function render_hide_dashboard_widget_settings( $args ) {
 		$option      = $this->get_value();
-		$remove_data = $option[ $args['id'] ];
+		$hide_dashboard_widget = $option[ $args['id'] ];
 
 		$field_name = $this->section->option_name . '[' . $args['id'] . ']';
 		?>
 
-		<input type="checkbox" name="<?php echo esc_attr( $field_name ); ?>" value="true" <?php checked( 'true', $remove_data ); ?>>
+		<input type="checkbox" name="<?php echo esc_attr( $field_name ); ?>" value="true" <?php checked( 'true', $hide_dashboard_widget ); ?>>
 		<?php _e( 'Check this box if you would like to disable dashboard widget.', 'email-log' ) ?>
 
 		<p>

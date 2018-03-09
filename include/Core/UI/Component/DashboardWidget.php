@@ -24,18 +24,11 @@ class DashboardWidget implements Loadie {
 	 * Adds the dashboard widget to display Email Log activity.
 	 */
 	public function register() {
-		$dashboard_status = false;
-		$options          = get_option( 'email-log-core' );
-		if( isset($options['hide_dashboard_widget']) )
-			$dashboard_status = $options['hide_dashboard_widget'];
-
-		if( ! $dashboard_status ) {
-			wp_add_dashboard_widget(
-				'email_log_dashboard_widget',
-				__( 'Email Logs Summary', 'email-log' ),
-				array( $this, 'render' )
-			);
-		}
+		wp_add_dashboard_widget(
+			'email_log_dashboard_widget',
+			__( 'Email Logs Summary', 'email-log' ),
+			array( $this, 'render' )
+		);
 	}
 
 	/**
