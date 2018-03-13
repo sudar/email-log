@@ -52,6 +52,7 @@ class UILoader implements Loadie {
 		if( isset( $options['hide_dashboard_widget'] ) ) {
 			$dashboard_status = $options['hide_dashboard_widget'];
 		}
+
 		return $dashboard_status;
 	}
 
