@@ -63,7 +63,7 @@ class Addon {
 		<div class="el-addon">
 			<h3 class="el-addon-title"> <?php echo esc_html( $this->name ); ?> </h3>
 
-			<a href="<?php echo esc_url( $this->link ); ?>?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=addon-grid&utm_content=<?php echo $this->name; ?>"
+			<a target="_blank" href="<?php echo esc_url( $this->link ); ?>?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=addon-grid&utm_content=<?php echo $this->name; ?>"
 			   title="<?php echo esc_attr( $this->name ); ?>">
 				<img src="<?php echo esc_url( $this->thumbnail ); ?>" class="attachment-showcase wp-post-image"
 				     alt="<?php echo esc_attr( $this->name ); ?>" title="<?php echo esc_attr( $this->name ); ?>">
@@ -132,7 +132,7 @@ class Addon {
 			if ( $this->is_active() ) {
 				$actions .= ' &amp; ' . _x( 'Activated', 'Installed and activated on website', 'email-log' ) . '</a>';
 			} else {
-				$actions .= sprintf( '</a> <a class="button button-primary" href="%s">%s</a>', $this->get_activate_url(), _x( 'Activate', 'Enable addon so it may be used', 'email-log' ) );
+				$actions .= sprintf( '</a> <a class="button button-primary" target="_blank" href="%s">%s</a>', $this->get_activate_url(), _x( 'Activate', 'Enable addon so it may be used', 'email-log' ) );
 			}
 		}
 
