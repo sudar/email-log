@@ -159,7 +159,7 @@ final class Licenser implements Loadie {
 			_e( 'Install it', 'email-log' );
 			echo '</a>';
 		} else {
-			echo '<a href="https://wpemaillog.com/addons/more-fields/?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=inline&utm_content=mf" style="color:red">';
+			echo '<a target="_blank" href="https://wpemaillog.com/addons/more-fields/?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=inline&utm_content=mf" style="color:red">';
 			_e( 'Buy Now', 'email-log' );
 			echo '</a>';
 		}
