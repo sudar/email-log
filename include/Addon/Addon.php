@@ -132,7 +132,7 @@ class Addon {
 			if ( $this->is_active() ) {
 				$actions .= ' &amp; ' . _x( 'Activated', 'Installed and activated on website', 'email-log' ) . '</a>';
 			} else {
-				$actions .= sprintf( '</a> <a class="button button-primary" target="_blank" href="%s">%s</a>', $this->get_activate_url(), _x( 'Activate', 'Enable addon so it may be used', 'email-log' ) );
+				$actions .= sprintf( '</a> <a class="button button-primary" href="%s">%s</a>', $this->get_activate_url(), _x( 'Activate', 'Enable addon so it may be used', 'email-log' ) );
 			}
 		}
 
