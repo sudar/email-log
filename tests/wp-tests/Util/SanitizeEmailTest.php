@@ -9,36 +9,44 @@ class SanitizeEmailTest extends \WP_UnitTestCase {
 		$email_with_whitespace = '   sudar@sudarmuthu.com   ';
 
 		$expected = 'sudar@sudarmuthu.com';
-		$actual   = sanitize_email( $email_with_whitespace );
+		$actual_1 = sanitize_email( $email_with_whitespace );
+		$actual_2 = sanitize_email_with_name( $email_with_whitespace );
 
-		$this->assertEquals( $expected, $actual );
+		$this->assertEquals( $expected, $actual_1 );
+		$this->assertEquals( $expected, $actual_2 );
 	}
 
 	function test_email_is_valid() {
 		$invalid_email = 'sudar@sudarmuthu';
 
 		$expected = '';
-		$actual   = sanitize_email( $invalid_email );
+		$actual_1 = sanitize_email( $invalid_email );
+		$actual_2 = sanitize_email_with_name( $invalid_email );
 
-		$this->assertEquals( $expected, $actual );
+		$this->assertEquals( $expected, $actual_1 );
+		$this->assertEquals( $expected, $actual_2 );
 	}
 
 	function test_email_with_name() {
 		$email_with_name = 'Sudar Muthu<sudar@sudarmuthu.com>';
 
 		$expected = 'Sudar Muthu <sudar@sudarmuthu.com>';
-		$actual   = sanitize_email( $email_with_name );
+		$actual_1 = sanitize_email( $email_with_name );
+		$actual_2 = sanitize_email_with_name( $email_with_name );
 
-		$this->assertEquals( $expected, $actual );
+		$this->assertEquals( $expected, $actual_1 );
+		$this->assertEquals( $expected, $actual_2 );
 	}
 
 	function test_email_with_name_and_space() {
 		$email_with_name_and_space = ' Sudar Muthu <sudar@sudarmuthu.com>';
 
 		$expected = 'Sudar Muthu <sudar@sudarmuthu.com>';
-		$actual   = sanitize_email( $email_with_name_and_space );
+		$actual_1 = sanitize_email( $email_with_name_and_space );
+		$actual_2 = sanitize_email_with_name( $email_with_name_and_space );
 
-		$this->assertEquals( $expected, $actual );
+		$this->assertEquals( $expected, $actual_1 );
+		$this->assertEquals( $expected, $actual_2 );
 	}
 
 	function test_multiple_simple_email_returns_first() {
