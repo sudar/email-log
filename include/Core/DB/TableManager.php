@@ -39,6 +39,8 @@ class TableManager implements Loadie {
 	 */
 	public function on_activate( $network_wide ) {
 		if ( is_multisite() && $network_wide ) {
+			// Note: if there are more than 10,000 blogs or
+			// if `wp_is_large_network` filter is set, then this may fail.
 			$sites = get_sites();
 
 			foreach ( $sites as $site ) {
