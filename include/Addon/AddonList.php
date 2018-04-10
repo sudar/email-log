@@ -174,7 +174,7 @@ class AddonList {
 		<span class="el-addon-empty">
 			<?php
 				printf(
-					__( 'We are not able to retrieve the add-on list now. Please visit the <a href="%s">add-on page</a> to view the add-ons.', 'email-log' ), // @codingStandardsIgnoreLine
+					__( 'We are not able to retrieve the add-on list now. Please visit the <a target="_blank" href="%s">add-on page</a> to view the add-ons.', 'email-log' ), // @codingStandardsIgnoreLine
 					'https://wpemaillog.com/store/?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=addon-grid-failed'
 				);
 			?>
