@@ -5,15 +5,6 @@
  */
 class SanitizeEmailTest extends \WP_UnitTestCase {
 
-	function test_email_is_trimed() {
-		$email_with_whitespace = '   sudar@sudarmuthu.com   ';
-
-		$expected = 'sudar@sudarmuthu.com';
-		$actual_1 = sanitize_email( $email_with_whitespace );
-
-		$this->assertEquals( $expected, $actual_1 );
-	}
-
 	function test_email_is_valid() {
 		$invalid_email = 'sudar@sudarmuthu';
 
@@ -54,8 +45,26 @@ class SanitizeEmailTest extends \WP_UnitTestCase {
 		$this->assertEquals( $expected, $actual );
 	}
 
+	function test_trimed_multiple_simple_email_returns_first() {
+		$multiple_emails = '  sudar@sudarmuthu.com,  muthu@sudarmuthu.com  ';
+
+		$expected = 'sudar@sudarmuthu.com';
+		$actual   = sanitize_email( $multiple_emails, false );
+
+		$this->assertEquals( $expected, $actual );
+	}
+
 	function test_multiple_simple_email() {
 		$multiple_emails = 'sudar@sudarmuthu.com, muthu@sudarmuthu.com';
+
+		$expected = 'sudar@sudarmuthu.com, muthu@sudarmuthu.com';
+		$actual   = sanitize_email( $multiple_emails );
+
+		$this->assertEquals( $expected, $actual );
+	}
+
+	function test_trimed_multiple_simple_email() {
+		$multiple_emails = '   sudar@sudarmuthu.com   ,   muthu@sudarmuthu.com   ';
 
 		$expected = 'sudar@sudarmuthu.com, muthu@sudarmuthu.com';
 		$actual   = sanitize_email( $multiple_emails );
