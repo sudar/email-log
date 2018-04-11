@@ -5,6 +5,9 @@
  */
 class CheckedArrayTest extends \WP_UnitTestCase {
 
+	/**
+	 * Test $values is array.
+	 */
 	function test_value_is_array() {
 		$current = 'editor';
 		$values  = 'author';
@@ -15,6 +18,9 @@ class CheckedArrayTest extends \WP_UnitTestCase {
 		$this->assertEquals( $expected, $actual );
 	}
 
+	/**
+	 * Test $current exist in $values array.
+	 */
 	function test_value_is_exist() {
 		$current = 'editor';
 		$values  = array( 'author', 'editor' );
