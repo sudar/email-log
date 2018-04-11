@@ -10,10 +10,8 @@ class SanitizeEmailTest extends \WP_UnitTestCase {
 
 		$expected = 'sudar@sudarmuthu.com';
 		$actual_1 = sanitize_email( $email_with_whitespace );
-		$actual_2 = sanitize_email_with_name( $email_with_whitespace );
 
 		$this->assertEquals( $expected, $actual_1 );
-		$this->assertEquals( $expected, $actual_2 );
 	}
 
 	function test_email_is_valid() {
@@ -21,10 +19,8 @@ class SanitizeEmailTest extends \WP_UnitTestCase {
 
 		$expected = '';
 		$actual_1 = sanitize_email( $invalid_email );
-		$actual_2 = sanitize_email_with_name( $invalid_email );
 
 		$this->assertEquals( $expected, $actual_1 );
-		$this->assertEquals( $expected, $actual_2 );
 	}
 
 	function test_email_with_name() {
