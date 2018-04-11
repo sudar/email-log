@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) && ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 if ( is_multisite() ) {
 	// Note: if there are more than 10,000 blogs or
 	// if `wp_is_large_network` filter is set, then this may fail.
-	$sites = wp_get_sites();
+	$sites = get_sites();
 
 	foreach ( $sites as $site ) {
 		switch_to_blog( $site['blog_id'] );
