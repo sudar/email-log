@@ -3,7 +3,7 @@
 /**
  * Test `checked_array` functions inside helper.
  */
-class CheckCheckboxTest extends \WP_UnitTestCase {
+class CheckedArrayTest extends \WP_UnitTestCase {
 
 	function test_value_is_array() {
 		$current = 'editor';
