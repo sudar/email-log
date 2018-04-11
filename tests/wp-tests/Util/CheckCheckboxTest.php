@@ -14,5 +14,15 @@ class CheckCheckboxTest extends \WP_UnitTestCase {
 
 		$this->assertEquals( $expected, $actual );
 	}
+
+	function test_value_is_exist() {
+		$current = 'editor';
+		$values  = array( 'author', 'editor' );
+
+		$expected = 'checked="checked"';
+		$actual = checked_array( $values, $current );
+
+		$this->assertEquals( $expected, $actual );
+	}
 }
 
