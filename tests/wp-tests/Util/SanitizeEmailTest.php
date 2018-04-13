@@ -5,13 +5,22 @@
  */
 class SanitizeEmailTest extends \WP_UnitTestCase {
 
+	function test_email_is_trimed() {
+		$email_with_whitespace = '   sudar@sudarmuthu.com   ';
+
+		$expected = 'sudar@sudarmuthu.com';
+		$actual   = sanitize_email( $email_with_whitespace );
+
+		$this->assertEquals( $expected, $actual );
+	}
+
 	function test_email_is_valid() {
 		$invalid_email = 'sudar@sudarmuthu';
 
 		$expected = '';
-		$actual_1 = sanitize_email( $invalid_email );
+		$actual = sanitize_email( $invalid_email );
 
-		$this->assertEquals( $expected, $actual_1 );
+		$this->assertEquals( $expected, $actual );
 	}
 
 	function test_email_with_name() {
