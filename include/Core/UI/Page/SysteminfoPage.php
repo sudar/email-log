@@ -3,13 +3,13 @@
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 /**
- * Settings Page.
- * This page is displayed only if any add-on has a setting enabled.
+ * System Info Page.
+ * This page is displayed about ststem info.
  *
  * @since 2.0.0
  */
 class SystemInfoPage extends BasePage {
-	const PAGE_SLUG = 'ststem_infos';
+	const PAGE_SLUG = 'system_infos';
 	/**
 	 * Specify additional hooks.
 	 *
@@ -18,72 +18,18 @@ class SystemInfoPage extends BasePage {
 	public function load() {
 		parent::load();
 
-		add_action( 'admin_init', array( $this, 'register_settings' ) );
-	}
+		$this->messages = array(
+			'info_message' => __( 'Please include this information when posting support requests.', 'email-log' ),
+		);
 
-	/**
-	 * Register settings and add setting sections and fields.
-	 */
-	public function register_settings() {
-		$sections = $this->get_setting_sections();
-
-		foreach ( $sections as $section ) {
-			register_setting(
-				self::PAGE_SLUG,
-				$section->option_name,
-				array( 'sanitize_callback' => $section->sanitize_callback )
-			);
-
-			add_settings_section(
-				$section->id,
-				$section->title,
-				$section->callback,
-				self::PAGE_SLUG
-			);
-
-			foreach ( $section->fields as $field ) {
-				add_settings_field(
-					$section->id . '[' . $field->id . ']',
-					$field->title,
-					$field->callback,
-					self::PAGE_SLUG,
-					$section->id,
-					$field->args
-				);
-			}
-		}
-	}
-
-	/**
-	 * Get a list of setting sections defined.
-	 * An add-on can define a setting section.
-	 *
-	 * @return \EmailLog\Core\UI\Setting\SettingSection[] List of defined setting sections.
-	 */
-	protected function get_setting_sections() {
-		/**
-		 * Specify the list of setting sections in the settings page.
-		 * An add-on can add its own setting section by adding an instance of
-		 * SectionSection to the array.
-		 *
-		 * @since 2.0.0
-		 *
-		 * @param \EmailLog\Core\UI\Setting\SettingSection[] List of SettingSections.
-		 */
-		return apply_filters( 'el_setting_sections', array() );
+		$this->actions     = array( 'download_sysinfo' );
+		add_action( 'el_download_sysinfo', array( $this, 'generate_sysinfo_download' ) );
 	}
 
 	/**
 	 * Register page.
 	 */
 	public function register_page() {
-
-		$sections = $this->get_setting_sections();
-
-		if ( empty( $sections ) ) {
-			return;
-		}
-
 		$this->page = add_submenu_page(
 			LogListPage::PAGE_SLUG,
 			__( 'System Info', 'email-log' ),
@@ -98,8 +44,6 @@ class SystemInfoPage extends BasePage {
 
 	/**
 	 * Get current theme name.
-	 *
-	 * @since 5.5.4
 	 *
 	 * @return string Current theme name.
 	 */
@@ -116,18 +60,104 @@ class SystemInfoPage extends BasePage {
 	}
 
 	/**
+	 * Try to identity the hosting provider.
+	 *
+	 * @return string Web host name if identified, empty string otherwise.
+	 */
+	protected function el_identify_host() {
+		$host = '';
+		if ( defined( 'WPE_APIKEY' ) ) {
+			$host = 'WP Engine';
+		} elseif ( defined( 'PAGELYBIN' ) ) {
+			$host = 'Pagely';
+		}
+
+		return $host;
+	}
+
+	/**
+	 * Print plugins that are currently active.
+	 */
+	protected function el_print_current_plugins() {
+		$plugins        = get_plugins();
+		$active_plugins = get_option( 'active_plugins', array() );
+
+		foreach ( $plugins as $plugin_path => $plugin ) {
+			// If the plugin isn't active, don't show it.
+			if ( ! in_array( $plugin_path, $active_plugins ) ) {
+				continue;
+			}
+
+			echo $plugin['Name'] . ': ' . $plugin['Version'] . "\n";
+		}
+	}
+
+	/**
+	 * Print network active plugins.
+	 */
+	protected function el_print_network_active_plugins() {
+		$plugins        = wp_get_active_network_plugins();
+		$active_plugins = get_site_option( 'active_sitewide_plugins', array() );
+
+		foreach ( $plugins as $plugin_path ) {
+			$plugin_base = plugin_basename( $plugin_path );
+
+			// If the plugin isn't active, don't show it.
+			if ( ! array_key_exists( $plugin_base, $active_plugins ) ) {
+				continue;
+			}
+
+			$plugin = get_plugin_data( $plugin_path );
+
+			echo $plugin['Name'] . ' :' . $plugin['Version'] . "\n";
+		}
+	}
+
+	protected function el_plugin_version() {
+		$plugin_path = WP_PLUGIN_DIR.'/email-log/email-log.php';
+		$plugin_data = get_plugin_data( $plugin_path );
+		echo $plugin_data['Version'];
+	}
+
+	/**
 	 * Render the page.
 	 * //TODO: Convert these sections into tabs.
 	 */
 	public function render_page() {
 		global $wpdb;
-		$plugin_version = '2.2.5';
 		?>
+		<div class="updated">
+			<p><strong><?php echo $this->messages['info_message']; ?></strong></p>
+		</div>
+
+		<?php if ( defined( 'SAVEQUERIES' ) && SAVEQUERIES ) { ?>
+			<div class="notice notice-warning">
+				<p><strong>
+					<?php printf( __( 'SAVEQUERIES is <a href="%s" target="_blank">enabled</a>. This puts additional load on the memory and will restrict the number of items that can be deleted.', 'bulk-delete' ), 'https://codex.wordpress.org/Editing_wp-config.php#Save_queries_for_analysis' ); ?>
+				</strong></p>
+			</div>
+		<?php } ?>
+
+		<?php if ( defined( 'DISABLE_WP_CRON' ) && DISABLE_WP_CRON ) { ?>
+			<div class="notice notice-warning">
+				<p><strong>
+					<?php printf( __( 'DISABLE_WP_CRON is <a href="%s" target="_blank">enabled</a>. This prevents scheduler from running.', 'bulk-delete' ), 'https://codex.wordpress.org/Editing_wp-config.php#Disable_Cron_and_Cron_Timeout' ); ?>
+				</strong></p>
+			</div>
+		<?php } ?>
 		<div class="wrap">
 			<h1><?php _e( 'Email Log  - System Info', 'email-log' ); ?></h1>
 
-		<textarea wrap="off" style="width:100%;height:500px;font-family:Menlo,Monaco,monospace;white-space:pre;" readonly="readonly" onclick="this.focus();this.select()" id="system-info-textarea" name="bulk-delete-sysinfo" title="<?php _e( 'To copy the system info, click below then press Ctrl + C (PC) or Cmd + C (Mac).', 'bulk-delete' ); ?>">
+		<textarea wrap="off" style="width:100%;height:500px;font-family:Menlo,Monaco,monospace;white-space:pre;" readonly="readonly" onclick="this.focus();this.select()" id="system-info-textarea" name="email-log-sysinfo" title="<?php _e( 'To copy the system info, click below then press Ctrl + C (PC) or Cmd + C (Mac).', 'bulk-delete' ); ?>">
 ### Begin System Info ###
+<?php
+	/**
+	 * Runs before displaying system info.
+	 *
+	 * This action is primarily for adding extra content in System Info.
+	 */
+	do_action( 'el_system_info_before' );
+?>
 
 Multisite:                <?php echo is_multisite() ? 'Yes' . "\n" : 'No' . "\n" ?>
 
@@ -138,7 +168,7 @@ Browser:                  <?php echo esc_html( $_SERVER['HTTP_USER_AGENT'] ), "\
 Permalink Structure:      <?php echo get_option( 'permalink_structure' ) . "\n"; ?>
 Active Theme:             <?php echo $this->el_get_current_theme_name() . "\n"; ?>
 <?php
-		$host = bd_identify_host();
+		$host = $this->el_identify_host();
 		if ( '' !== $host ) : ?>
 Host:                     <?php echo $host . "\n\n"; ?>
 <?php endif; ?>
@@ -162,7 +192,7 @@ Registered Post types:    <?php echo implode( ', ', $post_types ) . "\n"; ?>
 <?php $taxonomies = get_taxonomies(); ?>
 Registered Taxonomies:    <?php echo implode( ', ', $taxonomies ) . "\n"; ?>
 
-Email log Version:      <?php echo $plugin_version . "\n"; ?>
+Email log Version:        <?php $this->el_plugin_version() . "\n"; ?>
 WordPress Version:        <?php echo get_bloginfo( 'version' ) . "\n"; ?>
 PHP Version:              <?php echo PHP_VERSION . "\n"; ?>
 MySQL Version:            <?php echo $wpdb->db_version() . "\n"; ?>
@@ -207,23 +237,23 @@ SUHOSIN:                  <?php echo ( extension_loaded( 'suhosin' ) ) ? 'Your s
 
 ACTIVE PLUGINS:
 
-<?php bd_print_current_plugins(); ?>
+<?php $this->el_print_current_plugins(); ?>
 
 <?php
 		if ( is_multisite() ) : ?>
 NETWORK ACTIVE PLUGINS:
 
 <?php
-			bd_print_network_active_plugins();
+			$this->el_print_network_active_plugins();
 		endif;
 ?>
 
-<?php do_action( 'bd_system_info_after' );?>
+<?php do_action( 'el_system_info_after' );?>
 ### End System Info ###</textarea>
 
 		<p class="submit">
-			<input type="hidden" name="bd_action" value="download_sysinfo">
-			<?php submit_button( 'Download System Info File', 'primary', 'bulk-delete-download-sysinfo', false ); ?>
+			<input type="hidden" name="el_action" value="download_sysinfo">
+			<?php submit_button( 'Download System Info File', 'primary', 'email-log-sysinfo', false ); ?>
 		</p>
 
 
@@ -231,5 +261,20 @@ NETWORK ACTIVE PLUGINS:
 		<?php
 
 		$this->render_page_footer();
+	}
+
+	/**
+	 * Generates the System Info Download File.
+	 *
+	 * @return void
+	 */
+	public function generate_sysinfo_download() {
+		nocache_headers();
+
+		header( 'Content-type: text/plain' );
+		header( 'Content-Disposition: attachment; filename="email-log-system-info.txt"' );
+
+		echo wp_strip_all_tags( $_POST['email-log-sysinfo'] );
+		die();
 	}
 }
