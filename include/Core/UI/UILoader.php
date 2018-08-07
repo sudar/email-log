@@ -2,6 +2,7 @@
 
 use EmailLog\Core\Loadie;
 use EmailLog\Core\UI\Page\LogListPage;
+use EmailLog\Core\UI\Page\SystemInfoPage;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 

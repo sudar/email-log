@@ -10,6 +10,14 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
  */
 class SystemInfoPage extends BasePage {
 	const PAGE_SLUG = 'system_infos';
+
+	/**
+	 * Capability to manage system info.
+	 *
+	 * @since 2.3.0
+	 */
+	const CAPABILITY = 'manage_system_infos';
+
 	/**
 	 * Specify additional hooks.
 	 *
@@ -30,6 +38,7 @@ class SystemInfoPage extends BasePage {
 	 * Register page.
 	 */
 	public function register_page() {
+
 		$this->page = add_submenu_page(
 			LogListPage::PAGE_SLUG,
 			__( 'System Info', 'email-log' ),
