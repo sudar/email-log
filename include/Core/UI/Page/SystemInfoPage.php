@@ -57,7 +57,7 @@ class SystemInfoPage extends BasePage {
 		$page_actions = apply_filters( 'el_page_actions', $this->actions, $this );
 
 		if ( in_array( $action, $page_actions, true ) ) {
-			if ( check_admin_referer( "el-{self::PAGE_SLUG}", "el-{self::PAGE_SLUG}-nonce" ) ) {
+			if ( check_admin_referer( 'el-{self::PAGE_SLUG}', 'el-{self::PAGE_SLUG}-nonce' ) ) {
 				return true;
 			}
 		}
@@ -324,7 +324,7 @@ NETWORK ACTIVE PLUGINS:
 	public function request_handler() {
 		if ( isset( $_POST['el_action'] ) ) {
 			$el_action   = sanitize_text_field( $_POST['el_action'] );
-			
+
 			/**
 			 * Perform the operation.
 			 * This hook is for doing the operation. Nonce check has already happened by this point.
