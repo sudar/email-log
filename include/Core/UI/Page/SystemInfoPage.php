@@ -30,7 +30,7 @@ class SystemInfoPage extends BasePage {
 			'info_message' => __( 'Please include this information when posting support requests.', 'email-log' ),
 		);
 
-		$this->actions     = array( 'download_sysinfo' );
+		$this->actions = array( 'download_sysinfo' );
 		add_action( 'el_download_sysinfo', array( $this, 'generate_sysinfo_download' ) );
 
 		add_action( 'admin_init', array( $this, 'request_handler' ) );
@@ -190,16 +190,16 @@ class SystemInfoPage extends BasePage {
 
 		<textarea wrap="off" style="width:100%;height:500px;font-family:Menlo,Monaco,monospace;white-space:pre;" readonly="readonly" onclick="this.focus();this.select()" id="system-info-textarea" name="email-log-sysinfo" title="<?php _e( 'To copy the system info, click below then press Ctrl + C (PC) or Cmd + C (Mac).', 'bulk-delete' ); ?>">
 ### Begin System Info ###
-<?php
-	/**
-	 * Runs before displaying system info.
-	 *
-	 * This action is primarily for adding extra content in System Info.
-	 */
-	do_action( 'el_system_info_before' );
-?>
+		<?php
+		/**
+		 * Runs before displaying system info.
+		 *
+		 * This action is primarily for adding extra content in System Info.
+		 */
+		do_action( 'el_system_info_before' );
+		?>
 
-Multisite:                <?php echo is_multisite() ? 'Yes' . "\n" : 'No' . "\n" ?>
+Multisite:                <?php echo is_multisite() ? 'Yes' . "\n" : 'No' . "\n"; ?>
 
 SITE_URL:                 <?php echo site_url() . "\n"; ?>
 HOME_URL:                 <?php echo home_url() . "\n"; ?>
@@ -207,15 +207,16 @@ Browser:                  <?php echo esc_html( $_SERVER['HTTP_USER_AGENT'] ), "\
 
 Permalink Structure:      <?php echo get_option( 'permalink_structure' ) . "\n"; ?>
 Active Theme:             <?php echo $this->el_get_current_theme_name() . "\n"; ?>
-<?php
+		<?php
 		$host = $this->el_identify_host();
-		if ( '' !== $host ) : ?>
+		if ( '' !== $host ) :
+			?>
 Host:                     <?php echo $host . "\n\n"; ?>
 <?php endif; ?>
 
-<?php $post_types = get_post_types(); ?>
+		<?php $post_types = get_post_types(); ?>
 Registered Post types:    <?php echo implode( ', ', $post_types ) . "\n"; ?>
-<?php
+		<?php
 		foreach ( $post_types as $post_type ) {
 			echo $post_type;
 			if ( strlen( $post_type ) < 26 ) {
@@ -227,9 +228,9 @@ Registered Post types:    <?php echo implode( ', ', $post_types ) . "\n"; ?>
 			}
 			echo "\n";
 		}
-?>
+		?>
 
-<?php $taxonomies = get_taxonomies(); ?>
+		<?php $taxonomies = get_taxonomies(); ?>
 Registered Taxonomies:    <?php echo implode( ', ', $taxonomies ) . "\n"; ?>
 
 Email log Version:        <?php $this->el_plugin_version() . "\n"; ?>
@@ -242,25 +243,25 @@ WordPress Memory Limit:   <?php echo WP_MEMORY_LIMIT; ?><?php echo "\n"; ?>
 WordPress Max Limit:      <?php echo WP_MAX_MEMORY_LIMIT; ?><?php echo "\n"; ?>
 PHP Memory Limit:         <?php echo ini_get( 'memory_limit' ) . "\n"; ?>
 
-SAVEQUERIES:              <?php echo defined( 'SAVEQUERIES' ) ? SAVEQUERIES ? 'Enabled' . "\n" : 'Disabled' . "\n" : 'Not set' . "\n" ?>
-WP_DEBUG:                 <?php echo defined( 'WP_DEBUG' ) ? WP_DEBUG ? 'Enabled' . "\n" : 'Disabled' . "\n" : 'Not set' . "\n" ?>
-WP_SCRIPT_DEBUG:          <?php echo defined( 'WP_SCRIPT_DEBUG' ) ? WP_SCRIPT_DEBUG ? 'Enabled' . "\n" : 'Disabled' . "\n" : 'Not set' . "\n" ?>
+SAVEQUERIES:              <?php echo defined( 'SAVEQUERIES' ) ? SAVEQUERIES ? 'Enabled' . "\n" : 'Disabled' . "\n" : 'Not set' . "\n"; ?>
+WP_DEBUG:                 <?php echo defined( 'WP_DEBUG' ) ? WP_DEBUG ? 'Enabled' . "\n" : 'Disabled' . "\n" : 'Not set' . "\n"; ?>
+WP_SCRIPT_DEBUG:          <?php echo defined( 'WP_SCRIPT_DEBUG' ) ? WP_SCRIPT_DEBUG ? 'Enabled' . "\n" : 'Disabled' . "\n" : 'Not set' . "\n"; ?>
 
 GMT Offset:               <?php echo esc_html( get_option( 'gmt_offset' ) ), "\n\n"; ?>
-DISABLE_WP_CRON:          <?php echo defined( 'DISABLE_WP_CRON' ) ? DISABLE_WP_CRON ? 'Yes' . "\n" : 'No' . "\n" : 'Not set' . "\n" ?>
-WP_CRON_LOCK_TIMEOUT:     <?php echo defined( 'WP_CRON_LOCK_TIMEOUT' ) ? WP_CRON_LOCK_TIMEOUT : 'Not set', "\n" ?>
-EMPTY_TRASH_DAYS:         <?php echo defined( 'EMPTY_TRASH_DAYS' ) ? EMPTY_TRASH_DAYS : 'Not set', "\n" ?>
+DISABLE_WP_CRON:          <?php echo defined( 'DISABLE_WP_CRON' ) ? DISABLE_WP_CRON ? 'Yes' . "\n" : 'No' . "\n" : 'Not set' . "\n"; ?>
+WP_CRON_LOCK_TIMEOUT:     <?php echo defined( 'WP_CRON_LOCK_TIMEOUT' ) ? WP_CRON_LOCK_TIMEOUT : 'Not set', "\n"; ?>
+EMPTY_TRASH_DAYS:         <?php echo defined( 'EMPTY_TRASH_DAYS' ) ? EMPTY_TRASH_DAYS : 'Not set', "\n"; ?>
 
-PHP Safe Mode:            <?php echo ini_get( 'safe_mode' ) ? 'Yes' : 'No', "\n"; // phpcs:ignore PHPCompatibility.PHP.DeprecatedIniDirectives.safe_modeDeprecatedRemoved?>
+PHP Safe Mode:            <?php echo ini_get( 'safe_mode' ) ? 'Yes' : 'No', "\n"; // phpcs:ignore PHPCompatibility.PHP.DeprecatedIniDirectives.safe_modeDeprecatedRemoved ?>
 PHP Upload Max Size:      <?php echo ini_get( 'upload_max_filesize' ) . "\n"; ?>
 PHP Post Max Size:        <?php echo ini_get( 'post_max_size' ) . "\n"; ?>
 PHP Upload Max Filesize:  <?php echo ini_get( 'upload_max_filesize' ) . "\n"; ?>
 PHP Time Limit:           <?php echo ini_get( 'max_execution_time' ) . "\n"; ?>
-PHP Max Input Vars:       <?php echo ini_get( 'max_input_vars' ) . "\n"; // phpcs:ignore PHPCompatibility.PHP.NewIniDirectives.max_input_varsFound?>
+PHP Max Input Vars:       <?php echo ini_get( 'max_input_vars' ) . "\n"; // phpcs:ignore PHPCompatibility.PHP.NewIniDirectives.max_input_varsFound ?>
 PHP Arg Separator:        <?php echo ini_get( 'arg_separator.output' ) . "\n"; ?>
 PHP Allow URL File Open:  <?php echo ini_get( 'allow_url_fopen' ) ? 'Yes' : 'No', "\n"; ?>
 
-WP Table Prefix:          <?php echo $wpdb->prefix, "\n";?>
+WP Table Prefix:          <?php echo $wpdb->prefix, "\n"; ?>
 
 Session:                  <?php echo isset( $_SESSION ) ? 'Enabled' : 'Disabled'; ?><?php echo "\n"; ?>
 Session Name:             <?php echo esc_html( ini_get( 'session.name' ) ); ?><?php echo "\n"; ?>
@@ -277,23 +278,24 @@ SUHOSIN:                  <?php echo ( extension_loaded( 'suhosin' ) ) ? 'Your s
 
 ACTIVE PLUGINS:
 
-<?php $this->el_print_current_plugins(); ?>
+		<?php $this->el_print_current_plugins(); ?>
 
-<?php
-		if ( is_multisite() ) : ?>
+		<?php
+		if ( is_multisite() ) :
+			?>
 NETWORK ACTIVE PLUGINS:
 
-<?php
+			<?php
 			$this->el_print_network_active_plugins();
 		endif;
-?>
+		?>
 
-<?php do_action( 'el_system_info_after' );?>
+		<?php do_action( 'el_system_info_after' ); ?>
 ### End System Info ###</textarea>
 
 		<p class="submit">
 			<input type="hidden" name="el_action" value="download_sysinfo">
-			<?php submit_button( 'Download System Info File', 'primary', 'email-log-sysinfo', false ); ?>
+			<?php submit_button( 'Download System Info File', 'primary', 'email-log-sysinfo-button', false ); ?>
 		</p>
 
 
@@ -323,7 +325,7 @@ NETWORK ACTIVE PLUGINS:
 	 */
 	public function request_handler() {
 		if ( isset( $_POST['el_action'] ) ) {
-			$el_action   = sanitize_text_field( $_POST['el_action'] );
+			$el_action = sanitize_text_field( $_POST['el_action'] );
 
 			/**
 			 * Perform the operation.
