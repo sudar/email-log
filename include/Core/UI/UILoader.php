@@ -2,7 +2,6 @@
 
 use EmailLog\Core\Loadie;
 use EmailLog\Core\UI\Page\LogListPage;
-use EmailLog\Core\UI\Page\SystemInfoPage;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
@@ -81,9 +80,9 @@ class UILoader implements Loadie {
 	 * @access protected
 	 */
 	protected function initialize_pages() {
-		$this->pages['log_list_page']   = new Page\LogListPage();
-		$this->pages['settings_page']   = new Page\SettingsPage();
-		$this->pages['addon_list_page'] = new Page\AddonListPage();
+		$this->pages['log_list_page']    = new Page\LogListPage();
+		$this->pages['settings_page']    = new Page\SettingsPage();
+		$this->pages['addon_list_page']  = new Page\AddonListPage();
 		$this->pages['system_info_page'] = new Page\SystemInfoPage();
 	}
 }
