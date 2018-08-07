@@ -32,6 +32,37 @@ class SystemInfoPage extends BasePage {
 
 		$this->actions     = array( 'download_sysinfo' );
 		add_action( 'el_download_sysinfo', array( $this, 'generate_sysinfo_download' ) );
+
+		add_action( 'admin_init', array( $this, 'request_handler' ) );
+		add_filter( 'el_action_nonce_check', array( $this, 'verify_nonce' ), 10, 2 );
+	}
+
+	/**
+	 * Check for nonce before executing the action.
+	 *
+	 * @param bool   $result The current result.
+	 * @param string $action Action name.
+	 *
+	 * @return bool True if nonce is verified, False otherwise.
+	 */
+	public function verify_nonce( $result, $action ) {
+		/**
+		 * List of actions for page.
+		 *
+		 * @param array    $actions Actions.
+		 * @param BasePage $page    Page objects.
+		 *
+		 * @since 2.3.0
+		 */
+		$page_actions = apply_filters( 'el_page_actions', $this->actions, $this );
+
+		if ( in_array( $action, $page_actions, true ) ) {
+			if ( check_admin_referer( "el-{self::PAGE_SLUG}", "el-{self::PAGE_SLUG}-nonce" ) ) {
+				return true;
+			}
+		}
+
+		return $result;
 	}
 
 	/**
@@ -130,11 +161,11 @@ class SystemInfoPage extends BasePage {
 
 	/**
 	 * Render the page.
-	 * //TODO: Convert these sections into tabs.
 	 */
 	public function render_page() {
 		global $wpdb;
 		?>
+		<form method = "post">
 		<div class="updated">
 			<p><strong><?php echo $this->messages['info_message']; ?></strong></p>
 		</div>
@@ -267,6 +298,7 @@ NETWORK ACTIVE PLUGINS:
 
 
 		</div>
+	</form>
 		<?php
 
 		$this->render_page_footer();
@@ -274,8 +306,6 @@ NETWORK ACTIVE PLUGINS:
 
 	/**
 	 * Generates the System Info Download File.
-	 *
-	 * @return void
 	 */
 	public function generate_sysinfo_download() {
 		nocache_headers();
@@ -286,4 +316,23 @@ NETWORK ACTIVE PLUGINS:
 		echo wp_strip_all_tags( $_POST['email-log-sysinfo'] );
 		die();
 	}
+
+	/**
+	 * Handle both POST and GET requests.
+	 * This method automatically triggers all the actions after checking the nonce.
+	 */
+	public function request_handler() {
+		if ( isset( $_POST['el_action'] ) ) {
+			$el_action   = sanitize_text_field( $_POST['el_action'] );
+			
+			/**
+			 * Perform the operation.
+			 * This hook is for doing the operation. Nonce check has already happened by this point.
+			 *
+			 * @since 2.3.0
+			 */
+			do_action( 'el_' . $el_action, $_POST );
+		}
+	}
+
 }
