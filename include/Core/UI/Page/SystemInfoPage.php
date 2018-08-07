@@ -123,7 +123,7 @@ class SystemInfoPage extends BasePage {
 	}
 
 	protected function el_plugin_version() {
-		$plugin_path = WP_PLUGIN_DIR.'/email-log/email-log.php';
+		$plugin_path = WP_PLUGIN_DIR . '/email-log/email-log.php';
 		$plugin_data = get_plugin_data( $plugin_path );
 		echo $plugin_data['Version'];
 	}
