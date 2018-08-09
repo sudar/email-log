@@ -18,12 +18,18 @@ class CoreSetting extends Setting {
 			'allowed_user_roles'      => __( 'Allowed User Roles', 'email-log' ),
 			'remove_on_uninstall'     => __( 'Remove Data on Uninstall?', 'email-log' ),
 			'hide_dashboard_widget'   => __( 'Disable Dashboard Widget', 'email-log' ),
+			'db_size_notification'   => __( 'Database Size Notification', 'email-log' ),
 		);
 
 		$this->section->default_value = array(
 			'allowed_user_roles'      => array(),
 			'remove_on_uninstall'     => '',
 			'hide_dashboard_widget'   => false,
+			'db_size_notification'    => array(
+				'notify'         => false,
+				'admin_email'    => '',
+				'logs_threshold' => '',
+            ),
 		);
 
 		$this->load();
@@ -211,5 +217,95 @@ class CoreSetting extends Setting {
 		</p>
 
 		<?php
+	}
+
+	/**
+	 * Renders the Email Log `Database Size Notification` settings.
+	 *
+	 * @since 2.3.0
+	 *
+	 * @param array $args
+	 */
+	public function render_db_size_notification_settings( $args ) {
+		$option                    = $this->get_value();
+		$db_size_notification_data = $option[ $args['id'] ];
+
+		$field_name = $this->section->option_name . '[' . $args['id'] . ']';
+		// Since we store three different fields, give each field a unique name.
+		$db_size_notification_field_name = $field_name . '[notify]';
+		$admin_email_field_name          = $field_name . '[admin_email]';
+		$logs_threshold_field_name       = $field_name . '[logs_threshold]';
+
+		$email_log  = email_log();
+		$logs_count = $email_log->table_manager->get_logs_count();
+
+		$admin_email_input_field = sprintf(
+			'<input type="text" name="%s" value="" size="35" placeholder="%s" />',
+			$admin_email_field_name,
+			empty( $db_size_notification_data['admin_email'] ) ? get_option( 'admin_email',
+				'' ) : $db_size_notification_data['admin_email'] );
+
+		$logs_threshold_input_field = sprintf( '<input type="text" name="%s" placeholder="5000" value="%s" size="8" />',
+			$logs_threshold_field_name,
+			empty( $db_size_notification_data['logs_threshold'] ) ? '' : $db_size_notification_data['logs_threshold']
+		);
+		?>
+
+        <input type="checkbox" name="<?php echo esc_attr( $db_size_notification_field_name ); ?>" value="true" <?php
+		checked( 'true', $db_size_notification_data['notify'] ); ?> />
+		<?php printf( __( 'Notify %s if there are more than %s logs.', 'email-log' ),
+			$admin_email_input_field,
+			$logs_threshold_input_field
+		);
+		?>
+        <p>
+            <em>
+				<?php printf(
+					__( '<strong>Note:</strong> There are <strong>%s</strong> email logs currently logged in the database.',
+						'email-log' ),
+					$logs_count
+				); ?>
+            </em>
+        </p>
+		<?php
+	}
+
+	/**
+	 * Removes any additional keys set in the db_size_notification array.
+	 *
+	 * @since 2.3.0
+	 *
+	 * @param $key
+	 *
+	 * @return bool
+	 */
+	private function trim_array_to_allowed_keys( $key ) {
+		// TODO: Define the array as Class prop.
+		$allowed_keys = array( 'notify', 'admin_email', 'logs_threshold' );
+
+		return in_array( $key, $allowed_keys, true );
+	}
+
+	/**
+	 * Sanitizes the db_size_notification option.
+	 *
+	 * @since 2.3.0
+	 *
+	 * @param $db_size_notification_data
+	 */
+	public function sanitize_db_size_notification( $db_size_notification_data ) {
+		$db_size_notification_data = array_filter( $db_size_notification_data,
+			'trim_array_to_allowed_keys',
+			ARRAY_FILTER_USE_KEY );
+
+		foreach ( $db_size_notification_data as $setting => $value ) {
+			if ( $setting === 'notify' ) {
+				$db_size_notification_data[ $setting ] = \filter_var( $value, FILTER_VALIDATE_BOOLEAN );
+			} elseif ( $setting === 'admin_email' ) {
+				$db_size_notification_data[ $setting ] = \sanitize_email( $value );
+			} elseif ( $setting === 'logs_threshold' ) {
+				$db_size_notification_data[ $setting ] = intval( \sanitize_text_field( $value ) );
+			}
+		}
 	}
 }
