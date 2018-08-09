@@ -240,7 +240,7 @@ class CoreSetting extends Setting {
 		$logs_count = $email_log->table_manager->get_logs_count();
 
 		$admin_email_input_field = sprintf(
-			'<input type="text" name="%s" value="" size="35" placeholder="%s" />',
+			'<input type="text" name="%s" value="%s" size="35" />',
 			$admin_email_field_name,
 			empty( $db_size_notification_data['admin_email'] ) ? get_option( 'admin_email',
 				'' ) : $db_size_notification_data['admin_email'] );
@@ -252,7 +252,7 @@ class CoreSetting extends Setting {
 		?>
 
         <input type="checkbox" name="<?php echo esc_attr( $db_size_notification_field_name ); ?>" value="true" <?php
-		checked( 'true', $db_size_notification_data['notify'] ); ?> />
+		checked( true, $db_size_notification_data['notify'] ); ?> />
 		<?php printf( __( 'Notify %s if there are more than %s logs.', 'email-log' ),
 			$admin_email_input_field,
 			$logs_threshold_input_field
@@ -291,11 +291,13 @@ class CoreSetting extends Setting {
 	 *
 	 * @since 2.3.0
 	 *
-	 * @param $db_size_notification_data
+	 * @param array $db_size_notification_data
+	 *
+	 * @return array $db_size_notification_data
 	 */
 	public function sanitize_db_size_notification( $db_size_notification_data ) {
 		$db_size_notification_data = array_filter( $db_size_notification_data,
-			'trim_array_to_allowed_keys',
+			array( $this, 'trim_array_to_allowed_keys' ),
 			ARRAY_FILTER_USE_KEY );
 
 		foreach ( $db_size_notification_data as $setting => $value ) {
@@ -307,5 +309,12 @@ class CoreSetting extends Setting {
 				$db_size_notification_data[ $setting ] = intval( \sanitize_text_field( $value ) );
 			}
 		}
+
+		// wp_parse_args won't merge nested array keys. So add the key here if it is not set.
+		if ( ! array_key_exists( 'notify', $db_size_notification_data ) ) {
+			$db_size_notification_data['notify'] = false;
+		}
+
+		return $db_size_notification_data;
 	}
 }
