@@ -341,8 +341,8 @@ class CoreSetting extends Setting {
 
 	/**
 	 * Send the Threshold notification email to the admin.
-     *
-     * @since 2.3.0
+	 *
+	 * @since 2.3.0
 	 */
 	public function trigger_threshold_met_notification_email() {
 		$email_log  = email_log();
@@ -355,7 +355,7 @@ class CoreSetting extends Setting {
 			return;
 		}
 
-		$db_size_notification_key = 'db_size_notification';
+		$db_size_notification_key  = 'db_size_notification';
 		$db_size_notification_data = $setting_data[ $db_size_notification_key ];
 
 		// Return early.
@@ -389,6 +389,38 @@ EOT;
 
 			$setting_data[ $db_size_notification_key ]['log_threshold_met'] = true;
 			\update_option( $this->section->option_name, $setting_data );
+
+			$this->register_threshold_met_admin_notice();
 		}
 	}
+
+	/**
+	 * Registers the Email Log threshold met admin notice.
+	 *
+	 * @since 2.3.0
+	 */
+	public function register_threshold_met_admin_notice() {
+		add_action( 'admin_notices', array( $this, 'render_log_threshold_met_notice' ) );
+	}
+
+	/**
+	 * Displays the Email Log threshold met admin notice.
+	 *
+	 * @since 2.3.0
+	 */
+	public function render_log_threshold_met_notice() {
+		$email_log  = email_log();
+		$logs_count = intval( $email_log->table_manager->get_logs_count() );
+		?>
+        <div class="notice notice-warning is-dismissible">
+            <p><?php printf( __( 'Currently there are %1$s email logs logged, which is more than the threshold that is set in the <a href="%2$s">settings</a> screen. You can delete some logs or increase the threshold. You can also use our <a href="%3$s">Auto Delete Logs</a> add-on to automatically delete logs',
+					'email-log' ),
+					$logs_count,
+					admin_url( 'admin.php?page=' . \EmailLog\Core\UI\Page\SettingsPage::PAGE_SLUG ),
+					'https://wpemaillog.com/addons/auto-delete-logs/' );
+				?></p>
+        </div>
+		<?php
+	}
+
 }
