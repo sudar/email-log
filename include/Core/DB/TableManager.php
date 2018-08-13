@@ -30,6 +30,9 @@ class TableManager implements Loadie {
 		add_action( 'wpmu_new_blog', array( $this, 'create_table_for_new_blog' ) );
 
 		add_filter( 'wpmu_drop_tables', array( $this, 'delete_table_from_deleted_blog' ) );
+
+		// Do any DB upgrades.
+		$this->upgrade_db_schema();
 	}
 
 	/**
@@ -254,6 +257,9 @@ class TableManager implements Loadie {
 				headers TEXT NOT NULL,
 				attachments TEXT NOT NULL,
 				sent_date timestamp NOT NULL,
+				attachment_name VARCHAR(1000),
+				ip_address VARCHAR(15),
+				result TINYINT(1)
 				PRIMARY KEY  (id)
 			) ' . $charset_collate . ' ;';
 
@@ -275,5 +281,87 @@ class TableManager implements Loadie {
 		$query = 'SELECT count(*) FROM ' . $this->get_log_table_name();
 
 		return $wpdb->get_var( $query );
+	}
+
+	/**
+	 * Upgrades the DB schema.
+	 *
+	 * Adds new columns to the Database as of v0.2.
+	 *
+	 * @since 2.3.0
+	 */
+	public function upgrade_db_schema() {
+		global $wpdb;
+		$existing_db_version = get_option( self::DB_OPTION_NAME, false );
+		$updated_db_version  = self::DB_VERSION;
+
+		if ( ! $existing_db_version || $existing_db_version === $updated_db_version ) {
+			return;
+		}
+
+		$table_name      = $this->get_log_table_name();
+		$charset_collate = $wpdb->get_charset_collate();
+
+		if ( $this->is_columns_exist( array( 'attachment_name', 'ip_address', 'result' ) ) ) {
+			return;
+		}
+
+		$sql = 'CREATE TABLE ' . $table_name . ' (
+				id mediumint(9) NOT NULL AUTO_INCREMENT,
+				to_email VARCHAR(250) NOT NULL,
+				subject VARCHAR(250) NOT NULL,
+				message TEXT NOT NULL,
+				headers TEXT NOT NULL,
+				attachments TEXT NOT NULL,
+				sent_date timestamp NOT NULL,
+				attachment_name VARCHAR(1000),
+				ip_address VARCHAR(15),
+				result TINYINT(1)
+				PRIMARY KEY  (id)
+			) ' . $charset_collate . ' ;';
+
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+		dbDelta( $sql );
+
+		add_option( self::DB_OPTION_NAME, self::DB_VERSION );
+	}
+
+	/**
+	 * Returns TRUE when the given column(s) exists in Database table.
+	 *
+	 * @since 2.3.0
+	 *
+	 * @param string|array $columns
+	 *
+	 * @return bool
+	 */
+	protected function is_columns_exist( $columns ) {
+		global $wpdb;
+
+		if ( empty( $columns ) ) {
+			return false;
+		}
+
+		if ( ! is_array( $columns ) ) {
+			$columns = array( $columns );
+		}
+
+		$table_name  = $this->get_log_table_name();
+		$columns_str = '';
+
+		$columns_count = count( $columns );
+		foreach ( $columns as $key => $column ) {
+			$columns_str .= "COLUMN_NAME = '" . $column . "'";
+
+			if ( $key !== $columns_count - 1 ) {
+				$columns_str .= ' OR ';
+			}
+		}
+
+		$columns_sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '" . $table_name . "' AND ({$columns_str});";
+
+		$results = $wpdb->get_results( $columns_sql );
+
+		return count( $results ) > 0;
 	}
 }
