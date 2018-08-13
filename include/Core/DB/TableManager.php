@@ -21,7 +21,7 @@ class TableManager implements Loadie {
 	const DB_OPTION_NAME = 'email-log-db';
 
 	/* Database version */
-	const DB_VERSION = '0.1';
+	const DB_VERSION = '0.2';
 
 	/**
 	 * Setup hooks.
