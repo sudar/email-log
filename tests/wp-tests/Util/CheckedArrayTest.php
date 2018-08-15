@@ -6,28 +6,40 @@
 class CheckedArrayTest extends \WP_UnitTestCase {
 
 	/**
-	 * Test $values is array.
+	 * Data provider to `checked_array()`
+	 *
+	 * @see CheckedArrayTest::test_checked_array() To see how the data is used.
+	 *
+	 * @return array
 	 */
-	function test_value_is_array() {
-		$current = 'editor';
-		$values  = 'author';
-
-		$expected = '';
-		$actual = checked_array( $values, $current );
-
-		$this->assertEquals( $expected, $actual );
+	function provider_to_test_checked_array() {
+		return array(
+			array(
+				array(
+					'values'  => array( 'editor', 'author', 'subscriber' ),
+					'current' => 'editor'
+				),
+				'checked="checked"'
+			),
+			array(
+				array(
+					'values'  => 'editor',
+					'current' => 'editor'
+				),
+				''
+			)
+		);
 	}
 
 	/**
-	 * Test $current exist in $values array.
+	 * Test $values is array.
+	 *
+	 * @dataProvider provider_to_test_checked_array
 	 */
-	function test_value_is_exist() {
-		$current = 'editor';
-		$values  = array( 'author', 'editor' );
-
-		$expected = 'checked="checked"';
-		$actual = checked_array( $values, $current );
-
+	function test_checked_array( $input, $expected ) {
+		ob_start();
+		checked_array( $input['values'], $input['current'] );
+		$actual = ob_get_clean();
 		$this->assertEquals( $expected, $actual );
 	}
 }
