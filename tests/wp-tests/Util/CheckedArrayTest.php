@@ -14,13 +14,15 @@ class CheckedArrayTest extends \WP_UnitTestCase {
 	 */
 	function provider_to_test_checked_array() {
 		return array(
+			// Success test case.
 			array(
 				array(
 					'values'  => array( 'editor', 'author', 'subscriber' ),
 					'current' => 'editor'
 				),
-				'checked="checked"'
+				"checked='checked'"
 			),
+			// Failure test case.
 			array(
 				array(
 					'values'  => 'editor',
@@ -40,7 +42,7 @@ class CheckedArrayTest extends \WP_UnitTestCase {
 		ob_start();
 		checked_array( $input['values'], $input['current'] );
 		$actual = ob_get_clean();
-		$this->assertEquals( $expected, $actual );
+		$this->assertSame( $expected, $actual );
 	}
 }
 
