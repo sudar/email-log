@@ -350,10 +350,12 @@ class TableManager implements Loadie {
 		$columns_str = '';
 
 		$columns_count = count( $columns );
+		// Reduces the computation within for loop by decrementing the Columns count by 1.
+		$columns_count--;
 		foreach ( $columns as $key => $column ) {
 			$columns_str .= "COLUMN_NAME = '" . $column . "'";
 
-			if ( $key !== $columns_count - 1 ) {
+			if ( $key !== $columns_count ) {
 				$columns_str .= ' OR ';
 			}
 		}
