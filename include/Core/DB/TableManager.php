@@ -48,11 +48,11 @@ class TableManager implements Loadie {
 
 			foreach ( $sites as $site ) {
 				switch_to_blog( $site['blog_id'] );
-				$this->create_table();
+				$this->create_table_if_needed();
 				restore_current_blog();
 			}
 		} else {
-			$this->create_table();
+			$this->create_table_if_needed();
 		}
 	}
 
@@ -64,7 +64,7 @@ class TableManager implements Loadie {
 	public function create_table_for_new_blog( $blog_id ) {
 		if ( is_plugin_active_for_network( 'email-log/email-log.php' ) ) {
 			switch_to_blog( $blog_id );
-			$this->create_table();
+			$this->create_table_if_needed();
 			restore_current_blog();
 		}
 	}
@@ -241,7 +241,7 @@ class TableManager implements Loadie {
 	 *
 	 * @global object $wpdb
 	 */
-	private function create_table() {
+	private function create_table_if_needed() {
 		global $wpdb;
 
 		$table_name      = $this->get_log_table_name();
