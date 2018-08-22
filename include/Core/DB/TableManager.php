@@ -32,7 +32,7 @@ class TableManager implements Loadie {
 		add_filter( 'wpmu_drop_tables', array( $this, 'delete_table_from_deleted_blog' ) );
 
 		// Do any DB upgrades.
-		$this->upgrade_db_schema();
+		$this->update_table_if_needed();
 	}
 
 	/**
@@ -284,13 +284,13 @@ class TableManager implements Loadie {
 	}
 
 	/**
-	 * Upgrades the DB schema.
+	 * Updates the DB schema.
 	 *
 	 * Adds new columns to the Database as of v0.2.
 	 *
 	 * @since 2.3.0
 	 */
-	public function upgrade_db_schema() {
+	public function update_table_if_needed() {
 		global $wpdb;
 		$existing_db_version = get_option( self::DB_OPTION_NAME, false );
 		$updated_db_version  = self::DB_VERSION;
