@@ -290,7 +290,7 @@ class TableManager implements Loadie {
 	 *
 	 * @since 2.3.0
 	 */
-	public function update_table_if_needed() {
+	private function update_table_if_needed() {
 		global $wpdb;
 		$existing_db_version = get_option( self::DB_OPTION_NAME, false );
 		$updated_db_version  = self::DB_VERSION;
