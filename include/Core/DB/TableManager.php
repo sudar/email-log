@@ -295,16 +295,13 @@ class TableManager implements Loadie {
 		$existing_db_version = get_option( self::DB_OPTION_NAME, false );
 		$updated_db_version  = self::DB_VERSION;
 
-		if ( ! $existing_db_version || $existing_db_version === $updated_db_version ) {
+		// Bail out when the DB version is `0.1` or equals to self::DB_VERSION
+		if ( ! $existing_db_version || $existing_db_version !== '0.1' || $existing_db_version === $updated_db_version ) {
 			return;
 		}
 
 		$table_name      = $this->get_log_table_name();
 		$charset_collate = $wpdb->get_charset_collate();
-
-		if ( $this->is_columns_exist( array( 'attachment_name', 'ip_address', 'result' ) ) ) {
-			return;
-		}
 
 		$sql = 'CREATE TABLE ' . $table_name . ' (
 				id mediumint(9) NOT NULL AUTO_INCREMENT,
@@ -324,46 +321,5 @@ class TableManager implements Loadie {
 		dbDelta( $sql );
 
 		add_option( self::DB_OPTION_NAME, self::DB_VERSION );
-	}
-
-	/**
-	 * Returns TRUE when the given column(s) exists in Database table.
-	 *
-	 * @since 2.3.0
-	 *
-	 * @param string|array $columns
-	 *
-	 * @return bool
-	 */
-	protected function is_columns_exist( $columns ) {
-		global $wpdb;
-
-		if ( empty( $columns ) ) {
-			return false;
-		}
-
-		if ( ! is_array( $columns ) ) {
-			$columns = array( $columns );
-		}
-
-		$table_name  = $this->get_log_table_name();
-		$columns_str = '';
-
-		$columns_count = count( $columns );
-		// Reduces the computation within for loop by decrementing the Columns count by 1.
-		$columns_count--;
-		foreach ( $columns as $key => $column ) {
-			$columns_str .= "COLUMN_NAME = '" . $column . "'";
-
-			if ( $key !== $columns_count ) {
-				$columns_str .= ' OR ';
-			}
-		}
-
-		$columns_sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '" . $table_name . "' AND ({$columns_str});";
-
-		$results = $wpdb->get_results( $columns_sql );
-
-		return count( $results ) > 0;
 	}
 }
