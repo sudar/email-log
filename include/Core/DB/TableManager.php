@@ -320,6 +320,6 @@ class TableManager implements Loadie {
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		dbDelta( $sql );
 
-		add_option( self::DB_OPTION_NAME, self::DB_VERSION );
+		update_option( self::DB_OPTION_NAME, self::DB_VERSION );
 	}
 }
