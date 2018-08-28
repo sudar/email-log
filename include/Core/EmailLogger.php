@@ -73,7 +73,18 @@ class EmailLogger implements Loadie {
 		}
 
 		$data['message'] = $message;
+		$info = new \SplFileInfo( explode( ',', $data['attachment_name'] )[0] );
 
+		var_dump($info);
+		print_r( "\n" );
+		var_dump($info->getFilename());
+		print_r( "\n" );
+		var_dump($info->getExtension());
+		var_dump($info->getPath());
+		var_dump($info->getRealPath());
+		var_dump($info->isReadable());
+		var_dump($info->isWritable());
+		die;
 		$email_log->table_manager->insert_log( $data );
 
 		return $mail_info;
