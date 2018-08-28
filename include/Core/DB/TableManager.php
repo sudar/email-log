@@ -244,24 +244,11 @@ class TableManager implements Loadie {
 	private function create_table_if_needed() {
 		global $wpdb;
 
-		$table_name      = $this->get_log_table_name();
-		$charset_collate = $wpdb->get_charset_collate();
+		$table_name = $this->get_log_table_name();
 
 		if ( $wpdb->get_var( "show tables like '{$table_name}'" ) != $table_name ) {
 
-			$sql = 'CREATE TABLE ' . $table_name . ' (
-				id mediumint(9) NOT NULL AUTO_INCREMENT,
-				to_email VARCHAR(100) NOT NULL,
-				subject VARCHAR(250) NOT NULL,
-				message TEXT NOT NULL,
-				headers TEXT NOT NULL,
-				attachments TEXT NOT NULL,
-				sent_date timestamp NOT NULL,
-				attachment_name VARCHAR(1000),
-				ip_address VARCHAR(15),
-				result TINYINT(1)
-				PRIMARY KEY  (id)
-			) ' . $charset_collate . ' ;';
+			$sql = $this->get_create_table_query();
 
 			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 			dbDelta( $sql );
@@ -291,7 +278,6 @@ class TableManager implements Loadie {
 	 * @since 2.3.0
 	 */
 	private function update_table_if_needed() {
-		global $wpdb;
 		$existing_db_version = get_option( self::DB_OPTION_NAME, false );
 		$updated_db_version  = self::DB_VERSION;
 
@@ -300,6 +286,23 @@ class TableManager implements Loadie {
 			return;
 		}
 
+		$sql = $this->create_table_sql();
+
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+		dbDelta( $sql );
+
+		update_option( self::DB_OPTION_NAME, self::DB_VERSION );
+	}
+
+	/**
+	 * Gets the Create Table query.
+	 *
+	 * @since 2.3.0
+	 *
+	 * @return string
+	 */
+	private function get_create_table_query() {
+		global $wpdb;
 		$table_name      = $this->get_log_table_name();
 		$charset_collate = $wpdb->get_charset_collate();
 
@@ -317,9 +320,6 @@ class TableManager implements Loadie {
 				PRIMARY KEY  (id)
 			) ' . $charset_collate . ' ;';
 
-		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-		dbDelta( $sql );
-
-		update_option( self::DB_OPTION_NAME, self::DB_VERSION );
+		return $sql;
 	}
 }
