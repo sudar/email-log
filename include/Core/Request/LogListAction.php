@@ -21,6 +21,7 @@ class LogListAction implements Loadie {
 		add_action( 'el-log-list-delete', array( $this, 'delete_logs' ) );
 		add_action( 'el-log-list-delete-all', array( $this, 'delete_all_logs' ) );
 		add_action( 'el-log-list-manage-user-roles-changed', array( $this, 'update_capabilities_for_user_roles' ), 10, 2 );
+		add_filter( 'wp_kses_allowed_html', array( $this, 'el_allow_link_tag' ), 10, 2 );
 	}
 
 	/**
@@ -186,5 +187,33 @@ class LogListAction implements Loadie {
 		$email_log = email_log();
 
 		return $email_log->table_manager;
+	}
+
+	/**
+	 * Allows `<link>` tag in wp_kses_post().
+	 *
+	 * This has to be a `public` method as it is a callback method.
+	 * <link> tag should be allowed to allow loading of external stylesheets when previewing email logs.
+	 *
+	 * @since 2.3.0
+	 *
+	 * @param array $allowedposttags @see global @allowedposttags in wp-includes/kses.php.
+	 * @param string $context The context for which to retrieve tags.
+	 *
+	 * @return array List of allowed tags and their allowed attributes.
+	 */
+	public function el_allow_link_tag( $allowedposttags, $context ) {
+		if ( $context !== 'post' ) {
+			return $allowedposttags;
+		}
+
+		$allowedposttags['link'] = array(
+			'rel'   => true,
+			'href'  => true,
+			'type'  => true,
+			'media' => true,
+		);
+
+		return $allowedposttags;
 	}
 }
