@@ -45,6 +45,17 @@ class UILoader implements Loadie {
 		}
 	}
 
+	public function is_show_dashboard_widget() {
+		$this->components['core_settings'] = new Setting\CoreSetting();
+		$dashboard_status                  = false;
+		$options                           = get_option( 'email-log-core' );
+		if( isset( $options['hide_dashboard_widget'] ) ) {
+			$dashboard_status = $options['hide_dashboard_widget'];
+		}
+
+		return $dashboard_status;
+	}
+
 	/**
 	 * Initialize UI component Objects.
 	 *
@@ -53,11 +64,11 @@ class UILoader implements Loadie {
 	 * @access protected
 	 */
 	protected function initialize_components() {
-		$this->components['core_settings'] = new Setting\CoreSetting();
-
 		if ( current_user_can( LogListPage::CAPABILITY ) ) {
 			$this->components['admin_ui_enhancer'] = new Component\AdminUIEnhancer();
-			$this->components['dashboard_widget']  = new Component\DashboardWidget();
+			if( ! $this->is_show_dashboard_widget() ) {
+				$this->components['dashboard_widget']  = new Component\DashboardWidget();
+			}
 		}
 	}
 
@@ -69,8 +80,9 @@ class UILoader implements Loadie {
 	 * @access protected
 	 */
 	protected function initialize_pages() {
-		$this->pages['log_list_page']   = new Page\LogListPage();
-		$this->pages['settings_page']   = new Page\SettingsPage();
-		$this->pages['addon_list_page'] = new Page\AddonListPage();
+		$this->pages['log_list_page']    = new Page\LogListPage();
+		$this->pages['settings_page']    = new Page\SettingsPage();
+		$this->pages['addon_list_page']  = new Page\AddonListPage();
+		$this->pages['system_info_page'] = new Page\SystemInfoPage();
 	}
 }

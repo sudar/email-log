@@ -41,8 +41,7 @@ class TableManager implements Loadie {
 		if ( is_multisite() && $network_wide ) {
 			// Note: if there are more than 10,000 blogs or
 			// if `wp_is_large_network` filter is set, then this may fail.
-			// TODO: Take care of the deprecated function.
-			$sites = wp_get_sites();
+			$sites = get_sites();
 
 			foreach ( $sites as $site ) {
 				switch_to_blog( $site['blog_id'] );
