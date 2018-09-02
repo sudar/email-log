@@ -6,7 +6,6 @@ namespace EmailLog\Core\UI\Component;
  * Email Log System Info.
  *
  * @see \EmailLog\Core\UI\Component\SystemInfo
- *
  * @since 2.3.0
  */
 class EmailLogSystemInfo extends SystemInfo {

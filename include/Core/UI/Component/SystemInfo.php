@@ -239,7 +239,7 @@ do_action( 'system_info_after', $this->plugin_slug ); ?>
 		/**
 		 * Filter the identified webhost.
 		 *
-		 * @param string $host Identified web host.
+		 * @param string $host        Identified web host.
 		 * @param string $plugin_name Plugin slug.
 		 */
 		return apply_filters( 'system_info_host', $host, $this->plugin_slug );
