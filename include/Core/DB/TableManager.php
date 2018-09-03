@@ -286,7 +286,7 @@ class TableManager implements Loadie {
 			return;
 		}
 
-		$sql = $this->create_table_sql();
+		$sql = $this->get_create_table_query();
 
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		dbDelta( $sql );
