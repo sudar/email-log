@@ -384,6 +384,25 @@ class CoreSetting extends Setting {
 EOT;
 			$headers = array( 'Content-Type: text/html; charset=UTF-8' );
 
+			/**
+			 * Filters Log threshold notification email subject.
+			 *
+			 * @since 2.3.0
+			 *
+			 * @param string $subject The email subject.
+			 */
+			$subject = apply_filters( 'el_log_threshold_met_notification_email_subject', $subject );
+
+			/**
+			 * Filters Log threshold notification email body.
+			 *
+			 * @since 2.3.0
+			 *
+			 * @param string $message The email body.
+			 * @param int $logs_threshold The log threshold value set by the user.
+			 */
+			$message = apply_filters( 'el_log_threshold_met_notification_email_body', $message, $logs_threshold );
+
 			wp_mail( $admin_email, $subject, $message, $headers );
 
 			$setting_data[ $db_size_notification_key ]['log_threshold_met'] = true;
