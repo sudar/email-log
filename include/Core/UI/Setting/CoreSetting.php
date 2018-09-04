@@ -256,7 +256,7 @@ class CoreSetting extends Setting {
 
         <input type="checkbox" name="<?php echo esc_attr( $db_size_notification_field_name ); ?>" value="true" <?php
 		checked( true, $db_size_notification_data['notify'] ); ?> />
-		<?php printf( __( 'Notify %s if there are more than %s logs.', 'email-log' ),
+		<?php printf( __( 'Notify %1$s if there are more than %2$s logs.', 'email-log' ),
 			$admin_email_input_field,
 			$logs_threshold_input_field
 		);
