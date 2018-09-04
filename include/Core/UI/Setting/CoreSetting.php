@@ -248,7 +248,7 @@ class CoreSetting extends Setting {
 			$admin_email_field_name,
 			empty( $db_size_notification_data['admin_email'] ) ? get_option( 'admin_email', '' ) : $db_size_notification_data['admin_email'] );
 
-		$logs_threshold_input_field = sprintf( '<input type="text" name="%s" placeholder="5000" value="%s" size="8" />',
+		$logs_threshold_input_field = sprintf( '<input type="number" name="%s" placeholder="5000" value="%s" size="8" />',
 			$logs_threshold_field_name,
 			empty( $db_size_notification_data['logs_threshold'] ) ? '' : $db_size_notification_data['logs_threshold']
 		);
