@@ -246,9 +246,7 @@ class CoreSetting extends Setting {
 		$logs_count = $email_log->table_manager->get_logs_count();
 
 		$admin_email_input_field = sprintf(
-			'<input type="email" name="%s" value="%s" size="35" />',
-			$admin_email_field_name,
-			empty( $db_size_notification_data['admin_email'] ) ? get_option( 'admin_email', '' ) : $db_size_notification_data['admin_email'] );
+			'<input type="email" name="%s" value="%s" size="35" />', $admin_email_field_name, empty( $db_size_notification_data['admin_email'] ) ? get_option( 'admin_email', '' ) : $db_size_notification_data['admin_email'] );
 
 		$logs_threshold_input_field = sprintf( '<input type="number" name="%s" placeholder="5000" value="%s" min="0" max="99999999" />',
 			$logs_threshold_field_name,
