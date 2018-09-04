@@ -274,7 +274,7 @@ class CoreSetting extends Setting {
 	}
 
 	/**
-	 * Removes any additional keys set in the db_size_notification array.
+	 * Removes any additional keys set other than the ones in db_size_notification array.
 	 *
 	 * @since 2.3.0
 	 *
@@ -282,9 +282,8 @@ class CoreSetting extends Setting {
 	 *
 	 * @return bool
 	 */
-	protected function trim_array_to_allowed_keys( $key ) {
-		// TODO: Define the array as Class prop.
-		$allowed_keys = array( 'notify', 'admin_email', 'logs_threshold', 'log_threshold_met' );
+	protected function restrict_array_to_db_size_notification_setting_keys( $key ) {
+		$allowed_keys = array_keys( $this->section->default_value['db_size_notification'] );
 
 		return in_array( $key, $allowed_keys, true );
 	}
@@ -299,9 +298,10 @@ class CoreSetting extends Setting {
 	 * @return array $db_size_notification_data
 	 */
 	public function sanitize_db_size_notification( $db_size_notification_data ) {
-		$db_size_notification_data = array_filter( $db_size_notification_data,
-			array( $this, 'trim_array_to_allowed_keys' ),
-			ARRAY_FILTER_USE_KEY );
+		$db_size_notification_data = array_filter( $db_size_notification_data, array(
+			$this,
+			'restrict_array_to_db_size_notification_setting_keys'
+		), ARRAY_FILTER_USE_KEY );
 
 		foreach ( $db_size_notification_data as $setting => $value ) {
 			if ( $setting === 'notify' ) {
