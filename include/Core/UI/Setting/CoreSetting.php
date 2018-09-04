@@ -17,22 +17,22 @@ class CoreSetting extends Setting {
 		$this->section->option_name = 'email-log-core';
 
 		$this->section->field_labels = array(
-			'allowed_user_roles'      => __( 'Allowed User Roles', 'email-log' ),
-			'remove_on_uninstall'     => __( 'Remove Data on Uninstall?', 'email-log' ),
-			'hide_dashboard_widget'   => __( 'Disable Dashboard Widget', 'email-log' ),
-			'db_size_notification'   => __( 'Database Size Notification', 'email-log' ),
+			'allowed_user_roles'    => __( 'Allowed User Roles', 'email-log' ),
+			'remove_on_uninstall'   => __( 'Remove Data on Uninstall?', 'email-log' ),
+			'hide_dashboard_widget' => __( 'Disable Dashboard Widget', 'email-log' ),
+			'db_size_notification'  => __( 'Database Size Notification', 'email-log' ),
 		);
 
 		$this->section->default_value = array(
-			'allowed_user_roles'      => array(),
-			'remove_on_uninstall'     => '',
-			'hide_dashboard_widget'   => false,
-			'db_size_notification'    => array(
+			'allowed_user_roles'    => array(),
+			'remove_on_uninstall'   => '',
+			'hide_dashboard_widget' => false,
+			'db_size_notification'  => array(
 				'notify'            => false,
 				'admin_email'       => '',
 				'logs_threshold'    => '',
 				'log_threshold_met' => false,
-            ),
+			),
 		);
 
 		$this->load();
