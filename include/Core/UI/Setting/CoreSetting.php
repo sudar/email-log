@@ -309,7 +309,7 @@ class CoreSetting extends Setting {
 			} elseif ( $setting === 'admin_email' ) {
 				$db_size_notification_data[ $setting ] = \sanitize_email( $value );
 			} elseif ( $setting === 'logs_threshold' ) {
-				$db_size_notification_data[ $setting ] = intval( \sanitize_text_field( $value ) );
+				$db_size_notification_data[ $setting ] = absint( \sanitize_text_field( $value ) );
 			}
 		}
 
@@ -345,7 +345,7 @@ class CoreSetting extends Setting {
 	 */
 	public function trigger_threshold_met_notification_email() {
 		$email_log  = email_log();
-		$logs_count = intval( $email_log->table_manager->get_logs_count() );
+		$logs_count = absint( $email_log->table_manager->get_logs_count() );
 
 		$setting_data = $this->get_value();
 
@@ -366,7 +366,7 @@ class CoreSetting extends Setting {
 
 		$is_notification_enabled = $db_size_notification_data['notify'];
 		$admin_email             = $db_size_notification_data['admin_email'];
-		$logs_threshold          = intval( $db_size_notification_data['logs_threshold'] );
+		$logs_threshold          = absint( $db_size_notification_data['logs_threshold'] );
 		$logs_threshold_met      = $db_size_notification_data['log_threshold_met'];
 
 		// Ideally threshold cannot be 0. Also, skip sending email if it is already sent.
