@@ -1,5 +1,7 @@
 <?php namespace EmailLog\Core\UI\Setting;
 
+use  \EmailLog\Core\UI\Page\SettingsPage;
+
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 /**
@@ -431,16 +433,17 @@ EOT;
 	 * @since 2.3.0
 	 */
 	public function render_log_threshold_met_notice() {
-		$email_log  = email_log();
-		$logs_count = intval( $email_log->table_manager->get_logs_count() );
+		$email_log      = email_log();
+		$logs_count     = absint( $email_log->table_manager->get_logs_count() );
+		$notice_message = sprintf( __( 'Currently there are %1$s logged, which is more than the threshold that is set in the %2$s screen. You can delete some logs or increase the threshold. You can also use our %3$s add-on to automatically delete logs',
+			'email-log' ),
+			_n( '%d email log', '%d email logs', $logs_count, 'email-log' ),
+			'<a href="' . esc_url( admin_url( 'admin.php?page=' . SettingsPage::PAGE_SLUG ) ) . '">settings</a> screen',
+			'<a href="' . esc_url( 'https://wpemaillog.com/addons/auto-delete-logs/' ) . '">Auto Delete Logs</a>'
+			 );
 		?>
         <div class="notice notice-warning is-dismissible">
-            <p><?php printf( __( 'Currently there are %1$s email logs logged, which is more than the threshold that is set in the <a href="%2$s">settings</a> screen. You can delete some logs or increase the threshold. You can also use our <a href="%3$s">Auto Delete Logs</a> add-on to automatically delete logs',
-					'email-log' ),
-					$logs_count,
-					admin_url( 'admin.php?page=' . \EmailLog\Core\UI\Page\SettingsPage::PAGE_SLUG ),
-					'https://wpemaillog.com/addons/auto-delete-logs/' );
-				?></p>
+            <p><?php echo $notice_message; ?></p>
         </div>
 		<?php
 	}
