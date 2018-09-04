@@ -282,7 +282,7 @@ class CoreSetting extends Setting {
 	 *
 	 * @return bool
 	 */
-	private function trim_array_to_allowed_keys( $key ) {
+	protected function trim_array_to_allowed_keys( $key ) {
 		// TODO: Define the array as Class prop.
 		$allowed_keys = array( 'notify', 'admin_email', 'logs_threshold', 'log_threshold_met' );
 
