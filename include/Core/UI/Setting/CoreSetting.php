@@ -370,11 +370,11 @@ class CoreSetting extends Setting {
 		$logs_threshold_met      = $db_size_notification_data['log_threshold_met'];
 
 		// Ideally threshold cannot be 0. Also, skip sending email if it is already sent.
-		if ( $logs_threshold === 0 || $logs_threshold_met === true ) {
+		if ( ! $is_notification_enabled || $logs_threshold === 0 || $logs_threshold_met === true ) {
 			return;
 		}
 
-		if ( $is_notification_enabled && is_email( $admin_email ) && ( $logs_count >= $logs_threshold ) ) {
+		if ( is_email( $admin_email ) && ( $logs_count >= $logs_threshold ) ) {
 			$subject = sprintf( __( 'Email Log Plugin: Your log threshold of %s has been met', 'email-log' ),
 				$logs_threshold );
 			$message = <<<EOT
