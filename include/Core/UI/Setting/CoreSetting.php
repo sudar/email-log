@@ -300,7 +300,7 @@ class CoreSetting extends Setting {
 	public function sanitize_db_size_notification( $db_size_notification_data ) {
 		$db_size_notification_data = array_filter( $db_size_notification_data, array(
 			$this,
-			'restrict_array_to_db_size_notification_setting_keys'
+			'restrict_array_to_db_size_notification_setting_keys',
 		), ARRAY_FILTER_USE_KEY );
 
 		foreach ( $db_size_notification_data as $setting => $value ) {
