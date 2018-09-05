@@ -282,7 +282,7 @@ class CoreSetting extends Setting {
 	 *
 	 * @since 2.3.0
 	 *
-	 * @param $key
+	 * @param string $key Array key.
 	 *
 	 * @return bool
 	 */
