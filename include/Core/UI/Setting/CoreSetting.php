@@ -266,9 +266,9 @@ class CoreSetting extends Setting {
         <p>
             <em>
 				<?php printf(
-					__( '<strong>Note:</strong> There are <strong>%s</strong> email logs currently logged in the database.',
-						'email-log' ),
-					$logs_count
+					__( '%1$s There are %2$s email logs currently logged in the database.', 'email-log' ),
+					'<strong>Note:</strong>',
+					'<strong>' . $logs_count . '</strong>'
 				); ?>
             </em>
         </p>
