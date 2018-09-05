@@ -246,17 +246,19 @@ class CoreSetting extends Setting {
 		$logs_count = $email_log->table_manager->get_logs_count();
 
 		$admin_email_input_field = sprintf(
-			'<input type="email" name="%s" value="%s" size="35" />', $admin_email_field_name, empty( $db_size_notification_data['admin_email'] ) ? get_option( 'admin_email', '' ) : $db_size_notification_data['admin_email'] );
+			'<input type="email" name="%1$s" value="%2$s" size="35" />', esc_attr( $admin_email_field_name ), empty( $db_size_notification_data['admin_email'] ) ? get_option( 'admin_email', '' ) : esc_attr( $db_size_notification_data['admin_email'] ) );
 
-		$logs_threshold_input_field = sprintf( '<input type="number" name="%s" placeholder="5000" value="%s" min="0" max="99999999" />',
-			$logs_threshold_field_name,
-			empty( $db_size_notification_data['logs_threshold'] ) ? '' : $db_size_notification_data['logs_threshold']
+		$logs_threshold_input_field = sprintf( '<input type="number" name="%1$s" placeholder="5000" value="%2$s" min="0" max="99999999" />',
+			esc_attr( $logs_threshold_field_name ),
+			empty( $db_size_notification_data['logs_threshold'] ) ? '' : esc_attr( $db_size_notification_data['logs_threshold'] )
 		);
 		?>
 
         <input type="checkbox" name="<?php echo esc_attr( $db_size_notification_field_name ); ?>" value="true" <?php
 		checked( true, $db_size_notification_data['notify'] ); ?> />
-		<?php printf( __( 'Notify %1$s if there are more than %2$s logs.', 'email-log' ),
+		<?php
+		// The values within each field are already escaped.
+		printf( __( 'Notify %1$s if there are more than %2$s logs.', 'email-log' ),
 			$admin_email_input_field,
 			$logs_threshold_input_field
 		);
