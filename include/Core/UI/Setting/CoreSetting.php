@@ -404,8 +404,8 @@ EOT;
 			 *
 			 * @since 2.3.0
 			 *
-			 * @param string $message The email body.
-			 * @param int $logs_threshold The log threshold value set by the user.
+			 * @param string $message        The email body.
+			 * @param int    $logs_threshold The log threshold value set by the user.
 			 */
 			$message = apply_filters( 'el_log_threshold_met_notification_email_body', $message, $logs_threshold );
 
