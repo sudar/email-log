@@ -284,12 +284,25 @@ class CoreSetting extends Setting {
 	 *
 	 * @param string $key Array key.
 	 *
-	 * @return bool
+	 * @return array
 	 */
-	protected function restrict_array_to_db_size_notification_setting_keys( $key ) {
+	protected function restrict_array_to_db_size_notification_setting_keys( $arr ) {
 		$allowed_keys = array_keys( $this->section->default_value['db_size_notification'] );
+		$arr_keys     = array_keys( $arr );
 
-		return in_array( $key, $allowed_keys, true );
+		// Return the array when only the allowed keys exist.
+		$intersecting_keys = array_intersect( $allowed_keys, $arr_keys );
+		if ( count( $allowed_keys ) === count( $intersecting_keys ) ) {
+			return $arr;
+		}
+
+		// Otherwise remove keys that aren't expected.
+		$diff_keys = array_diff_key( $arr, $allowed_keys );
+		foreach ( $diff_keys as $key ) {
+			unset( $arr[ $key ] );
+		}
+
+		return $arr;
 	}
 
 	/**
@@ -302,10 +315,7 @@ class CoreSetting extends Setting {
 	 * @return array $db_size_notification_data
 	 */
 	public function sanitize_db_size_notification( $db_size_notification_data ) {
-		$db_size_notification_data = array_filter( $db_size_notification_data, array(
-			$this,
-			'restrict_array_to_db_size_notification_setting_keys',
-		), ARRAY_FILTER_USE_KEY );
+		$db_size_notification_data = $this->restrict_array_to_db_size_notification_setting_keys( $db_size_notification_data );
 
 		foreach ( $db_size_notification_data as $setting => $value ) {
 			if ( $setting === 'notify' ) {
