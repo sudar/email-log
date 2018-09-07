@@ -318,11 +318,11 @@ class CoreSetting extends Setting {
 		$db_size_notification_data = $this->restrict_array_to_db_size_notification_setting_keys( $db_size_notification_data );
 
 		foreach ( $db_size_notification_data as $setting => $value ) {
-			if ( $setting === 'notify' ) {
+			if ( 'notify' === $setting ) {
 				$db_size_notification_data[ $setting ] = \filter_var( $value, FILTER_VALIDATE_BOOLEAN );
-			} elseif ( $setting === 'admin_email' ) {
+			} elseif ( 'admin_email' === $setting ) {
 				$db_size_notification_data[ $setting ] = \sanitize_email( $value );
-			} elseif ( $setting === 'logs_threshold' ) {
+			} elseif ( 'logs_threshold' === $setting ) {
 				$db_size_notification_data[ $setting ] = absint( \sanitize_text_field( $value ) );
 			}
 		}
