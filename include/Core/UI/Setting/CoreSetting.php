@@ -359,8 +359,8 @@ class CoreSetting extends Setting {
 	 *
 	 * @since 2.3.0
 	 *
-	 * @param array $arr
-	 * @param array $keys
+	 * @param array $arr  The array whose keys must be checked.
+	 * @param array $keys All the required keys that the array must contain.
 	 *
 	 * @return bool
 	 */
