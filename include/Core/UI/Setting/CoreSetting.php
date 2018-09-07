@@ -372,7 +372,7 @@ class CoreSetting extends Setting {
 		}
 
 		foreach ( $arr as $key => $value ) {
-			$has_keys = $has_keys && in_array( $key, $keys );
+			$has_keys = $has_keys && in_array( $key, $keys, true );
 		}
 
 		return $has_keys;
