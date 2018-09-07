@@ -409,7 +409,7 @@ class CoreSetting extends Setting {
 		$logs_threshold_met      = $db_size_notification_data['log_threshold_met'];
 
 		// Ideally threshold cannot be 0. Also, skip sending email if it is already sent.
-		if ( $logs_threshold === 0 || $logs_threshold_met === true ) {
+		if ( 0 === $logs_threshold || true === $logs_threshold_met ) {
 			return;
 		}
 
