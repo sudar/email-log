@@ -282,9 +282,9 @@ class CoreSetting extends Setting {
 	 *
 	 * @since 2.3.0
 	 *
-	 * @param string $key Array key.
+	 * @param array $arr `db_size_notification` option array.
 	 *
-	 * @return array
+	 * @return array `db_size_notification` option array with keys removed other than the allowed.
 	 */
 	protected function restrict_array_to_db_size_notification_setting_keys( $arr ) {
 		$allowed_keys = array_keys( $this->section->default_value['db_size_notification'] );
