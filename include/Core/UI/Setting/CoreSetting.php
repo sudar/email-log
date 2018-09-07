@@ -471,8 +471,7 @@ EOT;
 	public function render_log_threshold_met_notice() {
 		$email_log      = email_log();
 		$logs_count     = absint( $email_log->table_manager->get_logs_count() );
-		$notice_message = sprintf( __( 'Currently there are %1$s logged, which is more than the threshold that is set in the %2$s screen. You can delete some logs or increase the threshold. You can also use our %3$s add-on to automatically delete logs',
-			'email-log' ),
+		$notice_message = sprintf( __( 'Currently there are %1$s logged, which is more than the threshold that is set in the %2$s screen. You can delete some logs or increase the threshold. You can also use our %3$s add-on to automatically delete logs', 'email-log' ),
 			$logs_count . _n( ' email log', ' email logs', $logs_count, 'email-log' ),
 			'<a href="' . esc_url( admin_url( 'admin.php?page=' . SettingsPage::PAGE_SLUG ) ) . '">settings</a> screen',
 			'<a href="' . esc_url( 'https://wpemaillog.com/addons/auto-delete-logs/' ) . '">Auto Delete Logs</a>'
