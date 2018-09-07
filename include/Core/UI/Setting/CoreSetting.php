@@ -353,6 +353,32 @@ class CoreSetting extends Setting {
 	}
 
 	/**
+	 * Utility method to verify all the given keys exist in the given array.
+	 *
+	 * This method helps reduce the Cyclomatic Complexity in its parent method.
+	 *
+	 * @since 2.3.0
+	 *
+	 * @param array $arr
+	 * @param array $keys
+	 *
+	 * @return bool
+	 */
+	protected function has_array_contains_required_keys( $arr, $keys ) {
+		$has_keys = true;
+
+		if ( ! is_array( $arr ) || ! is_array( $keys ) ) {
+			return false;
+		}
+
+		foreach ( $arr as $key => $value ) {
+			$has_keys = $has_keys && in_array( $key, $keys );
+		}
+
+		return $has_keys;
+	}
+
+	/**
 	 * Send the Threshold notification email to the admin.
 	 *
 	 * @since 2.3.0
@@ -372,9 +398,8 @@ class CoreSetting extends Setting {
 		$db_size_notification_data = $setting_data[ $db_size_notification_key ];
 
 		// Return early.
-		if ( ! array_key_exists( 'logs_threshold', $db_size_notification_data ) ||
-		     ! array_key_exists( 'admin_email', $db_size_notification_data ) ||
-		     ! array_key_exists( 'notify', $db_size_notification_data ) ) {
+		$keys = array_keys( $this->section->default_value['db_size_notification'] );
+		if ( ! $this->has_array_contains_required_keys( $db_size_notification_data, $keys ) ) {
 			return;
 		}
 
