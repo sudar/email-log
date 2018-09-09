@@ -18,7 +18,7 @@ class SanitizeEmailTest extends \WP_UnitTestCase {
 		$invalid_email = 'sudar@sudarmuthu';
 
 		$expected = '';
-		$actual   = sanitize_email( $invalid_email );
+		$actual = sanitize_email( $invalid_email );
 
 		$this->assertEquals( $expected, $actual );
 	}
@@ -27,9 +27,11 @@ class SanitizeEmailTest extends \WP_UnitTestCase {
 		$email_with_name = 'Sudar Muthu<sudar@sudarmuthu.com>';
 
 		$expected = 'Sudar Muthu <sudar@sudarmuthu.com>';
-		$actual   = sanitize_email( $email_with_name );
+		$actual_1 = sanitize_email( $email_with_name );
+		$actual_2 = sanitize_email_with_name( $email_with_name );
 
-		$this->assertEquals( $expected, $actual );
+		$this->assertEquals( $expected, $actual_1 );
+		$this->assertEquals( $expected, $actual_2 );
 	}
 
 	function test_email_with_name_and_space() {
@@ -38,7 +40,7 @@ class SanitizeEmailTest extends \WP_UnitTestCase {
 		$expected = 'Sudar Muthu <sudar@sudarmuthu.com>';
 		$actual   = sanitize_email( $email_with_name_and_space );
 
-		$this->assertEquals( $expected, $actual );
+		$this->assertEquals( $expected, $actual);
 	}
 
 	function test_multiple_simple_email_returns_first() {
@@ -50,8 +52,44 @@ class SanitizeEmailTest extends \WP_UnitTestCase {
 		$this->assertEquals( $expected, $actual );
 	}
 
+	function test_trimed_multiple_simple_email_returns_first() {
+		$multiple_emails = '  sudar@sudarmuthu.com,  muthu@sudarmuthu.com  ';
+
+		$expected = 'sudar@sudarmuthu.com';
+		$actual   = sanitize_email( $multiple_emails, false );
+
+		$this->assertEquals( $expected, $actual );
+	}
+
+	function test_multiple_simple_email_returns_all() {
+		$multiple_emails = 'sudar@sudarmuthu.com, muthu@sudarmuthu.com';
+
+		$expected = 'sudar@sudarmuthu.com, muthu@sudarmuthu.com';
+		$actual   = sanitize_email( $multiple_emails, true );
+
+		$this->assertEquals( $expected, $actual );
+	}
+
+	function test_trimed_multiple_simple_email_returns_all() {
+		$multiple_emails = '  sudar@sudarmuthu.com  ,  muthu@sudarmuthu.com  ';
+
+		$expected = 'sudar@sudarmuthu.com, muthu@sudarmuthu.com';
+		$actual   = sanitize_email( $multiple_emails, true );
+
+		$this->assertEquals( $expected, $actual );
+	}
+
 	function test_multiple_simple_email() {
 		$multiple_emails = 'sudar@sudarmuthu.com, muthu@sudarmuthu.com';
+
+		$expected = 'sudar@sudarmuthu.com, muthu@sudarmuthu.com';
+		$actual   = sanitize_email( $multiple_emails );
+
+		$this->assertEquals( $expected, $actual );
+	}
+
+	function test_trimed_multiple_simple_email() {
+		$multiple_emails = '   sudar@sudarmuthu.com   ,   muthu@sudarmuthu.com   ';
 
 		$expected = 'sudar@sudarmuthu.com, muthu@sudarmuthu.com';
 		$actual   = sanitize_email( $multiple_emails );
