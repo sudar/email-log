@@ -76,6 +76,20 @@ class EmailLogger implements Loadie {
 
 		$email_log->table_manager->insert_log( $data );
 
+		/**
+		 * Fires the `el_email_log_inserted` action right after the log is inserted in to DB.
+		 *
+		 * @param array $data {
+		 *      @type string $to
+		 *      @type string $subject
+		 *      @type string $message
+		 *      @type string $headers
+		 *      @type string $attachments
+		 *      @type string $sent_date
+		 * }
+		 */
+		do_action( 'el_email_log_inserted', $data );
+
 		return $mail_info;
 	}
 }
