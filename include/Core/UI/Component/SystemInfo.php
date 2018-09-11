@@ -66,7 +66,7 @@ class SystemInfo {
 		<textarea wrap="off" readonly="readonly" name="<?php echo esc_attr( $this->plugin_slug ); ?>-system-info"
 		          style="font-family:Menlo,Monaco,monospace; white-space:pre; width:100%; height:500px;" onclick="this.focus();this.select()"
 		          title="<?php _e( 'To copy the system info, click below then press Ctrl + C (PC) or Cmd + C (Mac).', 'email-log' ); ?>">
-### Begin System Info ###
+### Begin System Info (Generated <?php echo date( 'Y-m-d H:i:s') ?>) ###
 
 <?php
 /**
