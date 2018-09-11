@@ -3,6 +3,7 @@
 namespace EmailLog\Core\UI\Component;
 
 use EmailLog\Core\DB\TableManager;
+
 /**
  * Email Log System Info.
  *
@@ -20,7 +21,7 @@ class EmailLogSystemInfo extends SystemInfo {
 
 	/**
 	 * ##RefactorMe
-	 * Dummy method which should return license key or keys based on license type
+	 * Dummy method which should return license key or keys based on license type.
 	 *
 	 * @return string
 	 */
@@ -42,8 +43,8 @@ License Key:                        <?php echo $this->get_license_key() . "\n"; 
 <?php $email_log_core = get_option('email-log-core'); ?>
 <?php if ( $email_log_core ) : ?>
 Allowed Roles for Email Log View:   <?php echo implode( ', ', $email_log_core['allowed_user_roles'] ) . "\n"; ?>
-Remove All Data on Uninstallation:  <?php echo $email_log_core['remove_on_uninstall'] !== '' ? "Yes" : "No" . "\n"; ?>
-Disable Dash Board Widget:          <?php echo $email_log_core['hide_dashboard_widget'] === 'true' ? "Yes" : "No" . "\n"; ?>
+Remove All Data on Uninstallation:  <?php echo $email_log_core['remove_on_uninstall'] !== '' ? 'Yes' : 'No' . "\n"; ?>
+Disable Dash Board Widget:          <?php echo $email_log_core['hide_dashboard_widget'] === 'true' ? 'Yes' : 'No' . "\n"; ?>
 <?php endif; ?>
 <?php
 	}
