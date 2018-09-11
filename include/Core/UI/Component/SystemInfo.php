@@ -101,7 +101,7 @@ User Agent String:        <?php echo esc_html( $_SERVER['HTTP_USER_AGENT'] ), "\
 -- WordPress Configuration:
 
 Version:                  <?php echo get_bloginfo( 'version' ) . "\n"; ?>
-Language:                 <?php ( !empty( $locale ) ? $locale : 'en_US' ) . "\n"; ?>
+Language:                 <?php ( ! empty( $locale ) ? $locale : 'en_US' ) . "\n"; ?>
 Permalink Structure:      <?php echo get_option( 'permalink_structure' ) . "\n"; ?>
 Active Theme:             <?php echo $this->get_current_theme_name() . "\n"; ?>
 ABSPATH:                  <?php echo ABSPATH . "\n"; ?>

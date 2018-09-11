@@ -49,11 +49,15 @@ class EmailLogger implements Loadie {
 		) );
 
 		$data = array(
-			'attachments' => ( count( $mail_info['attachments'] ) > 0 ) ? 'true' : 'false',
-			'to_email'    => is_array( $mail_info['to'] ) ? implode( ',', $mail_info['to'] ) : $mail_info['to'],
-			'subject'     => $mail_info['subject'],
-			'headers'     => is_array( $mail_info['headers'] ) ? implode( "\n", $mail_info['headers'] ) : $mail_info['headers'],
-			'sent_date'   => current_time( 'mysql' ),
+			'attachments'     => ( count( $mail_info['attachments'] ) > 0 ) ? 'true' : 'false',
+			'to_email'        => is_array( $mail_info['to'] ) ? implode( ',', $mail_info['to'] ) : $mail_info['to'],
+			'subject'         => $mail_info['subject'],
+			'headers'         => is_array( $mail_info['headers'] ) ? implode( "\n", $mail_info['headers'] ) : $mail_info['headers'],
+			'sent_date'       => current_time( 'mysql' ),
+			'attachment_name' => implode( ',', $mail_info['attachments'] ),
+			// TODO: Improve the Client's IP using https://www.virendrachandak.com/techtalk/getting-real-client-ip-address-in-php-2/
+			'ip_address'      => $_SERVER['REMOTE_ADDR'],
+			'result'          => 1,
 		);
 
 		$message = '';
@@ -71,6 +75,20 @@ class EmailLogger implements Loadie {
 		$data['message'] = $message;
 
 		$email_log->table_manager->insert_log( $data );
+
+		/**
+		 * Fires the `el_email_log_inserted` action right after the log is inserted in to DB.
+		 *
+		 * @param array $data {
+		 *      @type string $to
+		 *      @type string $subject
+		 *      @type string $message
+		 *      @type string $headers
+		 *      @type string $attachments
+		 *      @type string $sent_date
+		 * }
+		 */
+		do_action( 'el_email_log_inserted', $data );
 
 		return $mail_info;
 	}
