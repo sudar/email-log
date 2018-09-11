@@ -22,7 +22,7 @@ class EmailLogSystemInfo extends SystemInfo {
 	 * ##RefactorMe
 	 * Dummy method which should return license key or keys based on license type
 	 *
-	 * @return void
+	 * @return string
 	 */
 	public function get_license_key(){
 		return '';

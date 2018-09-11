@@ -96,8 +96,6 @@ Host:                     <?php echo $host . "\n"; ?>
 -- User Browser
 
 Platform:                 <?php echo php_uname('s') . "\n"; ?>
-Browser Name:             <?php "TODO" . "\n"; ?>
-Browser Version:          "TODO\n"
 User Agent String:        <?php echo esc_html( $_SERVER['HTTP_USER_AGENT'] ), "\n"; ?>
 
 -- WordPress Configuration:
