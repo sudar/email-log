@@ -21,7 +21,6 @@ class LogListAction implements Loadie {
 		add_action( 'el-log-list-delete', array( $this, 'delete_logs' ) );
 		add_action( 'el-log-list-delete-all', array( $this, 'delete_all_logs' ) );
 		add_action( 'el-log-list-manage-user-roles-changed', array( $this, 'update_capabilities_for_user_roles' ), 10, 2 );
-		add_filter( 'wp_kses_allowed_html', array( $this, 'el_allow_link_tag' ), 10, 2 );
 	}
 
 	/**
@@ -85,7 +84,7 @@ class LogListAction implements Loadie {
 				</div>
 
 				<div id="tabs-preview">
-					<?php echo wp_kses_post( $log_item['message'] ); ?>
+					<?php echo wp_kses( $log_item['message'], $this->el_kses_allowed_html( 'post' ) ); ?>
 				</div>
 			</div>
 
@@ -190,30 +189,27 @@ class LogListAction implements Loadie {
 	}
 
 	/**
-	 * Allows `<link>` tag in wp_kses_post().
+	 * Allows `<link>` tag in wp_kses().
 	 *
-	 * This has to be a `public` method as it is a callback method.
-	 * <link> tag should be allowed to allow loading of external stylesheets when previewing email logs.
+	 * Gets the list of allowed HTML for the `post` context.
+	 * Appends <link> tag to the above list and returns the array.
 	 *
 	 * @since 2.3.0
 	 *
-	 * @param array $allowedposttags @see global @allowedposttags in wp-includes/kses.php.
-	 * @param string $context The context for which to retrieve tags.
+	 * @param string $context Optional. Default `post`. The context for which to retrieve tags.
 	 *
 	 * @return array List of allowed tags and their allowed attributes.
 	 */
-	public function el_allow_link_tag( $allowedposttags, $context ) {
-		if ( $context !== 'post' ) {
-			return $allowedposttags;
-		}
+	protected function el_kses_allowed_html( $context = 'post' ) {
+		$allowed_tags = wp_kses_allowed_html( $context );
 
-		$allowedposttags['link'] = array(
+		$allowed_tags['link'] = array(
 			'rel'   => true,
 			'href'  => true,
 			'type'  => true,
 			'media' => true,
 		);
 
-		return $allowedposttags;
+		return $allowed_tags;
 	}
 }
