@@ -99,7 +99,7 @@ class EmailLogger implements Loadie {
 	 *
 	 * @since 2.3.0
 	 *
-	 * @param $wp_error
+	 * @param \WP_Error $wp_error The error instance.
 	 */
 	public function update_email_fail_status( $wp_error ) {
 		if ( ! ( $wp_error instanceof \WP_Error ) ) {
