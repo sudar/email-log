@@ -272,6 +272,10 @@ class TableManager implements Loadie {
 	}
 
 	/**
+	 * Fetches the log item by the item data.
+	 *
+	 * Use this method to get the log item when the error instance only returns the log item data.
+	 *
 	 * @param array $data {
 	 *      @type string|array to
 	 *      @type string       subject
@@ -294,7 +298,7 @@ class TableManager implements Loadie {
 		$query_cond  = '';
 
 		if ( empty( $data ) || ! is_array( $data ) ) {
-			$query_cond .= " WHERE id = 0";
+			$query_cond .= ' WHERE id = 0';
 		}
 
 		if ( array_key_exists( 'to', $data ) ) {
@@ -331,7 +335,7 @@ class TableManager implements Loadie {
 	 *
 	 * @param int $id ID of the log item whose email sent status should be set to failed.
 	 */
-	public function set_log_item_fail_status_by_id( $id ) {
+	public function set_log_item_fail_status_by_id( $log_item_id ) {
 		global $wpdb;
 		$table_name = $this->get_log_table_name();
 
@@ -340,11 +344,11 @@ class TableManager implements Loadie {
 			array(
 				'result' => '0',
 			),
-			array( 'ID' => $id ),
+			array( 'ID' => $log_item_id ),
 			array(
-				'%d' // VALUE format
+				'%d' // VALUE format.
 			),
-			array( '%d' ) // WHERE format
+			array( '%d' ) // WHERE format.
 		);
 	}
 
