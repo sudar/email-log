@@ -31,12 +31,11 @@ class EmailLogger implements Loadie {
 		 * @since Genesis
 		 *
 		 * @param array $mail_info {
-		 *
-		 * @type string $to
-		 * @type string $subject
-		 * @type string $message
-		 * @type string $headers
-		 * @type string $attachment
+		 *     @type string $to
+		 *     @type string $subject
+		 *     @type string $message
+		 *     @type string $headers
+		 *     @type string $attachment
 		 * }
 		 */
 		$mail_info = apply_filters( 'el_wp_mail_log', $mail_info );
