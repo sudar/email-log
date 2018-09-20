@@ -214,15 +214,13 @@ class CoreSetting extends Setting {
 		<input type="checkbox" name="<?php echo esc_attr( $field_name ); ?>" value="true" <?php checked( 'true', $hide_dashboard_widget ); ?>>
 		<?php _e( 'Check this box if you would like to disable dashboard widget.', 'email-log' ) ?>
 
-        <p>
-            <em>
-				<?php
-				// TODO: Remove markup from I18N string.
-				printf(
+		<p>
+			<em>
+				<?php printf(
 					__( '<strong>Note:</strong> Each users can also disable dashboard widget using screen options', 'email-log' )
 				); ?>
-            </em>
-        </p>
+			</em>
+		</p>
 
 		<?php
 	}

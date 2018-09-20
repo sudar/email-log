@@ -22,7 +22,7 @@ class TableManager implements Loadie {
 	const DB_OPTION_NAME = 'email-log-db';
 
 	/* Database version */
-	const DB_VERSION = '0.1';
+	const DB_VERSION = '0.2';
 
 	/**
 	 * Setup hooks.
@@ -31,6 +31,9 @@ class TableManager implements Loadie {
 		add_action( 'wpmu_new_blog', array( $this, 'create_table_for_new_blog' ) );
 
 		add_filter( 'wpmu_drop_tables', array( $this, 'delete_table_from_deleted_blog' ) );
+
+		// Do any DB upgrades.
+		$this->update_table_if_needed();
 	}
 
 	/**
@@ -46,11 +49,11 @@ class TableManager implements Loadie {
 
 			foreach ( $sites as $site ) {
 				switch_to_blog( $site['blog_id'] );
-				$this->create_table();
+				$this->create_table_if_needed();
 				restore_current_blog();
 			}
 		} else {
-			$this->create_table();
+			$this->create_table_if_needed();
 		}
 	}
 
@@ -62,7 +65,7 @@ class TableManager implements Loadie {
 	public function create_table_for_new_blog( $blog_id ) {
 		if ( is_plugin_active_for_network( 'email-log/email-log.php' ) ) {
 			switch_to_blog( $blog_id );
-			$this->create_table();
+			$this->create_table_if_needed();
 			restore_current_blog();
 		}
 	}
@@ -239,24 +242,14 @@ class TableManager implements Loadie {
 	 *
 	 * @global object $wpdb
 	 */
-	private function create_table() {
+	private function create_table_if_needed() {
 		global $wpdb;
 
-		$table_name      = $this->get_log_table_name();
-		$charset_collate = $wpdb->get_charset_collate();
+		$table_name = $this->get_log_table_name();
 
 		if ( $wpdb->get_var( "show tables like '{$table_name}'" ) != $table_name ) {
 
-			$sql = 'CREATE TABLE ' . $table_name . ' (
-				id mediumint(9) NOT NULL AUTO_INCREMENT,
-				to_email VARCHAR(100) NOT NULL,
-				subject VARCHAR(250) NOT NULL,
-				message TEXT NOT NULL,
-				headers TEXT NOT NULL,
-				attachments TEXT NOT NULL,
-				sent_date timestamp NOT NULL,
-				PRIMARY KEY  (id)
-			) ' . $charset_collate . ' ;';
+			$sql = $this->get_create_table_query();
 
 			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 			dbDelta( $sql );
@@ -353,5 +346,58 @@ class TableManager implements Loadie {
 			),
 			array( '%d' ) // WHERE format
 		);
+	}
+
+	/**
+	 * Updates the DB schema.
+	 *
+	 * Adds new columns to the Database as of v0.2.
+	 *
+	 * @since 2.3.0
+	 */
+	private function update_table_if_needed() {
+		$existing_db_version = get_option( self::DB_OPTION_NAME, false );
+		$updated_db_version  = self::DB_VERSION;
+
+		// Bail out when the DB version is `0.1` or equals to self::DB_VERSION
+		if ( ! $existing_db_version || $existing_db_version !== '0.1' || $existing_db_version === $updated_db_version ) {
+			return;
+		}
+
+		$sql = $this->get_create_table_query();
+
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+		dbDelta( $sql );
+
+		update_option( self::DB_OPTION_NAME, self::DB_VERSION );
+	}
+
+	/**
+	 * Gets the Create Table query.
+	 *
+	 * @since 2.3.0
+	 *
+	 * @return string
+	 */
+	private function get_create_table_query() {
+		global $wpdb;
+		$table_name      = $this->get_log_table_name();
+		$charset_collate = $wpdb->get_charset_collate();
+
+		$sql = 'CREATE TABLE ' . $table_name . ' (
+				id mediumint(9) NOT NULL AUTO_INCREMENT,
+				to_email VARCHAR(250) NOT NULL,
+				subject VARCHAR(250) NOT NULL,
+				message TEXT NOT NULL,
+				headers TEXT NOT NULL,
+				attachments TEXT NOT NULL,
+				sent_date timestamp NOT NULL,
+				attachment_name VARCHAR(1000),
+				ip_address VARCHAR(15),
+				result TINYINT(1)
+				PRIMARY KEY  (id)
+			) ' . $charset_collate . ' ;';
+
+		return $sql;
 	}
 }
