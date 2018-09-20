@@ -4,6 +4,7 @@
  * Handle installation and db table creation.
  */
 use EmailLog\Core\Loadie;
+use EmailLog\Util;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
@@ -275,5 +276,82 @@ class TableManager implements Loadie {
 		$query = 'SELECT count(*) FROM ' . $this->get_log_table_name();
 
 		return $wpdb->get_var( $query );
+	}
+
+	/**
+	 * @param array $data {
+	 *      @type string|array to
+	 *      @type string       subject
+	 *      @type string       message
+	 *      @type string|array headers
+	 *      @type string|array attachments
+	 * }
+	 *
+	 * @return int
+	 */
+	public function fetch_log_item_by_item_data( $data ) {
+		global $wpdb;
+		$table_name = $this->get_log_table_name();
+
+		// Since the value is stored as CSV in DB, convert the values from error data to CSV to compare.
+		$data['to']      = Util\join_array_elements_with_delimiter( $data['to'], ',' );
+		$data['headers'] = Util\join_array_elements_with_delimiter( $data['headers'], "\n" );
+
+		$query = "SELECT ID FROM {$table_name}";
+		$query_cond  = '';
+
+		if ( empty( $data ) || ! is_array( $data ) ) {
+			$query_cond .= " WHERE id = 0";
+		}
+
+		if ( array_key_exists( 'to', $data ) ) {
+			$to_email   = trim( esc_sql( $data['to'] ) );
+			$query_cond .= " WHERE to_email = '$to_email'";
+		}
+
+		if ( array_key_exists( 'subject', $data ) ) {
+			$subject    = trim( esc_sql( $data['subject'] ) );
+			$query_cond .= " AND subject = '$subject'";
+		}
+
+		if ( array_key_exists( 'attachments', $data ) ) {
+			if ( is_array( $data['attachments'] ) ) {
+				$attachments = count( $data['attachments'] ) > 0 ? 'true' : 'false';
+			} else {
+				$attachments = empty( $data['attachments'] ) ? 'false' : 'true';
+			}
+			$attachments = trim( esc_sql( $attachments ) );
+			$query_cond  .= " AND attachments = '$attachments'";
+		}
+
+		// Get only the latest logged item when multiple rows match.
+		$query_cond .= ' ORDER BY id DESC LIMIT 1';
+
+		$query = $query . $query_cond;
+		return absint( $wpdb->get_var( $query ) );
+	}
+
+	/**
+	 * Sets email sent status as failed for the given log item.
+	 *
+	 * @since 2.3.0
+	 *
+	 * @param int $id ID of the log item whose email sent status should be set to failed.
+	 */
+	public function set_log_item_fail_status_by_id( $id ) {
+		global $wpdb;
+		$table_name = $this->get_log_table_name();
+
+		$wpdb->update(
+			$table_name,
+			array(
+				'result' => '0',
+			),
+			array( 'ID' => $id ),
+			array(
+				'%d' // VALUE format
+			),
+			array( '%d' ) // WHERE format
+		);
 	}
 }

@@ -111,3 +111,22 @@ function checked_array( $values, $current ) {
 		echo "checked='checked'";
 	}
 }
+
+/**
+ * Returns Comma separated values of the given array elements.
+ *
+ * Use $delimiter param to join elements other than `,`.
+ *
+ * @since 2.3.0
+ *
+ * @param array|string $value     The array whose values are to be joined.
+ * @param string       $delimiter Optional. Default is `,`.
+ *
+ * @return string
+ */
+function join_array_elements_with_delimiter( $value, $delimiter = ',' ) {
+	if ( is_array( $value ) ) {
+		return implode( $delimiter, $value );
+	}
+	return $value;
+}
