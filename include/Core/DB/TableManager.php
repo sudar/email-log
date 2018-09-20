@@ -333,7 +333,7 @@ class TableManager implements Loadie {
 	 *
 	 * @since 2.3.0
 	 *
-	 * @param int $id ID of the log item whose email sent status should be set to failed.
+	 * @param int $log_item_id ID of the log item whose email sent status should be set to failed.
 	 */
 	public function set_log_item_fail_status_by_id( $log_item_id ) {
 		global $wpdb;
