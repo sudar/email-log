@@ -283,7 +283,7 @@ class TableManager implements Loadie {
 	 * @type string       message
 	 * @type array|string headers
 	 * @type array|string attachments
-	 * }
+	 *                    }
 	 *
 	 * @return int
 	 */
