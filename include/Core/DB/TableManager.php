@@ -290,11 +290,12 @@ class TableManager implements Loadie {
 		global $wpdb;
 		$table_name = $this->get_log_table_name();
 
-		$query = "SELECT ID FROM {$table_name}";
-		$query_cond  = '';
+		$query      = "SELECT ID FROM {$table_name}";
+		$query_cond = '';
+		$where      = array();
 
 		if ( empty( $data ) || ! is_array( $data ) ) {
-			$query_cond .= ' WHERE id = 0';
+			$where[] = 'id = 0';
 		}
 
 		// Execute the following `if` conditions only when $data is array.
@@ -302,13 +303,13 @@ class TableManager implements Loadie {
 			// Since the value is stored as CSV in DB, convert the values from error data to CSV to compare.
 			$data['to'] = Util\join_array_elements_with_delimiter( $data['to'] );
 
-			$to_email   = trim( esc_sql( $data['to'] ) );
-			$query_cond .= " WHERE to_email = '$to_email'";
+			$to_email = trim( esc_sql( $data['to'] ) );
+			$where[]  = "to_email = '$to_email'";
 		}
 
 		if ( array_key_exists( 'subject', $data ) ) {
-			$subject    = trim( esc_sql( $data['subject'] ) );
-			$query_cond .= " AND subject = '$subject'";
+			$subject = trim( esc_sql( $data['subject'] ) );
+			$where[] = "subject = '$subject'";
 		}
 
 		if ( array_key_exists( 'attachments', $data ) ) {
@@ -318,13 +319,19 @@ class TableManager implements Loadie {
 				$attachments = empty( $data['attachments'] ) ? 'false' : 'true';
 			}
 			$attachments = trim( esc_sql( $attachments ) );
-			$query_cond  .= " AND attachments = '$attachments'";
+			$where[]     = "attachments = '$attachments'";
+		}
+
+		foreach ( $where as $index => $value ) {
+			$query_cond .= 0 === $index ? ' WHERE ' : ' AND ';
+			$query_cond .= $value;
 		}
 
 		// Get only the latest logged item when multiple rows match.
 		$query_cond .= ' ORDER BY id DESC LIMIT 1';
 
 		$query = $query . $query_cond;
+
 		return absint( $wpdb->get_var( $query ) );
 	}
 
