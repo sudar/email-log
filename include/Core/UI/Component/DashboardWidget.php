@@ -43,6 +43,13 @@ class DashboardWidget implements Loadie {
 			<?php _e( 'Total number of emails logged' , 'email-log' ); ?>: <strong><?php echo number_format( absint( $logs_count ), 0, ',', ',' ); ?></strong>
 		</p>
 
+		<?php if ( wp_next_scheduled( 'el_scheduled_delete_logs' ) ) : ?>
+			<p>
+				<?php _e( 'Auto delete logs cron will be triggered next at', 'email-log' ); ?>:
+				<strong><?php echo get_date_from_gmt( date( 'Y-m-d H:i:s', wp_next_scheduled( 'el_scheduled_delete_logs' ) ), 'M d, g:i A' ); ?></strong>
+			</p>
+		<?php endif; ?>
+
 		<ul class="subsubsub" style="float: none">
 			<li><?php printf( __( '<a href="%s">Email Logs</a>', 'email-log' ), 'admin.php?page=email-log' ); ?> <span style="color: #ddd"> | </span></li>
 			<li><?php printf( __( '<a href="%s">Settings</a>', 'email-log' ), 'admin.php?page=email-log-settings' ); ?> <span style="color: #ddd"> | </span></li>
