@@ -354,7 +354,7 @@ class TableManager implements Loadie {
 			),
 			array( 'ID' => $log_item_id ),
 			array(
-				'%d' // VALUE format.
+				'%d', // VALUE format.
 			),
 			array( '%d' ) // WHERE format.
 		);
