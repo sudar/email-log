@@ -278,11 +278,11 @@ class TableManager implements Loadie {
 	 *
 	 * @param array $data Array of Email information. {
 	 *
-	 * @type string|array to
+	 * @type array|string to
 	 * @type string       subject
 	 * @type string       message
-	 * @type string|array headers
-	 * @type string|array attachments
+	 * @type array|string headers
+	 * @type array|string attachments
 	 * }
 	 *
 	 * @return int
