@@ -277,11 +277,12 @@ class TableManager implements Loadie {
 	 * Use this method to get the log item when the error instance only returns the log item data.
 	 *
 	 * @param array $data Array of Email information. {
-	 *      @type string|array to
-	 *      @type string       subject
-	 *      @type string       message
-	 *      @type string|array headers
-	 *      @type string|array attachments
+	 *
+	 * @type string|array to
+	 * @type string       subject
+	 * @type string       message
+	 * @type string|array headers
+	 * @type string|array attachments
 	 * }
 	 *
 	 * @return int
