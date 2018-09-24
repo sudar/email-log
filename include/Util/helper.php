@@ -128,5 +128,6 @@ function join_array_elements_with_delimiter( $value, $delimiter = ',' ) {
 	if ( is_array( $value ) ) {
 		return implode( $delimiter, $value );
 	}
+
 	return $value;
 }
