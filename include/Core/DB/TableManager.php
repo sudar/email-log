@@ -290,10 +290,6 @@ class TableManager implements Loadie {
 		global $wpdb;
 		$table_name = $this->get_log_table_name();
 
-		// Since the value is stored as CSV in DB, convert the values from error data to CSV to compare.
-		$data['to']      = Util\join_array_elements_with_delimiter( $data['to'], ',' );
-		$data['headers'] = Util\join_array_elements_with_delimiter( $data['headers'], "\n" );
-
 		$query = "SELECT ID FROM {$table_name}";
 		$query_cond  = '';
 
@@ -301,7 +297,12 @@ class TableManager implements Loadie {
 			$query_cond .= ' WHERE id = 0';
 		}
 
+		// Execute the following `if` conditions only when $data is array.
+
 		if ( array_key_exists( 'to', $data ) ) {
+			// Since the value is stored as CSV in DB, convert the values from error data to CSV to compare.
+			$data['to'] = Util\join_array_elements_with_delimiter( $data['to'] );
+
 			$to_email   = trim( esc_sql( $data['to'] ) );
 			$query_cond .= " WHERE to_email = '$to_email'";
 		}
