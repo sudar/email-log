@@ -276,7 +276,7 @@ class TableManager implements Loadie {
 	 *
 	 * Use this method to get the log item when the error instance only returns the log item data.
 	 *
-	 * @param array $data {
+	 * @param array $data Array of Email information. {
 	 *      @type string|array to
 	 *      @type string       subject
 	 *      @type string       message
@@ -298,7 +298,6 @@ class TableManager implements Loadie {
 		}
 
 		// Execute the following `if` conditions only when $data is array.
-
 		if ( array_key_exists( 'to', $data ) ) {
 			// Since the value is stored as CSV in DB, convert the values from error data to CSV to compare.
 			$data['to'] = Util\join_array_elements_with_delimiter( $data['to'] );
