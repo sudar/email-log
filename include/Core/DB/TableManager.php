@@ -349,14 +349,10 @@ class TableManager implements Loadie {
 
 		$wpdb->update(
 			$table_name,
-			array(
-				'result' => '0',
-			),
+			array( 'result' => '0', ),
 			array( 'ID' => $log_item_id ),
-			array(
-				'%d', // VALUE format.
-			),
-			array( '%d' ) // WHERE format.
+			array( '%d' ),
+			array( '%d' )
 		);
 	}
 
