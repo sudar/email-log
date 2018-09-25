@@ -288,16 +288,16 @@ class TableManager implements Loadie {
 	 * @return int
 	 */
 	public function fetch_log_item_by_item_data( $data ) {
+		if ( empty( $data ) || ! is_array( $data ) ) {
+			return 0;
+		}
+
 		global $wpdb;
 		$table_name = $this->get_log_table_name();
 
 		$query      = "SELECT ID FROM {$table_name}";
 		$query_cond = '';
 		$where      = array();
-
-		if ( empty( $data ) || ! is_array( $data ) ) {
-			$where[] = 'id = 0';
-		}
 
 		// Execute the following `if` conditions only when $data is array.
 		if ( array_key_exists( 'to', $data ) ) {

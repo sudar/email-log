@@ -116,6 +116,7 @@ class EmailLogger implements Loadie {
 
 		// @see wp-includes/pluggable.php#484
 		$log_item_id = $email_log->table_manager->fetch_log_item_by_item_data( $mail_error_data );
+		// Empty will handle 0 and return FALSE.
 		if ( empty( $log_item_id ) ) {
 			return;
 		}
