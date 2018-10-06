@@ -402,9 +402,9 @@ class TableManager implements Loadie {
 				sent_date timestamp NOT NULL,
 				attachment_name VARCHAR(1000),
 				ip_address VARCHAR(15),
-				result TINYINT(1)
+				result TINYINT(1),
 				PRIMARY KEY  (id)
-			) ' . $charset_collate . ' ;';
+			) ' . $charset_collate . ';';
 
 		return $sql;
 	}
