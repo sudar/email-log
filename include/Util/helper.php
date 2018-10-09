@@ -150,4 +150,5 @@ function render_auto_delete_logs_next_run_schedule() {
 		</p>
 	<?php endif; ?>
 	<?php
+
 }
