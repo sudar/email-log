@@ -1,6 +1,7 @@
 <?php namespace EmailLog\Core\UI\Component;
 
 use EmailLog\Core\Loadie;
+use EmailLog\Util;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
@@ -43,12 +44,7 @@ class DashboardWidget implements Loadie {
 			<?php _e( 'Total number of emails logged' , 'email-log' ); ?>: <strong><?php echo number_format( absint( $logs_count ), 0, ',', ',' ); ?></strong>
 		</p>
 
-		<?php if ( wp_next_scheduled( 'el_scheduled_delete_logs' ) ) : ?>
-			<p>
-				<?php _e( 'Auto delete logs cron will be triggered next at', 'email-log' ); ?>:
-				<strong><?php echo get_date_from_gmt( date( 'Y-m-d H:i:s', wp_next_scheduled( 'el_scheduled_delete_logs' ) ), 'M d, g:i A' ); ?></strong>
-			</p>
-		<?php endif; ?>
+		<?php Util\render_auto_delete_logs_next_run_schedule(); ?>
 
 		<ul class="subsubsub" style="float: none">
 			<li><?php printf( __( '<a href="%s">Email Logs</a>', 'email-log' ), 'admin.php?page=email-log' ); ?> <span style="color: #ddd"> | </span></li>
