@@ -13,6 +13,7 @@ class EmailLogger implements Loadie {
 	 */
 	public function load() {
 		add_filter( 'wp_mail', array( $this, 'log_email' ) );
+		add_action( 'wp_mail_failed', array( $this, 'update_email_fail_status' ) );
 	}
 
 	/**
@@ -91,5 +92,35 @@ class EmailLogger implements Loadie {
 		do_action( 'el_email_log_inserted', $data );
 
 		return $mail_info;
+	}
+
+	/**
+	 * Updates the failed email in the DB.
+	 *
+	 * @since 2.3.0
+	 *
+	 * @param \WP_Error $wp_error The error instance.
+	 */
+	public function update_email_fail_status( $wp_error ) {
+		if ( ! ( $wp_error instanceof \WP_Error ) ) {
+			return;
+		}
+
+		$email_log       = email_log();
+		$mail_error_data = $wp_error->get_error_data( 'wp_mail_failed' );
+
+		// $mail_error_data can be of type mixed.
+		if ( ! is_array( $mail_error_data ) ) {
+			return;
+		}
+
+		// @see wp-includes/pluggable.php#484
+		$log_item_id = $email_log->table_manager->fetch_log_item_by_item_data( $mail_error_data );
+		// Empty will handle 0 and return FALSE.
+		if ( empty( $log_item_id ) ) {
+			return;
+		}
+
+		$email_log->table_manager->set_log_item_fail_status_by_id( $log_item_id );
 	}
 }

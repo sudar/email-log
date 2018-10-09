@@ -66,7 +66,7 @@ class SystemInfo {
 		<textarea wrap="off" readonly="readonly" name="<?php echo esc_attr( $this->plugin_slug ); ?>-system-info"
 		          style="font-family:Menlo,Monaco,monospace; white-space:pre; width:100%; height:500px;" onclick="this.focus();this.select()"
 		          title="<?php _e( 'To copy the system info, click below then press Ctrl + C (PC) or Cmd + C (Mac).', 'email-log' ); ?>">
-### Begin System Info ###
+### Begin System Info (Generated <?php echo date( 'Y-m-d H:i:s') ?>) ###
 
 <?php
 /**
@@ -77,21 +77,43 @@ class SystemInfo {
  * @param string $plugin_name Plugin slug.
  */
 do_action( 'system_info_before', $this->plugin_slug );
+$locale = get_locale();
 ?>
 
+-- Site Info
+
+Site URL:                 <?php echo site_url() . "\n"; ?>
+Home URL:                 <?php echo home_url() . "\n"; ?>
 Multisite:                <?php echo is_multisite() ? 'Yes' . "\n" : 'No' . "\n"; ?>
 
-SITE_URL:                 <?php echo site_url() . "\n"; ?>
-HOME_URL:                 <?php echo home_url() . "\n"; ?>
-Browser:                  <?php echo esc_html( $_SERVER['HTTP_USER_AGENT'] ), "\n"; ?>
-
-Permalink Structure:      <?php echo get_option( 'permalink_structure' ) . "\n"; ?>
-Active Theme:             <?php echo $this->get_current_theme_name() . "\n"; ?>
 <?php
 $host = $this->identify_host();
 if ( ! empty( $host ) ) : ?>
-Host:                     <?php echo $host . "\n\n"; ?>
+-- Hosting Provider
+
+Host:                     <?php echo $host . "\n"; ?>
 <?php endif; ?>
+-- User Browser
+
+Platform:                 <?php echo php_uname('s') . "\n"; ?>
+User Agent String:        <?php echo esc_html( $_SERVER['HTTP_USER_AGENT'] ), "\n"; ?>
+
+-- WordPress Configuration:
+
+Version:                  <?php echo get_bloginfo( 'version' ) . "\n"; ?>
+Language:                 <?php ( ! empty( $locale ) ? $locale : 'en_US' ) . "\n"; ?>
+Permalink Structure:      <?php echo get_option( 'permalink_structure' ) . "\n"; ?>
+Active Theme:             <?php echo $this->get_current_theme_name() . "\n"; ?>
+ABSPATH:                  <?php echo ABSPATH . "\n"; ?>
+WP Table Prefix:          <?php echo $wpdb->prefix, "\n"; ?>
+WP_DEBUG:                 <?php echo defined( 'WP_DEBUG' ) ? WP_DEBUG ? 'Enabled' . "\n" : 'Disabled' . "\n" : 'Not set' . "\n"; ?>
+Memory Limit:             <?php echo WP_MEMORY_LIMIT; ?><?php echo "\n"; ?>
+Memory Max Limit:         <?php echo WP_MAX_MEMORY_LIMIT; ?><?php echo "\n"; ?>
+WP_SCRIPT_DEBUG:          <?php echo defined( 'WP_SCRIPT_DEBUG' ) ? WP_SCRIPT_DEBUG ? 'Enabled' . "\n" : 'Disabled' . "\n" : 'Not set' . "\n"; ?>
+GMT Offset:               <?php echo esc_html( get_option( 'gmt_offset' ) ), "\n"; ?>
+DISABLE_WP_CRON:          <?php echo defined( 'DISABLE_WP_CRON' ) ? DISABLE_WP_CRON ? 'Yes' . "\n" : 'No' . "\n" : 'Not set' . "\n"; ?>
+WP_CRON_LOCK_TIMEOUT:     <?php echo defined( 'WP_CRON_LOCK_TIMEOUT' ) ? WP_CRON_LOCK_TIMEOUT : 'Not set', "\n"; ?>
+EMPTY_TRASH_DAYS:         <?php echo defined( 'EMPTY_TRASH_DAYS' ) ? EMPTY_TRASH_DAYS : 'Not set', "\n"; ?>
 
 <?php if ( $this->config['show_post_types'] ) : ?>
 <?php $post_types = get_post_types(); ?>
@@ -115,35 +137,47 @@ foreach ( $post_types as $post_type ) {
 <?php $taxonomies = get_taxonomies(); ?>
 Registered Taxonomies:    <?php echo implode( ', ', $taxonomies ) . "\n"; ?>
 <?php endif; ?>
+<?php if ( $this->config['show_plugins'] ) : ?>
+-- WordPress Active Plugins
 
-WordPress Version:        <?php echo get_bloginfo( 'version' ) . "\n"; ?>
+<?php $this->print_current_plugins(); ?>
+<?php endif;?>
+
+<?php if ( $this->config['show_network_plugins'] ) : ?>
+<?php if ( is_multisite() ) : ?>
+-- Network Active Plugins
+
+<?php $this->print_network_active_plugins(); ?>
+<?php endif;?>
+<?php endif;?>
+-- Webserver Configuration
+
 PHP Version:              <?php echo PHP_VERSION . "\n"; ?>
 MySQL Version:            <?php echo $wpdb->db_version() . "\n"; ?>
 Web Server Info:          <?php echo $_SERVER['SERVER_SOFTWARE'] . "\n"; ?>
 
-WordPress Memory Limit:   <?php echo WP_MEMORY_LIMIT; ?><?php echo "\n"; ?>
-WordPress Max Limit:      <?php echo WP_MAX_MEMORY_LIMIT; ?><?php echo "\n"; ?>
+-- PHP Configuration
+
 PHP Memory Limit:         <?php echo ini_get( 'memory_limit' ) . "\n"; ?>
-
 SAVEQUERIES:              <?php echo defined( 'SAVEQUERIES' ) ? SAVEQUERIES ? 'Enabled' . "\n" : 'Disabled' . "\n" : 'Not set' . "\n"; ?>
-WP_DEBUG:                 <?php echo defined( 'WP_DEBUG' ) ? WP_DEBUG ? 'Enabled' . "\n" : 'Disabled' . "\n" : 'Not set' . "\n"; ?>
-WP_SCRIPT_DEBUG:          <?php echo defined( 'WP_SCRIPT_DEBUG' ) ? WP_SCRIPT_DEBUG ? 'Enabled' . "\n" : 'Disabled' . "\n" : 'Not set' . "\n"; ?>
-
-GMT Offset:               <?php echo esc_html( get_option( 'gmt_offset' ) ), "\n\n"; ?>
-DISABLE_WP_CRON:          <?php echo defined( 'DISABLE_WP_CRON' ) ? DISABLE_WP_CRON ? 'Yes' . "\n" : 'No' . "\n" : 'Not set' . "\n"; ?>
-WP_CRON_LOCK_TIMEOUT:     <?php echo defined( 'WP_CRON_LOCK_TIMEOUT' ) ? WP_CRON_LOCK_TIMEOUT : 'Not set', "\n"; ?>
-EMPTY_TRASH_DAYS:         <?php echo defined( 'EMPTY_TRASH_DAYS' ) ? EMPTY_TRASH_DAYS : 'Not set', "\n"; ?>
-
 PHP Safe Mode:            <?php echo ini_get( 'safe_mode' ) ? 'Yes' : 'No', "\n"; // phpcs:ignore PHPCompatibility.PHP.DeprecatedIniDirectives.safe_modeDeprecatedRemoved?>
 PHP Upload Max Size:      <?php echo ini_get( 'upload_max_filesize' ) . "\n"; ?>
 PHP Post Max Size:        <?php echo ini_get( 'post_max_size' ) . "\n"; ?>
 PHP Upload Max Filesize:  <?php echo ini_get( 'upload_max_filesize' ) . "\n"; ?>
 PHP Time Limit:           <?php echo ini_get( 'max_execution_time' ) . "\n"; ?>
 PHP Max Input Vars:       <?php echo ini_get( 'max_input_vars' ) . "\n"; // phpcs:ignore PHPCompatibility.PHP.NewIniDirectives.max_input_varsFound?>
+Display Errors:           <?php echo ( ini_get( 'display_errors' ) ) ? 'On (' . ini_get( 'display_errors' ) . ')' : 'N/A'; ?><?php echo "\n"; ?>
 PHP Arg Separator:        <?php echo ini_get( 'arg_separator.output' ) . "\n"; ?>
 PHP Allow URL File Open:  <?php echo ini_get( 'allow_url_fopen' ) ? 'Yes' : 'No', "\n"; ?>
 
-WP Table Prefix:          <?php echo $wpdb->prefix, "\n"; ?>
+-- PHP Extensions
+
+fsockopen:                <?php echo ( function_exists( 'fsockopen' ) ) ? 'Your server supports fsockopen.' : 'Your server does not support fsockopen.'; ?><?php echo "\n"; ?>
+cURL:                     <?php echo ( function_exists( 'curl_init' ) ) ? 'Your server supports cURL.' : 'Your server does not support cURL.'; ?><?php echo "\n"; ?>
+SOAP Client:              <?php echo ( class_exists( 'SoapClient' ) ) ? 'Your server has the SOAP Client enabled.' : 'Your server does not have the SOAP Client enabled.'; ?><?php echo "\n"; ?>
+SUHOSIN:                  <?php echo ( extension_loaded( 'suhosin' ) ) ? 'Your server has SUHOSIN installed.' : 'Your server does not have SUHOSIN installed.'; ?><?php echo "\n"; ?>
+
+-- Session Configuration
 
 Session:                  <?php echo isset( $_SESSION ) ? 'Enabled' : 'Disabled'; ?><?php echo "\n"; ?>
 Session Name:             <?php echo esc_html( ini_get( 'session.name' ) ); ?><?php echo "\n"; ?>
@@ -151,26 +185,6 @@ Cookie Path:              <?php echo esc_html( ini_get( 'session.cookie_path' ) 
 Save Path:                <?php echo esc_html( ini_get( 'session.save_path' ) ); ?><?php echo "\n"; ?>
 Use Cookies:              <?php echo ini_get( 'session.use_cookies' ) ? 'On' : 'Off'; ?><?php echo "\n"; ?>
 Use Only Cookies:         <?php echo ini_get( 'session.use_only_cookies' ) ? 'On' : 'Off'; ?><?php echo "\n"; ?>
-
-DISPLAY ERRORS:           <?php echo ( ini_get( 'display_errors' ) ) ? 'On (' . ini_get( 'display_errors' ) . ')' : 'N/A'; ?><?php echo "\n"; ?>
-FSOCKOPEN:                <?php echo ( function_exists( 'fsockopen' ) ) ? 'Your server supports fsockopen.' : 'Your server does not support fsockopen.'; ?><?php echo "\n"; ?>
-cURL:                     <?php echo ( function_exists( 'curl_init' ) ) ? 'Your server supports cURL.' : 'Your server does not support cURL.'; ?><?php echo "\n"; ?>
-SOAP Client:              <?php echo ( class_exists( 'SoapClient' ) ) ? 'Your server has the SOAP Client enabled.' : 'Your server does not have the SOAP Client enabled.'; ?><?php echo "\n"; ?>
-SUHOSIN:                  <?php echo ( extension_loaded( 'suhosin' ) ) ? 'Your server has SUHOSIN installed.' : 'Your server does not have SUHOSIN installed.'; ?><?php echo "\n"; ?>
-
-<?php if ( $this->config['show_plugins'] ) : ?>
-ACTIVE PLUGINS:
-
-<?php $this->print_current_plugins(); ?>
-<?php endif;?>
-
-<?php if ( $this->config['show_network_plugins'] ) : ?>
-<?php if ( is_multisite() ) : ?>
-NETWORK ACTIVE PLUGINS:
-
-<?php $this->print_network_active_plugins(); ?>
-<?php endif;?>
-<?php endif;?>
 
 <?php
 /**

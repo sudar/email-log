@@ -4,6 +4,7 @@
  * Handle installation and db table creation.
  */
 use EmailLog\Core\Loadie;
+use EmailLog\Util;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
@@ -271,6 +272,91 @@ class TableManager implements Loadie {
 	}
 
 	/**
+	 * Fetches the log item by the item data.
+	 *
+	 * Use this method to get the log item when the error instance only returns the log item data.
+	 *
+	 * @param array $data Array of Email information. {
+	 *
+	 * @type array|string to
+	 * @type string       subject
+	 * @type string       message
+	 * @type array|string headers
+	 * @type array|string attachments
+	 *                    }
+	 *
+	 * @return int
+	 */
+	public function fetch_log_item_by_item_data( $data ) {
+		if ( empty( $data ) || ! is_array( $data ) ) {
+			return 0;
+		}
+
+		global $wpdb;
+		$table_name = $this->get_log_table_name();
+
+		$query      = "SELECT ID FROM {$table_name}";
+		$query_cond = '';
+		$where      = array();
+
+		// Execute the following `if` conditions only when $data is array.
+		if ( array_key_exists( 'to', $data ) ) {
+			// Since the value is stored as CSV in DB, convert the values from error data to CSV to compare.
+			$data['to'] = Util\join_array_elements_with_delimiter( $data['to'] );
+
+			$to_email = trim( esc_sql( $data['to'] ) );
+			$where[]  = "to_email = '$to_email'";
+		}
+
+		if ( array_key_exists( 'subject', $data ) ) {
+			$subject = trim( esc_sql( $data['subject'] ) );
+			$where[] = "subject = '$subject'";
+		}
+
+		if ( array_key_exists( 'attachments', $data ) ) {
+			if ( is_array( $data['attachments'] ) ) {
+				$attachments = count( $data['attachments'] ) > 0 ? 'true' : 'false';
+			} else {
+				$attachments = empty( $data['attachments'] ) ? 'false' : 'true';
+			}
+			$attachments = trim( esc_sql( $attachments ) );
+			$where[]     = "attachments = '$attachments'";
+		}
+
+		foreach ( $where as $index => $value ) {
+			$query_cond .= 0 === $index ? ' WHERE ' : ' AND ';
+			$query_cond .= $value;
+		}
+
+		// Get only the latest logged item when multiple rows match.
+		$query_cond .= ' ORDER BY id DESC LIMIT 1';
+
+		$query = $query . $query_cond;
+
+		return absint( $wpdb->get_var( $query ) );
+	}
+
+	/**
+	 * Sets email sent status as failed for the given log item.
+	 *
+	 * @since 2.3.0
+	 *
+	 * @param int $log_item_id ID of the log item whose email sent status should be set to failed.
+	 */
+	public function set_log_item_fail_status_by_id( $log_item_id ) {
+		global $wpdb;
+		$table_name = $this->get_log_table_name();
+
+		$wpdb->update(
+			$table_name,
+			array( 'result' => '0' ),
+			array( 'ID'     => $log_item_id ),
+			array( '%d' ),
+			array( '%d' )
+		);
+	}
+
+	/**
 	 * Updates the DB schema.
 	 *
 	 * Adds new columns to the Database as of v0.2.
@@ -316,9 +402,9 @@ class TableManager implements Loadie {
 				sent_date timestamp NOT NULL,
 				attachment_name VARCHAR(1000),
 				ip_address VARCHAR(15),
-				result TINYINT(1)
+				result TINYINT(1),
 				PRIMARY KEY  (id)
-			) ' . $charset_collate . ' ;';
+			) ' . $charset_collate . ';';
 
 		return $sql;
 	}
