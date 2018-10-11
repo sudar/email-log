@@ -106,6 +106,10 @@ class LogListAction implements Loadie {
 	 * @param array $data Request data.
 	 */
 	public function delete_logs( $data ) {
+		if ( ! is_array( $data ) || ! array_key_exists( 'email-log', $data ) ) {
+			return;
+		}
+
 		$ids = $data['email-log'];
 
 		if ( ! is_array( $ids ) ) {
