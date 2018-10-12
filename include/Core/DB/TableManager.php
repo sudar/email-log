@@ -408,4 +408,29 @@ class TableManager implements Loadie {
 
 		return $sql;
 	}
+
+	/**
+	 * Fetch log item by ID.
+	 *
+	 * @param array $ids Optional. Array of IDs of the log items to be retrieved.
+	 *
+	 * @return array Log item(s).
+	 */
+	public function fetch_log_items_by_id_with_custom_date_format( $ids = array(), $date_format ) {
+		global $wpdb;
+		$table_name = $this->get_log_table_name();
+
+		$query = "SELECT DATE_FORMAT(sent_date, \"{$date_format}\") as sent_date_custom, el.* FROM {$table_name} as el";
+
+		if ( ! empty( $ids ) ) {
+			$ids = array_map( 'absint', $ids );
+
+			// Can't use wpdb->prepare for the below query. If used it results in this bug https://github.com/sudar/email-log/issues/13.
+			$ids_list = esc_sql( implode( ',', $ids ) );
+
+			$query .= " where id IN ( {$ids_list} )";
+		}
+
+		return $wpdb->get_results( $query, 'ARRAY_A' ); //@codingStandardsIgnoreLine
+	}
 }
