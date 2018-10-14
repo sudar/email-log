@@ -25,6 +25,19 @@ class TableManager implements Loadie {
 	const DB_VERSION = '0.2';
 
 	/**
+	 * The format of the Date column used when fetching the log items.
+	 *
+	 * @since 2.3.0
+	 *
+	 * @var string $date_column_format
+	 */
+	private $date_column_format;
+
+	public function set_date_column_format( $format ) {
+		$this->date_column_format = $format;
+	}
+
+	/**
 	 * Setup hooks.
 	 */
 	public function load() {
@@ -166,6 +179,11 @@ class TableManager implements Loadie {
 		$table_name = $this->get_log_table_name();
 
 		$query = "SELECT * FROM {$table_name}";
+
+		// When `$this->date_column_format` exists, should replace the `$query` var.
+		if ( ! empty( $this->date_column_format ) ) {
+			$query = "SELECT DATE_FORMAT(sent_date, \"{$this->date_column_format}\") as sent_date_custom, el.* FROM {$table_name} as el";
+		}
 
 		if ( ! empty( $ids ) ) {
 			$ids = array_map( 'absint', $ids );
