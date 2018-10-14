@@ -29,7 +29,7 @@ class TableManager implements Loadie {
 	 *
 	 * @since 2.3.0
 	 *
-	 * @var string $date_column_format
+	 * @var string
 	 */
 	private $date_column_format;
 
