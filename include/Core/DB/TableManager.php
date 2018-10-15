@@ -33,6 +33,13 @@ class TableManager implements Loadie {
 	 */
 	private $date_column_format;
 
+	/**
+	 * Setter for `$date_column_format`
+	 *
+	 * @since 2.3.0
+	 *
+	 * @param string $format
+	 */
 	public function set_date_column_format( $format ) {
 		$this->date_column_format = $format;
 	}
