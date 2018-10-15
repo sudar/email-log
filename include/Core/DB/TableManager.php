@@ -34,7 +34,7 @@ class TableManager implements Loadie {
 	private $date_column_format;
 
 	/**
-	 * Setter for `$date_column_format`
+	 * Setter for `$date_column_format`.
 	 *
 	 * @since 2.3.0
 	 *
