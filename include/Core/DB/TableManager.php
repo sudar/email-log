@@ -157,13 +157,13 @@ class TableManager implements Loadie {
 	/**
 	 * Fetch log item by ID.
 	 *
-	 * @param array $ids                Optional. Array of IDs of the log items to be retrieved.
-	 * @param array $additional_args    {
-	 *                                  Optional. Array of additional args.
+	 * @param array $ids             Optional. Array of IDs of the log items to be retrieved.
+	 * @param array $additional_args {
+	 *                               Optional. Array of additional args.
 	 *
 	 * @type string $date_column_format MySQL date column format. Refer
 	 *
-	 *                                  @link  https://dev.mysql.com/doc/refman/5.5/en/date-and-time-functions.html#function_date-format
+	 * @link  https://dev.mysql.com/doc/refman/5.5/en/date-and-time-functions.html#function_date-format
 	 * }
 	 *
 	 * @return array Log item(s).
