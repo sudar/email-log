@@ -162,6 +162,7 @@ class TableManager implements Loadie {
 	 *                                  Optional. Array of additional args.
 	 *
 	 * @type string $date_column_format MySQL date column format. Refer
+	 *
 	 *                                  @link  https://dev.mysql.com/doc/refman/5.5/en/date-and-time-functions.html#function_date-format
 	 * }
 	 *
