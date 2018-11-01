@@ -157,15 +157,28 @@ class TableManager implements Loadie {
 	/**
 	 * Fetch log item by ID.
 	 *
-	 * @param array $ids Optional. Array of IDs of the log items to be retrieved.
+	 * @param array $ids             Optional. Array of IDs of the log items to be retrieved.
+	 * @param array $additional_args {
+	 *                               Optional. Array of additional args.
+	 *
+	 * @type string $date_column_format MySQL date column format. Refer
+	 *
+	 * @link  https://dev.mysql.com/doc/refman/5.5/en/date-and-time-functions.html#function_date-format
+	 * }
 	 *
 	 * @return array Log item(s).
 	 */
-	public function fetch_log_items_by_id( $ids = array() ) {
+	public function fetch_log_items_by_id( $ids = array(), $additional_args = array() ) {
 		global $wpdb;
 		$table_name = $this->get_log_table_name();
 
 		$query = "SELECT * FROM {$table_name}";
+
+		// When `date_column_format` exists, should replace the `$query` var.
+		$date_column_format_key = 'date_column_format';
+		if ( array_key_exists( $date_column_format_key, $additional_args ) && ! empty( $additional_args[ $date_column_format_key ] ) ) {
+			$query = "SELECT DATE_FORMAT(sent_date, \"{$additional_args[ $date_column_format_key ]}\") as sent_date_custom, el.* FROM {$table_name} as el";
+		}
 
 		if ( ! empty( $ids ) ) {
 			$ids = array_map( 'absint', $ids );
