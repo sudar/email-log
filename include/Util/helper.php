@@ -129,7 +129,7 @@ function join_array_elements_with_delimiter( $value, $delimiter = ',' ) {
 		return implode( $delimiter, $value );
 	}
 
-	return $value;
+	return is_string( $value ) ? $value : '';
 }
 
 /**
