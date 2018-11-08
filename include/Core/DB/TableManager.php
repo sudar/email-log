@@ -209,7 +209,7 @@ class TableManager implements Loadie {
 		$count_query = 'SELECT count(*) FROM ' . $table_name;
 		$query_cond  = '';
 
-		if ( isset( $request['s'] ) && $request['s'] !== '' ) {
+		if ( isset( $request['s'] ) && is_string( $request['s'] ) && $request['s'] !== '' ) {
 			$search_term = trim( esc_sql( $request['s'] ) );
 			$query_cond .= " WHERE ( to_email LIKE '%$search_term%' OR subject LIKE '%$search_term%' ) ";
 		}
@@ -407,8 +407,8 @@ class TableManager implements Loadie {
 
 		$sql = 'CREATE TABLE ' . $table_name . ' (
 				id mediumint(9) NOT NULL AUTO_INCREMENT,
-				to_email VARCHAR(250) NOT NULL,
-				subject VARCHAR(250) NOT NULL,
+				to_email VARCHAR(500) NOT NULL,
+				subject VARCHAR(500) NOT NULL,
 				message TEXT NOT NULL,
 				headers TEXT NOT NULL,
 				attachments TEXT NOT NULL,
