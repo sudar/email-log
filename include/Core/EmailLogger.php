@@ -49,8 +49,9 @@ class EmailLogger implements Loadie {
 			'headers'     => '',
 		) );
 
+		// ! empty() check on attachments handles both empty string and empty array.
 		$data = array(
-			'attachments'     => ( count( $mail_info['attachments'] ) > 0 ) ? 'true' : 'false',
+			'attachments'     => ( ! empty( $mail_info['attachments'] ) ) ? 'true' : 'false',
 			'to_email'        => is_array( $mail_info['to'] ) ? implode( ',', $mail_info['to'] ) : $mail_info['to'],
 			'subject'         => $mail_info['subject'],
 			'headers'         => is_array( $mail_info['headers'] ) ? implode( "\n", $mail_info['headers'] ) : $mail_info['headers'],
