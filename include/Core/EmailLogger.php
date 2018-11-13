@@ -64,7 +64,7 @@ class EmailLogger implements Loadie {
 		$to = '';
 		if ( empty( $mail_info['to'] ) ) {
 			$to = '';
-		} else if ( is_array( $mail_info['to'] ) ) {
+		} elseif ( is_array( $mail_info['to'] ) ) {
 			$to = implode( ',', $mail_info['to'] );
 		} else {
 			$to = $mail_info['to'];
