@@ -52,7 +52,6 @@ class EmailLogger implements Loadie {
 		// ! empty() check on attachments handles both empty string and empty array.
 		$data = array(
 			'attachments'     => ( ! empty( $mail_info['attachments'] ) ) ? 'true' : 'false',
-			'to_email'        => is_array( $mail_info['to'] ) ? implode( ',', $mail_info['to'] ) : $mail_info['to'],
 			'subject'         => $mail_info['subject'],
 			'headers'         => is_array( $mail_info['headers'] ) ? implode( "\n", $mail_info['headers'] ) : $mail_info['headers'],
 			'sent_date'       => current_time( 'mysql' ),
@@ -61,6 +60,17 @@ class EmailLogger implements Loadie {
 			'ip_address'      => $_SERVER['REMOTE_ADDR'],
 			'result'          => 1,
 		);
+
+		$to = '';
+		if ( empty( $mail_info['to'] ) ) {
+			$to = '';
+		} else if ( is_array( $mail_info['to'] ) ) {
+			$to = implode( ',', $mail_info['to'] );
+		} else {
+			$to = $mail_info['to'];
+		}
+
+		$data['to_email'] = $to;
 
 		$message = '';
 
