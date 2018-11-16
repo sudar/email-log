@@ -97,7 +97,7 @@ class AddonList {
 	 *
 	 * @return Addon[] List of add-ons, empty array if API call fails.
 	 */
-	protected function get_addons() {
+	public function get_addons() {
 		$json = get_transient( self::CACHE_KEY );
 		if ( false === $json ) {
 			$response = wp_remote_get( $this->get_api_url() );

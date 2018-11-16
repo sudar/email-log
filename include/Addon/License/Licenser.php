@@ -312,4 +312,13 @@ final class Licenser implements Loadie {
 
 		return '';
 	}
+
+	/**
+	 * Return the bundle license.
+	 *
+	 * @return \EmailLog\Addon\License\BundleLicense|null Bundle license or null if no bundle license.
+	 */
+	public function get_bundle_license() {
+		return $this->bundle_license;
+	}
 }

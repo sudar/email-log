@@ -20,6 +20,8 @@ class SystemInfoPage extends BasePage {
 	const CAPABILITY = 'manage_email_logs';
 
 	/**
+	 * SystemInfo class.
+	 *
 	 * @var EmailLogSystemInfo
 	 */
 	protected $system_info;
