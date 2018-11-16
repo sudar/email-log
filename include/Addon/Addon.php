@@ -63,7 +63,7 @@ class Addon {
 		<div class="el-addon">
 			<h3 class="el-addon-title"> <?php echo esc_html( $this->name ); ?> </h3>
 
-			<a target="_blank" href="<?php echo esc_url( $this->link ); ?>?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=addon-grid&utm_content=<?php echo $this->name; ?>"
+			<a rel="noopener" target="_blank" href="<?php echo esc_url( $this->link ); ?>?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=addon-grid&utm_content=<?php echo $this->name; ?>"
 			   title="<?php echo esc_attr( $this->name ); ?>">
 				<img src="<?php echo esc_url( $this->thumbnail ); ?>" class="attachment-showcase wp-post-image"
 				     alt="<?php echo esc_attr( $this->name ); ?>" title="<?php echo esc_attr( $this->name ); ?>">
@@ -137,7 +137,7 @@ class Addon {
 		}
 
 		$actions .= sprintf(
-			' <a class="button button-secondary" target="_blank" onclick="%s" href="%s">%s</a>',
+			' <a class="button button-secondary" rel="noopener" target="_blank" onclick="%s" href="%s">%s</a>',
 			$this->get_download_button_js(),
 			$this->get_download_url(),
 			_x( 'Download', 'Download to your computer', 'email-log' )

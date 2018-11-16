@@ -75,7 +75,7 @@ class SystemInfoPage extends BasePage {
 			<?php if ( defined( 'DISABLE_WP_CRON' ) && DISABLE_WP_CRON ) : ?>
 				<div class="notice notice-warning">
 					<p><strong>
-						<?php printf( __( 'DISABLE_WP_CRON is <a href="%s" target="_blank">enabled</a>. This prevents scheduler from running.', 'email-log' ), 'https://codex.wordpress.org/Editing_wp-config.php#Disable_Cron_and_Cron_Timeout' ); ?>
+						<?php printf( __( 'DISABLE_WP_CRON is <a href="%s" rel="noopener" target="_blank">enabled</a>. This prevents scheduler from running.', 'email-log' ), 'https://codex.wordpress.org/Editing_wp-config.php#Disable_Cron_and_Cron_Timeout' ); ?>
 					</strong></p>
 				</div>
 			<?php endif; ?>
