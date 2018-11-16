@@ -13,9 +13,8 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
  *
  * Uses the WPSystemInfo library.
  *
- * @link https://github.com/sudar/wp-system-info
- *
  * @since 2.3.0
+ * @link https://github.com/sudar/wp-system-info
  */
 class EmailLogSystemInfo extends SystemInfo {
 
