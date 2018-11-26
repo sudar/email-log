@@ -28,10 +28,11 @@ class CoreSetting extends Setting {
 			'remove_on_uninstall'   => '',
 			'hide_dashboard_widget' => false,
 			'db_size_notification'  => array(
-				'notify'            => false,
-				'admin_email'       => '',
-				'logs_threshold'    => '',
-				'log_threshold_met' => false,
+				'notify'                    => false,
+				'admin_email'               => '',
+				'logs_threshold'            => '',
+				'log_threshold_met'         => false,
+				'threshold_email_last_sent' => false
 			),
 		);
 
@@ -272,6 +273,15 @@ class CoreSetting extends Setting {
 				); ?>
             </em>
         </p>
+		<?php if ( ! empty( $db_size_notification_data['threshold_email_last_sent'] ) ) : ?>
+            <p>
+				<?php printf(
+					__( 'Last notification email was sent on %1$s. Click %2$s button to reset sending the notification.', 'email-log' ),
+					'<strong>' . get_date_from_gmt( date( 'Y-m-d H:i:s', $db_size_notification_data['threshold_email_last_sent'] ), \EmailLog\Util\get_user_defined_date_time_format() ) . '</strong>',
+					'<b>Save</b>'
+				); ?>
+            </p>
+		<?php endif; ?>
 		<?php
 	}
 
@@ -331,6 +341,9 @@ class CoreSetting extends Setting {
 		}
 		if ( ! array_key_exists( 'log_threshold_met', $db_size_notification_data ) ) {
 			$db_size_notification_data['log_threshold_met'] = false;
+		}
+		if ( ! array_key_exists( 'threshold_email_last_sent', $db_size_notification_data ) ) {
+			$db_size_notification_data['threshold_email_last_sent'] = false;
 		}
 
 		return $db_size_notification_data;
@@ -448,6 +461,7 @@ EOT;
 			wp_mail( $admin_email, $subject, $message, $headers );
 
 			$setting_data[ $db_size_notification_key ]['log_threshold_met'] = true;
+			$setting_data[ $db_size_notification_key ]['threshold_email_last_sent'] = time();
 			\update_option( $this->section->option_name, $setting_data );
 		}
 	}
