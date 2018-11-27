@@ -32,7 +32,7 @@ class CoreSetting extends Setting {
 				'admin_email'               => '',
 				'logs_threshold'            => '',
 				'log_threshold_met'         => false,
-				'threshold_email_last_sent' => false
+				'threshold_email_last_sent' => false,
 			),
 		);
 
@@ -460,7 +460,7 @@ EOT;
 
 			wp_mail( $admin_email, $subject, $message, $headers );
 
-			$setting_data[ $db_size_notification_key ]['log_threshold_met'] = true;
+			$setting_data[ $db_size_notification_key ]['log_threshold_met']         = true;
 			$setting_data[ $db_size_notification_key ]['threshold_email_last_sent'] = time();
 			\update_option( $this->section->option_name, $setting_data );
 		}
