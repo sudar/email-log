@@ -193,7 +193,16 @@ class LogListTable extends \WP_List_Table {
 	 * @return string
 	 */
 	protected function column_to( $item ) {
-		return esc_html( $item->to_email );
+		/**
+		 * Filters the `To` field before outputting on the table.
+		 *
+		 * @since 2.3.0
+		 *
+		 * @param string $email `To` field
+		 */
+		$email = apply_filters( 'el_row_email', esc_html( $item->to_email ) );
+
+		return $email;
 	}
 
 	/**
