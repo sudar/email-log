@@ -223,6 +223,15 @@ class TableManager implements Loadie {
 			}
 		}
 
+		if ( isset( $request['to'] ) && is_string( $request['to'] ) && $request['to'] !== '' ) {
+			$search_term = trim( esc_sql( $request['to'] ) );
+			if ( '' === $query_cond ) {
+				$query_cond .= " WHERE ( to_email LIKE '%$search_term%') ";
+			} else {
+				$query_cond .= " AND ( to_email LIKE '%$search_term%') ";
+			}
+		}
+
 		// Ordering parameters.
 		$orderby = ! empty( $request['orderby'] ) ? esc_sql( $request['orderby'] ) : 'sent_date';
 		$order   = ! empty( $request['order'] ) ? esc_sql( $request['order'] ) : 'DESC';

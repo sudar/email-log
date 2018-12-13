@@ -166,7 +166,35 @@ function render_auto_delete_logs_next_run_schedule() {
 	<?php
 }
 
+/**
+ * Gets the Advanced search URL that the Email Log search Icon uses.
+ *
+ * @since 2.3.0
+ *
+ * @return string The URL.
+ */
 function get_advanced_search_url() {
 	$admin_url = get_admin_url( null, 'admin.php?page=email-log' );
-	return add_query_arg( 'el_as', 1, $admin_url );
+
+	return add_query_arg( array(
+		'action'                  => 'el-log-list-adv-search',
+		'el-log-list-nonce-field' => wp_create_nonce( 'el-log-list-nonce' ),
+	), $admin_url );
+}
+
+/**
+ * Gets the value by key from the array.
+ *
+ * If the key isn't found, then null is returned.
+ *
+ * @since 2.3.0
+ *
+ * @param array  $array
+ * @param string $key
+ * @param string $default Optional.
+ *
+ * @return null|mixed
+ */
+function el_array_get( $array, $key, $default = null ) {
+	return isset( $array[ $key ] ) ? $array[ $key ] : $default;
 }
