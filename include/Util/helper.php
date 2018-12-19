@@ -184,8 +184,8 @@ function get_advanced_search_url() {
  *
  * @since 2.3.0
  *
- * @param array  $array
- * @param string $key
+ * @param array  $array   The actual array.
+ * @param string $key     The key whose value is to be retrieved.
  * @param string $default Optional.
  *
  * @return null|mixed
@@ -197,7 +197,7 @@ function el_array_get( $array, $key, $default = null ) {
 /**
  * Returns TRUE if the given search term is Advanced Search Term
  *
- * @param $term
+ * @param string $term Search Term.
  *
  * @return bool
  */
@@ -226,7 +226,7 @@ function is_advanced_search_term( $term ) {
  *
  * @since 2.3.0
  *
- * @param string $term
+ * @param string $term Search Term.
  *
  * @return array
  */
