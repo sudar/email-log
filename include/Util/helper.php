@@ -174,12 +174,7 @@ function render_auto_delete_logs_next_run_schedule() {
  * @return string The URL.
  */
 function get_advanced_search_url() {
-	$admin_url = get_admin_url( null, 'admin.php?page=email-log' );
-
-	return add_query_arg( array(
-		'action'                  => 'el-log-list-adv-search',
-		'el-log-list-nonce-field' => wp_create_nonce( 'el-log-list-nonce' ),
-	), $admin_url );
+	return get_admin_url( null, 'admin.php?page=email-log' );
 }
 
 /**
