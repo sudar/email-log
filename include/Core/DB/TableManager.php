@@ -218,10 +218,10 @@ class TableManager implements Loadie {
 				foreach ( $predicates as $column => $email ) {
 					switch ( $column ) {
 						case 'to':
-							$query_cond .= ( empty( $query_cond ) ? " WHERE " : " AND " ) . "to_email LIKE '%$email%'";
+							$query_cond .= ( empty( $query_cond ) ? ' WHERE ' : ' AND ' ) . "to_email LIKE '%$email%'";
 							break;
 						case 'email':
-							$query_cond .= ( empty( $query_cond ) ? " WHERE " : " AND " ) . "( to_email LIKE '%$email%' OR subject LIKE '%$email%' ) ";
+							$query_cond .= ( empty( $query_cond ) ? ' WHERE ' : ' AND ' ) . "( to_email LIKE '%$email%' OR subject LIKE '%$email%' ) ";
 							break;
 					}
 				}
