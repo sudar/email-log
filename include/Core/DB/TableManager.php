@@ -211,7 +211,24 @@ class TableManager implements Loadie {
 
 		if ( isset( $request['s'] ) && is_string( $request['s'] ) && $request['s'] !== '' ) {
 			$search_term = trim( esc_sql( $request['s'] ) );
-			$query_cond .= " WHERE ( to_email LIKE '%$search_term%' OR subject LIKE '%$search_term%' ) ";
+
+			if ( Util\is_advanced_search_term( $search_term ) ) {
+				$predicates = Util\get_advanced_search_term_predicates( $search_term );
+
+				foreach ( $predicates as $column => $email ) {
+					switch ( $column ) {
+						case 'to':
+							$query_cond .= ( empty( $query_cond ) ? " WHERE " : " AND " ) . "to_email LIKE '%$email%'";
+							break;
+						case 'email':
+							$query_cond .= ( empty( $query_cond ) ? " WHERE " : " AND " ) . "( to_email LIKE '%$email%' OR subject LIKE '%$email%' ) ";
+							break;
+					}
+				}
+
+			} else {
+				$query_cond .= " WHERE ( to_email LIKE '%$search_term%' OR subject LIKE '%$search_term%' ) ";
+			}
 		}
 
 		if ( isset( $request['d'] ) && $request['d'] !== '' ) {
@@ -220,15 +237,6 @@ class TableManager implements Loadie {
 				$query_cond .= " WHERE sent_date BETWEEN '$search_date 00:00:00' AND '$search_date 23:59:59' ";
 			} else {
 				$query_cond .= " AND sent_date BETWEEN '$search_date 00:00:00' AND '$search_date 23:59:59' ";
-			}
-		}
-
-		if ( isset( $request['to'] ) && is_string( $request['to'] ) && $request['to'] !== '' ) {
-			$search_term = trim( esc_sql( $request['to'] ) );
-			if ( '' === $query_cond ) {
-				$query_cond .= " WHERE ( to_email LIKE '%$search_term%') ";
-			} else {
-				$query_cond .= " AND ( to_email LIKE '%$search_term%') ";
 			}
 		}
 

@@ -193,3 +193,57 @@ function get_advanced_search_url() {
 function el_array_get( $array, $key, $default = null ) {
 	return isset( $array[ $key ] ) ? $array[ $key ] : $default;
 }
+
+/**
+ * Returns TRUE if the given search term is Advanced Search Term
+ *
+ * @param $term
+ *
+ * @return bool
+ */
+function is_advanced_search_term( $term ) {
+	if ( ! is_string( $term ) ) {
+		return false;
+	}
+
+	$predicates = get_advanced_search_term_predicates( $term );
+
+	return ! empty( $predicates );
+}
+
+/**
+ * Gets the Search Term Predicates.
+ *
+ * Example:
+ *
+ * If $term = to:admin@local.wordpress.test then,
+ *
+ * the output would be
+ *
+ * $output = array(
+ *      'to' => admin@local.wordpress.test
+ * )
+ *
+ * @since 2.3.0
+ *
+ * @param string $term
+ *
+ * @return array
+ */
+function get_advanced_search_term_predicates( $term ) {
+	if ( ! is_string( $term ) ) {
+		return array();
+	}
+
+	$predicates           = explode( ' ', $term );
+	$predicates_organized = array();
+
+	foreach ( $predicates as $predicate ) {
+		$is_match = preg_match( '/(email|to):(.*)$/', $predicate, $matches );
+		if ( 1 === $is_match ) {
+			$predicates_organized[ $matches[1] ] = $matches[2];
+		}
+	}
+
+	return $predicates_organized;
+}
