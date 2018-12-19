@@ -188,14 +188,14 @@ function get_advanced_search_url() {
  * @param string $key     The key whose value is to be retrieved.
  * @param string $default Optional.
  *
- * @return null|mixed
+ * @return mixed|null
  */
 function el_array_get( $array, $key, $default = null ) {
 	return isset( $array[ $key ] ) ? $array[ $key ] : $default;
 }
 
 /**
- * Returns TRUE if the given search term is Advanced Search Term
+ * Returns TRUE if the given search term is Advanced Search Term.
  *
  * @param string $term Search Term.
  *
