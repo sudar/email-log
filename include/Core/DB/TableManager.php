@@ -211,7 +211,68 @@ class TableManager implements Loadie {
 
 		if ( isset( $request['s'] ) && is_string( $request['s'] ) && $request['s'] !== '' ) {
 			$search_term = trim( esc_sql( $request['s'] ) );
-			$query_cond .= " WHERE ( to_email LIKE '%$search_term%' OR subject LIKE '%$search_term%' ) ";
+
+			if ( Util\is_advanced_search_term( $search_term ) ) {
+				$predicates = Util\get_advanced_search_term_predicates( $search_term );
+
+				foreach ( $predicates as $column => $email ) {
+					switch ( $column ) {
+						case 'to':
+							$query_cond .= empty( $query_cond ) ? ' WHERE ' : ' AND ';
+							$query_cond .= "to_email LIKE '%$email%'";
+							break;
+						case 'email':
+							$query_cond .= empty( $query_cond ) ? ' WHERE ' : ' AND ';
+							$query_cond .= ' ( '; /* Begin 1st */
+							$query_cond .= " ( to_email LIKE '%$email%' OR subject LIKE '%$email%' ) "; /* Begin 2nd & End 2nd */
+							$query_cond .= ' OR ';
+							$query_cond .= ' ( '; /* Begin 3rd */
+							$query_cond .= "headers <> ''";
+							$query_cond .= ' AND ';
+							$query_cond .= ' ( '; /* Begin 4th */
+							$query_cond .= "headers REGEXP '[F|f]rom:.*$email' OR ";
+							$query_cond .= "headers REGEXP '[CC|Cc|cc]:.*$email' OR ";
+							$query_cond .= "headers REGEXP '[BCC|Bcc|bcc]:.*$email' OR ";
+							$query_cond .= "headers REGEXP '[R|r]eply-[T|t]o:.*$email'";
+							$query_cond .= ' ) '; /* End 4th */
+							$query_cond .= ' ) '; /* End 3rd */
+							$query_cond .= ' ) '; /* End 1st */
+							break;
+						case 'cc':
+							$query_cond .= empty( $query_cond ) ? ' WHERE ' : ' AND ';
+							$query_cond .= ' ( '; /* Begin 1st */
+							$query_cond .= "headers <> ''";
+							$query_cond .= ' AND ';
+							$query_cond .= ' ( '; /* Begin 2nd */
+							$query_cond .= "headers REGEXP '[CC|Cc|cc]:.*$email' ";
+							$query_cond .= ' ) '; /* End 2nd */
+							$query_cond .= ' ) '; /* End 1st */
+							break;
+						case 'bcc':
+							$query_cond .= empty( $query_cond ) ? ' WHERE ' : ' AND ';
+							$query_cond .= ' ( '; /* Begin 1st */
+							$query_cond .= "headers <> ''";
+							$query_cond .= ' AND ';
+							$query_cond .= ' ( '; /* Begin 2nd */
+							$query_cond .= "headers REGEXP '[BCC|Bcc|bcc]:.*$email' ";
+							$query_cond .= ' ) '; /* End 2nd */
+							$query_cond .= ' ) '; /* End 1st */
+							break;
+						case 'reply-to':
+							$query_cond .= empty( $query_cond ) ? ' WHERE ' : ' AND ';
+							$query_cond .= ' ( '; /* Begin 1st */
+							$query_cond .= "headers <> ''";
+							$query_cond .= ' AND ';
+							$query_cond .= ' ( '; /* Begin 2nd */
+							$query_cond .= "headers REGEXP '[R|r]eply-to:.*$email' ";
+							$query_cond .= ' ) '; /* End 2nd */
+							$query_cond .= ' ) '; /* End 1st */
+							break;
+					}
+				}
+			} else {
+				$query_cond .= " WHERE ( to_email LIKE '%$search_term%' OR subject LIKE '%$search_term%' ) ";
+			}
 		}
 
 		if ( isset( $request['d'] ) && $request['d'] !== '' ) {

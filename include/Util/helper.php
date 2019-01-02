@@ -167,6 +167,77 @@ function render_auto_delete_logs_next_run_schedule() {
 }
 
 /**
+ * Gets the value by key from the array.
+ *
+ * If the key isn't found, then null is returned.
+ *
+ * @since 2.3.0
+ *
+ * @param array  $array   The actual array.
+ * @param string $key     The key whose value is to be retrieved.
+ * @param string $default Optional.
+ *
+ * @return mixed|null
+ */
+function el_array_get( $array, $key, $default = null ) {
+	return isset( $array[ $key ] ) ? $array[ $key ] : $default;
+}
+
+/**
+ * Returns TRUE if the given search term is Advanced Search Term.
+ *
+ * @param string $term Search Term.
+ *
+ * @return bool
+ */
+function is_advanced_search_term( $term ) {
+	if ( ! is_string( $term ) ) {
+		return false;
+	}
+
+	$predicates = get_advanced_search_term_predicates( $term );
+
+	return ! empty( $predicates );
+}
+
+/**
+ * Gets the Search Term Predicates.
+ *
+ * Example:
+ *
+ * If $term = to:admin@local.wordpress.test then,
+ *
+ * the output would be
+ *
+ * $output = array(
+ *      'to' => admin@local.wordpress.test
+ * )
+ *
+ * @since 2.3.0
+ *
+ * @param string $term Search Term.
+ *
+ * @return array
+ */
+function get_advanced_search_term_predicates( $term ) {
+	if ( ! is_string( $term ) ) {
+		return array();
+	}
+
+	$predicates           = explode( ' ', $term );
+	$predicates_organized = array();
+
+	foreach ( $predicates as $predicate ) {
+		$is_match = preg_match( '/(email|to|cc|bcc|reply-to):(.*)$/', $predicate, $matches );
+		if ( 1 === $is_match ) {
+			$predicates_organized[ $matches[1] ] = $matches[2];
+		}
+	}
+
+	return $predicates_organized;
+}
+
+/**
  * Gets the Advanced Search URL.
  *
  * @since 2.3.0
