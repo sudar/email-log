@@ -30,18 +30,18 @@ class EmailLogger implements Loadie {
 		 * @since Genesis
 		 *
 		 * @param array $mail_info {
-		 *     @type string $to
+		 *     @type string|array $to
 		 *     @type string $subject
 		 *     @type string $message
-		 *     @type string $headers
-		 *     @type string $attachment
+		 *     @type string|array $headers
+		 *     @type string|array $attachment
 		 * }
 		 */
 		$mail_info = apply_filters( 'el_wp_mail_log', $mail_info );
 
 		// Sometimes the array passed to the `wp_mail` filter may not contain all the required keys.
 		// See https://wordpress.org/support/topic/illegal-string-offset-attachments/
-		$mail_info = wp_parse_args( $mail_info, array(
+		$mail_info_replica = wp_parse_args( $mail_info, array(
 			'attachments' => array(),
 			'to'          => '',
 			'subject'     => '',
@@ -49,22 +49,22 @@ class EmailLogger implements Loadie {
 		) );
 
 		$data = array(
-			'attachments' => ( count( $mail_info['attachments'] ) > 0 ) ? 'true' : 'false',
-			'to_email'    => is_array( $mail_info['to'] ) ? implode( ',', $mail_info['to'] ) : $mail_info['to'],
-			'subject'     => $mail_info['subject'],
-			'headers'     => is_array( $mail_info['headers'] ) ? implode( "\n", $mail_info['headers'] ) : $mail_info['headers'],
+			'attachments' => ! empty( $mail_info_replica['attachments'] ) ? 'true' : 'false',
+			'to_email'    => is_array( $mail_info_replica['to'] ) ? implode( ',', $mail_info_replica['to'] ) : $mail_info_replica['to'],
+			'subject'     => $mail_info_replica['subject'],
+			'headers'     => is_array( $mail_info_replica['headers'] ) ? implode( "\n", $mail_info_replica['headers'] ) : $mail_info_replica['headers'],
 			'sent_date'   => current_time( 'mysql' ),
 		);
 
 		$message = '';
 
-		if ( isset( $mail_info['message'] ) ) {
-			$message = $mail_info['message'];
+		if ( isset( $mail_info_replica['message'] ) ) {
+			$message = $mail_info_replica['message'];
 		} else {
 			// wpmandrill plugin is changing "message" key to "html". See https://github.com/sudar/email-log/issues/20
 			// Ideally this should be fixed in wpmandrill, but I am including this hack here till it is fixed by them.
-			if ( isset( $mail_info['html'] ) ) {
-				$message = $mail_info['html'];
+			if ( isset( $mail_info_replica['html'] ) ) {
+				$message = $mail_info_replica['html'];
 			}
 		}
 
