@@ -42,6 +42,7 @@ class EmailLogger implements Loadie {
 		// Sometimes the array passed to the `wp_mail` filter may not contain all the required keys.
 		// See https://wordpress.org/support/topic/illegal-string-offset-attachments/
 		$mail_info_replica = wp_parse_args( $mail_info, array(
+			'attachments' => array(),
 			'to'          => '',
 			'subject'     => '',
 			'headers'     => '',
