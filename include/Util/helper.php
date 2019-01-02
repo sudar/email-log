@@ -133,6 +133,20 @@ function join_array_elements_with_delimiter( $value, $delimiter = ',' ) {
 }
 
 /**
+ * Gets the User defined Date time format.
+ *
+ * @used-by \EmailLog\Core\UI\Setting\CoreSetting
+ * @used-by \EmailLog\Util\render_auto_delete_logs_next_run_schedule()
+ *
+ * @since   2.3.0
+ *
+ * @return string
+ */
+function get_user_defined_date_time_format() {
+	return sprintf( '%1$s %2$s', get_option( 'date_format', 'Y-m-d' ), get_option( 'time_format', 'g:i a' ) );
+}
+
+/**
  * Renders the next run auto delete logs schedule in Date and time format set within WordPress.
  *
  * @used-by \EmailLog\Addon\UI\Setting\DashboardWidget
@@ -145,7 +159,7 @@ function render_auto_delete_logs_next_run_schedule() {
 	<?php if ( wp_next_scheduled( 'el_scheduled_delete_logs' ) ) : ?>
 		<p>
 			<?php _e( 'Auto delete logs cron will be triggered next at', 'email-log' ); ?>:
-			<?php $date_time_format = sprintf( '%1$s %2$s', get_option( 'date_format', 'Y-m-d' ), get_option( 'time_format', 'g:i a' ) ); ?>
+			<?php $date_time_format = get_user_defined_date_time_format(); ?>
 			<strong><?php echo get_date_from_gmt( date( 'Y-m-d H:i:s', wp_next_scheduled( 'el_scheduled_delete_logs' ) ), $date_time_format ); ?></strong>
 		</p>
 	<?php endif; ?>
