@@ -270,7 +270,6 @@ class TableManager implements Loadie {
 							break;
 					}
 				}
-
 			} else {
 				$query_cond .= " WHERE ( to_email LIKE '%$search_term%' OR subject LIKE '%$search_term%' ) ";
 			}
