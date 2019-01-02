@@ -31,56 +31,61 @@ class EmailLogger implements Loadie {
 		 * @since Genesis
 		 *
 		 * @param array $mail_info {
-		 *     @type string $to
-		 *     @type string $subject
-		 *     @type string $message
-		 *     @type string $headers
-		 *     @type string $attachment
+		 *     @type string|array $to
+		 *     @type string       $subject
+		 *     @type string       $message
+		 *     @type string       $headers
+		 *     @type string       $attachment
+		 *     @type string|array $headers
+		 *     @type string|array $attachment
 		 * }
 		 */
 		$mail_info = apply_filters( 'el_wp_mail_log', $mail_info );
 
 		// Sometimes the array passed to the `wp_mail` filter may not contain all the required keys.
-		// See https://wordpress.org/support/topic/illegal-string-offset-attachments/
-		$mail_info = wp_parse_args( $mail_info, array(
-			'attachments' => array(),
-			'to'          => '',
-			'subject'     => '',
-			'headers'     => '',
-		) );
+		// See https://wordpress.org/support/topic/illegal-string-offset-attachments/.
+		$cleaned_mail_info = wp_parse_args(
+			$mail_info,
+			array(
+				'attachments' => array(),
+				'to'          => '',
+				'subject'     => '',
+				'headers'     => '',
+			)
+		);
 
 		// ! empty() check on attachments handles both empty string and empty array.
 		$data = array(
-			'attachments'     => ( ! empty( $mail_info['attachments'] ) ) ? 'true' : 'false',
-			'subject'         => $mail_info['subject'],
-			'headers'         => is_array( $mail_info['headers'] ) ? implode( "\n", $mail_info['headers'] ) : $mail_info['headers'],
+			'attachments'     => ( ! empty( $cleaned_mail_info['attachments'] ) ) ? 'true' : 'false',
+			'subject'         => $cleaned_mail_info['subject'],
+			'headers'         => is_array( $cleaned_mail_info['headers'] ) ? implode( "\n", $cleaned_mail_info['headers'] ) : $cleaned_mail_info['headers'],
 			'sent_date'       => current_time( 'mysql' ),
-			'attachment_name' => implode( ',', $mail_info['attachments'] ),
-			// TODO: Improve the Client's IP using https://www.virendrachandak.com/techtalk/getting-real-client-ip-address-in-php-2/
+			'attachment_name' => implode( ',', $cleaned_mail_info['attachments'] ),
+			// TODO: Improve the Client's IP using https://www.virendrachandak.com/techtalk/getting-real-client-ip-address-in-php-2/.
 			'ip_address'      => $_SERVER['REMOTE_ADDR'],
 			'result'          => 1,
 		);
 
 		$to = '';
-		if ( empty( $mail_info['to'] ) ) {
+		if ( empty( $cleaned_mail_info['to'] ) ) {
 			$to = '';
-		} elseif ( is_array( $mail_info['to'] ) ) {
-			$to = implode( ',', $mail_info['to'] );
+		} elseif ( is_array( $cleaned_mail_info['to'] ) ) {
+			$to = implode( ',', $cleaned_mail_info['to'] );
 		} else {
-			$to = $mail_info['to'];
+			$to = $cleaned_mail_info['to'];
 		}
 
 		$data['to_email'] = $to;
 
 		$message = '';
 
-		if ( isset( $mail_info['message'] ) ) {
-			$message = $mail_info['message'];
+		if ( isset( $cleaned_mail_info['message'] ) ) {
+			$message = $cleaned_mail_info['message'];
 		} else {
 			// wpmandrill plugin is changing "message" key to "html". See https://github.com/sudar/email-log/issues/20
 			// Ideally this should be fixed in wpmandrill, but I am including this hack here till it is fixed by them.
-			if ( isset( $mail_info['html'] ) ) {
-				$message = $mail_info['html'];
+			if ( isset( $cleaned_mail_info['html'] ) ) {
+				$message = $cleaned_mail_info['html'];
 			}
 		}
 
