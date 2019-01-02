@@ -167,17 +167,6 @@ function render_auto_delete_logs_next_run_schedule() {
 }
 
 /**
- * Gets the Advanced search URL that the Email Log search Icon uses.
- *
- * @since 2.3.0
- *
- * @return string The URL.
- */
-function get_advanced_search_url() {
-	return get_admin_url( null, 'admin.php?page=email-log' );
-}
-
-/**
  * Gets the value by key from the array.
  *
  * If the key isn't found, then null is returned.
@@ -246,4 +235,17 @@ function get_advanced_search_term_predicates( $term ) {
 	}
 
 	return $predicates_organized;
+}
+
+/**
+ * Gets the Advanced Search URL.
+ *
+ * @since 2.3.0
+ *
+ * @return string
+ */
+function get_advanced_search_url() {
+	$admin_url = get_admin_url( null, 'admin.php?page=email-log' );
+
+	return add_query_arg( 'el_as', 1, $admin_url );
 }

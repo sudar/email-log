@@ -43,7 +43,7 @@ Email Log Version:                  <?php echo EmailLog::VERSION . "\n"; ?>
 Number of Logs:                     <?php echo $email_log->table_manager->get_logs_count() . "\n"; ?>
 Email Log DB Version:               <?php echo get_option( TableManager::DB_OPTION_NAME ) . "\n"; ?>
 <?php if ( is_array( $email_log_core ) ) : ?>
-Allowed Roles for Email Log View:   <?php echo implode( ', ', $email_log_core['allowed_user_roles'] ) . "\n"; ?>
+Additional allowed user roles:      <?php echo implode( ', ', $email_log_core['allowed_user_roles'] ) . "\n"; ?>
 Remove All Data on Uninstallation:  <?php echo $email_log_core['remove_on_uninstall'] !== '' ? 'Yes' : 'No' . "\n"; ?>
 Disable DashBoard Widget:           <?php echo $email_log_core['hide_dashboard_widget'] === 'true' ? 'Yes' : 'No' . "\n"; ?>
 <?php endif; ?>
