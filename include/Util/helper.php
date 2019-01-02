@@ -166,6 +166,13 @@ function render_auto_delete_logs_next_run_schedule() {
 	<?php
 }
 
+/**
+ * Gets the Advanced Search URL.
+ *
+ * @since 2.3.0
+ *
+ * @return string
+ */
 function get_advanced_search_url() {
 	$admin_url = get_admin_url( null, 'admin.php?page=email-log' );
 	return add_query_arg( 'el_as', 1, $admin_url );
