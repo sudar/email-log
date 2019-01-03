@@ -182,12 +182,12 @@ class Addon {
 	 * Render Individual license form.
 	 */
 	protected function render_individual_license() {
-		$action       = 'el_license_activate';
-		$action_text  = __( 'Activate', 'email-log' );
-		$button_class = 'button-primary';
-		$dashicon     = 'down';
-		$license_wrap = 'hidden';
-		$expires      = '';
+		$action         = 'el_license_activate';
+		$action_text    = __( 'Activate', 'email-log' );
+		$button_class   = 'button-primary';
+		$dashicon       = 'down';
+		$license_wrap   = 'hidden';
+		$expiry_details = '';
 
 		if ( $this->has_valid_addon_license() ) {
 			$action       = 'el_license_deactivate';
@@ -197,7 +197,14 @@ class Addon {
 			$license_wrap = '';
 
 			$expiry_date = date( 'F d, Y', strtotime( $this->get_license()->get_expiry_date() ) );
-			$expires     = sprintf( __( 'Your license expires on %s', 'email-log' ), $expiry_date );
+
+			if ( $this->get_license()->has_expired() ) {
+				/* translators: 1 License expiry date, 2 License Renewal link */
+				$expiry_details = sprintf( __( 'Your license has expired on %1$s. Please <a href="%2$s">renew it</a> to receive automatic updates and support.', 'email-log' ), $expiry_date, esc_url( $this->get_license()->get_renewal_link() ) );
+			} else {
+				/* translators: 1 License expiry date */
+				$expiry_details = sprintf( __( 'Your license is valid till %s', 'email-log' ), $expiry_date );
+			}
 		}
 		?>
 
@@ -214,7 +221,7 @@ class Addon {
 				<input type="submit" class="button button-large <?php echo sanitize_html_class( $button_class ); ?>"
 				       value="<?php echo esc_attr( $action_text ); ?>">
 
-				<p class="expires"><?php echo esc_html( $expires ); ?></p>
+				<p class="expires"><?php echo $expiry_details; ?></p>
 
 				<input type="hidden" name="el-addon" value="<?php echo esc_attr( $this->name ); ?>">
 				<input type="hidden" name="el-action" value="<?php echo esc_attr( $action ); ?>">
@@ -223,7 +230,6 @@ class Addon {
 			</form>
 		</div>
 		<?php
-
 	}
 
 	/**

@@ -23,13 +23,6 @@ abstract class BaseLicense {
 	protected $edd_api;
 
 	/**
-	 * Is the license activated and valid?
-	 *
-	 * @return bool True if license is active, False otherwise.
-	 */
-	abstract public function is_valid();
-
-	/**
 	 * Get the option name in which license data will be stored.
 	 *
 	 * @return string Option name.
@@ -97,6 +90,61 @@ abstract class BaseLicense {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Has the bundle license expired?
+	 *
+	 * @since 2.3.0
+	 *
+	 * @return bool True if expired, False otherwise.
+	 */
+	public function has_expired() {
+		$is_valid = $this->is_valid();
+
+		if ( ! $is_valid ) {
+			return true;
+		}
+
+		$expiry_date = $this->get_expiry_date();
+
+		if ( ! $expiry_date ) {
+			return true;
+		}
+
+		return ( strtotime( $expiry_date ) < time() );
+	}
+
+	/**
+	 * Is the license activated and valid?
+	 *
+	 * @since 2.3.0 Moved to BaseLicense class.
+	 *
+	 * @return bool True if license is active, False otherwise.
+	 */
+	public function is_valid() {
+		if ( ! $this->license_data instanceof \stdClass || ! isset( $this->license_data->license ) ) {
+			return false;
+		}
+
+		return ( 'valid' === $this->license_data->license );
+	}
+
+	/**
+	 * Get the renewal link for bundle license.
+	 *
+	 * @since 2.3.0
+	 *
+	 * @return string Renewal link.
+	 */
+	public function get_renewal_link() {
+		$license_key = $this->get_license_key();
+
+		if ( empty( $license_key ) ) {
+			return 'https://wpemaillog.com/store/?utm_campaign=Renewal&utm_medium=wpadmin&utm_source=renewal-notice';
+		}
+
+		return sprintf( 'https://wpemaillog.com/checkout/?edd_license_key=%s&utm_campaign=Renewal&utm_medium=wpadmin&utm_source=renewal-notice', $license_key );
 	}
 
 	/**

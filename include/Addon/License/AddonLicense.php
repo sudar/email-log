@@ -9,14 +9,6 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
  */
 class AddonLicense extends BaseLicense {
 
-	public function is_valid() {
-		if ( ! $this->license_data instanceof \stdClass || ! isset( $this->license_data->license ) ) {
-			return false;
-		}
-
-		return ( 'valid' === $this->license_data->license );
-	}
-
 	/**
 	 * Get License key.
 	 *
