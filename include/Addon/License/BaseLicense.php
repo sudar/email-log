@@ -169,34 +169,41 @@ abstract class BaseLicense {
 		switch ( $response->error ) {
 			case 'expired':
 				$message = sprintf(
-					__( 'Your license key expired on %s.' , 'email-log'),
-					date_i18n( get_option( 'date_format' ), strtotime( $response->expires, current_time( 'timestamp' ) ) )
+					/* translators: 1 License expiry date, 2 License Renewal link */
+					__( 'Your license key expired on %1$s. Please <a href="%2$s">renew it</a> to receive automatic updates and support.', 'email-log' ),
+					date_i18n( get_option( 'date_format' ), strtotime( $response->expires, current_time( 'timestamp' ) ) ),
+					'https://wpemaillog.com/checkout/?edd_license_key=' . $this->get_license_key() . '&utm_campaign=Renewal&utm_medium=wpadmin&utm_source=activation-failed'
 				);
 				break;
 
 			case 'revoked':
-				$message = __( 'Your license key has been disabled.' , 'email-log');
+				$message = __( 'Your license key has been disabled.', 'email-log' );
 				break;
 
 			case 'missing':
-				$message = __( 'Your license key is invalid.' , 'email-log');
+				$message = __( 'Your license key is invalid.', 'email-log' );
 				break;
 
 			case 'invalid':
 			case 'site_inactive':
-				$message = __( 'Your license is not active for this URL.' , 'email-log');
+				$message = __( 'Your license is not active for this URL.', 'email-log' );
 				break;
 
 			case 'item_name_mismatch':
-				$message = sprintf( __( 'Your license key is not valid for %s.' , 'email-log'), $this->get_addon_name() );
+				/* translators: 1 Add-on name */
+				$message = sprintf( __( 'Your license key is not valid for %s.', 'email-log' ), $this->get_addon_name() );
 				break;
 
 			case 'no_activations_left':
-				$message = __( 'Your license key has reached its activation limit.' , 'email-log');
+				$message = sprintf(
+					/* translators: 1 License Upgrade link */
+					__( 'Your license key has reached its activation limit. Please <a href="%s">upgrade</a> your license.', 'email-log' ),
+					'https://wpemaillog.com/account/?utm_campaign=Upgrade&utm_medium=wpadmin&utm_source=activation-failed'
+				);
 				break;
 
 			default:
-				$message = __( 'An error occurred, please try again.' , 'email-log');
+				$message = __( 'An error occurred, please try again.', 'email-log' );
 				break;
 		}
 
