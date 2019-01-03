@@ -172,6 +172,13 @@ abstract class BaseLicense {
 			return $response;
 		}
 
+		if ( $response->expires < time() ) {
+			// license has expired. Expired license can't be de-activated. So let's just clear it.
+			$this->clear();
+
+			return $response;
+		}
+
 		$message = __( 'An error occurred, please try again.', 'email-log' );
 
 		if ( isset( $response->error ) ) {
