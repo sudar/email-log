@@ -23,5 +23,22 @@
 		$( '#tabs' ).tabs( { active: 1 } );
 	});
 
+	/* Show tooltip on Email Log search Icon */
+	$( '.el-help' ).tooltip({
+		content: function() {
+			return $(this).prop('title');
+		},
+		position: {
+			my: 'center top',
+			at: 'center bottom+10',
+			collision: 'flipfit'
+		},
+		hide: {
+			duration: 200
+		},
+		show: {
+			duration: 200
+		}
+	});
 
 })( jQuery );

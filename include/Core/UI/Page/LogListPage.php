@@ -206,16 +206,21 @@ class LogListPage extends BasePage {
 			return;
 		}
 
+		global $wp_scripts;
 		$email_log      = email_log();
 		$plugin_dir_url = plugin_dir_url( $email_log->get_plugin_file() );
 
 		wp_enqueue_style( 'jquery-ui-css', $plugin_dir_url . 'assets/vendor/jquery-ui/themes/base/jquery-ui.min.css', array(), '1.12.1' );
 		wp_enqueue_style( 'el-view-logs-css', $plugin_dir_url . 'assets/css/admin/view-logs.css', array( 'jquery-ui-css' ), $email_log->get_version() );
 
+		$ui  = $wp_scripts->query( 'jquery-ui-core' );
+		$url = "//ajax.googleapis.com/ajax/libs/jqueryui/{$ui->ver}/themes/smoothness/jquery-ui.css";
+		wp_enqueue_style( 'jquery-ui-smoothness', $url, array(), $ui->ver );
+
 		wp_register_script( 'jquery-ui', $plugin_dir_url . 'assets/vendor/jquery-ui/jquery-ui.min.js', array( 'jquery' ), '1.12.1', true );
 		wp_register_script( 'insertionQ', $plugin_dir_url . 'assets/vendor/insertionQuery/insQ.min.js', array( 'jquery' ), '1.0.4', true );
 		wp_enqueue_script( 'jquery-ui-datepicker' );
 
-		wp_enqueue_script( 'el-view-logs', $plugin_dir_url . 'assets/js/admin/view-logs.js', array( 'jquery-ui', 'jquery-ui-datepicker', 'insertionQ' ), $email_log->get_version(), true );
+		wp_enqueue_script( 'el-view-logs', $plugin_dir_url . 'assets/js/admin/view-logs.js', array( 'jquery-ui', 'jquery-ui-datepicker', 'insertionQ', 'jquery-ui-tooltip' ), $email_log->get_version(), true );
 	}
 }
