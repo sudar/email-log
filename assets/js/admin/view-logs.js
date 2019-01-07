@@ -23,6 +23,4 @@
 		$( '#tabs' ).tabs( { active: 1 } );
 	});
 
-
-
 })( jQuery );
