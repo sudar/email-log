@@ -206,7 +206,6 @@ class LogListPage extends BasePage {
 			return;
 		}
 
-		global $wp_scripts;
 		$email_log      = email_log();
 		$plugin_dir_url = plugin_dir_url( $email_log->get_plugin_file() );
 
