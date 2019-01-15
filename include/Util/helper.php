@@ -249,3 +249,28 @@ function get_advanced_search_url() {
 
 	return add_query_arg( 'el_as', 1, $admin_url );
 }
+
+/**
+ * Gets the Column labels to be used in LogList table.
+ *
+ * @since 2.3.0
+ *
+ * @param string $db_column
+ *
+ * @return string
+ */
+function get_column_label_by_db_column( $db_column ) {
+	$labels = array(
+		'sent_date' => __( 'Sent at', 'email-log' ),
+		'to'        => __( 'To', 'email-log' ),
+		'subject'   => __( 'Subject', 'email-log' ),
+	);
+
+	// TODO: @sudar, Do we need a filter here to add items to the $labels array?
+
+	if ( array_key_exists( $db_column, $labels ) ) {
+		return $labels[ $db_column ];
+	}
+
+	return $db_column;
+}
