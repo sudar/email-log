@@ -261,9 +261,12 @@ function get_advanced_search_url() {
  */
 function get_column_label_by_db_column( $db_column ) {
 	$labels = array(
+		'id'        => __( 'ID', 'email-log' ),
 		'sent_date' => __( 'Sent at', 'email-log' ),
-		'to'        => __( 'To', 'email-log' ),
+		'to'        => __( 'To', 'email-log' ), // EmailLog\Core\UI\ListTable::get_columns() uses `to`
+		'to_email'  => __( 'To', 'email-log' ),
 		'subject'   => __( 'Subject', 'email-log' ),
+		'message'   => __( 'Message', 'email-log' ),
 	);
 
 	// TODO: @sudar, Do we need a filter here to add items to the $labels array?
