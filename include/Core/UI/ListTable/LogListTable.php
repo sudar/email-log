@@ -60,12 +60,11 @@ class LogListTable extends \WP_List_Table {
 
 	/**
 	 * Returns the list of column and title names.
-     *
-     * @since 2.3.0 Retrieve Column labels using Utility methods.
 	 *
+	 * @since 2.3.0 Retrieve Column labels using Utility methods.
 	 * @see WP_List_Table::single_row_columns()
-     *
-     * @uses \EmailLog\Util\get_column_label_by_column()
+	 *
+	 * @uses \EmailLog\Util\get_column_label_by_column()
 	 *
 	 * @return array An associative array containing column information: 'slugs'=>'Visible Titles'.
 	 */
