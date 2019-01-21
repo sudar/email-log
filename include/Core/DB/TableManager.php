@@ -48,7 +48,7 @@ class TableManager implements Loadie {
 			$sites = get_sites();
 
 			foreach ( $sites as $site ) {
-				switch_to_blog( $site['blog_id'] );
+				switch_to_blog( $site->blog_id );
 				$this->create_table_if_needed();
 				restore_current_blog();
 			}
