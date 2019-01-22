@@ -275,7 +275,21 @@ function get_column_label_by_db_column( $db_column ) {
 		'attachment'  => __( 'Attachment', 'email-log' ),
 	);
 
-	// TODO: @sudar, Do we need a filter here to add items to the $labels array?
+	/**
+	 * Filters the Labels used through out the Email Log plugin.
+	 *
+	 * @since 2.3.0
+	 *
+	 * @param array $labels {
+	 *                      List of DB Columns and its respective labels.
+	 *
+	 *                      Example:
+	 *                      'id'          => __( 'ID', 'email-log' ),
+	 *
+	 * @type string $key    DB Column or any key for which a Label would be required. Accepts a internationalized string as Label.
+	 *                      }
+	 */
+	$labels = apply_filters( 'el_labels', $labels );
 
 	if ( array_key_exists( $db_column, $labels ) ) {
 		return $labels[ $db_column ];
