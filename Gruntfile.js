@@ -35,6 +35,7 @@ module.exports = function( grunt ) {
 							'!Gruntfile.js',
 							'!bower.json',
 							'!package.json',
+							'!package-lock.json',
 							'!composer.json',
 							'!composer.lock',
 							'!phpcs.xml',

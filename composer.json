@@ -1,14 +1,36 @@
 {
-    "name": "sudar/email-log",
-    "description": "Email Log WordPress plugin",
-    "license": "GPL-2.0+",
-    "type": "wordpress-plugin",
-    "require-dev": {
-        "codeception/codeception": "^2.2",
-        "lucatume/wp-browser": "^1.14",
-        "jdgrimes/wp-plugin-uninstall-tester": "~0.6",
-        "squizlabs/php_codesniffer": "^3.0",
-        "dealerdirect/phpcodesniffer-composer-installer": "^0.4.2",
-        "wimg/php-compatibility": "^8.0"
+  "name": "sudar/email-log",
+  "description": "Email Log WordPress plugin",
+  "type": "wordpress-plugin",
+  "license": "GPL-2.0-or-later",
+  "authors": [
+    {
+      "name": "Sudar Muthu",
+      "homepage": "https://sudarmuthu.com"
     }
+  ],
+  "support": {
+    "issues": "https://github.com/sudar/email-log/issues"
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/sudar/wp-system-info"
+    }
+  ],
+  "require": {
+    "php": ">=5.3",
+    "sudar/wp-system-info": "dev-master"
+  },
+  "require-dev": {
+    "codeception/codeception": "^2.2",
+    "lucatume/wp-browser": "^1.14",
+    "jdgrimes/wp-plugin-uninstall-tester": "~0.6",
+    "squizlabs/php_codesniffer": "^3.0",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.4.2",
+    "wimg/php-compatibility": "^8.0"
+  }
 }

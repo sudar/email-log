@@ -44,9 +44,11 @@ matrix:
 install:
   - |
     if [[ $TRAVIS_PHP_VERSION == 5.6 ]]; then
-      # Run composer install only for PHP 5.6
-      # composer is used for running phpcs and testing Unintall and Codeception
+      # Install composer dev dependencies only for PHP 5.6
+      # composer dev dependencies are used for running phpcs and testing Unintall and Codeception
       composer install
+    else
+      composer install  --no-dev
     fi
 
 before_script:

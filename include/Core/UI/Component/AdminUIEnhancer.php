@@ -65,7 +65,7 @@ class AdminUIEnhancer {
 	 */
 	public function insert_addon_store_link( $links, $file ) {
 		if ( $file === $this->plugin_basename ) {
-			$links[] = '<a href="https://wpemaillog.com/store/?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=plugin-page" target="_blank">' .
+			$links[] = '<a href="https://wpemaillog.com/store/?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=plugin-page" rel="noopener" target="_blank">' .
 			           __( 'Buy Addons', 'email-log' ) . '</a>';
 		}
 

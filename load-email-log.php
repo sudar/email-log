@@ -26,6 +26,7 @@ function load_email_log( $plugin_file ) {
 
 	$loader = new \EmailLog\EmailLogAutoloader();
 	$loader->add_namespace( 'EmailLog', $plugin_dir . 'include' );
+	$loader->add_namespace( 'Sudar\\WPSystemInfo', $plugin_dir . 'vendor/sudar/wp-system-info/src/' );
 
 	if ( file_exists( $plugin_dir . 'tests/' ) ) {
 		// if tests are present, then add them.

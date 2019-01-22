@@ -19,9 +19,8 @@
 		$( element ).trigger( tabsInsertedEvent )
 	});
 
-	$( document ).on( tabsInsertedEvent, function() {
-		$( '#tabs' ).tabs();
+	$( document ).on( tabsInsertedEvent, function () {
+		$( '#tabs' ).tabs( { active: 1 } );
 	});
-
 
 })( jQuery );

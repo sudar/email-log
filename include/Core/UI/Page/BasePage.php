@@ -51,13 +51,13 @@ abstract class BasePage implements Loadie {
 				'<p>' .
 					__( 'You can view the logged emails from the View Logs screen. ', 'email-log' ) .
 					sprintf(
-						__( 'Check the <a href="%s">documentation about the View Logs screen</a> for more details.', 'email-log' ),
+						__( 'Check the <a target="_blank" rel="noopener" href="%s">documentation about the View Logs screen</a> for more details.', 'email-log' ),
 						'https://wpemaillog.com/docs/view-logged-email/?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=help&utm_content=docs-content'
 					) .
 				'</p>' .
 				'<p>' .
 					sprintf(
-						__( 'You can perform advanced actions like re-sending email, automatically forwarding emails or export logs with our <a href="%s">premium plugins</a>.', 'email-log' ),
+						__( 'You can perform advanced actions like re-sending email, automatically forwarding emails or export logs with our <a target="_blank" rel="noopener" href="%s">premium plugins</a>.', 'email-log' ),
 						'https://wpemaillog.com/store/?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=help&utm_content=store-content'
 					) .
 				'</p>';
@@ -73,9 +73,9 @@ abstract class BasePage implements Loadie {
 
 		$this->get_screen()->set_help_sidebar(
 			'<p><strong>' . __( 'More information', 'email-log' ) . '</strong></p>' .
-			'<p><a href = "https://wpemaillog.com/docs/?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=help&utm_content=docs">' . __( 'Documentation', 'email-log' ) . '</a></p>' .
-			'<p><a href = "https://wpemaillog.com/support/?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=help&utm_content=support">' . __( 'Support', 'email-log' ) . '</a></p>' .
-			'<p><a href = "https://wpemaillog.com/store/?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=help&utm_content=store">' . __( 'Add-ons', 'email-log' ) . '</a></p>'
+			'<p><a target="_blank" rel="noopener" href = "https://wpemaillog.com/docs/?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=help&utm_content=docs">' . __( 'Documentation', 'email-log' ) . '</a></p>' .
+			'<p><a target="_blank" rel="noopener" href = "https://wpemaillog.com/support/?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=help&utm_content=support">' . __( 'Support', 'email-log' ) . '</a></p>' .
+			'<p><a target="_blank" rel="noopener" href = "https://wpemaillog.com/store/?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=help&utm_content=store">' . __( 'Add-ons', 'email-log' ) . '</a></p>'
 		);
 	}
 
