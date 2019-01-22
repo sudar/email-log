@@ -17,17 +17,10 @@ class BundleLicense extends BaseLicense {
 	 */
 	protected $addon_name = 'Email Log Bundle';
 
-	/**
-	 * Is the license valid?
-	 *
-	 * @return bool True if valid, False otherwise.
-	 */
-	public function is_valid() {
-		if ( empty( $this->license_data ) ) {
-			return false;
-		}
+	public function get_renewal_link() {
+		$renewal_link = parent::get_renewal_link();
 
-		return ( 'valid' === $this->license_data->license );
+		return $renewal_link . '&utm_content=BL';
 	}
 
 	/**

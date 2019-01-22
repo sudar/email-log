@@ -84,7 +84,7 @@ class LogListAction implements Loadie {
 				</div>
 
 				<div id="tabs-preview">
-					<?php echo wp_kses_post( $log_item['message'] ); ?>
+					<?php echo wp_kses( $log_item['message'], $this->el_kses_allowed_html( 'post' ) ); ?>
 				</div>
 			</div>
 
@@ -106,6 +106,10 @@ class LogListAction implements Loadie {
 	 * @param array $data Request data.
 	 */
 	public function delete_logs( $data ) {
+		if ( ! is_array( $data ) || ! array_key_exists( 'email-log', $data ) ) {
+			return;
+		}
+
 		$ids = $data['email-log'];
 
 		if ( ! is_array( $ids ) ) {
@@ -186,5 +190,30 @@ class LogListAction implements Loadie {
 		$email_log = email_log();
 
 		return $email_log->table_manager;
+	}
+
+	/**
+	 * Allows `<link>` tag in wp_kses().
+	 *
+	 * Gets the list of allowed HTML for the `post` context.
+	 * Appends <link> tag to the above list and returns the array.
+	 *
+	 * @since 2.3.0
+	 *
+	 * @param string $context Optional. Default `post`. The context for which to retrieve tags.
+	 *
+	 * @return array List of allowed tags and their allowed attributes.
+	 */
+	protected function el_kses_allowed_html( $context = 'post' ) {
+		$allowed_tags = wp_kses_allowed_html( $context );
+
+		$allowed_tags['link'] = array(
+			'rel'   => true,
+			'href'  => true,
+			'type'  => true,
+			'media' => true,
+		);
+
+		return $allowed_tags;
 	}
 }
