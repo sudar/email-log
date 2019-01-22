@@ -289,7 +289,7 @@ function get_column_label_by_db_column( $db_column ) {
 	 * @type string $key    DB Column or any key for which a Label would be required. Accepts a internationalized string as Label.
 	 *                      }
 	 */
-	$labels = apply_filters( 'el_labels', $labels );
+	$labels = apply_filters( 'el_db_column_labels', $labels );
 
 	if ( array_key_exists( $db_column, $labels ) ) {
 		return $labels[ $db_column ];
