@@ -201,8 +201,8 @@ class TableManager implements Loadie {
 	 *              to: sudar@sudarmuthu.com
 	 *
 	 * @param array $request Request object.
-	 * @param int $per_page Entries per page.
-	 * @param int $current_page_no Current page no.
+	 * @param   int $per_page Entries per page.
+	 * @param   int $current_page_no Current page no.
 	 *
 	 * @return array Log entries and total items count.
 	 */
@@ -492,10 +492,28 @@ class TableManager implements Loadie {
 		return $sql;
 	}
 
+	/**
+	 * Callback for the Array filter.
+	 *
+	 * @since 2.3.0
+	 *
+	 * @param   array $column
+	 *
+	 * @return bool
+	 */
 	private function validate_columns( $column ) {
 		return in_array( $column, array( 'to' ) );
 	}
 
+	/**
+	 * @since 2.3.0
+	 *
+	 * @param $columns
+	 *
+	 * @uses \EmailLog\Core\DB\TableManager::validate_columns()
+	 *
+	 * @return array|null|object|void
+	 */
 	public function fetch_log_items_for_edd_customer_tab_display( $columns ) {
 		if ( ! is_array( $columns ) ) {
 			return;
