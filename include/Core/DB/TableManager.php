@@ -195,9 +195,14 @@ class TableManager implements Loadie {
 	/**
 	 * Fetch log items.
 	 *
-	 * @param array $request         Request object.
-	 * @param int   $per_page        Entries per page.
-	 * @param int   $current_page_no Current page no.
+	 * @since 2.3.0 Implemented Advanced Search. Search queries could look like the following.
+	 *              Example:
+	 *              id: 2
+	 *              to: sudar@sudarmuthu.com
+	 *
+	 * @param array $request Request object.
+	 * @param int $per_page Entries per page.
+	 * @param int $current_page_no Current page no.
 	 *
 	 * @return array Log entries and total items count.
 	 */
@@ -217,6 +222,10 @@ class TableManager implements Loadie {
 
 				foreach ( $predicates as $column => $email ) {
 					switch ( $column ) {
+						case 'id':
+							$query_cond .= empty( $query_cond ) ? ' WHERE ' : ' AND ';
+							$query_cond .= "id = '$email'";
+							break;
 						case 'to':
 							$query_cond .= empty( $query_cond ) ? ' WHERE ' : ' AND ';
 							$query_cond .= "to_email LIKE '%$email%'";
@@ -298,7 +307,7 @@ class TableManager implements Loadie {
 
 		// Adjust the query to take pagination into account.
 		if ( ! empty( $current_page_no ) && ! empty( $per_page ) ) {
-			$offset = ( $current_page_no - 1 ) * $per_page;
+			$offset     = ( $current_page_no - 1 ) * $per_page;
 			$query_cond .= ' LIMIT ' . (int) $offset . ',' . (int) $per_page;
 		}
 
@@ -481,5 +490,47 @@ class TableManager implements Loadie {
 			) ' . $charset_collate . ';';
 
 		return $sql;
+	}
+
+	private function validate_columns( $column ) {
+		return in_array( $column, array( 'to' ) );
+	}
+
+	public function fetch_log_items_for_edd_customer_tab_display( $columns ) {
+		if ( ! is_array( $columns ) ) {
+			return;
+		}
+
+		if ( ! array_filter( $columns, array( $this, 'validate_columns' ), ARRAY_FILTER_USE_KEY ) ) {
+			return;
+		}
+
+		global $wpdb;
+
+		$table_name = $this->get_log_table_name();
+		$query      = "SELECT id, sent_date, to_email, subject FROM {$table_name}";
+		$query_cond = '';
+		$where      = array();
+
+		// Execute the following `if` conditions only when $data is array.
+		if ( array_key_exists( 'to', $columns ) ) {
+			// Since the value is stored as CSV in DB, convert the values from error data to CSV to compare.
+			$to_email = Util\join_array_elements_with_delimiter( $columns['to'] );
+
+			$to_email = trim( esc_sql( $to_email ) );
+			$where[]  = "to_email = '$to_email'";
+
+			foreach ( $where as $index => $value ) {
+				$query_cond .= 0 === $index ? ' WHERE ' : ' AND ';
+				$query_cond .= $value;
+			}
+
+			// Get only the latest logged item when multiple rows match.
+			$query_cond .= ' ORDER BY id DESC';
+
+			$query = $query . $query_cond;
+
+			return $wpdb->get_results( $query );
+		}
 	}
 }
