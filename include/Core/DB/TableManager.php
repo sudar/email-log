@@ -497,12 +497,12 @@ class TableManager implements Loadie {
 	 *
 	 * @since 2.3.0
 	 *
-	 * @param   array $column
+	 * @param   string $column A column from the array Columns.
 	 *
 	 * @return bool
 	 */
 	private function validate_columns( $column ) {
-		return in_array( $column, array( 'to' ) );
+		return in_array( $column, array( 'to' ), true );
 	}
 
 	/**
@@ -519,7 +519,10 @@ class TableManager implements Loadie {
 			return;
 		}
 
-		if ( ! array_filter( $columns, array( $this, 'validate_columns' ), ARRAY_FILTER_USE_KEY ) ) {
+		// Since we support PHP v5.2.4, we cannot use ARRAY_FILTER_USE_KEY
+		// TODO: PHP v5.5: Once WordPress updates minimum PHP version to v5.5, start using ARRAY_FILTER_USE_KEY.
+		$columns_keys = array_keys( $columns );
+		if ( ! array_filter( $columns_keys, array( $this, 'validate_columns' ) ) ) {
 			return;
 		}
 
