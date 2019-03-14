@@ -62,6 +62,6 @@ class AdminUIEnhancerTest extends \PHPUnit_Framework_TestCase {
 
 		$actual = $this->plugin_list_enhancer->insert_view_logs_link( $links );
 
-		$this->assertCount( count( $links ) + 1, $actual );
+		$this->assertCount( count( $links ) + 2, $actual );
 	}
 }
