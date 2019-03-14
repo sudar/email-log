@@ -228,7 +228,7 @@ function get_advanced_search_term_predicates( $term ) {
 	$predicates_organized = array();
 
 	foreach ( $predicates as $predicate ) {
-		$is_match = preg_match( '/(email|to|cc|bcc|reply-to):(.*)$/', $predicate, $matches );
+		$is_match = preg_match( '/(id|email|to|cc|bcc|reply-to):(.*)$/', $predicate, $matches );
 		if ( 1 === $is_match ) {
 			$predicates_organized[ $matches[1] ] = $matches[2];
 		}

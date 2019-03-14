@@ -195,6 +195,11 @@ class TableManager implements Loadie {
 	/**
 	 * Fetch log items.
 	 *
+	 * @since 2.3.0 Implemented Advanced Search. Search queries could look like the following.
+	 *              Example:
+	 *              id: 2
+	 *              to: sudar@sudarmuthu.com
+	 *
 	 * @param array $request         Request object.
 	 * @param int   $per_page        Entries per page.
 	 * @param int   $current_page_no Current page no.
@@ -217,6 +222,10 @@ class TableManager implements Loadie {
 
 				foreach ( $predicates as $column => $email ) {
 					switch ( $column ) {
+						case 'id':
+							$query_cond .= empty( $query_cond ) ? ' WHERE ' : ' AND ';
+							$query_cond .= "id = '$email'";
+							break;
 						case 'to':
 							$query_cond .= empty( $query_cond ) ? ' WHERE ' : ' AND ';
 							$query_cond .= "to_email LIKE '%$email%'";
@@ -298,7 +307,7 @@ class TableManager implements Loadie {
 
 		// Adjust the query to take pagination into account.
 		if ( ! empty( $current_page_no ) && ! empty( $per_page ) ) {
-			$offset = ( $current_page_no - 1 ) * $per_page;
+			$offset     = ( $current_page_no - 1 ) * $per_page;
 			$query_cond .= ' LIMIT ' . (int) $offset . ',' . (int) $per_page;
 		}
 
@@ -312,11 +321,9 @@ class TableManager implements Loadie {
 	/**
 	 * Create email log table.
 	 *
-	 * @access private
-	 *
 	 * @global object $wpdb
 	 */
-	private function create_table_if_needed() {
+	public function create_table_if_needed() {
 		global $wpdb;
 
 		$table_name = $this->get_log_table_name();
@@ -481,5 +488,70 @@ class TableManager implements Loadie {
 			) ' . $charset_collate . ';';
 
 		return $sql;
+	}
+
+	/**
+	 * Callback for the Array filter.
+	 *
+	 * @since 2.3.0
+	 *
+	 * @param string $column A column from the array Columns.
+	 *
+	 * @return bool
+	 */
+	private function validate_columns( $column ) {
+		return in_array( $column, array( 'to' ), true );
+	}
+
+	/**
+	 * Query log items by column.
+	 *
+	 * @since 2.3.0
+	 *
+	 * @param array $columns Key value pair based on which items should be retrieved.
+	 *
+	 * @uses \EmailLog\Core\DB\TableManager::validate_columns()
+	 *
+	 * @return array|object|null
+	 */
+	public function query_log_items_by_column( $columns ) {
+		if ( ! is_array( $columns ) ) {
+			return;
+		}
+
+		// Since we support PHP v5.2.4, we cannot use ARRAY_FILTER_USE_KEY
+		// TODO: PHP v5.5: Once WordPress updates minimum PHP version to v5.5, start using ARRAY_FILTER_USE_KEY.
+		$columns_keys = array_keys( $columns );
+		if ( ! array_filter( $columns_keys, array( $this, 'validate_columns' ) ) ) {
+			return;
+		}
+
+		global $wpdb;
+
+		$table_name = $this->get_log_table_name();
+		$query      = "SELECT id, sent_date, to_email, subject FROM {$table_name}";
+		$query_cond = '';
+		$where      = array();
+
+		// Execute the following `if` conditions only when $data is array.
+		if ( array_key_exists( 'to', $columns ) ) {
+			// Since the value is stored as CSV in DB, convert the values from error data to CSV to compare.
+			$to_email = Util\join_array_elements_with_delimiter( $columns['to'] );
+
+			$to_email = trim( esc_sql( $to_email ) );
+			$where[]  = "to_email = '$to_email'";
+
+			foreach ( $where as $index => $value ) {
+				$query_cond .= 0 === $index ? ' WHERE ' : ' AND ';
+				$query_cond .= $value;
+			}
+
+			// Get only the latest logged item when multiple rows match.
+			$query_cond .= ' ORDER BY id DESC';
+
+			$query = $query . $query_cond;
+
+			return $wpdb->get_results( $query );
+		}
 	}
 }
