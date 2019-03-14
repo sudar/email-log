@@ -321,11 +321,9 @@ class TableManager implements Loadie {
 	/**
 	 * Create email log table.
 	 *
-	 * @access private
-	 *
 	 * @global object $wpdb
 	 */
-	private function create_table_if_needed() {
+	public function create_table_if_needed() {
 		global $wpdb;
 
 		$table_name = $this->get_log_table_name();
@@ -506,15 +504,17 @@ class TableManager implements Loadie {
 	}
 
 	/**
+	 * Query log items by column.
+	 *
 	 * @since 2.3.0
 	 *
-	 * @param $columns
+	 * @param array $columns Key value pair based on which items should be retrieved.
 	 *
 	 * @uses \EmailLog\Core\DB\TableManager::validate_columns()
 	 *
-	 * @return array|object|void|null
+	 * @return array|object|null
 	 */
-	public function fetch_log_items_for_edd_customer_tab_display( $columns ) {
+	public function query_log_items_by_column( $columns ) {
 		if ( ! is_array( $columns ) ) {
 			return;
 		}
