@@ -287,7 +287,7 @@ function get_column_label_by_db_column( $db_column ) {
 	 *                      'id'          => __( 'ID', 'email-log' ),
 	 *
 	 * @type string $key    DB Column or any key for which a Label would be required. Accepts a internationalized string as Label.
-	 *                      }
+	 *              }
 	 */
 	$labels = apply_filters( 'el_db_column_labels', $labels );
 
