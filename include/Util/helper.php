@@ -249,3 +249,51 @@ function get_advanced_search_url() {
 
 	return add_query_arg( 'el_as', 1, $admin_url );
 }
+
+/**
+ * Gets the Column labels to be used in LogList table.
+ *
+ * @since 2.3.0
+ *
+ * @param string $db_column
+ *
+ * @return string
+ */
+function get_column_label_by_db_column( $db_column ) {
+	$labels = array(
+		'id'          => __( 'ID', 'email-log' ),
+		'sent_date'   => __( 'Sent at', 'email-log' ),
+		'to'          => __( 'To', 'email-log' ), // EmailLog\Core\UI\ListTable::get_columns() uses `to`
+		'to_email'    => __( 'To', 'email-log' ),
+		'subject'     => __( 'Subject', 'email-log' ),
+		'message'     => __( 'Message', 'email-log' ),
+		'from'        => __( 'From', 'email-log' ),
+		'cc'          => __( 'CC', 'email-log' ),
+		'bcc'         => __( 'BCC', 'email-log' ),
+		'reply-to'    => __( 'Reply To', 'email-log' ),
+		'attachments' => __( 'Attachment', 'email-log' ),
+		'attachment'  => __( 'Attachment', 'email-log' ),
+	);
+
+	/**
+	 * Filters the Labels used through out the Email Log plugin.
+	 *
+	 * @since 2.3.0
+	 *
+	 * @param array $labels {
+	 *                      List of DB Columns and its respective labels.
+	 *
+	 *                      Example:
+	 *                      'id'          => __( 'ID', 'email-log' ),
+	 *
+	 * @type string $key    DB Column or any key for which a Label would be required. Accepts a internationalized string as Label.
+	 *              }
+	 */
+	$labels = apply_filters( 'el_db_column_labels', $labels );
+
+	if ( array_key_exists( $db_column, $labels ) ) {
+		return $labels[ $db_column ];
+	}
+
+	return $db_column;
+}
