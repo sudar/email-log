@@ -1,21 +1,22 @@
-# Copyright (C) 2018 Email Log
+# Copyright (C) 2019 Email Log
 # This file is distributed under the same license as the Email Log package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Email Log 2.2.5\n"
+"Project-Id-Version: Email Log 2.3.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/email-log\n"
-"POT-Creation-Date: 2018-02-22 11:06:34+00:00\n"
+"POT-Creation-Date: 2019-04-11 11:03:17+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2018-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2019-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
 #: dist/email-log.php:49 email-log.php:49
 msgid ""
 "Email Log requires at least PHP 5.3 to function properly. Please upgrade PHP "
-"or use <a href=\"%s\">v1.9.1 of Email Log</a>."
+"or use <a href=\"%s\" target=\"_blank\" rel=\"noopener\">v1.9.1 of Email "
+"Log</a>."
 msgstr ""
 
 #: dist/include/Addon/API/EDDAPI.php:115 include/Addon/API/EDDAPI.php:115
@@ -64,37 +65,46 @@ msgstr ""
 msgid "You need an active license to use the add-on"
 msgstr ""
 
-#: dist/include/Addon/Addon.php:186 dist/include/Addon/License/Licenser.php:103
+#: dist/include/Addon/Addon.php:186 dist/include/Addon/License/Licenser.php:104
 #: include/Addon/Addon.php:186 include/Addon/License/Licenser.php:104
 msgid "Activate"
 msgstr ""
 
-#: dist/include/Addon/Addon.php:194 dist/include/Addon/License/Licenser.php:109
-#: include/Addon/Addon.php:194 include/Addon/License/Licenser.php:110
+#: dist/include/Addon/Addon.php:194 dist/include/Addon/License/Licenser.php:112
+#: include/Addon/Addon.php:194 include/Addon/License/Licenser.php:112
 msgid "Deactivate"
 msgstr ""
 
-#: dist/include/Addon/Addon.php:200 dist/include/Addon/License/Licenser.php:112
-#: include/Addon/Addon.php:200 include/Addon/License/Licenser.php:113
-msgid "Your license expires on %s"
+#. translators: 1 License expiry date, 2 License Renewal link
+#: dist/include/Addon/Addon.php:203 dist/include/Addon/License/Licenser.php:118
+#: include/Addon/Addon.php:203 include/Addon/License/Licenser.php:118
+msgid ""
+"Your license has expired on %1$s. Please <a href=\"%2$s\">renew it</a> to "
+"receive automatic updates and support."
 msgstr ""
 
-#: dist/include/Addon/Addon.php:205 include/Addon/Addon.php:205
+#. translators: 1 License expiry date
+#: dist/include/Addon/Addon.php:206 dist/include/Addon/License/Licenser.php:122
+#: include/Addon/Addon.php:206 include/Addon/License/Licenser.php:122
+msgid "Your license is valid till %s"
+msgstr ""
+
+#: dist/include/Addon/Addon.php:212 include/Addon/Addon.php:212
 msgid "Individual add-on license"
 msgstr ""
 
-#: dist/include/Addon/Addon.php:210 include/Addon/Addon.php:210
+#: dist/include/Addon/Addon.php:217 include/Addon/Addon.php:217
 msgid "Email Log License Key"
 msgstr ""
 
-#: dist/include/Addon/Addon.php:211 include/Addon/Addon.php:211
+#: dist/include/Addon/Addon.php:218 include/Addon/Addon.php:218
 msgid "%s Add-on License Key"
 msgstr ""
 
 #: dist/include/Addon/AddonList.php:177 include/Addon/AddonList.php:177
 msgid ""
-"We are not able to retrieve the add-on list now. Please visit the <a href="
-"\"%s\">add-on page</a> to view the add-ons."
+"We are not able to retrieve the add-on list now. Please visit the <a target="
+"\"_blank\" rel=\"noopener\" href=\"%s\">add-on page</a> to view the add-ons."
 msgstr ""
 
 #: dist/include/Addon/DependencyEnforcer.php:46
@@ -109,108 +119,127 @@ msgstr ""
 msgid "Please get the latest version of these add-ons from add-on store."
 msgstr ""
 
-#: dist/include/Addon/License/BaseLicense.php:124
-#: include/Addon/License/BaseLicense.php:124
-msgid "Your license key expired on %s."
+#. translators: 1 License expiry date, 2 License Renewal link
+#: dist/include/Addon/License/BaseLicense.php:173
+#: include/Addon/License/BaseLicense.php:173
+msgid ""
+"Your license key expired on %1$s. Please <a href=\"%2$s\">renew it</a> to "
+"receive automatic updates and support."
 msgstr ""
 
-#: dist/include/Addon/License/BaseLicense.php:130
-#: include/Addon/License/BaseLicense.php:130
+#: dist/include/Addon/License/BaseLicense.php:180
+#: include/Addon/License/BaseLicense.php:180
 msgid "Your license key has been disabled."
 msgstr ""
 
-#: dist/include/Addon/License/BaseLicense.php:134
-#: include/Addon/License/BaseLicense.php:134
+#: dist/include/Addon/License/BaseLicense.php:184
+#: include/Addon/License/BaseLicense.php:184
 msgid "Your license key is invalid."
 msgstr ""
 
-#: dist/include/Addon/License/BaseLicense.php:139
-#: include/Addon/License/BaseLicense.php:139
+#: dist/include/Addon/License/BaseLicense.php:189
+#: include/Addon/License/BaseLicense.php:189
 msgid "Your license is not active for this URL."
 msgstr ""
 
-#: dist/include/Addon/License/BaseLicense.php:143
-#: include/Addon/License/BaseLicense.php:143
+#. translators: 1 Add-on name
+#: dist/include/Addon/License/BaseLicense.php:194
+#: include/Addon/License/BaseLicense.php:194
 msgid "Your license key is not valid for %s."
 msgstr ""
 
-#: dist/include/Addon/License/BaseLicense.php:147
-#: include/Addon/License/BaseLicense.php:147
-msgid "Your license key has reached its activation limit."
+#. translators: 1 License Upgrade link
+#: dist/include/Addon/License/BaseLicense.php:200
+#: include/Addon/License/BaseLicense.php:200
+msgid ""
+"Your license key has reached its activation limit. Please <a href=\"%s"
+"\">upgrade</a> your license."
 msgstr ""
 
-#: dist/include/Addon/License/BaseLicense.php:151
-#: dist/include/Addon/License/BaseLicense.php:175
-#: include/Addon/License/BaseLicense.php:151
-#: include/Addon/License/BaseLicense.php:175
+#: dist/include/Addon/License/BaseLicense.php:206
+#: dist/include/Addon/License/BaseLicense.php:237
+#: include/Addon/License/BaseLicense.php:206
+#: include/Addon/License/BaseLicense.php:237
 msgid "An error occurred, please try again."
 msgstr ""
 
-#: dist/include/Addon/License/BaseLicense.php:199
-#: include/Addon/License/BaseLicense.php:199
+#: dist/include/Addon/License/BaseLicense.php:261
+#: include/Addon/License/BaseLicense.php:261
 msgid "An error occurred, please try again"
 msgstr ""
 
-#: dist/include/Addon/License/Licenser.php:121
-#: include/Addon/License/Licenser.php:122
+#: dist/include/Addon/License/Licenser.php:133
+#: include/Addon/License/Licenser.php:133
 msgid ""
 "Enter your license key to activate add-ons. If you don't have a license, "
 "then you can <a href='%s' target='_blank'>buy it</a>"
 msgstr ""
 
-#: dist/include/Addon/License/Licenser.php:130
-#: dist/include/Addon/License/Licenser.php:131
-#: include/Addon/License/Licenser.php:131
-#: include/Addon/License/Licenser.php:132
+#: dist/include/Addon/License/Licenser.php:142
+#: dist/include/Addon/License/Licenser.php:143
+#: include/Addon/License/Licenser.php:142
+#: include/Addon/License/Licenser.php:143
 msgid "Email Log Bundle License Key"
 msgstr ""
 
-#: dist/include/Addon/License/Licenser.php:159
-#: include/Addon/License/Licenser.php:182
+#: dist/include/Addon/License/Licenser.php:168
+#: include/Addon/License/Licenser.php:168
+msgid "Additional fields are available through More Fields add-on. "
+msgstr ""
+
+#: dist/include/Addon/License/Licenser.php:172
+#: include/Addon/License/Licenser.php:172
+msgid "Install it"
+msgstr ""
+
+#: dist/include/Addon/License/Licenser.php:176
+#: include/Addon/License/Licenser.php:176
+msgid "Buy Now"
+msgstr ""
+
+#: dist/include/Addon/License/Licenser.php:195
+#: include/Addon/License/Licenser.php:195
 msgid ""
 "Your license has been activated. You can now install add-ons, will receive "
 "automatic updates and access to email support."
 msgstr ""
 
-#: dist/include/Addon/License/Licenser.php:175
-#: include/Addon/License/Licenser.php:198
+#: dist/include/Addon/License/Licenser.php:211
+#: include/Addon/License/Licenser.php:211
 msgid ""
 "Your license has been deactivated. You will not receive automatic updates."
 msgstr ""
 
-#: dist/include/Addon/License/Licenser.php:218
-#: include/Addon/License/Licenser.php:241
+#: dist/include/Addon/License/Licenser.php:254
+#: include/Addon/License/Licenser.php:254
 msgid ""
 "Your license for %s has been activated. You will receive automatic updates "
 "and access to email support."
 msgstr ""
 
-#: dist/include/Addon/License/Licenser.php:245
-#: include/Addon/License/Licenser.php:268
+#: dist/include/Addon/License/Licenser.php:281
+#: include/Addon/License/Licenser.php:281
 msgid ""
 "Your license for %s has been deactivated. You will not receive automatic "
 "updates."
 msgstr ""
 
 #: dist/include/Core/Request/LogListAction.php:50
-#: dist/include/Core/UI/ListTable/LogListTable.php:70
-#: include/Core/Request/LogListAction.php:50
-#: include/Core/UI/ListTable/LogListTable.php:69
+#: dist/include/Util/helper.php:265 include/Core/Request/LogListAction.php:50
+#: include/Util/helper.php:265
 msgid "Sent at"
 msgstr ""
 
 #: dist/include/Core/Request/LogListAction.php:54
-#: dist/include/Core/UI/ListTable/LogListTable.php:71
-#: include/Core/Request/LogListAction.php:54
-#: include/Core/UI/ListTable/LogListTable.php:70
-#: tmp_addon/ForwardEmailSetting.php:32
+#: dist/include/Util/helper.php:266 dist/include/Util/helper.php:267
+#: include/Core/Request/LogListAction.php:54 include/Util/helper.php:266
+#: include/Util/helper.php:267
 msgid "To"
 msgstr ""
 
 #: dist/include/Core/Request/LogListAction.php:58
-#: dist/include/Core/UI/ListTable/LogListTable.php:72
-#: include/Core/Request/LogListAction.php:58
-#: include/Core/UI/ListTable/LogListTable.php:71
+#: dist/include/Util/helper.php:268 include/Core/Request/LogListAction.php:58
+#: include/Util/helper.php:268
 msgid "Subject"
 msgstr ""
 
@@ -229,13 +258,13 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: dist/include/Core/Request/LogListAction.php:164
-#: include/Core/Request/LogListAction.php:164
+#: dist/include/Core/Request/LogListAction.php:168
+#: include/Core/Request/LogListAction.php:168
 msgid "There was some problem in deleting the email logs"
 msgstr ""
 
-#: dist/include/Core/Request/LogListAction.php:168
-#: include/Core/Request/LogListAction.php:168
+#: dist/include/Core/Request/LogListAction.php:172
+#: include/Core/Request/LogListAction.php:172
 msgid "1 email log deleted."
 msgid_plural "%s email logs deleted"
 msgstr[0] ""
@@ -246,103 +275,103 @@ msgstr[1] ""
 msgid "Buy Addons"
 msgstr ""
 
-#: dist/include/Core/UI/Component/AdminUIEnhancer.php:83
+#: dist/include/Core/UI/Component/AdminUIEnhancer.php:85
 #: dist/include/Core/UI/Page/LogListPage.php:68
 #: dist/include/Core/UI/Page/LogListPage.php:69
-#: include/Core/UI/Component/AdminUIEnhancer.php:83
+#: include/Core/UI/Component/AdminUIEnhancer.php:85
 #: include/Core/UI/Page/LogListPage.php:68
 #: include/Core/UI/Page/LogListPage.php:69
 msgid "View Logs"
 msgstr ""
 
-#: dist/include/Core/UI/Component/AdminUIEnhancer.php:106
-#: include/Core/UI/Component/AdminUIEnhancer.php:106
+#: dist/include/Core/UI/Component/AdminUIEnhancer.php:86
+#: dist/include/Core/UI/Page/SettingsPage.php:94
+#: dist/include/Core/UI/Page/SettingsPage.php:95
+#: include/Core/UI/Component/AdminUIEnhancer.php:86
+#: include/Core/UI/Page/SettingsPage.php:94
+#: include/Core/UI/Page/SettingsPage.php:95
+msgid "Settings"
+msgstr ""
+
+#: dist/include/Core/UI/Component/AdminUIEnhancer.php:109
+#: include/Core/UI/Component/AdminUIEnhancer.php:109
 msgid "plugin"
 msgstr ""
 
-#: dist/include/Core/UI/Component/AdminUIEnhancer.php:106
-#: include/Core/UI/Component/AdminUIEnhancer.php:106
+#: dist/include/Core/UI/Component/AdminUIEnhancer.php:109
+#: include/Core/UI/Component/AdminUIEnhancer.php:109
 msgid "Version"
 msgstr ""
 
-#: dist/include/Core/UI/Component/AdminUIEnhancer.php:106
-#: include/Core/UI/Component/AdminUIEnhancer.php:106
+#: dist/include/Core/UI/Component/AdminUIEnhancer.php:109
+#: include/Core/UI/Component/AdminUIEnhancer.php:109
 msgid "by"
 msgstr ""
 
-#: dist/include/Core/UI/Component/DashboardWidget.php:29
-#: include/Core/UI/Component/DashboardWidget.php:29
+#: dist/include/Core/UI/Component/DashboardWidget.php:30
+#: include/Core/UI/Component/DashboardWidget.php:30
 msgid "Email Logs Summary"
 msgstr ""
 
-#: dist/include/Core/UI/Component/DashboardWidget.php:43
-#: include/Core/UI/Component/DashboardWidget.php:43
+#: dist/include/Core/UI/Component/DashboardWidget.php:44
+#: include/Core/UI/Component/DashboardWidget.php:44
 msgid "Total number of emails logged"
 msgstr ""
 
-#: dist/include/Core/UI/Component/DashboardWidget.php:47
-#: include/Core/UI/Component/DashboardWidget.php:47
+#: dist/include/Core/UI/Component/DashboardWidget.php:50
+#: include/Core/UI/Component/DashboardWidget.php:50
 msgid "<a href=\"%s\">Email Logs</a>"
 msgstr ""
 
-#: dist/include/Core/UI/Component/DashboardWidget.php:48
-#: include/Core/UI/Component/DashboardWidget.php:48
+#: dist/include/Core/UI/Component/DashboardWidget.php:51
+#: include/Core/UI/Component/DashboardWidget.php:51
 msgid "<a href=\"%s\">Settings</a>"
 msgstr ""
 
-#: dist/include/Core/UI/Component/DashboardWidget.php:49
-#: include/Core/UI/Component/DashboardWidget.php:49
+#: dist/include/Core/UI/Component/DashboardWidget.php:52
+#: include/Core/UI/Component/DashboardWidget.php:52
 msgid "<a href=\"%s\">Addons</a>"
 msgstr ""
 
-#: dist/include/Core/UI/ListTable/LogListTable.php:52
-msgid "Additional fields are available in Pro add-on. "
-msgstr ""
-
-#: dist/include/Core/UI/ListTable/LogListTable.php:54
-#: include/Addon/License/Licenser.php:163
-msgid "Buy Now"
-msgstr ""
-
-#: dist/include/Core/UI/ListTable/LogListTable.php:134
-#: include/Core/UI/ListTable/LogListTable.php:133
+#: dist/include/Core/UI/ListTable/LogListTable.php:138
+#: include/Core/UI/ListTable/LogListTable.php:138
 msgid "%s @ %s"
 msgstr ""
 
-#: dist/include/Core/UI/ListTable/LogListTable.php:152
-#: include/Core/UI/ListTable/LogListTable.php:151
+#: dist/include/Core/UI/ListTable/LogListTable.php:156
+#: include/Core/UI/ListTable/LogListTable.php:156
 msgid "Email Content"
 msgstr ""
 
-#: dist/include/Core/UI/ListTable/LogListTable.php:153
-#: include/Core/UI/ListTable/LogListTable.php:152
+#: dist/include/Core/UI/ListTable/LogListTable.php:157
+#: include/Core/UI/ListTable/LogListTable.php:157
 msgid "View Content"
 msgstr ""
 
-#: dist/include/Core/UI/ListTable/LogListTable.php:167
-#: dist/include/Core/UI/ListTable/LogListTable.php:239
-#: include/Core/UI/ListTable/LogListTable.php:166
-#: include/Core/UI/ListTable/LogListTable.php:238
+#: dist/include/Core/UI/ListTable/LogListTable.php:171
+#: dist/include/Core/UI/ListTable/LogListTable.php:252
+#: include/Core/UI/ListTable/LogListTable.php:171
+#: include/Core/UI/ListTable/LogListTable.php:252
 msgid "Delete"
 msgstr ""
 
-#: dist/include/Core/UI/ListTable/LogListTable.php:240
-#: include/Core/UI/ListTable/LogListTable.php:239
+#: dist/include/Core/UI/ListTable/LogListTable.php:253
+#: include/Core/UI/ListTable/LogListTable.php:253
 msgid "Delete All Logs"
 msgstr ""
 
-#: dist/include/Core/UI/ListTable/LogListTable.php:273
-#: include/Core/UI/ListTable/LogListTable.php:272
+#: dist/include/Core/UI/ListTable/LogListTable.php:286
+#: include/Core/UI/ListTable/LogListTable.php:286
 msgid "Your email log is empty"
 msgstr ""
 
-#: dist/include/Core/UI/ListTable/LogListTable.php:300
-#: include/Core/UI/ListTable/LogListTable.php:299
+#: dist/include/Core/UI/ListTable/LogListTable.php:313
+#: include/Core/UI/ListTable/LogListTable.php:313
 msgid "Search by date"
 msgstr ""
 
-#: dist/include/Core/UI/ListTable/LogListTable.php:301
-#: include/Core/UI/ListTable/LogListTable.php:300
+#: dist/include/Core/UI/ListTable/LogListTable.php:314
+#: include/Core/UI/ListTable/LogListTable.php:314
 msgid "Search by term"
 msgstr ""
 
@@ -389,15 +418,16 @@ msgstr ""
 #: dist/include/Core/UI/Page/BasePage.php:54
 #: include/Core/UI/Page/BasePage.php:54
 msgid ""
-"Check the <a href=\"%s\">documentation about the View Logs screen</a> for "
-"more details."
+"Check the <a target=\"_blank\" rel=\"noopener\" href=\"%s\">documentation "
+"about the View Logs screen</a> for more details."
 msgstr ""
 
 #: dist/include/Core/UI/Page/BasePage.php:60
 #: include/Core/UI/Page/BasePage.php:60
 msgid ""
 "You can perform advanced actions like re-sending email, automatically "
-"forwarding emails or export logs with our <a href=\"%s\">premium plugins</a>."
+"forwarding emails or export logs with our <a target=\"_blank\" rel=\"noopener"
+"\" href=\"%s\">premium plugins</a>."
 msgstr ""
 
 #: dist/include/Core/UI/Page/BasePage.php:67
@@ -420,7 +450,7 @@ msgstr ""
 msgid "Support"
 msgstr ""
 
-#. #-#-#-#-#  email-log.pot (Email Log 2.2.5)  #-#-#-#-#
+#. #-#-#-#-#  email-log.pot (Email Log 2.3.0)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 #: dist/include/Core/UI/Page/LogListPage.php:57
 #: dist/include/Core/UI/Page/LogListPage.php:58
@@ -439,16 +469,9 @@ msgstr ""
 msgid "Search Logs"
 msgstr ""
 
-#: dist/include/Core/UI/Page/LogListPage.php:130
-#: include/Core/UI/Page/LogListPage.php:130
+#: dist/include/Core/UI/Page/LogListPage.php:128
+#: include/Core/UI/Page/LogListPage.php:128
 msgid "Entries per page"
-msgstr ""
-
-#: dist/include/Core/UI/Page/SettingsPage.php:94
-#: dist/include/Core/UI/Page/SettingsPage.php:95
-#: include/Core/UI/Page/SettingsPage.php:94
-#: include/Core/UI/Page/SettingsPage.php:95
-msgid "Settings"
 msgstr ""
 
 #: dist/include/Core/UI/Page/SettingsPage.php:111
@@ -461,49 +484,170 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: dist/include/Core/UI/Setting/CoreSetting.php:14
-#: include/Core/UI/Setting/CoreSetting.php:14
+#: dist/include/Core/UI/Page/SystemInfoPage.php:41
+#: dist/include/Core/UI/Page/SystemInfoPage.php:42
+#: include/Core/UI/Page/SystemInfoPage.php:41
+#: include/Core/UI/Page/SystemInfoPage.php:42
+msgid "System Info"
+msgstr ""
+
+#: dist/include/Core/UI/Page/SystemInfoPage.php:70
+#: include/Core/UI/Page/SystemInfoPage.php:70
+msgid "Please include this information when posting support requests."
+msgstr ""
+
+#: dist/include/Core/UI/Page/SystemInfoPage.php:78
+#: include/Core/UI/Page/SystemInfoPage.php:78
+msgid ""
+"DISABLE_WP_CRON is <a href=\"%s\" rel=\"noopener\" target=\"_blank"
+"\">enabled</a>. This prevents scheduler from running."
+msgstr ""
+
+#: dist/include/Core/UI/Page/SystemInfoPage.php:84
+#: include/Core/UI/Page/SystemInfoPage.php:84
+msgid "Email Log  - System Info"
+msgstr ""
+
+#: dist/include/Core/UI/Page/SystemInfoPage.php:94
+#: include/Core/UI/Page/SystemInfoPage.php:94
+msgid "Download System Info File"
+msgstr ""
+
+#: dist/include/Core/UI/Setting/CoreSetting.php:16
+#: include/Core/UI/Setting/CoreSetting.php:16
 msgid "Core Email Log Settings"
 msgstr ""
 
-#: dist/include/Core/UI/Setting/CoreSetting.php:18
-#: include/Core/UI/Setting/CoreSetting.php:18
+#: dist/include/Core/UI/Setting/CoreSetting.php:20
+#: include/Core/UI/Setting/CoreSetting.php:20
 msgid "Allowed User Roles"
 msgstr ""
 
-#: dist/include/Core/UI/Setting/CoreSetting.php:19
-#: include/Core/UI/Setting/CoreSetting.php:19
+#: dist/include/Core/UI/Setting/CoreSetting.php:21
+#: include/Core/UI/Setting/CoreSetting.php:21
 msgid "Remove Data on Uninstall?"
 msgstr ""
 
-#: dist/include/Core/UI/Setting/CoreSetting.php:58
-#: include/Core/UI/Setting/CoreSetting.php:58
-msgid "Administrator"
+#: dist/include/Core/UI/Setting/CoreSetting.php:22
+#: include/Core/UI/Setting/CoreSetting.php:22
+msgid "Disable Dashboard Widget"
 msgstr ""
 
-#: dist/include/Core/UI/Setting/CoreSetting.php:72
-#: include/Core/UI/Setting/CoreSetting.php:72
-msgid ""
-"<strong>Note:</strong> Users with the above User Roles can view Email Logs."
+#: dist/include/Core/UI/Setting/CoreSetting.php:23
+#: include/Core/UI/Setting/CoreSetting.php:23
+msgid "Database Size Notification"
 msgstr ""
 
 #: dist/include/Core/UI/Setting/CoreSetting.php:73
 #: include/Core/UI/Setting/CoreSetting.php:73
+msgid "Administrator"
+msgstr ""
+
+#: dist/include/Core/UI/Setting/CoreSetting.php:87
+#: include/Core/UI/Setting/CoreSetting.php:87
+msgid ""
+"<strong>Note:</strong> Users with the above User Roles can view Email Logs."
+msgstr ""
+
+#: dist/include/Core/UI/Setting/CoreSetting.php:88
+#: include/Core/UI/Setting/CoreSetting.php:88
 msgid "Administrator role always has access and cannot be disabled."
 msgstr ""
 
-#: dist/include/Core/UI/Setting/CoreSetting.php:108
-#: include/Core/UI/Setting/CoreSetting.php:108
+#: dist/include/Core/UI/Setting/CoreSetting.php:123
+#: include/Core/UI/Setting/CoreSetting.php:123
 msgid ""
 "Check this box if you would like to completely remove all of its data when "
 "the plugin is deleted."
 msgstr ""
 
-#: dist/include/Core/UI/Setting/CoreSetting.php:113
-#: include/Core/UI/Setting/CoreSetting.php:113
+#: dist/include/Core/UI/Setting/CoreSetting.php:128
+#: include/Core/UI/Setting/CoreSetting.php:128
 msgid ""
 "<strong>Note:</strong> You can also export the Email Logs using our <a href="
 "\"%s\" rel=\"noopener noreferrer\" target=\"_blank\">Export Logs</a> add-on."
+msgstr ""
+
+#: dist/include/Core/UI/Setting/CoreSetting.php:216
+#: include/Core/UI/Setting/CoreSetting.php:216
+msgid "Check this box if you would like to disable dashboard widget."
+msgstr ""
+
+#: dist/include/Core/UI/Setting/CoreSetting.php:221
+#: include/Core/UI/Setting/CoreSetting.php:221
+msgid ""
+"<strong>Note:</strong> Each users can also disable dashboard widget using "
+"screen options"
+msgstr ""
+
+#: dist/include/Core/UI/Setting/CoreSetting.php:262
+#: include/Core/UI/Setting/CoreSetting.php:262
+msgid "Notify %1$s if there are more than %2$s logs."
+msgstr ""
+
+#: dist/include/Core/UI/Setting/CoreSetting.php:270
+#: include/Core/UI/Setting/CoreSetting.php:270
+msgid "%1$s There are %2$s email logs currently logged in the database."
+msgstr ""
+
+#: dist/include/Core/UI/Setting/CoreSetting.php:279
+#: include/Core/UI/Setting/CoreSetting.php:279
+msgid ""
+"Last notification email was sent on %1$s. Click %2$s button to reset sending "
+"the notification."
+msgstr ""
+
+#: dist/include/Core/UI/Setting/CoreSetting.php:434
+#: include/Core/UI/Setting/CoreSetting.php:434
+msgid "Email Log Plugin: Your log threshold of %s has been met"
+msgstr ""
+
+#: dist/include/Core/UI/Setting/CoreSetting.php:486
+#: include/Core/UI/Setting/CoreSetting.php:486
+msgid ""
+"Currently there are %1$s logged, which is more than the threshold that is "
+"set in the %2$s screen. You can delete some logs or increase the threshold. "
+"You can also use our %3$s add-on to automatically delete logs"
+msgstr ""
+
+#: dist/include/Core/UI/Setting/CoreSetting.php:487
+#: include/Core/UI/Setting/CoreSetting.php:487
+msgid " email log"
+msgid_plural " email logs"
+msgstr[0] ""
+msgstr[1] ""
+
+#: dist/include/Util/helper.php:161 include/Util/helper.php:161
+msgid "Auto delete logs cron will be triggered next at"
+msgstr ""
+
+#: dist/include/Util/helper.php:264 include/Util/helper.php:264
+msgid "ID"
+msgstr ""
+
+#: dist/include/Util/helper.php:269 include/Util/helper.php:269
+msgid "Message"
+msgstr ""
+
+#: dist/include/Util/helper.php:270 include/Util/helper.php:270
+msgid "From"
+msgstr ""
+
+#: dist/include/Util/helper.php:271 include/Util/helper.php:271
+msgid "CC"
+msgstr ""
+
+#: dist/include/Util/helper.php:272 include/Util/helper.php:272
+msgid "BCC"
+msgstr ""
+
+#: dist/include/Util/helper.php:273 include/Util/helper.php:273
+msgid "Reply To"
+msgstr ""
+
+#: dist/include/Util/helper.php:274 dist/include/Util/helper.php:275
+#: include/Util/helper.php:274 include/Util/helper.php:275
+msgid "Attachment"
 msgstr ""
 
 #: dist/include/libraries/EDD_SL_Plugin_Updater.php:201
@@ -527,139 +671,6 @@ msgstr ""
 #: dist/include/libraries/EDD_SL_Plugin_Updater.php:399
 #: include/libraries/EDD_SL_Plugin_Updater.php:399
 msgid "Error"
-msgstr ""
-
-#: include/Addon/License/Licenser.php:155
-msgid "Additional fields are available through More Fields add-on. "
-msgstr ""
-
-#: include/Addon/License/Licenser.php:159
-msgid "Install it"
-msgstr ""
-
-#: tmp_addon/AutoDeleteLogsSetting.php:15
-msgid "Auto Delete Logs Add-on Settings"
-msgstr ""
-
-#: tmp_addon/AutoDeleteLogsSetting.php:24
-msgid ""
-"Auto Delete Logs allows you to automatically delete logs that are older than "
-"specified interval (in days)."
-msgstr ""
-
-#: tmp_addon/AutoDeleteLogsSetting.php:25
-msgid "Specify the interval beyond which the logs are to be auto deleted."
-msgstr ""
-
-#: tmp_addon/AutoDeleteLogsSetting.php:34
-msgid "Interval"
-msgstr ""
-
-#: tmp_addon/AutoDeleteLogsSetting.php:58
-msgid "Specify the interval in days."
-msgstr ""
-
-#: tmp_addon/EmailLogAddonActivator.php:94
-msgid "This plugin"
-msgstr ""
-
-#: tmp_addon/EmailLogAddonActivator.php:144
-msgid ""
-"requires at least PHP %1$s or above! You are currently using PHP %2$s, which "
-"is very old. Please contact your web host and upgrade PHP."
-msgstr ""
-
-#: tmp_addon/EmailLogAddonActivator.php:157
-msgid "activate it"
-msgstr ""
-
-#: tmp_addon/EmailLogAddonActivator.php:160
-msgid "install it"
-msgstr ""
-
-#: tmp_addon/EmailLogAddonActivator.php:165
-msgid "requires Email Log! Please %s to continue!"
-msgstr ""
-
-#: tmp_addon/EmailLogAddonActivator.php:174
-msgid "update it"
-msgstr ""
-
-#: tmp_addon/EmailLogAddonActivator.php:178
-msgid "requires Email Log version %s or above! Please %s to continue!"
-msgstr ""
-
-#: tmp_addon/ExportLogsAddon.php:50
-msgid "Export"
-msgstr ""
-
-#: tmp_addon/ExportLogsAddon.php:51
-msgid "Export All Logs"
-msgstr ""
-
-#: tmp_addon/ForwardEmailSetting.php:15
-msgid "Forward Email Add-on Settings"
-msgstr ""
-
-#: tmp_addon/ForwardEmailSetting.php:22
-msgid ""
-"Forward Email add-on allows you to automatically send a copy of all emails "
-"generated by WordPress to other email addresses."
-msgstr ""
-
-#: tmp_addon/ForwardEmailSetting.php:23
-msgid ""
-"Specify the list of email addresses to which the emails should be forwarded."
-msgstr ""
-
-#: tmp_addon/ForwardEmailSetting.php:33 tmp_addon/MoreFieldsAddon.php:46
-#: tmp_addon/ResendEmailAddon.php:113
-msgid "CC"
-msgstr ""
-
-#: tmp_addon/ForwardEmailSetting.php:34 tmp_addon/MoreFieldsAddon.php:47
-#: tmp_addon/ResendEmailAddon.php:117
-msgid "BCC"
-msgstr ""
-
-#: tmp_addon/ForwardEmailSetting.php:58
-msgid "You can enter multiple email address by separating them with comma."
-msgstr ""
-
-#: tmp_addon/MoreFieldsAddon.php:45 tmp_addon/ResendEmailAddon.php:109
-msgid "From"
-msgstr ""
-
-#: tmp_addon/MoreFieldsAddon.php:48 tmp_addon/ResendEmailAddon.php:121
-msgid "Reply To"
-msgstr ""
-
-#: tmp_addon/MoreFieldsAddon.php:49
-msgid "Attachment"
-msgstr ""
-
-#: tmp_addon/ResendEmailAddon.php:48 tmp_addon/ResendEmailAddon.php:129
-msgid "Resend Email"
-msgstr ""
-
-#: tmp_addon/ResendEmailAddon.php:90
-msgid "Email Details"
-msgstr ""
-
-#: tmp_addon/ResendEmailAddon.php:106
-msgid "Additional Details"
-msgstr ""
-
-#: tmp_addon/ResendEmailAddon.php:125
-msgid "Content Type"
-msgstr ""
-
-#: tmp_addon/ResendEmailAddon.php:193
-msgid "Email was successfully resent"
-msgstr ""
-
-#: tmp_addon/ResendEmailAddon.php:195
-msgid "There was some problem in sending the email"
 msgstr ""
 
 #: vendor/lucatume/wp-browser/src/data/plugins/wordpress-importer/parsers.php:42
@@ -871,6 +882,12 @@ msgstr ""
 msgid ""
 "Import <strong>posts, pages, comments, custom fields, categories, and tags</"
 "strong> from a WordPress export file."
+msgstr ""
+
+#: vendor/sudar/wp-system-info/src/SystemInfo.php:78
+msgid ""
+"To copy the system info, click below then press Ctrl + C (PC) or Cmd + C "
+"(Mac)."
 msgstr ""
 
 #. Plugin URI of the plugin/theme
