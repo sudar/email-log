@@ -1,5 +1,19 @@
 ## Changelog ##
 
+### v2.3.0 - (2019-04-11) ###
+
+- New: The 'To' and 'Subject' fields now supports text upto 500 characters.
+- New: Store the name of the attachment file if present.
+- New: Store ip address of the request that triggered the email.
+- New: Setting to enable notification when the number of email logs reach a threshold.
+- New: Dashboard Widget - Provide an option to hide Dashboard Widget from all users.
+- Tweak: Dashboard Widget - Add thousand separator for logs count.
+- Tweak: Improve preview of HTML emails.
+- Tweak: Enhanced the output of System Info page.
+- Fix: Deleting logs in bulk was not working.
+- Fix: Added compatibility with wp-ses plugin.
+- Fix: Added the ability to deactivate expired license.
+
 ### v2.2.5 - (2018-02-22) ###
 - Tweak: Show Dashboard Widget only if the user can view email logs.
 
