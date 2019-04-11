@@ -189,6 +189,9 @@
 
 ## Upgrade Notice ##
 
+### 2.3.0 ###
+The 'To' and 'Subject' fields now supports text upto 500 characters.
+
 ### 2.2.5 ###
 Hide Dashboard Widget for users who can't view email logs.
 
