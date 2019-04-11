@@ -23,13 +23,6 @@ abstract class BaseLicense {
 	protected $edd_api;
 
 	/**
-	 * Is the license activated and valid?
-	 *
-	 * @return bool True if license is active, False otherwise.
-	 */
-	abstract public function is_valid();
-
-	/**
 	 * Get the option name in which license data will be stored.
 	 *
 	 * @return string Option name.
@@ -100,6 +93,61 @@ abstract class BaseLicense {
 	}
 
 	/**
+	 * Has the bundle license expired?
+	 *
+	 * @since 2.3.0
+	 *
+	 * @return bool True if expired, False otherwise.
+	 */
+	public function has_expired() {
+		$is_valid = $this->is_valid();
+
+		if ( ! $is_valid ) {
+			return true;
+		}
+
+		$expiry_date = $this->get_expiry_date();
+
+		if ( ! $expiry_date ) {
+			return true;
+		}
+
+		return ( strtotime( $expiry_date ) < time() );
+	}
+
+	/**
+	 * Is the license activated and valid?
+	 *
+	 * @since 2.3.0 Moved to BaseLicense class.
+	 *
+	 * @return bool True if license is active, False otherwise.
+	 */
+	public function is_valid() {
+		if ( ! $this->license_data instanceof \stdClass || ! isset( $this->license_data->license ) ) {
+			return false;
+		}
+
+		return ( 'valid' === $this->license_data->license );
+	}
+
+	/**
+	 * Get the renewal link for bundle license.
+	 *
+	 * @since 2.3.0
+	 *
+	 * @return string Renewal link.
+	 */
+	public function get_renewal_link() {
+		$license_key = $this->get_license_key();
+
+		if ( empty( $license_key ) ) {
+			return 'https://wpemaillog.com/store/?utm_campaign=Renewal&utm_medium=wpadmin&utm_source=renewal-notice';
+		}
+
+		return sprintf( 'https://wpemaillog.com/checkout/?edd_license_key=%s&utm_campaign=Renewal&utm_medium=wpadmin&utm_source=renewal-notice', $license_key );
+	}
+
+	/**
 	 * Activate License by calling EDD API.
 	 * The license data returned by API is stored in an option.
 	 *
@@ -121,34 +169,41 @@ abstract class BaseLicense {
 		switch ( $response->error ) {
 			case 'expired':
 				$message = sprintf(
-					__( 'Your license key expired on %s.' , 'email-log'),
-					date_i18n( get_option( 'date_format' ), strtotime( $response->expires, current_time( 'timestamp' ) ) )
+					/* translators: 1 License expiry date, 2 License Renewal link */
+					__( 'Your license key expired on %1$s. Please <a href="%2$s">renew it</a> to receive automatic updates and support.', 'email-log' ),
+					date_i18n( get_option( 'date_format' ), strtotime( $response->expires, current_time( 'timestamp' ) ) ),
+					'https://wpemaillog.com/checkout/?edd_license_key=' . $this->get_license_key() . '&utm_campaign=Renewal&utm_medium=wpadmin&utm_source=activation-failed'
 				);
 				break;
 
 			case 'revoked':
-				$message = __( 'Your license key has been disabled.' , 'email-log');
+				$message = __( 'Your license key has been disabled.', 'email-log' );
 				break;
 
 			case 'missing':
-				$message = __( 'Your license key is invalid.' , 'email-log');
+				$message = __( 'Your license key is invalid.', 'email-log' );
 				break;
 
 			case 'invalid':
 			case 'site_inactive':
-				$message = __( 'Your license is not active for this URL.' , 'email-log');
+				$message = __( 'Your license is not active for this URL.', 'email-log' );
 				break;
 
 			case 'item_name_mismatch':
-				$message = sprintf( __( 'Your license key is not valid for %s.' , 'email-log'), $this->get_addon_name() );
+				/* translators: 1 Add-on name */
+				$message = sprintf( __( 'Your license key is not valid for %s.', 'email-log' ), $this->get_addon_name() );
 				break;
 
 			case 'no_activations_left':
-				$message = __( 'Your license key has reached its activation limit.' , 'email-log');
+				$message = sprintf(
+					/* translators: 1 License Upgrade link */
+					__( 'Your license key has reached its activation limit. Please <a href="%s">upgrade</a> your license.', 'email-log' ),
+					'https://wpemaillog.com/account/?utm_campaign=Upgrade&utm_medium=wpadmin&utm_source=activation-failed'
+				);
 				break;
 
 			default:
-				$message = __( 'An error occurred, please try again.' , 'email-log');
+				$message = __( 'An error occurred, please try again.', 'email-log' );
 				break;
 		}
 
@@ -167,6 +222,13 @@ abstract class BaseLicense {
 		$response = $this->edd_api->deactivate_license( $this->get_license_key(), $this->get_addon_name() );
 
 		if ( $response->success && 'deactivated' === $response->license ) {
+			$this->clear();
+
+			return $response;
+		}
+
+		if ( $response->expires < time() ) {
+			// license has expired. Expired license can't be de-activated. So let's just clear it.
 			$this->clear();
 
 			return $response;

@@ -65,7 +65,7 @@ class AdminUIEnhancer {
 	 */
 	public function insert_addon_store_link( $links, $file ) {
 		if ( $file === $this->plugin_basename ) {
-			$links[] = '<a href="https://wpemaillog.com/store/?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=plugin-page" target="_blank">' .
+			$links[] = '<a href="https://wpemaillog.com/store/?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=plugin-page" rel="noopener" target="_blank">' .
 			           __( 'Buy Addons', 'email-log' ) . '</a>';
 		}
 
@@ -75,13 +75,16 @@ class AdminUIEnhancer {
 	/**
 	 * Add link to 'View logs' page in plugin listing page.
 	 *
+	 * @since 2.4.0 Added Settings link.
+	 *
 	 * @param array $links List of links.
 	 *
 	 * @return array Modified list of links.
 	 */
 	public function insert_view_logs_link( $links ) {
-		$settings_link = '<a href="admin.php?page=email-log">' . __( 'View Logs', 'email-log' ) . '</a>';
-		array_unshift( $links, $settings_link );
+		$view_logs_link = '<a href="admin.php?page=email-log">' . __( 'View Logs', 'email-log' ) . '</a>';
+		$settings_link  = '<a href="admin.php?page=email-log-settings">' . __( 'Settings', 'email-log' ) . '</a>';
+		array_unshift( $links, $view_logs_link, $settings_link );
 
 		return $links;
 	}

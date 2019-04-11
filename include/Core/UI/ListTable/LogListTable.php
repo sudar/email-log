@@ -1,5 +1,7 @@
 <?php namespace EmailLog\Core\UI\ListTable;
 
+use EmailLog\Util;
+
 if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once ABSPATH . WPINC . '/class-wp-list-table.php';
 }
@@ -59,16 +61,19 @@ class LogListTable extends \WP_List_Table {
 	/**
 	 * Returns the list of column and title names.
 	 *
+	 * @since 2.3.0 Retrieve Column labels using Utility methods.
 	 * @see WP_List_Table::single_row_columns()
+	 *
+	 * @uses \EmailLog\Util\get_column_label_by_column()
 	 *
 	 * @return array An associative array containing column information: 'slugs'=>'Visible Titles'.
 	 */
 	public function get_columns() {
 		$columns = array(
 			'cb'        => '<input type="checkbox" />', // Render a checkbox instead of text.
-			'sent_date' => __( 'Sent at', 'email-log' ),
-			'to'        => __( 'To', 'email-log' ),
-			'subject'   => __( 'Subject', 'email-log' ),
+			'sent_date' => Util\get_column_label_by_db_column( 'sent_date' ),
+			'to'        => Util\get_column_label_by_db_column( 'to' ),
+			'subject'   => Util\get_column_label_by_db_column( 'subject' ),
 		);
 
 		/**
@@ -193,7 +198,16 @@ class LogListTable extends \WP_List_Table {
 	 * @return string
 	 */
 	protected function column_to( $item ) {
-		return esc_html( $item->to_email );
+		/**
+		 * Filters the `To` field before outputting on the table.
+		 *
+		 * @since 2.3.0
+		 *
+		 * @param string $email `To` field
+		 */
+		$email = apply_filters( 'el_row_email', esc_html( $item->to_email ) );
+
+		return $email;
 	}
 
 	/**
