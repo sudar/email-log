@@ -6,7 +6,7 @@
                 "slug": "more-fields",
                 "title": "More Fields",
                 "create_date": "2017-03-07 11:50:43",
-                "modified_date": "2017-09-21 10:02:24",
+                "modified_date": "2018-02-13 14:48:45",
                 "status": "publish",
                 "link": "http:\/\/wpemaillog.com\/?post_type=download&p=18",
                 "content": "More Fields add-on shows additional fields about the email in the email log list page. The following are the additional fields that are added by this add-on.\r\n<ul>\r\n \t<li>From<\/li>\r\n \t<li>CC<\/li>\r\n \t<li>BCC<\/li>\r\n \t<li>Reply To<\/li>\r\n \t<li>Attachment<\/li>\r\n<\/ul>\r\nThese additional fields will allow you to see more information about the logged email.\r\n<h3>Screenshots<\/h3>\r\n[gallery columns=\"2\" ids=\"974,975\"]",
@@ -48,10 +48,10 @@
                 "slug": "resend-email",
                 "title": "Resend Email",
                 "create_date": "2017-03-07 11:40:25",
-                "modified_date": "2017-09-21 09:46:59",
+                "modified_date": "2019-03-17 18:45:17",
                 "status": "publish",
                 "link": "http:\/\/wpemaillog.com\/?post_type=download&p=16",
-                "content": "Resend Email add-on allows you to resend the entire email directly from the email log. Before re-sending the email, this\u00a0add-on allows you to modify the different fields before re-sending the email.\r\n<h3>Screenshots<\/h3>\r\n[gallery ids=\"980,981,982,983,984\"]",
+                "content": "Resend Email add-on allows you to resend the entire email directly from the email log. Before re-sending the email, this\u00a0add-on allows you to modify the different fields before re-sending the email.\r\n\r\nYou can also resend all emails or only selected emails in bulk in addition to individually re-sending them.\r\n<h3>Screenshots<\/h3>\r\n[gallery ids=\"980,981,982,983,984\"]",
                 "excerpt": "Resend Email add-on allows you to resend the entire email directly from the email log. You can also modify the different fields before re-sending the email.",
                 "thumbnail": "https:\/\/wpemaillog.com\/wp-content\/uploads\/edd\/2016\/11\/resend-email-addon.png",
                 "category": [
@@ -70,7 +70,7 @@
                 ],
                 "tags": false,
                 "permalink": "https:\/\/wpemaillog.com\/addons\/resend-email\/",
-                "version": "2.0.2"
+                "version": "2.1.2"
             },
             "pricing": {
                 "singlesite": "19.00",
@@ -79,7 +79,7 @@
             },
             "licensing": {
                 "enabled": true,
-                "version": "2.0.2",
+                "version": "2.1.2",
                 "exp_unit": "years",
                 "exp_length": "1"
             }
@@ -90,7 +90,7 @@
                 "slug": "forward-email",
                 "title": "Forward Email",
                 "create_date": "2017-03-07 11:30:56",
-                "modified_date": "2017-09-21 09:26:45",
+                "modified_date": "2018-02-13 14:50:29",
                 "status": "publish",
                 "link": "http:\/\/wpemaillog.com\/?post_type=download&p=20",
                 "content": "Forward Email add-on allows you to send a copy of all the emails send from WordPress, to another email address. The add-on allows you to choose whether you want to forward through to, cc or bcc fields. This can be extremely useful when you want to debug by analyzing the emails that are sent from WordPress.\r\n<h3>Screenshots<\/h3>\r\n[gallery ids=\"987,988,989\"]",
@@ -132,10 +132,10 @@
                 "slug": "auto-delete-logs",
                 "title": "Auto Delete Logs",
                 "create_date": "2017-03-07 11:30:56",
-                "modified_date": "2017-07-15 09:13:31",
+                "modified_date": "2019-01-03 18:15:51",
                 "status": "publish",
                 "link": "https:\/\/wpemaillog.com\/?post_type=download&p=311",
-                "content": "The Auto Delete Logs add-on allows you to automatically delete logs based on a schedule.\r\n<h3>Screenshots<\/h3>\r\n[gallery columns=\"2\" ids=\"991,992\"]",
+                "content": "The Auto Delete Logs add-on allows you to automatically delete logs based on a schedule.\r\n<h3>Screenshots<\/h3>\r\n[gallery columns=\"2\" ids=\"791182, 791183\"]",
                 "excerpt": "The Auto Delete Logs add-on allows you to automatically delete logs based on a schedule.",
                 "thumbnail": "https:\/\/wpemaillog.com\/wp-content\/uploads\/edd\/2017\/03\/delete-logs-addon.png",
                 "category": [
@@ -154,7 +154,7 @@
                 ],
                 "tags": false,
                 "permalink": "https:\/\/wpemaillog.com\/addons\/auto-delete-logs\/",
-                "version": "1.0.0"
+                "version": "1.1.0"
             },
             "pricing": {
                 "singlesite": "19.00",
@@ -163,7 +163,7 @@
             },
             "licensing": {
                 "enabled": true,
-                "version": "1.0.0",
+                "version": "1.1.0",
                 "exp_unit": "years",
                 "exp_length": "1"
             }
@@ -174,10 +174,10 @@
                 "slug": "export-logs",
                 "title": "Export Logs",
                 "create_date": "2017-03-07 11:20:12",
-                "modified_date": "2017-11-08 23:46:42",
+                "modified_date": "2019-04-11 10:47:40",
                 "status": "publish",
                 "link": "https:\/\/wpemaillog.com\/?post_type=download&p=308",
-                "content": "Export Logs add-on allows you to export the logged email logs as a csv file. The exported logs can be used for further processing or for record keeping.\r\n<h3>Screenshots<\/h3>\r\n[gallery ids=\"965,966,967,968\"]",
+                "content": "Export Logs add-on allows you to export the logged email logs as a csv file. The exported logs can be used for further processing or for record keeping.\r\n<h3>Screenshots<\/h3>\r\n[gallery ids=\"965,966,967,968, 791221\"]",
                 "excerpt": "Export Logs add-on allows you to export the logged email logs for further processing or record keeping.",
                 "thumbnail": "https:\/\/wpemaillog.com\/wp-content\/uploads\/edd\/2017\/03\/export-logs-addon.png",
                 "category": [
@@ -196,7 +196,7 @@
                 ],
                 "tags": false,
                 "permalink": "https:\/\/wpemaillog.com\/addons\/export-logs\/",
-                "version": "1.1.0"
+                "version": "1.2.1"
             },
             "pricing": {
                 "singlesite": "19.00",
@@ -205,11 +205,11 @@
             },
             "licensing": {
                 "enabled": true,
-                "version": "1.1.0",
+                "version": "1.2.1",
                 "exp_unit": "years",
                 "exp_length": "1"
             }
         }
     ],
-    "request_speed": 0.010409116744995117
+    "request_speed": 0.00640106201171875
 }
