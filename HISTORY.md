@@ -1,5 +1,8 @@
 ## Changelog ##
 
+### v2.3.1 – (2019-04-11) ###
+- Fix: Added a missing file that broke v2.3.1 release for some installations.
+
 ### v2.3.0 - (2019-04-11) ###
 
 - New: The 'To' and 'Subject' fields now supports text upto 500 characters.

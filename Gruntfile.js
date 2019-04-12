@@ -46,7 +46,7 @@ module.exports = function( grunt ) {
 							'!.idea/**',
 							'!tags',
 							'!vendor/**',
-							'vendor/sudar/wp-system-info/*'
+							"vendor/sudar/wp-system-info/**"
 						],
 						dest: 'dist/'
 					}

@@ -1,7 +1,7 @@
 {
   "name": "email-log",
   "description": "Email Log is a WordPress Plugin that logs every email sent through WordPress.",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "authors": [
     {
       "name": "Sudar Muthu",
