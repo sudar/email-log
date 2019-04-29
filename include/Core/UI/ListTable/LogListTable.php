@@ -59,16 +59,19 @@ class LogListTable extends \WP_List_Table {
 	/**
 	 * Returns the list of column and title names.
 	 *
+	 * @since 2.4.0 Added `sent_status` column.
+	 *
 	 * @see WP_List_Table::single_row_columns()
 	 *
 	 * @return array An associative array containing column information: 'slugs'=>'Visible Titles'.
 	 */
 	public function get_columns() {
 		$columns = array(
-			'cb'        => '<input type="checkbox" />', // Render a checkbox instead of text.
-			'sent_date' => __( 'Sent at', 'email-log' ),
-			'to'        => __( 'To', 'email-log' ),
-			'subject'   => __( 'Subject', 'email-log' ),
+			'cb'          => '<input type="checkbox" />', // Render a checkbox instead of text.
+			'sent_date'   => __( 'Sent at', 'email-log' ),
+			'sent_status' => __( 'Sent status', 'email-log' ),
+			'to'          => __( 'To', 'email-log' ),
+			'subject'     => __( 'Subject', 'email-log' ),
 		);
 
 		/**
@@ -224,6 +227,25 @@ class LogListTable extends \WP_List_Table {
 			/*$1%s*/ $this->_args['singular'],
 			/*$2%s*/ $item->id
 		);
+	}
+
+	/**
+	 * Markup for Status column.
+	 *
+	 * @since 2.4.0
+	 *
+	 * @access protected
+	 *
+	 * @param object $item
+	 *
+	 * @return string
+	 */
+	protected function column_sent_status( $item ) {
+		if ( 1 === absint( $item->result ) ) {
+			return \EmailLog\Util\get_email_sent_svg();
+		}
+
+		return \EmailLog\Util\get_email_failed_svg();
 	}
 
 	/**
