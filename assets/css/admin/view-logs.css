@@ -32,3 +32,11 @@
 	padding-bottom: 10px !important; /* Override the default Thickbox css values. */
 	overflow: hidden !important; /* Override the default Thickbox css values. */
 }
+
+svg.el_sent_status--sent {
+	fill: #00C853;
+}
+
+svg.el_sent_status--failed {
+	fill: #E53935;
+}
