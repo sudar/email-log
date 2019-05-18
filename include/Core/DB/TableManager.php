@@ -189,6 +189,21 @@ class TableManager implements Loadie {
 			$query .= " where id IN ( {$ids_list} )";
 		}
 
+		$per_batch = 10000;
+		$offset    = 0;
+
+		if ( isset( $additional_args['per_batch'] ) &&
+		     absint( $additional_args['per_batch'] > 0 ) ) {
+			$per_batch = $additional_args['per_batch'];
+		}
+
+		if ( isset( $additional_args['offset'] ) &&
+		     absint( $additional_args['offset'] > 0 ) ) {
+			$offset = $additional_args['offset'];
+		}
+
+		$query .= " LIMIT {$offset}, {$per_batch}";
+
 		return $wpdb->get_results( $query, 'ARRAY_A' ); //@codingStandardsIgnoreLine
 	}
 
