@@ -192,15 +192,8 @@ class TableManager implements Loadie {
 		$per_batch = 10000;
 		$offset    = 0;
 
-		if ( isset( $additional_args['per_batch'] ) &&
-		     absint( $additional_args['per_batch'] > 0 ) ) {
-			$per_batch = $additional_args['per_batch'];
-		}
-
-		if ( isset( $additional_args['offset'] ) &&
-		     absint( $additional_args['offset'] > 0 ) ) {
-			$offset = $additional_args['offset'];
-		}
+		$per_batch = Util\el_array_get( $additional_args, 'per_batch', $per_batch );
+		$offset    = Util\el_array_get( $additional_args, 'offset', $offset );
 
 		$query .= " LIMIT {$offset}, {$per_batch}";
 
