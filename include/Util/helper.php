@@ -297,3 +297,28 @@ function get_column_label_by_db_column( $db_column ) {
 
 	return $db_column;
 }
+
+/**
+ * Returns an array of Email Log columns.
+ *
+ * Keys are the column names in the DB.
+ * This holds true except for CC, BCC & Reply To as they are put under one column `headers`.
+ *
+ * @since 2.4.0
+ *
+ * @return array Key value pair of Email Log columns.
+ */
+function get_email_log_columns() {
+	return array(
+		'sent_date'   => __( 'Sent at', '' ),
+		'to_email'    => __( 'To', '' ),
+		'subject'     => __( 'Subject', '' ),
+		'from'        => __( 'From', '' ),
+		'cc'          => __( 'CC', '' ),
+		'bcc'         => __( 'BCC', '' ),
+		'reply_to'    => __( 'Reply To', '' ),
+		'message'     => __( 'Message', '' ),
+		'attachments' => __( 'Attachment', '' ),
+		'ip_address'  => __( 'IP Address', '' ),
+	);
+}
