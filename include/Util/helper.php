@@ -289,6 +289,7 @@ function get_column_label_by_db_column( $db_column ) {
 
 	if ( array_key_exists( $db_column, $labels ) ) {
 		$db_column = array_key_exists( $db_column, $mapping ) ? $mapping[ $db_column ] : $db_column;
+
 		return $labels[ $db_column ];
 	}
 
@@ -326,9 +327,9 @@ function get_email_log_columns() {
  *
  * @since 2.3.2
  *
- * @param string $value Content
+ * @param string $value     Content
  * @param string $mask_char Mask character.
- * @param int $percent The higher the percent, the more masking character on the email.
+ * @param int    $percent   The higher the percent, the more masking character on the email.
  *
  * @return string
  */
@@ -346,14 +347,13 @@ function get_masked_value( $value, $mask_char, $percent ) {
  * Masks Email address.
  *
  * @see http://www.webhostingtalk.com/showthread.php?t=1014672
- *
  * @since 2.3.2
  *
  * @uses get_masked_value()
  *
- * @param string $email Email to be masked.
+ * @param string $email     Email to be masked.
  * @param string $mask_char Mask character.
- * @param int $percent The higher the percent, the more masking character on the email.
+ * @param int    $percent   The higher the percent, the more masking character on the email.
  *
  * @return string
  */
@@ -362,7 +362,7 @@ function mask_email( $email, $mask_char = '*', $percent = 50 ) {
 		return $email;
 	}
 
-	list( $user, $domain ) = preg_split( "/@/", $email );
+	list( $user, $domain ) = preg_split( '/@/', $email );
 
 	return sprintf( '%1$s@%2$s',
 		get_masked_value( $user, $mask_char, $percent ),
@@ -379,9 +379,9 @@ function mask_email( $email, $mask_char = '*', $percent = 50 ) {
  *
  * @uses get_masked_value()
  *
- * @param string $content The actual content.
+ * @param string $content   The actual content.
  * @param string $mask_char Mask character.
- * @param int $percent The higher the percent, the more masking character on the email.
+ * @param int    $percent   The higher the percent, the more masking character on the email.
  *
  * @return string
  */
