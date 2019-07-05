@@ -91,9 +91,15 @@ class EmailLogger implements Loadie {
 
 		$data['message'] = $message;
 
-		// Masked fields would use this filter to avoid modifying the original data sent to
-		// `wp_mail() function`
-		$data = apply_filters( 'el_wp_mail_log_sanitized', $data );
+		/**
+		 * Filters the mail info right before inserting on the table.
+		 *
+		 * Masked fields would use this filter to avoid modifying the original data sent to
+		 * `wp_mail() function`
+		 *
+		 * @since 2.3.2
+		 */
+		$data = apply_filters( 'el_email_log_before_insert', $data );
 
 		$email_log->table_manager->insert_log( $data );
 
