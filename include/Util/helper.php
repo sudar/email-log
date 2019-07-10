@@ -145,8 +145,8 @@ function join_array_elements_with_delimiter( $value, $delimiter = ',' ) {
 function get_user_defined_date_time_format() {
 	return sprintf(
 		'%1$s %2$s',
-		/** @scrutinizer ignore-type */ get_option( 'date_format', 'Y-m-d' ),
-		/** @scrutinizer ignore-type */ get_option( 'time_format', 'g:i a' )
+/** @scrutinizer ignore-type */ get_option( 'date_format', 'Y-m-d' ),
+/** @scrutinizer ignore-type */ get_option( 'time_format', 'g:i a' )
 	);
 }
 
