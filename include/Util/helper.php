@@ -391,6 +391,7 @@ function get_advanced_search_url() {
 /**
  * Gets the Column labels to be used in LogList table.
  *
+ * @since 2.3.2
  * @since 2.3.0
  *
  * @param string $db_column
@@ -398,20 +399,15 @@ function get_advanced_search_url() {
  * @return string
  */
 function get_column_label_by_db_column( $db_column ) {
-	$labels = array(
-		'id'          => __( 'ID', 'email-log' ),
-		'sent_date'   => __( 'Sent at', 'email-log' ),
-		'to'          => __( 'To', 'email-log' ), // EmailLog\Core\UI\ListTable::get_columns() uses `to`
-		'to_email'    => __( 'To', 'email-log' ),
-		'subject'     => __( 'Subject', 'email-log' ),
-		'message'     => __( 'Message', 'email-log' ),
-		'from'        => __( 'From', 'email-log' ),
-		'cc'          => __( 'CC', 'email-log' ),
-		'bcc'         => __( 'BCC', 'email-log' ),
-		'reply-to'    => __( 'Reply To', 'email-log' ),
-		'attachments' => __( 'Attachment', 'email-log' ),
-		'attachment'  => __( 'Attachment', 'email-log' ),
+	// Standard column labels are on the right.
+	// $mapping[ $non_standard_key ] => $standard_key
+	$mapping = array(
+		'to'         => 'to_email', // EmailLog\Core\UI\ListTable::get_columns() uses `to`
+		'reply-to'   => 'reply_to',
+		'attachment' => 'attachments',
 	);
+
+	$labels = get_email_log_columns();
 
 	/**
 	 * Filters the Labels used through out the Email Log plugin.
@@ -430,8 +426,105 @@ function get_column_label_by_db_column( $db_column ) {
 	$labels = apply_filters( 'el_db_column_labels', $labels );
 
 	if ( array_key_exists( $db_column, $labels ) ) {
+		$db_column = array_key_exists( $db_column, $mapping ) ? $mapping[ $db_column ] : $db_column;
+
 		return $labels[ $db_column ];
 	}
 
 	return $db_column;
+}
+
+/**
+ * Returns an array of Email Log columns.
+ *
+ * Keys are the column names in the DB.
+ * This holds true except for CC, BCC & Reply To as they are put under one column `headers`.
+ *
+ * @since 2.3.2
+ *
+ * @return array Key value pair of Email Log columns.
+ */
+function get_email_log_columns() {
+	return array(
+		'id'          => __( 'ID', 'email-log' ),
+		'sent_date'   => __( 'Sent at', 'email-log' ),
+		'to_email'    => __( 'To', 'email-log' ),
+		'subject'     => __( 'Subject', 'email-log' ),
+		'message'     => __( 'Message', 'email-log' ),
+		'from'        => __( 'From', 'email-log' ),
+		'cc'          => __( 'CC', 'email-log' ),
+		'bcc'         => __( 'BCC', 'email-log' ),
+		'attachments' => __( 'Attachment', 'email-log' ),
+		'ip_address'  => __( 'IP Address', 'email-log' ),
+		'reply_to'    => __( 'Reply To', 'email-log' ),
+	);
+}
+
+/**
+ * Abstract of the core logic behind masking.
+ *
+ * @since 2.3.2
+ *
+ * @param string $value     Content
+ * @param string $mask_char Mask character.
+ * @param int    $percent   The higher the percent, the more masking character on the email.
+ *
+ * @return string
+ */
+function get_masked_value( $value, $mask_char, $percent ) {
+	$len        = strlen( $value );
+	$mask_count = (int) floor( $len * $percent / 100 );
+	$offset     = (int) floor( ( $len - $mask_count ) / 2 );
+
+	return substr( $value, 0, $offset )
+	       . str_repeat( $mask_char, $mask_count )
+	       . substr( $value, $mask_count + $offset );
+}
+
+/**
+ * Masks Email address.
+ *
+ * @see http://www.webhostingtalk.com/showthread.php?t=1014672
+ * @since 2.3.2
+ *
+ * @uses get_masked_value()
+ *
+ * @param string $email     Email to be masked.
+ * @param string $mask_char Mask character.
+ * @param int    $percent   The higher the percent, the more masking character on the email.
+ *
+ * @return string
+ */
+function mask_email( $email, $mask_char = '*', $percent = 50 ) {
+	if ( ! is_email( $email ) ) {
+		return $email;
+	}
+
+	list( $user, $domain ) = preg_split( '/@/', $email );
+
+	return sprintf( '%1$s@%2$s',
+		get_masked_value( $user, $mask_char, $percent ),
+		get_masked_value( $domain, $mask_char, $percent )
+	);
+}
+
+/**
+ * Mask Content fields.
+ *
+ * Content fields can be Subject or Email message.
+ *
+ * @since 2.3.2
+ *
+ * @uses get_masked_value()
+ *
+ * @param string $content   The actual content.
+ * @param string $mask_char Mask character.
+ * @param int    $percent   The higher the percent, the more masking character on the email.
+ *
+ * @return string
+ */
+function mask_content( $content, $mask_char = '*', $percent = 80 ) {
+	$content = wp_strip_all_tags( $content );
+
+	return get_masked_value( $content, $mask_char, $percent );
 }
