@@ -335,8 +335,8 @@ function get_email_log_columns() {
  */
 function get_masked_value( $value, $mask_char, $percent ) {
 	$len        = strlen( $value );
-	$mask_count = floor( $len * $percent / 100 );
-	$offset     = floor( ( $len - $mask_count ) / 2 );
+	$mask_count = (int) floor( $len * $percent / 100 );
+	$offset     = (int) floor( ( $len - $mask_count ) / 2 );
 
 	return substr( $value, 0, $offset )
 	       . str_repeat( $mask_char, $mask_count )
