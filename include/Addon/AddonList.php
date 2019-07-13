@@ -97,7 +97,7 @@ class AddonList {
 	 *
 	 * @return Addon[] List of add-ons, empty array if API call fails.
 	 */
-	protected function get_addons() {
+	public function get_addons() {
 		$json = get_transient( self::CACHE_KEY );
 		if ( false === $json ) {
 			$response = wp_remote_get( $this->get_api_url() );
@@ -174,7 +174,7 @@ class AddonList {
 		<span class="el-addon-empty">
 			<?php
 				printf(
-					__( 'We are not able to retrieve the add-on list now. Please visit the <a href="%s">add-on page</a> to view the add-ons.', 'email-log' ), // @codingStandardsIgnoreLine
+					__( 'We are not able to retrieve the add-on list now. Please visit the <a target="_blank" rel="noopener" href="%s">add-on page</a> to view the add-ons.', 'email-log' ), // @codingStandardsIgnoreLine
 					'https://wpemaillog.com/store/?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=addon-grid-failed'
 				);
 			?>

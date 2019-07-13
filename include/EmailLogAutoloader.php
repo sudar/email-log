@@ -1,7 +1,7 @@
 <?php namespace EmailLog;
 
 /**
- * Autoloader for EmailLog, based on the PSR-4 general purpose implemetation.
+ * Autoloader for EmailLog, based on the PSR-4 general purpose implementation.
  *
  * @see http://www.php-fig.org/psr/psr-4/
  *

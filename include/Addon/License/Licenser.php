@@ -103,14 +103,25 @@ final class Licenser implements Loadie {
 		$action       = 'el_bundle_license_activate';
 		$action_text  = __( 'Activate', 'email-log' );
 		$button_class = 'button-primary';
-		$expires      = '';
+
+		$expiry_details       = '';
+		$expiry_details_class = '';
 
 		if ( $this->is_bundle_license_valid() ) {
 			$action       = 'el_bundle_license_deactivate';
 			$action_text  = __( 'Deactivate', 'email-log' );
 			$button_class = '';
 			$expiry_date  = date( 'F d, Y', strtotime( $this->get_bundle_license_expiry_date() ) );
-			$expires      = sprintf( __( 'Your license expires on %s', 'email-log' ), $expiry_date );
+
+			if ( $this->bundle_license->has_expired() ) {
+				/* translators: 1 License expiry date, 2 License Renewal link */
+				$expiry_details       = sprintf( __( 'Your license has expired on %1$s. Please <a href="%2$s">renew it</a> to receive automatic updates and support.', 'email-log' ), $expiry_date, esc_url( $this->bundle_license->get_renewal_link() ) );
+				$expiry_details_class = 'notice notice-warning';
+			} else {
+				/* translators: 1 License expiry date */
+				$expiry_details       = sprintf( __( 'Your license is valid till %s', 'email-log' ), $expiry_date );
+				$expiry_details_class = 'expires';
+			}
 		}
 		?>
 
@@ -135,7 +146,9 @@ final class Licenser implements Loadie {
 				<input type="submit" class="button button-large <?php echo sanitize_html_class( $button_class ); ?>"
 					   value="<?php echo esc_attr( $action_text ); ?>">
 
-				<p class="expires"><?php echo esc_html( $expires ); ?></p>
+				<p class="<?php echo esc_attr( $expiry_details_class ); ?>">
+					<?php echo $expiry_details; ?>
+				</p>
 
 				<input type="hidden" name="el-action" value="<?php echo esc_attr( $action ); ?>">
 
@@ -159,7 +172,7 @@ final class Licenser implements Loadie {
 			_e( 'Install it', 'email-log' );
 			echo '</a>';
 		} else {
-			echo '<a href="https://wpemaillog.com/addons/more-fields/?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=inline&utm_content=mf" style="color:red">';
+			echo '<a rel="noopener" target="_blank" href="https://wpemaillog.com/addons/more-fields/?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=inline&utm_content=mf" style="color:red">';
 			_e( 'Buy Now', 'email-log' );
 			echo '</a>';
 		}
@@ -311,5 +324,14 @@ final class Licenser implements Loadie {
 		}
 
 		return '';
+	}
+
+	/**
+	 * Return the bundle license.
+	 *
+	 * @return \EmailLog\Addon\License\BundleLicense|null Bundle license or null if no bundle license.
+	 */
+	public function get_bundle_license() {
+		return $this->bundle_license;
 	}
 }
