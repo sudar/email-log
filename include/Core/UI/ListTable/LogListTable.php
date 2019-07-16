@@ -255,6 +255,13 @@ class LogListTable extends \WP_List_Table {
 	 * @return string
 	 */
 	protected function column_sent_status( $item ) {
+		// For older records that does not have value in the result column,
+		// $item->result will be null.
+		// Cannot use absint here because absint( null ) will be 0.
+		if ( ! isset( $item->result ) ) {
+			return null;
+		}
+
 		if ( 1 === absint( $item->result ) ) {
 			return \EmailLog\Util\get_email_sent_svg();
 		}
