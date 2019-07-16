@@ -74,7 +74,7 @@ class LogListTable extends \WP_List_Table {
 		$columns = array(
 			'cb'          => '<input type="checkbox" />', // Render a checkbox instead of text.
 			'sent_date'   => Util\get_column_label_by_db_column( 'sent_date' ),
-			'sent_status' => __( 'Sent status', 'email-log' ),
+			'sent_status' => Util\get_column_label_by_db_column( 'result' ),
 			'to'          => Util\get_column_label_by_db_column( 'to' ),
 			'subject'     => Util\get_column_label_by_db_column( 'subject' ),
 		);

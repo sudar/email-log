@@ -402,9 +402,10 @@ function get_column_label_by_db_column( $db_column ) {
 	// Standard column labels are on the right.
 	// $mapping[ $non_standard_key ] => $standard_key
 	$mapping = array(
-		'to'         => 'to_email', // EmailLog\Core\UI\ListTable::get_columns() uses `to`
-		'reply-to'   => 'reply_to',
-		'attachment' => 'attachments',
+		'to'          => 'to_email', // EmailLog\Core\UI\ListTable::get_columns() uses `to`
+		'reply-to'    => 'reply_to',
+		'attachment'  => 'attachments',
+		'sent_status' => 'result',
 	);
 
 	$labels = get_email_log_columns();
@@ -426,9 +427,10 @@ function get_column_label_by_db_column( $db_column ) {
 	$labels = apply_filters( 'el_db_column_labels', $labels );
 
 	if ( array_key_exists( $db_column, $labels ) ) {
-		$db_column = array_key_exists( $db_column, $mapping ) ? $mapping[ $db_column ] : $db_column;
-
 		return $labels[ $db_column ];
+	} else if ( array_key_exists( $db_column, $mapping ) ) {
+		$label_key = $mapping[ $db_column ];
+		return $labels[ $label_key ];
 	}
 
 	return $db_column;
@@ -457,6 +459,7 @@ function get_email_log_columns() {
 		'attachments' => __( 'Attachment', 'email-log' ),
 		'ip_address'  => __( 'IP Address', 'email-log' ),
 		'reply_to'    => __( 'Reply To', 'email-log' ),
+		'result'      => __( 'Sent Status', 'email-log' ),
 	);
 }
 
