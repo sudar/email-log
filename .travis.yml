@@ -26,15 +26,9 @@ env:
 
 matrix:
   include:
-    # Only run nightly against trunk.
-    - php: nightly
-      env: WP_VERSION=nightly
     # For PHP 7.3 also run Multisite
     - php: 7.3
       env: WP_VERSION=latest WP_MULTISITE=1
-  allow_failures:
-      - php: nightly
-  fast_finish: true
 
 install:
   - |
