@@ -59,14 +59,14 @@ script:
   - |
     if [[ $TRAVIS_PHP_VERSION == 7.3 ]]; then
       # Run code coverage for PHP 7.3 alone
-      phpunit --coverage-clover=coverage.clover
+      vendor/bin/phpunit --coverage-clover=coverage.clover
     else
-      phpunit
+      vendor/bin/phpunit
 
       if [[ $TRAVIS_PHP_VERSION == 5.6 ]]; then
         # Run uninstall tests in PHP 5.6
-        phpunit --group=uninstall-delete
-        phpunit --group=uninstall
+        vendor/bin/phpunit --group=uninstall-delete
+        vendor/bin/phpunit --group=uninstall
 
         # Run PHPCompatibility code sniffs.
         bash bin/phpcs.sh
