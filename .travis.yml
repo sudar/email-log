@@ -2,7 +2,6 @@
 # @link http://docs.travis-ci.com/user/migrating-from-legacy/#Why-migrate-to-container-based-infrastructure%3F
 # @link http://docs.travis-ci.com/user/workers/container-based-infrastructure/#Routing-your-build-to-container-based-infrastructure
 sudo: false
-dist: precise
 language: php
 
 notifications:
@@ -19,12 +18,8 @@ cache:
 
 php:
   - 5.3
-  - 5.4
-  - 5.5
   - 5.6
-  - 7.0
-  - 7.1
-  - 7.2
+  - 7.3
 
 env:
   - WP_VERSION=latest WP_MULTISITE=0
@@ -62,8 +57,8 @@ before_script:
 
 script:
   - |
-    if [[ $TRAVIS_PHP_VERSION == 5.4 ]]; then
-      # Run code coverage for PHP 5.4 alone
+    if [[ $TRAVIS_PHP_VERSION == 7.3 ]]; then
+      # Run code coverage for PHP 7.3 alone
       phpunit --coverage-clover=coverage.clover
     else
       phpunit
@@ -80,7 +75,7 @@ script:
 
 after_script:
   - |
-    if [[ $TRAVIS_PHP_VERSION == 5.4 ]]; then
+    if [[ $TRAVIS_PHP_VERSION == 7.3 ]]; then
       wget https://scrutinizer-ci.com/ocular.phar
       php ocular.phar code-coverage:upload --format=php-clover coverage.clover
     fi
