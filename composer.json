@@ -26,11 +26,12 @@
     "sudar/wp-system-info": "dev-master"
   },
   "require-dev": {
+    "phpunit/phpunit": "^7.0",
     "codeception/codeception": "^2.2",
     "lucatume/wp-browser": "^1.14",
     "jdgrimes/wp-plugin-uninstall-tester": "~0.6",
     "squizlabs/php_codesniffer": "^3.0",
-    "dealerdirect/phpcodesniffer-composer-installer": "^0.4.2",
-    "wimg/php-compatibility": "^8.0"
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.5",
+    "phpcompatibility/php-compatibility": "^9.0"
   }
 }
