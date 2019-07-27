@@ -17,8 +17,8 @@ cache:
     - $HOME/.composer/cache
 
 php:
-  - 5.3
   - 5.6
+  - 7.2
   - 7.3
 
 env:
@@ -29,8 +29,8 @@ matrix:
     # Only run nightly against trunk.
     - php: nightly
       env: WP_VERSION=nightly
-    # For PHP 5.3 also run Multisite
-    - php: 5.3
+    # For PHP 7.2 also run Multisite
+    - php: 7.2
       env: WP_VERSION=latest WP_MULTISITE=1
   allow_failures:
       - php: nightly
