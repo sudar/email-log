@@ -56,15 +56,24 @@ class EmailLogger implements Loadie {
 
 		// ! empty() check on attachments handles both empty string and empty array.
 		$data = array(
-			'attachments'     => ( ! empty( $cleaned_mail_info['attachments'] ) ) ? 'true' : 'false',
-			'subject'         => $cleaned_mail_info['subject'],
-			'headers'         => is_array( $cleaned_mail_info['headers'] ) ? implode( "\n", $cleaned_mail_info['headers'] ) : $cleaned_mail_info['headers'],
-			'sent_date'       => current_time( 'mysql' ),
-			'attachment_name' => implode( ',', $cleaned_mail_info['attachments'] ),
-			// TODO: Improve the Client's IP using https://www.virendrachandak.com/techtalk/getting-real-client-ip-address-in-php-2/.
-			'ip_address'      => $_SERVER['REMOTE_ADDR'],
-			'result'          => 1,
+			'subject'    => $cleaned_mail_info['subject'],
+			'headers'    => is_array( $cleaned_mail_info['headers'] ) ? implode( "\n", $cleaned_mail_info['headers'] ) : $cleaned_mail_info['headers'],
+			'sent_date'  => current_time( 'mysql' ),
+			'ip_address' => $_SERVER['REMOTE_ADDR'],
+			'result'     => 1,
 		);
+
+		if ( is_array( $cleaned_mail_info['attachments'] ) ) {
+			$data['attachment_name'] = implode( ',', $cleaned_mail_info['attachments'] );
+		} else {
+			$data['attachment_name'] = $cleaned_mail_info['attachments'];
+		}
+
+		if ( empty( $data['attachment_name'] ) ) {
+			$data['attachments'] = 'false';
+		} else {
+			$data['attachments'] = 'true';
+		}
 
 		$to = '';
 		if ( empty( $cleaned_mail_info['to'] ) ) {
