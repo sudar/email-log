@@ -253,14 +253,15 @@ function get_advanced_search_url() {
 /**
  * Gets the Column labels to be used in LogList table.
  *
- * @since 2.3.2
- * @since 2.3.0
+ * @since 2.3.2 Standardize fetching DB Column label by using get_email_log_columns() and $mapping.
+ *              Renamed $db_column arg to $maybe_db_column to make it more appropriate.
+ * @since 2.3.0 Initial definition.
  *
- * @param string $db_column
+ * @param string $maybe_db_column
  *
  * @return string
  */
-function get_column_label_by_db_column( $db_column ) {
+function get_column_label_by_db_column( $maybe_db_column ) {
 	// Standard column labels are on the right.
 	// $mapping[ $non_standard_key ] => $standard_key
 	$mapping = array(
@@ -287,20 +288,22 @@ function get_column_label_by_db_column( $db_column ) {
 	 */
 	$labels = apply_filters( 'el_db_column_labels', $labels );
 
-	if ( array_key_exists( $db_column, $labels ) ) {
-		$db_column = array_key_exists( $db_column, $mapping ) ? $mapping[ $db_column ] : $db_column;
-
-		return $labels[ $db_column ];
+	if ( array_key_exists( $maybe_db_column, $mapping ) ) {
+		$maybe_db_column = $mapping[ $maybe_db_column ];
 	}
 
-	return $db_column;
+	if ( array_key_exists( $maybe_db_column, $labels ) ) {
+		return $labels[ $maybe_db_column ];
+	}
+
+	return $maybe_db_column;
 }
 
 /**
  * Returns an array of Email Log columns.
  *
  * Keys are the column names in the DB.
- * This holds true except for CC, BCC & Reply To as they are put under one column `headers`.
+ * This holds true except for From, CC, BCC & Reply To as they are put under one column `headers`.
  *
  * @since 2.3.2
  *
