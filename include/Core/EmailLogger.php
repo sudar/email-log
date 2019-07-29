@@ -102,9 +102,12 @@ class EmailLogger implements Loadie {
 		 * Masked fields would use this filter to avoid modifying the original data sent to
 		 * `wp_mail() function`
 		 *
+		 * @param array $log                Email Log that is about to be inserted into db.
+		 * @param array $original_mail_info Original mail info that was passed to `wp_mail` filter.
+		 *
 		 * @since 2.3.2
 		 */
-		$log = apply_filters( 'el_email_log_before_insert', $log );
+		$log = apply_filters( 'el_email_log_before_insert', $log, $original_mail_info );
 
 		$email_log = email_log();
 		$email_log->table_manager->insert_log( $log );
