@@ -126,7 +126,6 @@ function checked_array( $values, $current ) {
  * Returns the Email failure SVG.
  *
  * @see   https://www.flaticon.com/free-icon/do-not-disturb-rounded-sign_61072
- *
  * @since 2.4.0
  *
  * @return string
@@ -183,7 +182,6 @@ EOT;
  * Returns the Email sent SVG.
  *
  * @see   https://www.flaticon.com/free-icon/tick-inside-circle_61222
- *
  * @since 2.4.0
  *
  * @return string
