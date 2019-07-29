@@ -52,35 +52,20 @@ class EmailLogger implements Loadie {
 		);
 
 		$log = array(
-			'subject'    => $mail_info['subject'],
-			'headers'    => is_array( $mail_info['headers'] ) ? implode( "\n", $mail_info['headers'] ) : $mail_info['headers'],
-			'sent_date'  => current_time( 'mysql' ),
-			'ip_address' => $_SERVER['REMOTE_ADDR'],
-			'result'     => 1,
+			'to_email'        => \EmailLog\Util\stringify( $mail_info['to'] ),
+			'subject'         => $mail_info['subject'],
+			'headers'         => \EmailLog\Util\stringify( $mail_info['headers'], "\n" ),
+			'attachment_name' => \EmailLog\Util\stringify( $mail_info['attachments'] ),
+			'sent_date'       => current_time( 'mysql' ),
+			'ip_address'      => $_SERVER['REMOTE_ADDR'],
+			'result'          => 1,
 		);
-
-		if ( is_array( $mail_info['attachments'] ) ) {
-			$log['attachment_name'] = implode( ',', $mail_info['attachments'] );
-		} else {
-			$log['attachment_name'] = $mail_info['attachments'];
-		}
 
 		if ( empty( $log['attachment_name'] ) ) {
 			$log['attachments'] = 'false';
 		} else {
 			$log['attachments'] = 'true';
 		}
-
-		$to = '';
-		if ( empty( $mail_info['to'] ) ) {
-			$to = '';
-		} elseif ( is_array( $mail_info['to'] ) ) {
-			$to = implode( ',', $mail_info['to'] );
-		} else {
-			$to = $mail_info['to'];
-		}
-
-		$log['to_email'] = $to;
 
 		$message = '';
 
@@ -125,6 +110,8 @@ class EmailLogger implements Loadie {
 		 *      @type string $attachments
 		 *      @type string $attachment_name
 		 *      @type string $sent_date
+		 *      @type string $ip_address
+		 *      @type bool   $result
 		 * }
 		 */
 		do_action( 'el_email_log_inserted', $log );
