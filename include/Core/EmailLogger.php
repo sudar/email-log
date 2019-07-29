@@ -46,6 +46,7 @@ class EmailLogger implements Loadie {
 			array(
 				'to'          => '',
 				'subject'     => '',
+				'message'     => '',
 				'headers'     => '',
 				'attachments' => array(),
 			)
@@ -54,6 +55,7 @@ class EmailLogger implements Loadie {
 		$log = array(
 			'to_email'        => \EmailLog\Util\stringify( $mail_info['to'] ),
 			'subject'         => $mail_info['subject'],
+			'message'         => $mail_info['message'],
 			'headers'         => \EmailLog\Util\stringify( $mail_info['headers'], "\n" ),
 			'attachment_name' => \EmailLog\Util\stringify( $mail_info['attachments'] ),
 			'sent_date'       => current_time( 'mysql' ),
@@ -66,20 +68,6 @@ class EmailLogger implements Loadie {
 		} else {
 			$log['attachments'] = 'true';
 		}
-
-		$message = '';
-
-		if ( isset( $mail_info['message'] ) ) {
-			$message = $mail_info['message'];
-		} else {
-			// wpmandrill plugin is changing "message" key to "html". See https://github.com/sudar/email-log/issues/20
-			// Ideally this should be fixed in wpmandrill, but I am including this hack here till it is fixed by them.
-			if ( isset( $mail_info['html'] ) ) {
-				$message = $mail_info['html'];
-			}
-		}
-
-		$log['message'] = $message;
 
 		/**
 		 * Filters the mail info right before inserting on the table.
