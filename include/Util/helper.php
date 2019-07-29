@@ -113,23 +113,25 @@ function checked_array( $values, $current ) {
 }
 
 /**
- * Returns Comma separated values of the given array elements.
+ * Stringify arrays.
  *
- * Use $delimiter param to join elements other than `,`.
+ * If the parameter is an array, then return delimiter separated values of the array.
+ * Otherwise return the parameter.
  *
  * @since 2.3.0
+ * @since 2.3.2 Renamed name to `Stringify`.
  *
- * @param array|string $value     The array whose values are to be joined.
- * @param string       $delimiter Optional. Default is `,`.
+ * @param array|string $may_be_array The array whose values are to be converted to string.
+ * @param string       $delimiter    Optional. Default is `,`.
  *
- * @return string
+ * @return string Stringified value.
  */
-function join_array_elements_with_delimiter( $value, $delimiter = ',' ) {
-	if ( is_array( $value ) ) {
-		return implode( $delimiter, $value );
+function stringify( $may_be_array, $delimiter = ',' ) {
+	if ( ! is_array( $may_be_array ) ) {
+		return (string) $may_be_array;
 	}
 
-	return is_string( $value ) ? $value : '';
+	return implode( $delimiter, $may_be_array );
 }
 
 /**

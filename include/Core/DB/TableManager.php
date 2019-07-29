@@ -393,7 +393,7 @@ class TableManager implements Loadie {
 		// Execute the following `if` conditions only when $data is array.
 		if ( array_key_exists( 'to', $data ) ) {
 			// Since the value is stored as CSV in DB, convert the values from error data to CSV to compare.
-			$to_email = Util\join_array_elements_with_delimiter( $data['to'] );
+			$to_email = Util\stringify( $data['to'] );
 
 			$to_email = trim( esc_sql( $to_email ) );
 			$where[]  = "to_email = '$to_email'";
@@ -546,7 +546,7 @@ class TableManager implements Loadie {
 		// Execute the following `if` conditions only when $data is array.
 		if ( array_key_exists( 'to', $columns ) ) {
 			// Since the value is stored as CSV in DB, convert the values from error data to CSV to compare.
-			$to_email = Util\join_array_elements_with_delimiter( $columns['to'] );
+			$to_email = Util\stringify( $columns['to'] );
 
 			$to_email = trim( esc_sql( $to_email ) );
 			$where[]  = "to_email = '$to_email'";
