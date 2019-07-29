@@ -250,7 +250,7 @@ function get_log_row_class_by_result_code( $result ) {
 		0 => 'el_email_sent_status--failed',
 		1 => 'el_email_sent_status--sent',
 	);
-	if ( empty ( $result ) ) {
+	if ( empty( $result ) ) {
 		return $log_row_classes[0];
 	}
 
@@ -440,7 +440,7 @@ function get_column_label_by_db_column( $db_column ) {
 
 	if ( array_key_exists( $db_column, $labels ) ) {
 		return $labels[ $db_column ];
-	} else if ( array_key_exists( $db_column, $mapping ) ) {
+	} elseif ( array_key_exists( $db_column, $mapping ) ) {
 		$label_key = $mapping[ $db_column ];
 
 		return $labels[ $label_key ];
