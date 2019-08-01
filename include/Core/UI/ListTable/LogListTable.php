@@ -61,6 +61,7 @@ class LogListTable extends \WP_List_Table {
 	/**
 	 * Returns the list of column and title names.
 	 *
+	 * @since 2.4.0 Added `sent_status` column.
 	 * @since 2.3.0 Retrieve Column labels using Utility methods.
 	 * @see WP_List_Table::single_row_columns()
 	 *
@@ -70,10 +71,11 @@ class LogListTable extends \WP_List_Table {
 	 */
 	public function get_columns() {
 		$columns = array(
-			'cb'        => '<input type="checkbox" />', // Render a checkbox instead of text.
-			'sent_date' => Util\get_column_label_by_db_column( 'sent_date' ),
-			'to'        => Util\get_column_label_by_db_column( 'to' ),
-			'subject'   => Util\get_column_label_by_db_column( 'subject' ),
+			'cb'          => '<input type="checkbox" />', // Render a checkbox instead of text.
+			'sent_date'   => Util\get_column_label_by_db_column( 'sent_date' ),
+			'sent_status' => Util\get_column_label_by_db_column( 'result' ),
+			'to'          => Util\get_column_label_by_db_column( 'to' ),
+			'subject'     => Util\get_column_label_by_db_column( 'subject' ),
 		);
 
 		/**
@@ -238,6 +240,32 @@ class LogListTable extends \WP_List_Table {
 			/*$1%s*/ $this->_args['singular'],
 			/*$2%s*/ $item->id
 		);
+	}
+
+	/**
+	 * Markup for Status column.
+	 *
+	 * @since 2.4.0
+	 *
+	 * @access protected
+	 *
+	 * @param object $item
+	 *
+	 * @return string
+	 */
+	protected function column_sent_status( $item ) {
+		// For older records that does not have value in the result column,
+		// $item->result will be null.
+		// Cannot use absint here because absint( null ) will be 0.
+		if ( ! isset( $item->result ) ) {
+			return null;
+		}
+
+		if ( 1 === absint( $item->result ) ) {
+			return \EmailLog\Util\get_email_sent_svg();
+		}
+
+		return \EmailLog\Util\get_email_failed_svg();
 	}
 
 	/**
