@@ -448,8 +448,8 @@ class TableManager implements Loadie {
 		$existing_db_version = get_option( self::DB_OPTION_NAME, false );
 		$updated_db_version  = self::DB_VERSION;
 
-		// Bail out when the DB version is `0.1` or equals to self::DB_VERSION
-		if ( ! $existing_db_version || $existing_db_version !== '0.1' || $existing_db_version === $updated_db_version ) {
+		// Bail out when the DB version equals to self::DB_VERSION.
+		if ( ! $existing_db_version || $existing_db_version === $updated_db_version ) {
 			return;
 		}
 
@@ -464,6 +464,7 @@ class TableManager implements Loadie {
 	/**
 	 * Gets the Create Table query.
 	 *
+	 * @since 2.4.0 Added error_message column.
 	 * @since 2.3.0
 	 *
 	 * @return string
@@ -484,6 +485,7 @@ class TableManager implements Loadie {
 				attachment_name VARCHAR(1000),
 				ip_address VARCHAR(15),
 				result TINYINT(1),
+				error_message TEXT,
 				PRIMARY KEY  (id)
 			) ' . $charset_collate . ';';
 
