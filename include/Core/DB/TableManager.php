@@ -418,22 +418,37 @@ class TableManager implements Loadie {
 	}
 
 	/**
-	 * Sets email sent status as failed for the given log item.
+	 * Sets email sent status and error message for the given log item when email fails.
 	 *
+	 * @param int    $log_item_id ID of the log item whose email sent status should be set to
+	 *                            failed.
+	 * @param string $message     Error message.
+	 *
+	 * @since 2.4.0 Include error message during update.
 	 * @since 2.3.0
 	 *
-	 * @param int $log_item_id ID of the log item whose email sent status should be set to failed.
+	 * @global \wpdb $wpdb
+	 *
+	 * @see  TableManager::get_log_table_name()
 	 */
-	public function set_log_item_fail_status_by_id( $log_item_id ) {
+	public function set_log_item_fail_status_by_id( $log_item_id, $message ) {
 		global $wpdb;
 		$table_name = $this->get_log_table_name();
 
 		$wpdb->update(
 			$table_name,
-			array( 'result' => '0' ),
-			array( 'ID'     => $log_item_id ),
-			array( '%d' ),
-			array( '%d' )
+			array(
+				'result'        => '0',
+				'error_message' => $message,
+			),
+			array( 'ID' => $log_item_id ),
+			array(
+				'%d', // `result` format.
+				'%s', // `error_message` format.
+			),
+			array(
+				'%d', // `ID` format.
+			)
 		);
 	}
 
