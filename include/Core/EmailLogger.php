@@ -118,16 +118,16 @@ class EmailLogger implements Loadie {
 	 * @since 2.4.0 Use is_wp_error() to validate the type of $wp_error.
 	 * @since 2.3.0
 	 *
-	 * @see is_wp_error()
-	 * @see email_log()
+	 * @see   is_wp_error()
+	 * @see   email_log()
 	 */
 	public function update_email_fail_status( $wp_error ) {
 		if ( ! is_wp_error( $wp_error ) ) {
 			return;
 		}
 
-		$email_log       = email_log();
-		$mail_error_data = $wp_error->get_error_data( 'wp_mail_failed' );
+		$email_log          = email_log();
+		$mail_error_data    = $wp_error->get_error_data( 'wp_mail_failed' );
 		$mail_error_message = $wp_error->get_error_message( 'wp_mail_failed' );
 
 		// $mail_error_data can be of type mixed.
