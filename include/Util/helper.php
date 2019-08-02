@@ -237,30 +237,6 @@ EOT;
 }
 
 /**
- * Gets the log row class by result code.
- *
- * @param int $result Mail sent status.
- *
- * @return string
- */
-function get_log_row_class_by_result_code( $result ) {
-	$log_row_classes = array(
-		0 => 'el_email_sent_status--failed',
-		1 => 'el_email_sent_status--sent',
-	);
-	if ( empty( $result ) ) {
-		return $log_row_classes[0];
-	}
-
-	$result = absint( $result );
-	if ( array_key_exists( $result, $log_row_classes ) ) {
-		return $log_row_classes[ $result ];
-	}
-
-	return $log_row_classes[0];
-}
-
-/**
  * Stringify arrays.
  *
  * If the parameter is an array, then return delimiter separated values of the array.
