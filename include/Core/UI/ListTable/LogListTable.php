@@ -261,11 +261,21 @@ class LogListTable extends \WP_List_Table {
 			return null;
 		}
 
+		$svg = \EmailLog\Util\get_email_failed_svg();
 		if ( 1 === absint( $item->result ) ) {
-			return \EmailLog\Util\get_email_sent_svg();
+			$svg = \EmailLog\Util\get_email_sent_svg();
 		}
 
-		return \EmailLog\Util\get_email_failed_svg();
+		if ( isset( $item->error_message ) ) {
+			return sprintf(
+				'<span class="%3$s" title="%2$s">%1$s</span>',
+				$svg,
+				esc_attr( $item->error_message ),
+				'el-help'
+			);
+		}
+
+		return $svg;
 	}
 
 	/**
