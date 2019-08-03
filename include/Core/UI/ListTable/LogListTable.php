@@ -256,11 +256,11 @@ class LogListTable extends \WP_List_Table {
 	protected function column_sent_status( $item ) {
 		// For older records that does not have value in the result column,
 		// $item->result will be null.
-		if ( ! isset( $item->result ) ) {
-			return null;
+		if ( is_null( $item->result ) ) {
+			return '';
 		}
 
-		if ( 1 === $item->result ) {
+		if ( $item->result ) {
 			return \EmailLog\Util\get_success_icon();
 		}
 
