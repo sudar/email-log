@@ -89,10 +89,6 @@ The pot file is available with the Plugin.
 If you are willing to do translation for the Plugin, use the pot file to create the .po files for your language and let me know.
 I will add it to the Plugin after giving credit to you.
 
-## Credits ##
-
-Icon made by [Google](https://www.flaticon.com/authors/google) from [www.flaticon.com](https://www.flaticon.com)
-
 ## Installation ##
 
 ### Normal WordPress installations
