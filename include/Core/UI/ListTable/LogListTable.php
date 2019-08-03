@@ -245,27 +245,26 @@ class LogListTable extends \WP_List_Table {
 	/**
 	 * Markup for Status column.
 	 *
-	 * @since 2.4.0
+	 * @since 2.3.2
 	 *
 	 * @access protected
 	 *
-	 * @param object $item
+	 * @param object $item Email Log item.
 	 *
-	 * @return string
+	 * @return string Column markup.
 	 */
 	protected function column_sent_status( $item ) {
 		// For older records that does not have value in the result column,
 		// $item->result will be null.
-		// Cannot use absint here because absint( null ) will be 0.
 		if ( ! isset( $item->result ) ) {
 			return null;
 		}
 
-		if ( 1 === absint( $item->result ) ) {
-			return \EmailLog\Util\get_email_sent_svg();
+		if ( 1 === $item->result ) {
+			return \EmailLog\Util\get_success_icon();
 		}
 
-		return \EmailLog\Util\get_email_failed_svg();
+		return \EmailLog\Util\get_failure_icon();
 	}
 
 	/**
