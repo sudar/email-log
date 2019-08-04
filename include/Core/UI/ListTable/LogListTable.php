@@ -61,27 +61,28 @@ class LogListTable extends \WP_List_Table {
 	/**
 	 * Returns the list of column and title names.
 	 *
-	 * @since 2.4.0 Added `sent_status` column.
 	 * @since 2.3.0 Retrieve Column labels using Utility methods.
+	 * @since 2.3.2 Added `result` column.
+	 *
 	 * @see WP_List_Table::single_row_columns()
 	 *
-	 * @uses \EmailLog\Util\get_column_label_by_column()
+	 * @uses \EmailLog\Util\get_column_label()
 	 *
 	 * @return array An associative array containing column information: 'slugs'=>'Visible Titles'.
 	 */
 	public function get_columns() {
 		$columns = array(
-			'cb' => '<input type="checkbox" />', // Render a checkbox instead of text.
+			'cb' => '<input type="checkbox" />', // Render a checkbox instead of heading.
 		);
 
 		foreach ( array( 'sent_date', 'result', 'to_email', 'subject' ) as $column ) {
-			$columns[ $column ] = Util\get_column_label_by_db_column( $column );
+			$columns[ $column ] = Util\get_column_label( $column );
 		}
 
 		/**
 		 * Filter the email log list table columns.
 		 *
-		 * @since 2.0
+		 * @since 2.0.0
 		 *
 		 * @param array $columns Columns of email log list table.
 		 */

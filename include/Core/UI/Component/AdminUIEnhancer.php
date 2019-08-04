@@ -75,7 +75,7 @@ class AdminUIEnhancer {
 	/**
 	 * Add link to 'View logs' page in plugin listing page.
 	 *
-	 * @since 2.4.0 Added Settings link.
+	 * @since 2.3.0 Added Settings link.
 	 *
 	 * @param array $links List of links.
 	 *
