@@ -292,50 +292,36 @@ function get_advanced_search_url() {
 /**
  * Gets the Column labels to be used in LogList table.
  *
- * @since 2.3.2
+ * Deprecated. This is currently used by Email Log - Export Logs add-on v1.2.1 and will eventually be removed.
+ *
  * @since 2.3.0
+ * @since 2.3.2 Deprecated.
  *
- * @param string $db_column
+ * @param string $db_column Column ID.
  *
- * @return string
+ * @return string Column label.
  */
 function get_column_label_by_db_column( $db_column ) {
-	// Standard column labels are on the right.
-	// $mapping[ $non_standard_key ] => $standard_key
-	$mapping = array(
-		'to'          => 'to_email', // EmailLog\Core\UI\ListTable::get_columns() uses `to`.
-		'reply-to'    => 'reply_to',
-		'attachment'  => 'attachments',
-		'sent_status' => 'result',
-	);
+	return get_column_label( $db_column );
+}
 
-	$labels = get_email_log_columns();
+/**
+ * Get Column label based on column name.
+ *
+ * @since 2.3.2
+ *
+ * @param string $column_name Column name.
+ *
+ * @return string Column label.
+ */
+function get_column_label( $column_name ) {
+	$labels = get_column_label_map();
 
-	/**
-	 * Filters the Labels used through out the Email Log plugin.
-	 *
-	 * @since 2.3.0
-	 *
-	 * @param array $labels {
-	 *                      List of DB Columns and its respective labels.
-	 *
-	 *                      Example:
-	 *                      'id'          => __( 'ID', 'email-log' ),
-	 *
-	 * @type string $key    DB Column or any key for which a Label would be required. Accepts a internationalized string as Label.
-	 *              }
-	 */
-	$labels = apply_filters( 'el_db_column_labels', $labels );
-
-	if ( array_key_exists( $db_column, $labels ) ) {
-		return $labels[ $db_column ];
-	} elseif ( array_key_exists( $db_column, $mapping ) ) {
-		$label_key = $mapping[ $db_column ];
-
-		return $labels[ $label_key ];
+	if ( ! array_key_exists( $column_name, $labels ) ) {
+		return $column_name;
 	}
 
-	return $db_column;
+	return $labels[ $column_name ];
 }
 
 /**
@@ -348,21 +334,31 @@ function get_column_label_by_db_column( $db_column ) {
  *
  * @return array Key value pair of Email Log columns.
  */
-function get_email_log_columns() {
-	return array(
+function get_column_label_map() {
+	$labels = array(
 		'id'          => __( 'ID', 'email-log' ),
-		'sent_date'   => __( 'Sent at', 'email-log' ),
 		'to_email'    => __( 'To', 'email-log' ),
 		'subject'     => __( 'Subject', 'email-log' ),
 		'message'     => __( 'Message', 'email-log' ),
+		'attachments' => __( 'Attachment', 'email-log' ),
+		'sent_date'   => __( 'Sent at', 'email-log' ),
 		'from'        => __( 'From', 'email-log' ),
 		'cc'          => __( 'CC', 'email-log' ),
 		'bcc'         => __( 'BCC', 'email-log' ),
-		'attachments' => __( 'Attachment', 'email-log' ),
-		'ip_address'  => __( 'IP Address', 'email-log' ),
 		'reply_to'    => __( 'Reply To', 'email-log' ),
+		'ip_address'  => __( 'IP Address', 'email-log' ),
 		'result'      => __( 'Sent Status', 'email-log' ),
 	);
+
+	/**
+	 * Filters the Labels used through out the Email Log plugin.
+	 *
+	 * @since 2.3.2
+	 *
+	 * @param array $labels List of DB Columns and its respective labels which are internationalized string.
+	 * Example: 'id' => __( 'ID', 'email-log' ),
+	 */
+	return apply_filters( 'el_db_column_labels', $labels );
 }
 
 /**

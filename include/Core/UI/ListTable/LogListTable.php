@@ -71,12 +71,12 @@ class LogListTable extends \WP_List_Table {
 	 */
 	public function get_columns() {
 		$columns = array(
-			'cb'          => '<input type="checkbox" />', // Render a checkbox instead of text.
-			'sent_date'   => Util\get_column_label_by_db_column( 'sent_date' ),
-			'sent_status' => Util\get_column_label_by_db_column( 'result' ),
-			'to'          => Util\get_column_label_by_db_column( 'to' ),
-			'subject'     => Util\get_column_label_by_db_column( 'subject' ),
+			'cb' => '<input type="checkbox" />', // Render a checkbox instead of text.
 		);
+
+		foreach ( array( 'sent_date', 'result', 'to_email', 'subject' ) as $column ) {
+			$columns[ $column ] = Util\get_column_label_by_db_column( $column );
+		}
 
 		/**
 		 * Filter the email log list table columns.
@@ -99,7 +99,7 @@ class LogListTable extends \WP_List_Table {
 	protected function get_sortable_columns() {
 		$sortable_columns = array(
 			'sent_date' => array( 'sent_date', true ), // true means it's already sorted.
-			'to'        => array( 'to_email', false ),
+			'to_email'  => array( 'to_email', false ),
 			'subject'   => array( 'subject', false ),
 		);
 
@@ -199,7 +199,7 @@ class LogListTable extends \WP_List_Table {
 	 *
 	 * @return string
 	 */
-	protected function column_to( $item ) {
+	protected function column_to_email( $item ) {
 		/**
 		 * Filters the `To` field before outputting on the table.
 		 *
@@ -207,7 +207,7 @@ class LogListTable extends \WP_List_Table {
 		 *
 		 * @param string $email `To` field
 		 */
-		$email = apply_filters( 'el_row_email', esc_html( $item->to_email ) );
+		$email = apply_filters( 'el_log_list_column_to_email', esc_html( $item->to_email ) );
 
 		return $email;
 	}
@@ -253,7 +253,7 @@ class LogListTable extends \WP_List_Table {
 	 *
 	 * @return string Column markup.
 	 */
-	protected function column_sent_status( $item ) {
+	protected function column_result( $item ) {
 		// For older records that does not have value in the result column,
 		// $item->result will be null.
 		if ( is_null( $item->result ) ) {
