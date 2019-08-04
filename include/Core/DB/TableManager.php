@@ -500,7 +500,7 @@ class TableManager implements Loadie {
 				attachment_name VARCHAR(1000),
 				ip_address VARCHAR(15),
 				result TINYINT(1),
-				error_message TEXT,
+				error_message VARCHAR(1000),
 				PRIMARY KEY  (id)
 			) ' . $charset_collate . ';';
 
