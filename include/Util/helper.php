@@ -67,7 +67,17 @@ function sanitize_email_with_name( $string ) {
 function get_log_columns_to_export() {
 
 	if ( is_plugin_active( 'email-log-more-fields/email-log-more-fields.php' ) ) {
-		return array( 'id', 'sent_date', 'to_email', 'subject', 'from', 'cc', 'bcc', 'reply-to', 'attachment' );
+		return array(
+			'id',
+			'sent_date',
+			'to_email',
+			'subject',
+			'from',
+			'cc',
+			'bcc',
+			'reply-to',
+			'attachment',
+		);
 	}
 
 	return array( 'id', 'sent_date', 'to_email', 'subject' );
@@ -113,23 +123,52 @@ function checked_array( $values, $current ) {
 }
 
 /**
- * Returns Comma separated values of the given array elements.
+ * Return failure icon.
  *
- * Use $delimiter param to join elements other than `,`.
+ * @since 2.3.2
+ *
+ * @return string Failure icon markup.
+ */
+function get_failure_icon() {
+	return <<<EOT
+<span class="dashicons dashicons-dismiss"></span>
+EOT;
+}
+
+/**
+ * Return success icon.
+ *
+ * @since 2.3.2
+ *
+ * @return string Success icon markup.
+ */
+function get_success_icon() {
+	return <<<EOT
+<span class="dashicons dashicons-yes-alt"></span>
+EOT;
+
+}
+
+/**
+ * Stringify arrays.
+ *
+ * If the parameter is an array, then return delimiter separated values of the array.
+ * Otherwise return the parameter.
  *
  * @since 2.3.0
+ * @since 2.3.2 Renamed name to `Stringify`.
  *
- * @param array|string $value     The array whose values are to be joined.
- * @param string       $delimiter Optional. Default is `,`.
+ * @param array|string $may_be_array The array whose values are to be converted to string.
+ * @param string       $delimiter    Optional. Default is `,`.
  *
- * @return string
+ * @return string Stringified value.
  */
-function join_array_elements_with_delimiter( $value, $delimiter = ',' ) {
-	if ( is_array( $value ) ) {
-		return implode( $delimiter, $value );
+function stringify( $may_be_array, $delimiter = ',' ) {
+	if ( ! is_array( $may_be_array ) ) {
+		return (string) $may_be_array;
 	}
 
-	return is_string( $value ) ? $value : '';
+	return implode( $delimiter, $may_be_array );
 }
 
 /**
@@ -152,7 +191,7 @@ function get_user_defined_date_time_format() {
  * @used-by \EmailLog\Addon\UI\Setting\DashboardWidget
  * @used-by \EmailLog\Core\UI\Component\AutoDeleteLogsSetting
  *
- * @since 2.3.0
+ * @since   2.3.0
  */
 function render_auto_delete_logs_next_run_schedule() {
 	?>
@@ -253,47 +292,36 @@ function get_advanced_search_url() {
 /**
  * Gets the Column labels to be used in LogList table.
  *
- * @since 2.3.2
+ * Deprecated. This is currently used by Email Log - Export Logs add-on v1.2.1 and will eventually be removed.
+ *
  * @since 2.3.0
+ * @since 2.3.2 Deprecated.
  *
- * @param string $db_column
+ * @param string $db_column Column ID.
  *
- * @return string
+ * @return string Column label.
  */
 function get_column_label_by_db_column( $db_column ) {
-	// Standard column labels are on the right.
-	// $mapping[ $non_standard_key ] => $standard_key
-	$mapping = array(
-		'to'         => 'to_email', // EmailLog\Core\UI\ListTable::get_columns() uses `to`
-		'reply-to'   => 'reply_to',
-		'attachment' => 'attachments',
-	);
+	return get_column_label( $db_column );
+}
 
-	$labels = get_email_log_columns();
+/**
+ * Get Column label based on column name.
+ *
+ * @since 2.3.2
+ *
+ * @param string $column_name Column name.
+ *
+ * @return string Column label.
+ */
+function get_column_label( $column_name ) {
+	$labels = get_column_label_map();
 
-	/**
-	 * Filters the Labels used through out the Email Log plugin.
-	 *
-	 * @since 2.3.0
-	 *
-	 * @param array $labels {
-	 *                      List of DB Columns and its respective labels.
-	 *
-	 *                      Example:
-	 *                      'id'          => __( 'ID', 'email-log' ),
-	 *
-	 * @type string $key    DB Column or any key for which a Label would be required. Accepts a internationalized string as Label.
-	 *              }
-	 */
-	$labels = apply_filters( 'el_db_column_labels', $labels );
-
-	if ( array_key_exists( $db_column, $labels ) ) {
-		$db_column = array_key_exists( $db_column, $mapping ) ? $mapping[ $db_column ] : $db_column;
-
-		return $labels[ $db_column ];
+	if ( ! array_key_exists( $column_name, $labels ) ) {
+		return $column_name;
 	}
 
-	return $db_column;
+	return $labels[ $column_name ];
 }
 
 /**
@@ -306,20 +334,31 @@ function get_column_label_by_db_column( $db_column ) {
  *
  * @return array Key value pair of Email Log columns.
  */
-function get_email_log_columns() {
-	return array(
+function get_column_label_map() {
+	$labels = array(
 		'id'          => __( 'ID', 'email-log' ),
-		'sent_date'   => __( 'Sent at', 'email-log' ),
 		'to_email'    => __( 'To', 'email-log' ),
 		'subject'     => __( 'Subject', 'email-log' ),
 		'message'     => __( 'Message', 'email-log' ),
+		'attachments' => __( 'Attachment', 'email-log' ),
+		'sent_date'   => __( 'Sent at', 'email-log' ),
 		'from'        => __( 'From', 'email-log' ),
 		'cc'          => __( 'CC', 'email-log' ),
 		'bcc'         => __( 'BCC', 'email-log' ),
-		'attachments' => __( 'Attachment', 'email-log' ),
-		'ip_address'  => __( 'IP Address', 'email-log' ),
 		'reply_to'    => __( 'Reply To', 'email-log' ),
+		'ip_address'  => __( 'IP Address', 'email-log' ),
+		'result'      => __( 'Sent Status', 'email-log' ),
 	);
+
+	/**
+	 * Filters the Labels used through out the Email Log plugin.
+	 *
+	 * @since 2.3.2
+	 *
+	 * @param array $labels List of DB Columns and its respective labels which are internationalized string.
+	 * Example: 'id' => __( 'ID', 'email-log' ),
+	 */
+	return apply_filters( 'el_db_column_labels', $labels );
 }
 
 /**
@@ -327,7 +366,7 @@ function get_email_log_columns() {
  *
  * @since 2.3.2
  *
- * @param string $value     Content
+ * @param string $value     Content.
  * @param string $mask_char Mask character.
  * @param int    $percent   The higher the percent, the more masking character on the email.
  *
@@ -338,18 +377,16 @@ function get_masked_value( $value, $mask_char, $percent ) {
 	$mask_count = (int) floor( $len * $percent / 100 );
 	$offset     = (int) floor( ( $len - $mask_count ) / 2 );
 
-	return substr( $value, 0, $offset )
-	       . str_repeat( $mask_char, $mask_count )
-	       . substr( $value, $mask_count + $offset );
+	return substr( $value, 0, $offset ) . str_repeat( $mask_char, $mask_count ) . substr( $value, $mask_count + $offset );
 }
 
 /**
  * Masks Email address.
  *
- * @see http://www.webhostingtalk.com/showthread.php?t=1014672
+ * @see   http://www.webhostingtalk.com/showthread.php?t=1014672
  * @since 2.3.2
  *
- * @uses get_masked_value()
+ * @uses  get_masked_value()
  *
  * @param string $email     Email to be masked.
  * @param string $mask_char Mask character.
@@ -364,7 +401,8 @@ function mask_email( $email, $mask_char = '*', $percent = 50 ) {
 
 	list( $user, $domain ) = preg_split( '/@/', $email );
 
-	return sprintf( '%1$s@%2$s',
+	return sprintf(
+		'%1$s@%2$s',
 		get_masked_value( $user, $mask_char, $percent ),
 		get_masked_value( $domain, $mask_char, $percent )
 	);
@@ -377,7 +415,7 @@ function mask_email( $email, $mask_char = '*', $percent = 50 ) {
  *
  * @since 2.3.2
  *
- * @uses get_masked_value()
+ * @uses  get_masked_value()
  *
  * @param string $content   The actual content.
  * @param string $mask_char Mask character.

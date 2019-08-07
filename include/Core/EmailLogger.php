@@ -19,77 +19,55 @@ class EmailLogger implements Loadie {
 	/**
 	 * Logs email to database.
 	 *
-	 * @param array $mail_info Information about email.
+	 * @param array $original_mail_info Information about email.
 	 *
 	 * @return array Information about email.
 	 */
-	public function log_email( $mail_info ) {
-		$email_log = email_log();
+	public function log_email( $original_mail_info ) {
 		/**
 		 * Hook to modify wp_mail contents before Email Log plugin logs.
 		 *
-		 * @since Genesis
-		 *
-		 * @param array $mail_info {
+		 * @param array $original_mail_info {
 		 *     @type string|array $to
 		 *     @type string       $subject
 		 *     @type string       $message
-		 *     @type string       $headers
-		 *     @type string       $attachment
 		 *     @type string|array $headers
 		 *     @type string|array $attachment
 		 * }
+		 *
+		 * @since 2.0.0
 		 */
-		$mail_info = apply_filters( 'el_wp_mail_log', $mail_info );
+		$original_mail_info = apply_filters( 'el_wp_mail_log', $original_mail_info );
 
 		// Sometimes the array passed to the `wp_mail` filter may not contain all the required keys.
 		// See https://wordpress.org/support/topic/illegal-string-offset-attachments/.
-		$cleaned_mail_info = wp_parse_args(
-			$mail_info,
+		$mail_info = wp_parse_args(
+			$original_mail_info,
 			array(
-				'attachments' => array(),
 				'to'          => '',
 				'subject'     => '',
+				'message'     => '',
 				'headers'     => '',
+				'attachments' => array(),
 			)
 		);
 
-		// ! empty() check on attachments handles both empty string and empty array.
-		$data = array(
-			'attachments'     => ( ! empty( $cleaned_mail_info['attachments'] ) ) ? 'true' : 'false',
-			'subject'         => $cleaned_mail_info['subject'],
-			'headers'         => is_array( $cleaned_mail_info['headers'] ) ? implode( "\n", $cleaned_mail_info['headers'] ) : $cleaned_mail_info['headers'],
+		$log = array(
+			'to_email'        => \EmailLog\Util\stringify( $mail_info['to'] ),
+			'subject'         => $mail_info['subject'],
+			'message'         => $mail_info['message'],
+			'headers'         => \EmailLog\Util\stringify( $mail_info['headers'], "\n" ),
+			'attachment_name' => \EmailLog\Util\stringify( $mail_info['attachments'] ),
 			'sent_date'       => current_time( 'mysql' ),
-			'attachment_name' => implode( ',', $cleaned_mail_info['attachments'] ),
-			// TODO: Improve the Client's IP using https://www.virendrachandak.com/techtalk/getting-real-client-ip-address-in-php-2/.
 			'ip_address'      => $_SERVER['REMOTE_ADDR'],
 			'result'          => 1,
 		);
 
-		$to = '';
-		if ( empty( $cleaned_mail_info['to'] ) ) {
-			$to = '';
-		} elseif ( is_array( $cleaned_mail_info['to'] ) ) {
-			$to = implode( ',', $cleaned_mail_info['to'] );
+		if ( empty( $log['attachment_name'] ) ) {
+			$log['attachments'] = 'false';
 		} else {
-			$to = $cleaned_mail_info['to'];
+			$log['attachments'] = 'true';
 		}
-
-		$data['to_email'] = $to;
-
-		$message = '';
-
-		if ( isset( $cleaned_mail_info['message'] ) ) {
-			$message = $cleaned_mail_info['message'];
-		} else {
-			// wpmandrill plugin is changing "message" key to "html". See https://github.com/sudar/email-log/issues/20
-			// Ideally this should be fixed in wpmandrill, but I am including this hack here till it is fixed by them.
-			if ( isset( $cleaned_mail_info['html'] ) ) {
-				$message = $cleaned_mail_info['html'];
-			}
-		}
-
-		$data['message'] = $message;
 
 		/**
 		 * Filters the mail info right before inserting on the table.
@@ -97,27 +75,36 @@ class EmailLogger implements Loadie {
 		 * Masked fields would use this filter to avoid modifying the original data sent to
 		 * `wp_mail() function`
 		 *
+		 * @param array $log                Email Log that is about to be inserted into db.
+		 * @param array $original_mail_info Original mail info that was passed to `wp_mail` filter.
+		 *
 		 * @since 2.3.2
 		 */
-		$data = apply_filters( 'el_email_log_before_insert', $data );
+		$log = apply_filters( 'el_email_log_before_insert', $log, $original_mail_info );
 
-		$email_log->table_manager->insert_log( $data );
+		$email_log = email_log();
+		$email_log->table_manager->insert_log( $log );
 
 		/**
 		 * Fires the `el_email_log_inserted` action right after the log is inserted in to DB.
 		 *
-		 * @param array $data {
+		 * @since 2.3.0
+		 *
+		 * @param array $log {
 		 *      @type string $to
 		 *      @type string $subject
 		 *      @type string $message
 		 *      @type string $headers
 		 *      @type string $attachments
+		 *      @type string $attachment_name
 		 *      @type string $sent_date
+		 *      @type string $ip_address
+		 *      @type bool   $result
 		 * }
 		 */
-		do_action( 'el_email_log_inserted', $data );
+		do_action( 'el_email_log_inserted', $log );
 
-		return $mail_info;
+		return $original_mail_info;
 	}
 
 	/**
