@@ -117,7 +117,7 @@ function checked_array( $values, $current ) {
 		return;
 	}
 
-	if ( in_array( $current, $values ) ) {
+	if ( in_array( $current, $values, true ) ) {
 		echo "checked='checked'";
 	}
 }
