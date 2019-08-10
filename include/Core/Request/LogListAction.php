@@ -26,6 +26,7 @@ class LogListAction implements Loadie {
 	/**
 	 * AJAX callback for displaying email content.
 	 *
+	 * @since 2.4.0 Show Active Tab based on the Email's content type.
 	 * @since 1.6
 	 */
 	public function view_log_message() {
@@ -42,6 +43,19 @@ class LogListAction implements Loadie {
 		$log_items = $this->get_table_manager()->fetch_log_items_by_id( array( $id ) );
 		if ( count( $log_items ) > 0 ) {
 			$log_item = $log_items[0];
+
+			$content_type_active_attr = ' data-active=0';
+			$headers                  = array();
+			if ( ! empty( $log_item['headers'] ) ) {
+				$parser  = new \EmailLog\Util\EmailHeaderParser();
+				$headers = $parser->parse_headers( $log_item['headers'] );
+			}
+
+			// Avoid NPath complexity
+			if ( isset( $headers['content_type'] ) &&
+			     'text/html' === $headers['content_type'] ) {
+				$content_type_active_attr = ' data-active=1';
+			}
 
 			ob_start();
 			?>
@@ -74,7 +88,7 @@ class LogListAction implements Loadie {
 			</table>
 
 			<div id="tabs">
-				<ul>
+				<ul <?php echo esc_html( $content_type_active_attr ); ?>>
 					<li><a href="#tabs-text"><?php _e( 'Raw Email Content', 'email-log' ); ?></a></li>
 					<li><a href="#tabs-preview"><?php _e( 'Preview Content as HTML', 'email-log' ); ?></a></li>
 				</ul>

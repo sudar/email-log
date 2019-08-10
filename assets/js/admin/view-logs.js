@@ -19,8 +19,10 @@
 		$( element ).trigger( tabsInsertedEvent )
 	});
 
-	$( document ).on( tabsInsertedEvent, function () {
-		$( '#tabs' ).tabs( { active: 1 } );
-	});
+	$( document ).on( tabsInsertedEvent, function() {
+		var activeTabIndex = parseInt( $( '#tabs ul' ).data( 'active' ) );
+		activeTabIndex = isNaN( activeTabIndex ) ? 1 : activeTabIndex;
+		$( '#tabs' ).tabs( { active: activeTabIndex } );
+	} );
 
 })( jQuery );
