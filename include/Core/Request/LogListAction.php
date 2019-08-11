@@ -13,6 +13,8 @@ class LogListAction implements Loadie {
 	/**
 	 * Setup actions.
 	 *
+	 * @since 2.4.0 Display Plain type email using <pre>.
+	 *
 	 * @inheritdoc
 	 */
 	public function load() {
@@ -94,7 +96,8 @@ class LogListAction implements Loadie {
 				</ul>
 
 				<div id="tabs-text">
-					<textarea class="tabs-text-textarea"><?php echo esc_textarea( $log_item['message'] ); ?></textarea>
+					<pre class="tabs-text-pre"><?php echo esc_textarea( $log_item['message'] );
+					?></pre>
 				</div>
 
 				<div id="tabs-preview">
