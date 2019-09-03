@@ -2,6 +2,7 @@
 
 use EmailLog\Core\Loadie;
 use EmailLog\Core\UI\Page\LogListPage;
+use EmailLog\Util;
 
 /**
  * Actions performed in Log List.
@@ -13,6 +14,8 @@ class LogListAction implements Loadie {
 	/**
 	 * Setup actions.
 	 *
+	 * @since 2.4.0 Added Star Email Log AJAX.
+	 *
 	 * @inheritdoc
 	 */
 	public function load() {
@@ -21,6 +24,8 @@ class LogListAction implements Loadie {
 		add_action( 'el-log-list-delete', array( $this, 'delete_logs' ) );
 		add_action( 'el-log-list-delete-all', array( $this, 'delete_all_logs' ) );
 		add_action( 'el-log-list-manage-user-roles-changed', array( $this, 'update_capabilities_for_user_roles' ), 10, 2 );
+
+		add_action( 'wp_ajax_el-log-list-star-email', array( $this, 'star_email' ) );
 	}
 
 	/**
@@ -215,5 +220,52 @@ class LogListAction implements Loadie {
 		);
 
 		return $allowed_tags;
+	}
+
+	/**
+	 * Stars the selected Email Log.
+	 *
+	 * @since 2.4.0
+	 */
+	public function star_email() {
+		/*
+		 * Nonce validation handled at
+		 * {@see EmailLog\Core\Request\NonceChecker::check_nonce()}
+		 */
+
+		$is_star = sanitize_text_field( Util\el_array_get( $_POST, 'is_star', '0' ) ) === '1';
+		$log_id  = absint( Util\el_array_get( $_POST, 'log_id', 0 ) );
+		$current_user_id = get_current_user_id();
+
+		if ( 0 === $log_id ) {
+			wp_send_json_error( new \WP_Error( 'INVALID_LOG_ID', 'Invalid Log ID' ) );
+		}
+
+		// TODO: Should we check user capabilities?
+		$starred_log_ids = get_user_meta( $current_user_id,
+			LogListPage::STARRED_LOGS_META_KEY, true );
+
+		if ( ! $starred_log_ids ) {
+			$starred_log_ids = array();
+		}
+
+		if ( $is_star ) {
+			$starred_log_ids = array_merge( $starred_log_ids, array( $log_id ) );
+		} else {
+			$key = array_search( $log_id, $starred_log_ids );
+			unset( $starred_log_ids[ $key ] );
+		}
+
+		$update = update_user_meta(
+			$current_user_id,
+			LogListPage::STARRED_LOGS_META_KEY,
+			$starred_log_ids
+		);
+
+		if ( ! $update ) {
+			wp_send_json_error();
+		}
+
+		wp_send_json_success();
 	}
 }

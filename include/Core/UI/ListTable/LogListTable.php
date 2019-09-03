@@ -1,6 +1,7 @@
 <?php namespace EmailLog\Core\UI\ListTable;
 
 use EmailLog\Util;
+use \EmailLog\Core\UI\Page\LogListPage;
 
 if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once ABSPATH . WPINC . '/class-wp-list-table.php';
@@ -18,6 +19,8 @@ class LogListTable extends \WP_List_Table {
 	 * @since 2.0
 	 */
 	protected $page;
+
+	protected $log_list_type;
 
 	/**
 	 * Set up a constructor that references the parent constructor.
@@ -38,6 +41,8 @@ class LogListTable extends \WP_List_Table {
 		) );
 
 		parent::__construct( $args );
+
+		$this->set_log_list_type();
 	}
 
 	/**
@@ -75,7 +80,7 @@ class LogListTable extends \WP_List_Table {
 			'cb' => '<input type="checkbox" />', // Render a checkbox instead of heading.
 		);
 
-		foreach ( array( 'sent_date', 'result', 'to_email', 'subject' ) as $column ) {
+		foreach ( array( 'sent_date', 'result', 'to_email', 'subject', 'star' ) as $column ) {
 			$columns[ $column ] = Util\get_column_label( $column );
 		}
 
@@ -269,6 +274,33 @@ class LogListTable extends \WP_List_Table {
 	}
 
 	/**
+	 * Display column to star Email logs.
+	 *
+	 * @since 2.4.0
+	 *
+	 * @return string
+	 */
+	protected function column_star( $item ) {
+		$current_user_id = get_current_user_id();
+		$nonce_field = LogListPage::LOG_LIST_ACTION_NONCE_FIELD;
+		$class = 'dashicons-star-empty';
+
+		$starred_ids = get_user_meta( $current_user_id, LogListPage::STARRED_LOGS_META_KEY, true );
+
+		if ( ! empty( $starred_ids ) && in_array( $item->id, $starred_ids ) ) {
+			$class = 'dashicons-star-filled';
+		}
+
+		return sprintf(
+			'<a class="el-star-email" href="%2$s" data-nonce-field="%3$s" data-log-id="%4$s">%1$s</a>',
+			sprintf( '<span class="dashicons %s"></span>', $class ),
+			'#',
+			$nonce_field,
+			$item->id
+		);
+	}
+
+	/**
 	 * Specify the list of bulk actions.
 	 *
 	 * @access protected
@@ -286,6 +318,44 @@ class LogListTable extends \WP_List_Table {
 	}
 
 	/**
+	 * @inheritdoc
+	 */
+	protected function get_views() {
+		return array(
+			'all_logs'     => sprintf(
+				'<a href="%2$s"%3$s>%1$s</a>',
+				"All",
+				'admin.php?page=email-log&el_log_list_type=all',
+				'all' === $this->log_list_type ? ' class="current"' : ''
+			),
+			'starred_logs' => sprintf(
+				'<a href="%2$s"%3$s>%1$s</a>',
+				"Starred", 'admin.php?page=email-log&el_log_list_type=starred',
+				'starred' === $this->log_list_type ? ' class="current"' : ''
+			),
+		);
+	}
+
+	/**
+	 * Sets the Log List type.
+	 *
+	 * Two types of views are avialable using the View Logs table - All & Starred.
+	 *
+	 * @used-by \EmailLog\Core\UI\ListTable\LogListTable::__construct()
+	 * @used-by \EmailLog\Core\UI\ListTable\LogListTable::get_views()
+	 */
+	protected function set_log_list_type() {
+		$log_list_type = esc_attr( Util\el_array_get( $_REQUEST, 'el_log_list_type', '' ) );
+		switch ( $log_list_type ) {
+			case 'starred':
+				$this->log_list_type = 'starred';
+				break;
+			default:
+				$this->log_list_type = 'all';
+		}
+	}
+
+	/**
 	 * Prepare data for display.
 	 */
 	public function prepare_items() {
@@ -295,9 +365,35 @@ class LogListTable extends \WP_List_Table {
 		$current_page_no = $this->get_pagenum();
 		$per_page        = $this->page->get_per_page();
 
-		list( $items, $total_items ) = $this->page->get_table_manager()->fetch_log_items( $_GET, $per_page, $current_page_no );
+		if ( 'all' === $this->log_list_type ) {
+			list( $items, $total_items ) = $this->page->get_table_manager()->fetch_log_items( $_GET, $per_page, $current_page_no );
 
-		$this->items = $items;
+			$this->items = $items;
+		} else {
+			$log_ids = get_user_meta(
+				get_current_user_id(),
+				LogListPage::STARRED_LOGS_META_KEY,
+				true
+			);
+
+			if ( empty( $log_ids ) ) {
+				$log_ids = array( 0 );
+			}
+
+			$additional_args = array(
+				'output_type'     => OBJECT,
+				'current_page_no' => $current_page_no,
+				'per_page'        => $per_page,
+			);
+
+			$this->page->get_table_manager()->fetch_log_items_by_id( $log_ids, $additional_args );
+
+			$this->items = $this->page->get_table_manager()->fetch_log_items_by_id( $log_ids,
+				array(
+					'output_type' => OBJECT,
+				) );
+			$total_items  = count( $log_ids );
+		}
 
 		// Register pagination options & calculations.
 		$this->set_pagination_args( array(

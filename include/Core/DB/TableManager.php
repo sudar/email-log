@@ -157,20 +157,23 @@ class TableManager implements Loadie {
 	/**
 	 * Fetch log item by ID.
 	 *
-	 * @param array $ids             Optional. Array of IDs of the log items to be retrieved.
-	 * @param array $additional_args {
-	 *                               Optional. Array of additional args.
+	 * @param array $ids                Optional. Array of IDs of the log items to be retrieved.
+	 * @param array $additional_args    {
+	 *                                  Optional. Array of additional args.
 	 *
 	 * @type string $date_column_format MySQL date column format. Refer
-	 *
 	 * @link  https://dev.mysql.com/doc/refman/5.5/en/date-and-time-functions.html#function_date-format
+	 * @type int    $current_page_no    Current Page number.
+	 * @type int    $per_page           Per Page count.
 	 * }
 	 *
 	 * @return array Log item(s).
 	 */
 	public function fetch_log_items_by_id( $ids = array(), $additional_args = array() ) {
 		global $wpdb;
-		$table_name = $this->get_log_table_name();
+		$table_name      = $this->get_log_table_name();
+		$current_page_no = Util\el_array_get( $additional_args, 'current_page_no', false );
+		$per_page        = Util\el_array_get( $additional_args, 'per_page', false );
 
 		$query = "SELECT * FROM {$table_name}";
 
@@ -187,6 +190,28 @@ class TableManager implements Loadie {
 			$ids_list = esc_sql( implode( ',', $ids ) );
 
 			$query .= " where id IN ( {$ids_list} )";
+		}
+
+		// Ordering parameters.
+		$orderby = ! empty( $additional_args['orderby'] ) ? esc_sql( $additional_args['orderby'] ) : 'sent_date';
+		$order   = ! empty( $additional_args['order'] ) ? esc_sql( $additional_args['order'] ) : 'DESC';
+
+		$query .= " ORDER BY {$orderby} {$order}";
+
+		// Adjust the query to take pagination into account.
+		if ( ! empty( $current_page_no ) && ! empty( $per_page ) ) {
+			$offset = ( $current_page_no - 1 ) * $per_page;
+			$query  .= ' LIMIT ' . (int) $offset . ',' . (int) $per_page;
+		}
+		error_log( '$query' . $query );
+		if ( ! empty( $additional_args['output_type'] )
+		     && in_array( $additional_args['output_type'], array(
+				OBJECT,
+				OBJECT_K,
+				ARRAY_A,
+				ARRAY_N,
+			) ) ) {
+			return $wpdb->get_results( $query, $additional_args['output_type'] );
 		}
 
 		return $wpdb->get_results( $query, 'ARRAY_A' ); //@codingStandardsIgnoreLine

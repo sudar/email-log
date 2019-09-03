@@ -36,6 +36,8 @@ class LogListPage extends BasePage {
 	 */
 	const CAPABILITY = 'manage_email_logs';
 
+	const STARRED_LOGS_META_KEY = 'email-log-starred-logs';
+
 	/**
 	 * Setup hooks.
 	 */
@@ -100,6 +102,7 @@ class LogListPage extends BasePage {
 			<h2><?php _e( 'Email Logs', 'email-log' ); ?></h2>
 			<?php settings_errors(); ?>
 
+			<?php $this->log_list_table->views(); ?>
 			<form id="email-logs-list" method="get">
 				<input type="hidden" name="page" value="<?php echo esc_attr( self::PAGE_SLUG ); ?>">
 				<?php $this->log_list_table->search_box( __( 'Search Logs', 'email-log' ), 'search_id' ); ?>
