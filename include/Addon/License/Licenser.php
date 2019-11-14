@@ -143,7 +143,7 @@ final class Licenser implements Loadie {
 					   placeholder="<?php _e( 'Email Log Bundle License Key', 'email-log' ); ?>"
 					   value="<?php echo esc_attr( $this->bundle_license->get_license_key() ); ?>">
 
-				<input type="submit" class="button button-large <?php echo sanitize_html_class( $button_class ); ?>"
+				<input type="submit" class="button-large <?php echo sanitize_html_class( $button_class ); ?>"
 					   value="<?php echo esc_attr( $action_text ); ?>">
 
 				<p class="<?php echo esc_attr( $expiry_details_class ); ?>">

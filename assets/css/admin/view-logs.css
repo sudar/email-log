@@ -32,6 +32,11 @@
 	padding-bottom: 10px !important; /* Override the default Thickbox css values. */
 }
 
+#el-pro-msg {
+	display: inline-block;
+	margin: 5px 0;
+}
+
 .column-result .dashicons {
 	font-size: xx-large;
 }
