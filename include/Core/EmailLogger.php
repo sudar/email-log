@@ -14,7 +14,34 @@ class EmailLogger implements Loadie {
 	public function load() {
 		add_filter( 'wp_mail', array( $this, 'log_email' ) );
 		add_action( 'wp_mail_failed', array( $this, 'update_email_fail_status' ) );
+		/**
+		 * These actions are required for logging buddy press emails as buddy press does
+		 * not use wp_mail for sending emails.
+		 */
+		add_action( 'bp_send_email_success', array( $this, 'log_bp_emails' ), 10, 2 );
+		add_action( 'bp_send_email_failure', array( $this, 'log_bp_emails' ), 10, 2 );
 	}
+
+	/**
+	 * Preparae buddy press emails to log into database.
+	 *
+	 * @param bool  $status       Mail sent status.
+	 * @param array $bp_mail_info Information about email
+	 *
+	 * @return void
+	 */
+    public function log_bp_emails( $status, $bp_mail_info ) {
+        $bp_for_email_log = array(
+            'to'          => array_shift( $bp_mail_info->get_to() )->get_address(),
+            'subject'     => $bp_mail_info->get( 'subject' ),
+            'message'     => $bp_mail_info->get_content_plaintext( 'replace-tokens' ),
+            'headers'     => $bp_mail_info->get_headers(),
+        );
+		$this->log_email( $bp_for_email_log );
+		if ( ! $status ) {
+			// TODO set status to failure.
+		}
+    }
 
 	/**
 	 * Logs email to database.
