@@ -26,7 +26,7 @@
 	}
 }
 
-@media screen and (min-width:990px) and (max-width:1199px) {
+@media screen and (min-width:990px) and (max-width:1274px) {
 	.el-addon {
 		float: left;
 		width: 45%;
@@ -42,7 +42,7 @@
 	}
 }
 
-@media screen and (min-width:1200px) {
+@media screen and (min-width:1275px) {
 	.el-addon {
 		float: left;
 		width: 30%;
