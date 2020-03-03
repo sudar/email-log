@@ -353,22 +353,21 @@ class TableManager implements Loadie {
 	}
 
 	/**
-	 * Fetches the log item by the item data.
+	 * Fetches the log id by item data.
 	 *
-	 * Use this method to get the log item when the error instance only returns the log item data.
+	 * Use this method to get the log item id when the error instance only returns the log item data.
 	 *
-	 * @param array $data Array of Email information. {
+	 * @param array $data Array of Email information {
+	 *     @type array|string to
+	 *     @type string       subject
+	 *     @type string       message
+	 *     @type array|string headers
+	 *     @type array|string attachments
+	 * }
 	 *
-	 * @type array|string to
-	 * @type string       subject
-	 * @type string       message
-	 * @type array|string headers
-	 * @type array|string attachments
-	 *                    }
-	 *
-	 * @return int
+	 * @return int Log item id.
 	 */
-	public function fetch_log_item_by_item_data( $data ) {
+	public function fetch_log_id_by_data( $data ) {
 		if ( empty( $data ) || ! is_array( $data ) ) {
 			return 0;
 		}

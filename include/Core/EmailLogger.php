@@ -185,7 +185,7 @@ class EmailLogger implements Loadie {
 
 		$email_log = email_log();
 
-		$log_item_id = $email_log->table_manager->fetch_log_item_by_item_data( $log );
+		$log_item_id = $email_log->table_manager->fetch_log_id_by_data( $log );
 
 		if ( empty( $log_item_id ) ) {
 			return;
