@@ -13,7 +13,7 @@ class EmailLogger implements Loadie {
 	 */
 	public function load() {
 		add_filter( 'wp_mail', array( $this, 'log_email' ) );
-		add_action( 'wp_mail_failed', array( $this, 'update_email_fail_status' ) );
+		add_action( 'wp_mail_failed', array( $this, 'on_email_failed' ) );
 
 		/**
 		 * These actions are required for logging BuddyPress emails, since BuddyPress does
@@ -125,7 +125,7 @@ class EmailLogger implements Loadie {
 	 *
 	 * @param \WP_Error $wp_error The error instance.
 	 */
-	public function update_email_fail_status( $wp_error ) {
+	public function on_email_failed( $wp_error ) {
 		if ( ! ( $wp_error instanceof \WP_Error ) ) {
 			return;
 		}
