@@ -2,6 +2,9 @@
 
 ### v2.3.2 – (2020-03-03) ###
 - New: Added the ability to log BuddyPress emails which don't use wp_mail function.
+- New: Supports PHP 5.6 to PHP 7.4
+- Tweak: Design tweaks for WordPress 5.3
+- Fix: Don't throw a warning if wrong data is passed to wp_mail function.
 - Fix: Bulk Actions that were performed from the bottom dropdown in the Log List page was not working.
 
 ### v2.3.1 – (2019-04-11) ###
