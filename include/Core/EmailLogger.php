@@ -14,34 +14,14 @@ class EmailLogger implements Loadie {
 	public function load() {
 		add_filter( 'wp_mail', array( $this, 'log_email' ) );
 		add_action( 'wp_mail_failed', array( $this, 'update_email_fail_status' ) );
+
 		/**
-		 * These actions are required for logging buddy press emails as buddy press does
+		 * These actions are required for logging BuddyPress emails, since BuddyPress does
 		 * not use wp_mail for sending emails.
 		 */
-		add_action( 'bp_send_email_success', array( $this, 'log_bp_emails' ), 10, 2 );
-		add_action( 'bp_send_email_failure', array( $this, 'log_bp_emails' ), 10, 2 );
+		add_action( 'bp_send_email_success', array( $this, 'log_buddy_press_email' ), 10, 2 );
+		add_action( 'bp_send_email_failure', array( $this, 'log_buddy_press_email' ), 10, 2 );
 	}
-
-	/**
-	 * Preparae buddy press emails to log into database.
-	 *
-	 * @param bool  $status       Mail sent status.
-	 * @param array $bp_mail_info Information about email
-	 *
-	 * @return void
-	 */
-    public function log_bp_emails( $status, $bp_mail_info ) {
-        $bp_for_email_log = array(
-            'to'          => array_shift( $bp_mail_info->get_to() )->get_address(),
-            'subject'     => $bp_mail_info->get( 'subject' ),
-            'message'     => $bp_mail_info->get_content_plaintext( 'replace-tokens' ),
-            'headers'     => $bp_mail_info->get_headers(),
-        );
-		$this->log_email( $bp_for_email_log );
-		if ( ! $status ) {
-			// TODO set status to failure.
-		}
-    }
 
 	/**
 	 * Logs email to database.
@@ -146,17 +126,63 @@ class EmailLogger implements Loadie {
 			return;
 		}
 
-		$email_log       = email_log();
+		// @see wp-includes/pluggable.php#500
 		$mail_error_data = $wp_error->get_error_data( 'wp_mail_failed' );
 
-		// $mail_error_data can be of type mixed.
-		if ( ! is_array( $mail_error_data ) ) {
+		$this->mark_email_log_as_failed( $mail_error_data );
+	}
+
+	/**
+	 * Prepare BuddyPress emails to log into database.
+	 *
+	 * @since 2.3.2
+	 *
+	 * @param bool      $status  Mail sent status.
+	 * @param \BP_Email $bp_mail Information about email.
+	 */
+	public function log_buddy_press_email( $status, $bp_mail ) {
+		if ( ! class_exists( '\\BP_Email' ) ) {
 			return;
 		}
 
-		// @see wp-includes/pluggable.php#484
-		$log_item_id = $email_log->table_manager->fetch_log_item_by_item_data( $mail_error_data );
-		// Empty will handle 0 and return FALSE.
+		if ( $bp_mail instanceof \BP_Email ) {
+			return;
+		}
+
+		$log = array(
+			'to'      => array_shift( $bp_mail->get_to() )->get_address(),
+			'subject' => $bp_mail->get_subject( 'replace-tokens' ),
+			'message' => $bp_mail->get_content( 'replace-tokens' ),
+			'headers' => $bp_mail->get_headers( 'replace-tokens ' ),
+		);
+
+		$this->log_email( $log );
+
+		if ( ! $status ) {
+			$this->mark_email_log_as_failed( $log );
+		}
+	}
+
+	/**
+	 * Mark email log as failed.
+	 *
+	 * @since 2.3.2
+	 *
+	 * @param array $log Email Log.
+	 */
+	protected function mark_email_log_as_failed( $log ) {
+		if ( ! is_array( $log ) ) {
+			return;
+		}
+
+		if ( ! isset( $log['to'], $log['subject'] ) ) {
+			return;
+		}
+
+		$email_log = email_log();
+
+		$log_item_id = $email_log->table_manager->fetch_log_item_by_item_data( $log );
+
 		if ( empty( $log_item_id ) ) {
 			return;
 		}
