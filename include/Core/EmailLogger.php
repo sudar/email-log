@@ -191,6 +191,6 @@ class EmailLogger implements Loadie {
 			return;
 		}
 
-		$email_log->table_manager->set_log_item_fail_status_by_id( $log_item_id );
+		$email_log->table_manager->mark_log_as_failed( $log_item_id );
 	}
 }

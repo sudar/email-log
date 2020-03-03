@@ -423,14 +423,14 @@ class TableManager implements Loadie {
 	 *
 	 * @param int $log_item_id ID of the log item whose email sent status should be set to failed.
 	 */
-	public function set_log_item_fail_status_by_id( $log_item_id ) {
+	public function mark_log_as_failed( $log_item_id ) {
 		global $wpdb;
 		$table_name = $this->get_log_table_name();
 
 		$wpdb->update(
 			$table_name,
 			array( 'result' => '0' ),
-			array( 'ID'     => $log_item_id ),
+			array( 'ID' => $log_item_id ),
 			array( '%d' ),
 			array( '%d' )
 		);
