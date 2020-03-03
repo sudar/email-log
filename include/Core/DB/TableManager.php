@@ -358,12 +358,12 @@ class TableManager implements Loadie {
 	 * Use this method to get the log item id when the error instance only returns the log item data.
 	 *
 	 * @param array $data Array of Email information {
-	 *     @type array|string to
-	 *     @type string       subject
-	 *     @type string       message
-	 *     @type array|string headers
-	 *     @type array|string attachments
-	 * }
+	 * @type array|string to
+	 * @type string       subject
+	 * @type string       message
+	 * @type array|string headers
+	 * @type array|string attachments
+	 *                    }
 	 *
 	 * @return int Log item id.
 	 */
@@ -430,7 +430,7 @@ class TableManager implements Loadie {
 		$wpdb->update(
 			$table_name,
 			array( 'result' => '0' ),
-			array( 'ID' => $log_item_id ),
+			array( 'ID'     => $log_item_id ),
 			array( '%d' ),
 			array( '%d' )
 		);
