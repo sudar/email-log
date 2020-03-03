@@ -13,101 +13,109 @@ class EmailLogger implements Loadie {
 	 */
 	public function load() {
 		add_filter( 'wp_mail', array( $this, 'log_email' ) );
-		add_action( 'wp_mail_failed', array( $this, 'update_email_fail_status' ) );
+		add_action( 'wp_mail_failed', array( $this, 'on_email_failed' ) );
+
+		/**
+		 * These actions are required for logging BuddyPress emails, since BuddyPress does
+		 * not use wp_mail for sending emails.
+		 *
+		 * Support for BuddyPress was added in v2.3.2
+		 *
+		 * @link https://github.com/sudar/email-log/issues/249
+		 */
+		add_action( 'bp_send_email_success', array( $this, 'log_buddy_press_email' ), 10, 2 );
+		add_action( 'bp_send_email_failure', array( $this, 'log_buddy_press_email' ), 10, 2 );
 	}
 
 	/**
 	 * Logs email to database.
 	 *
-	 * @param array $mail_info Information about email.
+	 * @param array $original_mail_info Information about email.
 	 *
 	 * @return array Information about email.
 	 */
-	public function log_email( $mail_info ) {
-		$email_log = email_log();
+	public function log_email( $original_mail_info ) {
 		/**
 		 * Hook to modify wp_mail contents before Email Log plugin logs.
 		 *
-		 * @since Genesis
-		 *
-		 * @param array $mail_info {
+		 * @param array $original_mail_info {
 		 *     @type string|array $to
 		 *     @type string       $subject
 		 *     @type string       $message
-		 *     @type string       $headers
-		 *     @type string       $attachment
 		 *     @type string|array $headers
 		 *     @type string|array $attachment
 		 * }
+		 *
+		 * @since 2.0.0
 		 */
-		$mail_info = apply_filters( 'el_wp_mail_log', $mail_info );
+		$original_mail_info = apply_filters( 'el_wp_mail_log', $original_mail_info );
 
 		// Sometimes the array passed to the `wp_mail` filter may not contain all the required keys.
 		// See https://wordpress.org/support/topic/illegal-string-offset-attachments/.
-		$cleaned_mail_info = wp_parse_args(
-			$mail_info,
+		$mail_info = wp_parse_args(
+			$original_mail_info,
 			array(
-				'attachments' => array(),
 				'to'          => '',
 				'subject'     => '',
+				'message'     => '',
 				'headers'     => '',
+				'attachments' => array(),
 			)
 		);
 
-		// ! empty() check on attachments handles both empty string and empty array.
-		$data = array(
-			'attachments'     => ( ! empty( $cleaned_mail_info['attachments'] ) ) ? 'true' : 'false',
-			'subject'         => $cleaned_mail_info['subject'],
-			'headers'         => is_array( $cleaned_mail_info['headers'] ) ? implode( "\n", $cleaned_mail_info['headers'] ) : $cleaned_mail_info['headers'],
+		$log = array(
+			'to_email'        => \EmailLog\Util\stringify( $mail_info['to'] ),
+			'subject'         => $mail_info['subject'],
+			'message'         => $mail_info['message'],
+			'headers'         => \EmailLog\Util\stringify( $mail_info['headers'], "\n" ),
+			'attachment_name' => \EmailLog\Util\stringify( $mail_info['attachments'] ),
 			'sent_date'       => current_time( 'mysql' ),
-			'attachment_name' => implode( ',', $cleaned_mail_info['attachments'] ),
-			// TODO: Improve the Client's IP using https://www.virendrachandak.com/techtalk/getting-real-client-ip-address-in-php-2/.
 			'ip_address'      => $_SERVER['REMOTE_ADDR'],
 			'result'          => 1,
 		);
 
-		$to = '';
-		if ( empty( $cleaned_mail_info['to'] ) ) {
-			$to = '';
-		} elseif ( is_array( $cleaned_mail_info['to'] ) ) {
-			$to = implode( ',', $cleaned_mail_info['to'] );
+		if ( empty( $log['attachment_name'] ) ) {
+			$log['attachments'] = 'false';
 		} else {
-			$to = $cleaned_mail_info['to'];
+			$log['attachments'] = 'true';
 		}
 
-		$data['to_email'] = $to;
+		/**
+		 * Filters the mail info right before inserting on the table.
+		 *
+		 * Masked fields would use this filter to avoid modifying the original data sent to
+		 * `wp_mail() function`
+		 *
+		 * @param array $log                Email Log that is about to be inserted into db.
+		 * @param array $original_mail_info Original mail info that was passed to `wp_mail` filter.
+		 *
+		 * @since 2.3.2
+		 */
+		$log = apply_filters( 'el_email_log_before_insert', $log, $original_mail_info );
 
-		$message = '';
-
-		if ( isset( $cleaned_mail_info['message'] ) ) {
-			$message = $cleaned_mail_info['message'];
-		} else {
-			// wpmandrill plugin is changing "message" key to "html". See https://github.com/sudar/email-log/issues/20
-			// Ideally this should be fixed in wpmandrill, but I am including this hack here till it is fixed by them.
-			if ( isset( $cleaned_mail_info['html'] ) ) {
-				$message = $cleaned_mail_info['html'];
-			}
-		}
-
-		$data['message'] = $message;
-
-		$email_log->table_manager->insert_log( $data );
+		$email_log = email_log();
+		$email_log->table_manager->insert_log( $log );
 
 		/**
 		 * Fires the `el_email_log_inserted` action right after the log is inserted in to DB.
 		 *
-		 * @param array $data {
+		 * @since 2.3.0
+		 *
+		 * @param array $log {
 		 *      @type string $to
 		 *      @type string $subject
 		 *      @type string $message
 		 *      @type string $headers
 		 *      @type string $attachments
+		 *      @type string $attachment_name
 		 *      @type string $sent_date
+		 *      @type string $ip_address
+		 *      @type bool   $result
 		 * }
 		 */
-		do_action( 'el_email_log_inserted', $data );
+		do_action( 'el_email_log_inserted', $log );
 
-		return $mail_info;
+		return $original_mail_info;
 	}
 
 	/**
@@ -117,26 +125,72 @@ class EmailLogger implements Loadie {
 	 *
 	 * @param \WP_Error $wp_error The error instance.
 	 */
-	public function update_email_fail_status( $wp_error ) {
+	public function on_email_failed( $wp_error ) {
 		if ( ! ( $wp_error instanceof \WP_Error ) ) {
 			return;
 		}
 
-		$email_log       = email_log();
+		// @see wp-includes/pluggable.php#500
 		$mail_error_data = $wp_error->get_error_data( 'wp_mail_failed' );
 
-		// $mail_error_data can be of type mixed.
-		if ( ! is_array( $mail_error_data ) ) {
+		$this->mark_email_log_as_failed( $mail_error_data );
+	}
+
+	/**
+	 * Prepare BuddyPress emails to log into database.
+	 *
+	 * @since 2.3.2
+	 *
+	 * @param bool      $status  Mail sent status.
+	 * @param \BP_Email $bp_mail Information about email.
+	 */
+	public function log_buddy_press_email( $status, $bp_mail ) {
+		if ( ! class_exists( '\\BP_Email' ) ) {
 			return;
 		}
 
-		// @see wp-includes/pluggable.php#484
-		$log_item_id = $email_log->table_manager->fetch_log_item_by_item_data( $mail_error_data );
-		// Empty will handle 0 and return FALSE.
+		if ( $bp_mail instanceof \BP_Email ) {
+			return;
+		}
+
+		$log = array(
+			'to'      => array_shift( $bp_mail->get_to() )->get_address(),
+			'subject' => $bp_mail->get_subject( 'replace-tokens' ),
+			'message' => $bp_mail->get_content( 'replace-tokens' ),
+			'headers' => $bp_mail->get_headers( 'replace-tokens ' ),
+		);
+
+		$this->log_email( $log );
+
+		if ( ! $status ) {
+			$this->mark_email_log_as_failed( $log );
+		}
+	}
+
+	/**
+	 * Mark email log as failed.
+	 *
+	 * @since 2.3.2
+	 *
+	 * @param array $log Email Log.
+	 */
+	protected function mark_email_log_as_failed( $log ) {
+		if ( ! is_array( $log ) ) {
+			return;
+		}
+
+		if ( ! isset( $log['to'], $log['subject'] ) ) {
+			return;
+		}
+
+		$email_log = email_log();
+
+		$log_item_id = $email_log->table_manager->fetch_log_id_by_data( $log );
+
 		if ( empty( $log_item_id ) ) {
 			return;
 		}
 
-		$email_log->table_manager->set_log_item_fail_status_by_id( $log_item_id );
+		$email_log->table_manager->mark_log_as_failed( $log_item_id );
 	}
 }

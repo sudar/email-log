@@ -62,24 +62,26 @@ class LogListTable extends \WP_List_Table {
 	 * Returns the list of column and title names.
 	 *
 	 * @since 2.3.0 Retrieve Column labels using Utility methods.
+	 * @since 2.3.2 Added `result` column.
 	 * @see WP_List_Table::single_row_columns()
 	 *
-	 * @uses \EmailLog\Util\get_column_label_by_column()
+	 * @uses \EmailLog\Util\get_column_label()
 	 *
 	 * @return array An associative array containing column information: 'slugs'=>'Visible Titles'.
 	 */
 	public function get_columns() {
 		$columns = array(
-			'cb'        => '<input type="checkbox" />', // Render a checkbox instead of text.
-			'sent_date' => Util\get_column_label_by_db_column( 'sent_date' ),
-			'to'        => Util\get_column_label_by_db_column( 'to' ),
-			'subject'   => Util\get_column_label_by_db_column( 'subject' ),
+			'cb' => '<input type="checkbox" />', // Render a checkbox instead of heading.
 		);
+
+		foreach ( array( 'sent_date', 'result', 'to_email', 'subject' ) as $column ) {
+			$columns[ $column ] = Util\get_column_label( $column );
+		}
 
 		/**
 		 * Filter the email log list table columns.
 		 *
-		 * @since 2.0
+		 * @since 2.0.0
 		 *
 		 * @param array $columns Columns of email log list table.
 		 */
@@ -97,7 +99,7 @@ class LogListTable extends \WP_List_Table {
 	protected function get_sortable_columns() {
 		$sortable_columns = array(
 			'sent_date' => array( 'sent_date', true ), // true means it's already sorted.
-			'to'        => array( 'to_email', false ),
+			'to_email'  => array( 'to_email', false ),
 			'subject'   => array( 'subject', false ),
 		);
 
@@ -197,7 +199,7 @@ class LogListTable extends \WP_List_Table {
 	 *
 	 * @return string
 	 */
-	protected function column_to( $item ) {
+	protected function column_to_email( $item ) {
 		/**
 		 * Filters the `To` field before outputting on the table.
 		 *
@@ -205,7 +207,7 @@ class LogListTable extends \WP_List_Table {
 		 *
 		 * @param string $email `To` field
 		 */
-		$email = apply_filters( 'el_row_email', esc_html( $item->to_email ) );
+		$email = apply_filters( 'el_log_list_column_to_email', esc_html( $item->to_email ) );
 
 		return $email;
 	}
@@ -238,6 +240,31 @@ class LogListTable extends \WP_List_Table {
 			/*$1%s*/ $this->_args['singular'],
 			/*$2%s*/ $item->id
 		);
+	}
+
+	/**
+	 * Markup for Status column.
+	 *
+	 * @since 2.3.2
+	 *
+	 * @access protected
+	 *
+	 * @param object $item Email Log item.
+	 *
+	 * @return string Column markup.
+	 */
+	protected function column_result( $item ) {
+		// For older records that does not have value in the result column,
+		// $item->result will be null.
+		if ( is_null( $item->result ) ) {
+			return '';
+		}
+
+		if ( $item->result ) {
+			return \EmailLog\Util\get_success_icon();
+		}
+
+		return \EmailLog\Util\get_failure_icon();
 	}
 
 	/**
