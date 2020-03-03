@@ -43,11 +43,6 @@ install:
     else
       composer install
     fi
-  - |
-    if [[ $TRAVIS_PHP_VERSION == 7.3 ]]; then
-      # The jdgrimes/wp-plugin-uninstall-tester package is not compatible with PHP > 7.3
-      composer remove --dev -n jdgrimes/wp-plugin-uninstall-tester
-    fi
 
 before_script:
   - rm -rf /tmp/wordpress-tests-lib
