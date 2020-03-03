@@ -39,7 +39,7 @@ install:
       # So install phpunit globally and run composer without requiring dev dependencies.
       composer global require "phpunit/phpunit=4.8.*|5.7.*"
 
-      composer install--no-dev
+      composer install --no-dev
     else
       composer install
     fi
