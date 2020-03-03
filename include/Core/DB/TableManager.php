@@ -444,11 +444,7 @@ class TableManager implements Loadie {
 	 * @since 2.3.0
 	 */
 	private function update_table_if_needed() {
-		$existing_db_version = get_option( self::DB_OPTION_NAME, false );
-		$updated_db_version  = self::DB_VERSION;
-
-		// Bail out when the DB version is `0.1` or equals to self::DB_VERSION
-		if ( ! $existing_db_version || $existing_db_version !== '0.1' || $existing_db_version === $updated_db_version ) {
+		if ( get_option( self::DB_OPTION_NAME, false ) === self::DB_VERSION ) {
 			return;
 		}
 
