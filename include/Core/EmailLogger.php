@@ -18,6 +18,10 @@ class EmailLogger implements Loadie {
 		/**
 		 * These actions are required for logging BuddyPress emails, since BuddyPress does
 		 * not use wp_mail for sending emails.
+		 *
+		 * Support for BuddyPress was added in v2.3.2
+		 *
+		 * @link https://github.com/sudar/email-log/issues/249
 		 */
 		add_action( 'bp_send_email_success', array( $this, 'log_buddy_press_email' ), 10, 2 );
 		add_action( 'bp_send_email_failure', array( $this, 'log_buddy_press_email' ), 10, 2 );

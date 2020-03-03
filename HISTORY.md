@@ -1,5 +1,8 @@
 ## Changelog ##
 
+### v2.3.2 – (2020-03-03) ###
+- New: Added the ability to log BuddyPress emails which don't use wp_mail function.
+
 ### v2.3.1 – (2019-04-11) ###
 - Fix: Added a missing file that broke v2.3.1 release for some installations.
 
