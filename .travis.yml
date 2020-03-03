@@ -36,8 +36,11 @@ matrix:
 install:
   - |
     if [[ $TRAVIS_PHP_VERSION == 5.6 ]]; then
-      # Run composer install only for PHP 7.1 or above. The dependencies are not compatible with PHP 5.x or PHP 7.0
+      # The dev dependencies are not compatible with PHP 5.x or PHP 7.0
+      # So install phpunit globally and run composer without requiring dev dependencies.
       composer global require "phpunit/phpunit=4.8.*|5.7.*"
+
+      composer install--no-dev
     else
       composer install
     fi
