@@ -213,7 +213,7 @@ class Addon {
 
 		<div class="individual-license <?php echo sanitize_html_class( $license_wrap ); ?>">
 			<form method="post">
-				<input type="text" name="el-license" class="el-license" size="36"
+				<input type="text" name="el-license" class="el-license" size="33"
 				       title="<?php _e( 'Email Log License Key', 'email-log' ); ?>"
 				       placeholder="<?php echo esc_attr( sprintf( __( '%s Add-on License Key', 'email-log' ), $this->name ) ); ?>"
 				       value="<?php echo esc_attr( $this->get_addon_license_key() ); ?>">

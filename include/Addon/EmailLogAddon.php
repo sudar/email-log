@@ -1,5 +1,7 @@
 <?php namespace EmailLog\Addon;
 
+use EmailLog\Core\Loadie;
+
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 /**
@@ -7,7 +9,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
  *
  * @since 2.0.0
  */
-abstract class EmailLogAddon {
+abstract class EmailLogAddon implements Loadie {
 
 	protected $addon_file;
 	protected $addon_name    = '';
