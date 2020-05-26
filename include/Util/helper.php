@@ -123,30 +123,6 @@ function checked_array( $values, $current ) {
 }
 
 /**
- * Gets the log row class by result code.
- *
- * @param int $result Mail sent status.
- *
- * @return string
- */
-function get_log_row_class_by_result_code( $result ) {
-	$log_row_classes = array(
-		0 => 'el_email_sent_status--failed',
-		1 => 'el_email_sent_status--sent',
-	);
-	if ( empty( $result ) ) {
-		return $log_row_classes[0];
-	}
-
-	$result = absint( $result );
-	if ( array_key_exists( $result, $log_row_classes ) ) {
-		return $log_row_classes[ $result ];
-	}
-
-	return $log_row_classes[0];
-}
-
-/**
  * Return failure icon.
  *
  * @since 2.3.2
@@ -372,7 +348,6 @@ function get_column_label_map() {
 		'reply_to'    => __( 'Reply To', 'email-log' ),
 		'result'      => __( 'Sent Status', 'email-log' ),
 		'ip_address'  => __( 'IP Address', 'email-log' ),
-		'result'      => __( 'Sent Status', 'email-log' ),
 	);
 
 	/**

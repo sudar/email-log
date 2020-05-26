@@ -13,14 +13,14 @@
 		});
 
 		// Sent status tool tip.
-		$( '.el-help' ).tooltip({
+		$( ".el-help" ).tooltip( {
 			content: function() {
-				return $(this).prop('title');
+				return $( this ).prop( "title" );
 			},
 			position: {
-				my: 'center top',
-				at: 'center bottom+10',
-				collision: 'flipfit'
+				my: "center top",
+				at: "center bottom+10",
+				collision: "flipfit"
 			},
 			hide: {
 				duration: 100
