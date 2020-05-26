@@ -33,7 +33,7 @@ class LogListTableTest extends \WP_UnitTestCase {
 
 		$this->assertArrayHasKey( 'cb', $actual );
 		$this->assertArrayHasKey( 'sent_date', $actual );
-		$this->assertArrayHasKey( 'to', $actual );
+		$this->assertArrayHasKey( 'to_email', $actual );
 		$this->assertArrayHasKey( 'subject', $actual );
 	}
 }

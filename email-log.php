@@ -5,7 +5,7 @@
  * Description: Logs every email sent through WordPress
  * Donate Link: http://sudarmuthu.com/if-you-wanna-thank-me
  * Author: Sudar
- * Version: 2.3.1
+ * Version: 2.3.2
  * Author URI: http://sudarmuthu.com/
  * Text Domain: email-log
  * Domain Path: languages/
@@ -29,7 +29,7 @@
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 // Include the stub of the old `EmailLog` class, so that old add-ons don't generate a fatal error.
-include_once plugin_dir_path( __FILE__ ) . 'include/compatibility/EmailLog.php';
+require_once plugin_dir_path( __FILE__ ) . 'include/compatibility/EmailLog.php';
 
 if ( version_compare( PHP_VERSION, '5.3.0', '<' ) ) {
 	/**
@@ -74,3 +74,6 @@ if ( version_compare( PHP_VERSION, '5.3.0', '<' ) ) {
 // PHP is at least 5.3, so we can safely include namespace code.
 require_once 'load-email-log.php';
 load_email_log( __FILE__ );
+
+// Fix compatibility issues with wpmandrill plugin.
+require_once plugin_dir_path( __FILE__ ) . 'include/compatibility/wpmandrill.php';
