@@ -209,16 +209,12 @@ class LogListPage extends BasePage {
 		$email_log      = email_log();
 		$plugin_dir_url = plugin_dir_url( $email_log->get_plugin_file() );
 
-		wp_enqueue_style( 'jquery-ui-css', $plugin_dir_url . 'assets/vendor/jquery-ui/themes/base/jquery-ui.min.css', array(), '1.12.1' );
+		wp_register_style( 'jquery-ui-css', $plugin_dir_url . 'assets/vendor/jquery-ui/themes/base/jquery-ui.min.css', array(), '1.12.1' );
 		wp_enqueue_style( 'el-view-logs-css', $plugin_dir_url . 'assets/css/admin/view-logs.css', array( 'jquery-ui-css' ), $email_log->get_version() );
 
-		// @see bower.json file for the Version.
-		wp_enqueue_style( 'jquery-ui-smoothness', $plugin_dir_url . 'assets/vendor/jquery-ui/themes/smoothness/jquery-ui.min.css', array( 'jquery-ui-css' ), '1.12.1' );
-
 		wp_register_script( 'jquery-ui', $plugin_dir_url . 'assets/vendor/jquery-ui/jquery-ui.min.js', array( 'jquery' ), '1.12.1', true );
-		wp_register_script( 'insertionQ', $plugin_dir_url . 'assets/vendor/insertionQuery/insQ.min.js', array( 'jquery' ), '1.0.4', true );
-		wp_enqueue_script( 'jquery-ui-datepicker' );
+		wp_register_script( 'insertionQ', $plugin_dir_url . 'assets/vendor/insertion-query/insQ.min.js', array( 'jquery' ), '1.0.4', true );
 
-		wp_enqueue_script( 'el-view-logs', $plugin_dir_url . 'assets/js/admin/view-logs.js', array( 'jquery-ui', 'jquery-ui-datepicker', 'insertionQ', 'jquery-ui-tooltip' ), $email_log->get_version(), true );
+		wp_enqueue_script( 'el-view-logs', $plugin_dir_url . 'assets/js/admin/view-logs.js', array( 'insertionQ', 'jquery-ui', 'jquery-ui-datepicker', 'jquery-ui-tooltip' ), $email_log->get_version(), true );
 	}
 }

@@ -137,7 +137,7 @@ class LogListTable extends \WP_List_Table {
 	 */
 	protected function column_sent_date( $item ) {
 		$email_date = mysql2date(
-			sprintf( __( '%s @ %s', 'email-log' ), get_option( 'date_format', 'F j, Y' ), get_option( 'time_format', 'g:i A' ) ),
+			sprintf( __( '%s @ %s', 'email-log' ), get_option( 'date_format', 'F j, Y' ), 'g:i:s a' ),
 			$item->sent_date
 		);
 
