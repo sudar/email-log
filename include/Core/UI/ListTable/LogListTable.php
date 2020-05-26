@@ -61,9 +61,10 @@ class LogListTable extends \WP_List_Table {
 	/**
 	 * Returns the list of column and title names.
 	 *
-	 * @since 2.4.0 Added `sent_status` column.
 	 * @since 2.3.0 Retrieve Column labels using Utility methods.
 	 * @since 2.3.2 Added `result` column.
+	 * @since 2.4.0 Added `sent_status` column.
+	 *
 	 * @see WP_List_Table::single_row_columns()
 	 *
 	 * @uses \EmailLog\Util\get_column_label()
@@ -72,7 +73,7 @@ class LogListTable extends \WP_List_Table {
 	 */
 	public function get_columns() {
 		$columns = array(
-			'cb' => '<input type="checkbox" />', // Render a checkbox instead of heading.
+			'cb' => '<input type="checkbox" />',
 		);
 
 		foreach ( array( 'sent_date', 'result', 'to_email', 'subject' ) as $column ) {

@@ -346,8 +346,8 @@ function get_column_label_map() {
 		'cc'          => __( 'CC', 'email-log' ),
 		'bcc'         => __( 'BCC', 'email-log' ),
 		'reply_to'    => __( 'Reply To', 'email-log' ),
-		'result'      => __( 'Sent Status', 'email-log' ),
 		'ip_address'  => __( 'IP Address', 'email-log' ),
+		'result'      => __( 'Sent Status', 'email-log' ),
 	);
 
 	/**

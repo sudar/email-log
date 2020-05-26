@@ -419,8 +419,7 @@ class TableManager implements Loadie {
 	/**
 	 * Sets email sent status and error message for the given log item when email fails.
 	 *
-	 * @param int    $log_item_id ID of the log item whose email sent status should be set to
-	 *                            failed.
+	 * @param int    $log_item_id ID of the log item whose email sent status should be set to failed.
 	 * @param string $message     Error message.
 	 *
 	 * @since 2.4.0 Include error message during update.

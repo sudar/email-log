@@ -14,9 +14,7 @@
 
 		// Sent status tool tip.
 		$( ".el-help" ).tooltip( {
-			content: function() {
-				return $( this ).prop( "title" );
-			},
+			content: function() { return $( this ).prop( "title" ); },
 			position: {
 				my: "center top",
 				at: "center bottom+10",
