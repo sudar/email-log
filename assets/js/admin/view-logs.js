@@ -11,6 +11,22 @@
 			event.preventDefault();
 			tb_remove();
 		});
+
+		// Sent status tool tip.
+		$( ".el-help" ).tooltip( {
+			content: function() { return $( this ).prop( "title" ); },
+			position: {
+				my: "center top",
+				at: "center bottom+10",
+				collision: "flipfit"
+			},
+			hide: {
+				duration: 100
+			},
+			show: {
+				duration: 100
+			}
+		});
 	});
 
 	var tabsInsertedEvent = 'tabs_elem_inserted';

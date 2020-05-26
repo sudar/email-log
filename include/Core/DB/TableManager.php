@@ -22,7 +22,7 @@ class TableManager implements Loadie {
 	const DB_OPTION_NAME = 'email-log-db';
 
 	/* Database version */
-	const DB_VERSION = '0.2';
+	const DB_VERSION = '0.3';
 
 	/**
 	 * Setup hooks.
@@ -417,22 +417,36 @@ class TableManager implements Loadie {
 	}
 
 	/**
-	 * Sets email sent status as failed for the given log item.
+	 * Sets email sent status and error message for the given log item when email fails.
 	 *
+	 * @param int    $log_item_id ID of the log item whose email sent status should be set to failed.
+	 * @param string $message     Error message.
+	 *
+	 * @since 2.4.0 Include error message during update.
 	 * @since 2.3.0
 	 *
-	 * @param int $log_item_id ID of the log item whose email sent status should be set to failed.
+	 * @global \wpdb $wpdb
+	 *
+	 * @see  TableManager::get_log_table_name()
 	 */
-	public function mark_log_as_failed( $log_item_id ) {
+	public function mark_log_as_failed( $log_item_id, $message ) {
 		global $wpdb;
 		$table_name = $this->get_log_table_name();
 
 		$wpdb->update(
 			$table_name,
-			array( 'result' => '0' ),
-			array( 'ID'     => $log_item_id ),
-			array( '%d' ),
-			array( '%d' )
+			array(
+				'result'        => '0',
+				'error_message' => $message,
+			),
+			array( 'ID' => $log_item_id ),
+			array(
+				'%d', // `result` format.
+				'%s', // `error_message` format.
+			),
+			array(
+				'%d', // `ID` format.
+			)
 		);
 	}
 
@@ -459,6 +473,7 @@ class TableManager implements Loadie {
 	/**
 	 * Gets the Create Table query.
 	 *
+	 * @since 2.4.0 Added error_message column.
 	 * @since 2.3.0
 	 *
 	 * @return string
@@ -479,6 +494,7 @@ class TableManager implements Loadie {
 				attachment_name VARCHAR(1000),
 				ip_address VARCHAR(15),
 				result TINYINT(1),
+				error_message VARCHAR(1000),
 				PRIMARY KEY  (id)
 			) ' . $charset_collate . ';';
 
