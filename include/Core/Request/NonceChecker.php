@@ -25,9 +25,13 @@ class NonceChecker implements Loadie {
 	 * Check nonce for all Email Log Requests.
 	 * All Email Log Requests will have the `el_` prefix and
 	 * nonce would be available at `el_{action_name}_nonce`.
+	 *
+	 * Bulk Action keys.
+	 * action => Bulk actions from the top dropdown.
+	 * action2 => Bulk actions from the bottom dropdown.
 	 */
 	public function check_nonce() {
-		if ( ! isset( $_POST['el-action'] ) && ! isset( $_REQUEST['action'] ) ) {
+		if ( ! isset( $_POST['el-action'] ) && ! isset( $_REQUEST['action'] ) && ! isset( $_REQUEST['action2'] ) ) {
 			return;
 		}
 
@@ -43,10 +47,18 @@ class NonceChecker implements Loadie {
 			}
 		}
 
-		if ( isset( $_REQUEST['action'] ) ) {
+		if ( isset( $_REQUEST['action'] ) || isset( $_REQUEST['action2'] ) ) {
 			$action = sanitize_text_field( $_REQUEST['action'] );
 
-			if ( 'el-log-list-' !== substr( $action, 0, 12 ) ) {
+			if ( '-1' === $action ) {
+				if ( ! isset( $_REQUEST['action2'] ) ) {
+					return;
+				}
+
+				$action = sanitize_text_field( $_REQUEST['action2'] );
+			}
+
+			if ( strpos( $action, 'el-log-list-' ) !== 0 ) {
 				return;
 			}
 

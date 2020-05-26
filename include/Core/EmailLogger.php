@@ -13,7 +13,18 @@ class EmailLogger implements Loadie {
 	 */
 	public function load() {
 		add_filter( 'wp_mail', array( $this, 'log_email' ) );
-		add_action( 'wp_mail_failed', array( $this, 'update_email_fail_status' ) );
+		add_action( 'wp_mail_failed', array( $this, 'on_email_failed' ) );
+
+		/**
+		 * These actions are required for logging BuddyPress emails, since BuddyPress does
+		 * not use wp_mail for sending emails.
+		 *
+		 * Support for BuddyPress was added in v2.3.2
+		 *
+		 * @link https://github.com/sudar/email-log/issues/249
+		 */
+		add_action( 'bp_send_email_success', array( $this, 'log_buddy_press_email' ), 10, 2 );
+		add_action( 'bp_send_email_failure', array( $this, 'log_buddy_press_email' ), 10, 2 );
 	}
 
 	/**
@@ -110,30 +121,83 @@ class EmailLogger implements Loadie {
 	/**
 	 * Updates the failed email in the DB.
 	 *
+	 * @param \WP_Error $wp_error The error instance.
+	 *
+	 * @since 2.4.0 Use is_wp_error() to validate the type of $wp_error.
 	 * @since 2.3.0
 	 *
-	 * @param \WP_Error $wp_error The error instance.
+	 * @see   is_wp_error()
+	 * @see   email_log()
 	 */
-	public function update_email_fail_status( $wp_error ) {
-		if ( ! ( $wp_error instanceof \WP_Error ) ) {
+	public function on_email_failed( $wp_error ) {
+		if ( ! is_wp_error( $wp_error ) ) {
 			return;
 		}
 
-		$email_log       = email_log();
+		// @see wp-includes/pluggable.php#500
 		$mail_error_data = $wp_error->get_error_data( 'wp_mail_failed' );
+		$mail_error_message = $wp_error->get_error_message( 'wp_mail_failed' );
 
-		// $mail_error_data can be of type mixed.
-		if ( ! is_array( $mail_error_data ) ) {
+		$this->mark_email_log_as_failed( $mail_error_data, $mail_error_message );
+	}
+
+	/**
+	 * Prepare BuddyPress emails to log into database.
+	 *
+	 * @since 2.3.2
+	 *
+	 * @param bool      $status  Mail sent status.
+	 * @param \BP_Email $bp_mail Information about email.
+	 */
+	public function log_buddy_press_email( $status, $bp_mail ) {
+		if ( ! class_exists( '\\BP_Email' ) ) {
 			return;
 		}
 
-		// @see wp-includes/pluggable.php#484
-		$log_item_id = $email_log->table_manager->fetch_log_item_by_item_data( $mail_error_data );
-		// Empty will handle 0 and return FALSE.
+		if ( $bp_mail instanceof \BP_Email ) {
+			return;
+		}
+
+		$log = array(
+			'to'      => array_shift( $bp_mail->get_to() )->get_address(),
+			'subject' => $bp_mail->get_subject( 'replace-tokens' ),
+			'message' => $bp_mail->get_content( 'replace-tokens' ),
+			'headers' => $bp_mail->get_headers( 'replace-tokens ' ),
+		);
+
+		$this->log_email( $log );
+
+		if ( ! $status ) {
+			$this->mark_email_log_as_failed( $log );
+		}
+	}
+
+	/**
+	 * Mark email log as failed.
+	 *
+	 * @param array  $log           Email Log.
+	 * @param string $error_message Error message.
+	 *
+	 * @since 2.3.2
+	 * @since 2.4.0 Store the error message.
+	 */
+	protected function mark_email_log_as_failed( $log, $error_message = '' ) {
+		if ( ! is_array( $log ) ) {
+			return;
+		}
+
+		if ( ! isset( $log['to'], $log['subject'] ) ) {
+			return;
+		}
+
+		$email_log = email_log();
+
+		$log_item_id = $email_log->table_manager->fetch_log_id_by_data( $log );
+
 		if ( empty( $log_item_id ) ) {
 			return;
 		}
 
-		$email_log->table_manager->set_log_item_fail_status_by_id( $log_item_id );
+		$email_log->table_manager->mark_log_as_failed( $log_item_id, $error_message );
 	}
 }
