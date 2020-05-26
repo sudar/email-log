@@ -64,7 +64,6 @@ class LogListTable extends \WP_List_Table {
 	 * @since 2.3.0 Retrieve Column labels using Utility methods.
 	 * @since 2.3.2 Added `result` column.
 	 * @since 2.4.0 Added `sent_status` column.
-	 *
 	 * @see WP_List_Table::single_row_columns()
 	 *
 	 * @uses \EmailLog\Util\get_column_label()
