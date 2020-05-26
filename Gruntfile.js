@@ -51,7 +51,34 @@ module.exports = function( grunt ) {
 						dest: 'dist/'
 					}
 				]
-			}
+			},
+			jqueryUi: {
+				files: [
+					{
+						src : "node_modules/components-jqueryui/jquery-ui.min.js",
+						dest: "assets/vendor/jquery-ui/jquery-ui.min.js"
+					},
+					{
+						src : "node_modules/components-jqueryui/themes/base/jquery-ui.min.css",
+						dest: "assets/vendor/jquery-ui/themes/base/jquery-ui.min.css"
+					},
+					{
+						expand: true,
+						src: ["node_modules/components-jqueryui/themes/base/images/*"],
+						dest: "assets/vendor/jquery-ui/themes/base/images/",
+						flatten: true,
+						filter: "isFile"
+					}
+				]
+			},
+			insertionQ: {
+				files: [
+					{
+						src : "node_modules/insertion-query/insQ.min.js",
+						dest: "assets/vendor/insertion-query/insQ.min.js"
+					}
+				]
+			},
 		},
 		watch: {
 			all: {
@@ -63,7 +90,8 @@ module.exports = function( grunt ) {
 
 	require('time-grunt')(grunt);
 
-	grunt.registerTask('build', ['clean', 'copy:dist']);
+	grunt.registerTask("vendor", ["copy:jqueryUi", "copy:insertionQ"]);
+	grunt.registerTask("build", ["vendor", "clean", "copy:dist"]);
 
 	grunt.util.linefeed = '\n';
 };

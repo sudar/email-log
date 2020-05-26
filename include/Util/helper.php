@@ -357,7 +357,7 @@ function get_column_label_map() {
 	 * @since 2.3.2
 	 *
 	 * @param array $labels List of DB Columns and its respective labels which are internationalized string.
-	 * Example: 'id' => __( 'ID', 'email-log' ),
+	 *                      Example: 'id' => __( 'ID', 'email-log' ),
 	 */
 	return apply_filters( 'el_db_column_labels', $labels );
 }

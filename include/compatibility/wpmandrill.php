@@ -8,10 +8,8 @@
  *
  * Ideally this should be fixed in wpmandrill, but I am including this hack here till it is fixed by them.
  * This will be eventually removed once it is fixed in the original plugin.
- *
  * @since 2.3.2
  */
-
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 /**
