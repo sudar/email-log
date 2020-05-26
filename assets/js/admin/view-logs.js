@@ -20,9 +20,10 @@
 	});
 
 	$( document ).on( tabsInsertedEvent, function() {
-		var activeTabIndex = parseInt( $( '#tabs ul' ).data( 'active' ) );
+		var activeTabIndex = parseInt( $( "#tabs ul" ).data( "active-tab" ) );
+
 		activeTabIndex = isNaN( activeTabIndex ) ? 1 : activeTabIndex;
-		$( '#tabs' ).tabs( { active: activeTabIndex } );
+		$( "#tabs" ).tabs( { active: activeTabIndex } );
 	} );
 
 })( jQuery );

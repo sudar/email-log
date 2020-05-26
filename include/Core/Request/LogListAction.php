@@ -46,17 +46,15 @@ class LogListAction implements Loadie {
 		if ( count( $log_items ) > 0 ) {
 			$log_item = $log_items[0];
 
-			$content_type_active_attr = ' data-active=0';
-			$headers                  = array();
+			$headers = array();
 			if ( ! empty( $log_item['headers'] ) ) {
 				$parser  = new \EmailLog\Util\EmailHeaderParser();
 				$headers = $parser->parse_headers( $log_item['headers'] );
 			}
 
-			// Avoid NPath complexity
-			if ( isset( $headers['content_type'] ) &&
-			     'text/html' === $headers['content_type'] ) {
-				$content_type_active_attr = ' data-active=1';
+			$active_tab = '0';
+			if ( isset( $headers['content_type'] ) && 'text/html' === $headers['content_type'] ) {
+				$active_tab = '1';
 			}
 
 			ob_start();
@@ -90,14 +88,13 @@ class LogListAction implements Loadie {
 			</table>
 
 			<div id="tabs">
-				<ul <?php echo esc_html( $content_type_active_attr ); ?>>
+				<ul data-active-tab="<?php echo absint( $active_tab ); ?>">
 					<li><a href="#tabs-text"><?php _e( 'Raw Email Content', 'email-log' ); ?></a></li>
 					<li><a href="#tabs-preview"><?php _e( 'Preview Content as HTML', 'email-log' ); ?></a></li>
 				</ul>
 
 				<div id="tabs-text">
-					<pre class="tabs-text-pre"><?php echo esc_textarea( $log_item['message'] );
-					?></pre>
+					<pre class="tabs-text-pre"><?php echo esc_textarea( $log_item['message'] ); ?></pre>
 				</div>
 
 				<div id="tabs-preview">
@@ -110,8 +107,7 @@ class LogListAction implements Loadie {
 			</div>
 
 			<?php
-			$output = ob_get_clean();
-			echo $output;
+			echo ob_get_clean();
 		}
 
 		wp_die(); // this is required to return a proper result.
