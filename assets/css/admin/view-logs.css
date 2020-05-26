@@ -8,7 +8,7 @@
 	margin-top: 10px;
 }
 
-.tabs-text-textarea {
+.tabs-text-pre {
 	height: 100%;
 	width: 100%;
 }
@@ -30,4 +30,21 @@
 
 #TB_ajaxContent {
 	padding-bottom: 10px !important; /* Override the default Thickbox css values. */
+}
+
+#el-pro-msg {
+	display: inline-block;
+	margin: 7px 0;
+}
+
+.column-result .dashicons {
+	font-size: xx-large;
+}
+
+.column-result .dashicons-yes-alt {
+	color: #00C853;
+}
+
+.column-result .dashicons-dismiss {
+	color: #E53935;
 }

@@ -22,7 +22,7 @@ class TableManager implements Loadie {
 	const DB_OPTION_NAME = 'email-log-db';
 
 	/* Database version */
-	const DB_VERSION = '0.2';
+	const DB_VERSION = '0.3';
 
 	/**
 	 * Setup hooks.
@@ -353,22 +353,21 @@ class TableManager implements Loadie {
 	}
 
 	/**
-	 * Fetches the log item by the item data.
+	 * Fetches the log id by item data.
 	 *
-	 * Use this method to get the log item when the error instance only returns the log item data.
+	 * Use this method to get the log item id when the error instance only returns the log item data.
 	 *
-	 * @param array $data Array of Email information. {
+	 * @param array        $data Array of Email information {
+	 * @type  array|string to
+	 * @type  string       subject
+	 * @type  string       message
+	 * @type  array|string headers
+	 * @type  array|string attachments
+	 *                          }
 	 *
-	 * @type array|string to
-	 * @type string       subject
-	 * @type string       message
-	 * @type array|string headers
-	 * @type array|string attachments
-	 *                    }
-	 *
-	 * @return int
+	 * @return int Log item id.
 	 */
-	public function fetch_log_item_by_item_data( $data ) {
+	public function fetch_log_id_by_data( $data ) {
 		if ( empty( $data ) || ! is_array( $data ) ) {
 			return 0;
 		}
@@ -383,7 +382,7 @@ class TableManager implements Loadie {
 		// Execute the following `if` conditions only when $data is array.
 		if ( array_key_exists( 'to', $data ) ) {
 			// Since the value is stored as CSV in DB, convert the values from error data to CSV to compare.
-			$to_email = Util\join_array_elements_with_delimiter( $data['to'] );
+			$to_email = Util\stringify( $data['to'] );
 
 			$to_email = trim( esc_sql( $to_email ) );
 			$where[]  = "to_email = '$to_email'";
@@ -418,22 +417,36 @@ class TableManager implements Loadie {
 	}
 
 	/**
-	 * Sets email sent status as failed for the given log item.
+	 * Sets email sent status and error message for the given log item when email fails.
 	 *
+	 * @param int    $log_item_id ID of the log item whose email sent status should be set to failed.
+	 * @param string $message     Error message.
+	 *
+	 * @since 2.4.0 Include error message during update.
 	 * @since 2.3.0
 	 *
-	 * @param int $log_item_id ID of the log item whose email sent status should be set to failed.
+	 * @global \wpdb $wpdb
+	 *
+	 * @see  TableManager::get_log_table_name()
 	 */
-	public function set_log_item_fail_status_by_id( $log_item_id ) {
+	public function mark_log_as_failed( $log_item_id, $message ) {
 		global $wpdb;
 		$table_name = $this->get_log_table_name();
 
 		$wpdb->update(
 			$table_name,
-			array( 'result' => '0' ),
-			array( 'ID'     => $log_item_id ),
-			array( '%d' ),
-			array( '%d' )
+			array(
+				'result'        => '0',
+				'error_message' => $message,
+			),
+			array( 'ID' => $log_item_id ),
+			array(
+				'%d', // `result` format.
+				'%s', // `error_message` format.
+			),
+			array(
+				'%d', // `ID` format.
+			)
 		);
 	}
 
@@ -445,11 +458,7 @@ class TableManager implements Loadie {
 	 * @since 2.3.0
 	 */
 	private function update_table_if_needed() {
-		$existing_db_version = get_option( self::DB_OPTION_NAME, false );
-		$updated_db_version  = self::DB_VERSION;
-
-		// Bail out when the DB version is `0.1` or equals to self::DB_VERSION
-		if ( ! $existing_db_version || $existing_db_version !== '0.1' || $existing_db_version === $updated_db_version ) {
+		if ( get_option( self::DB_OPTION_NAME, false ) === self::DB_VERSION ) {
 			return;
 		}
 
@@ -464,6 +473,7 @@ class TableManager implements Loadie {
 	/**
 	 * Gets the Create Table query.
 	 *
+	 * @since 2.4.0 Added error_message column.
 	 * @since 2.3.0
 	 *
 	 * @return string
@@ -484,6 +494,7 @@ class TableManager implements Loadie {
 				attachment_name VARCHAR(1000),
 				ip_address VARCHAR(15),
 				result TINYINT(1),
+				error_message VARCHAR(1000),
 				PRIMARY KEY  (id)
 			) ' . $charset_collate . ';';
 
@@ -536,7 +547,7 @@ class TableManager implements Loadie {
 		// Execute the following `if` conditions only when $data is array.
 		if ( array_key_exists( 'to', $columns ) ) {
 			// Since the value is stored as CSV in DB, convert the values from error data to CSV to compare.
-			$to_email = Util\join_array_elements_with_delimiter( $columns['to'] );
+			$to_email = Util\stringify( $columns['to'] );
 
 			$to_email = trim( esc_sql( $to_email ) );
 			$where[]  = "to_email = '$to_email'";
