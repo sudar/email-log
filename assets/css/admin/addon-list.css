@@ -14,6 +14,10 @@
 	cursor: not-allowed !important;
 }
 
+.el-container .el-small-activate {
+	margin-top: 7px;
+}
+
 @media screen and (max-width:989px) {
 	.el-addon {
 		float: none;
@@ -74,10 +78,6 @@
 
 .bundle-license .el-license, .bundle-license .button {
 	font-size: 1.7em;
-}
-
-.bundle-license .button {
-	margin-top: 2px;
 }
 
 .bundle-license .expires {
