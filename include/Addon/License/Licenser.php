@@ -1,6 +1,7 @@
 <?php namespace EmailLog\Addon\License;
 
 use EmailLog\Addon\AddonList;
+use EmailLog\Addon\Upseller;
 use EmailLog\Addon\API\EDDUpdater;
 use EmailLog\Core\Loadie;
 
@@ -68,6 +69,7 @@ final class Licenser implements Loadie {
 
 		add_action( 'el_before_addon_list', array( $this, 'render_bundle_license_form' ) );
 		add_action( 'el_before_logs_list_table', array( $this, 'render_more_fields_addon_upsell_message' ) );
+		add_action( 'el_before_logs_list_table', array( 'Upseller', 'render_auto_delete_logs_addon_upsell_message' ) );
 
 		add_action( 'el_bundle_license_activate', array( $this, 'activate_bundle_license' ) );
 		add_action( 'el_bundle_license_deactivate', array( $this, 'deactivate_bundle_license' ) );

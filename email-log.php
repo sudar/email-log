@@ -77,3 +77,5 @@ load_email_log( __FILE__ );
 
 // Fix compatibility issues with wpmandrill plugin.
 require_once plugin_dir_path( __FILE__ ) . 'include/compatibility/wpmandrill.php';
+
+require_once  __DIR__ . '/vendor/collizo4sky/persist-admin-notices-dismissal/persist-admin-notices-dismissal.php';
