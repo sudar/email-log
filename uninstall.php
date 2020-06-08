@@ -64,6 +64,8 @@ function email_log_delete_db_data() {
 				$role->remove_cap( 'manage_email_logs' );
 			}
 		}
+		// Mask Fields addon adds this option.
+		delete_option( 'el_mask_fields' );
 
 		delete_option( 'el_bundle_license' );
 		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE 'el_license_%'" );
