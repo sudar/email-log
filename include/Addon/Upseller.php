@@ -1,12 +1,23 @@
 <?php namespace EmailLog\Addon;
 
+use EmailLog\Core\Loadie;
+
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 /**
  * Handles upsell messages.
  */
 
- class Upseller{
+ class Upseller implements Loadie {
+
+	/**
+	 * Load all hooks.
+	 *
+	 * @inheritdoc
+	 */
+	public function load() {
+		add_action( 'el_before_logs_list_table', array( $this, 'render_auto_delete_logs_addon_upsell_message' ) );
+	}
 
    	/**
 	 * Renders Upsell message for Auto delete logs add-on.
@@ -14,7 +25,6 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 	 * @since 2.4.0
 	 */
 	public function render_auto_delete_logs_addon_upsell_message() {
-        echo "Heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
 		if ( ! \PAnD::is_admin_notice_active( 'disable-upsell-notice-forever' ) ) {
 			return;
 		}

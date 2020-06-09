@@ -35,6 +35,7 @@ function load_email_log( $plugin_file ) {
 
 	$loader->add_file( $plugin_dir . 'include/Util/helper.php' );
 	$loader->add_file( $plugin_dir . 'include/Addon/addon-helper.php' );
+	$loader->add_file( $plugin_dir . 'vendor/collizo4sky/persist-admin-notices-dismissal/persist-admin-notices-dismissal.php' );
 
 	$loader->register();
 
@@ -53,6 +54,8 @@ function load_email_log( $plugin_file ) {
 
 	$email_log->add_loadie( new \EmailLog\Core\Request\NonceChecker() );
 	$email_log->add_loadie( new \EmailLog\Core\Request\LogListAction() );
+
+	$email_log->add_loadie( new \EmailLog\Addon\Upseller() );
 
 	$capability_giver = new \EmailLog\Core\AdminCapabilityGiver();
 	$email_log->add_loadie( $capability_giver );
