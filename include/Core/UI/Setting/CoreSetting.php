@@ -282,7 +282,9 @@ class CoreSetting extends Setting {
 				); ?>
             </p>
 		<?php endif; ?>
-		<?php
+		<?php if ( $logs_count > 5000 ) {
+			do_action( 'el_auto_delete_logs_addon_upsell_message' );
+		}
 	}
 
 	/**
