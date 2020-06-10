@@ -1,7 +1,6 @@
 <?php namespace EmailLog\Addon\License;
 
 use EmailLog\Addon\AddonList;
-use EmailLog\Addon\Upseller;
 use EmailLog\Addon\API\EDDUpdater;
 use EmailLog\Core\Loadie;
 

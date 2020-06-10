@@ -13,10 +13,10 @@ class Upseller implements Loadie {
 
 	// phpcs:ignore Squiz.Commenting.FunctionComment.Missing
 	public function load() {
-		add_action( 'admin_init', [ 'PAnD', 'init' ] );
+		add_action( 'admin_init', array( 'PAnD', 'init' ) );
 
-		add_action( 'el_before_logs_list_table', [ $this, 'upsell_auto_delete_logs_in_log_list_page' ] );
-		add_action( 'el_after_db_size_notification_setting', [ $this, 'upsell_auto_delete_logs_in_settings_page' ] );
+		add_action( 'el_before_logs_list_table', array( $this, 'upsell_auto_delete_logs_in_log_list_page' ) );
+		add_action( 'el_after_db_size_notification_setting', array( $this, 'upsell_auto_delete_logs_in_settings_page' ) );
 	}
 
 	/**
