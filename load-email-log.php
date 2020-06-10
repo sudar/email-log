@@ -45,6 +45,7 @@ function load_email_log( $plugin_file ) {
 		// Loading licenser in frontend or ajax request is resulting in huge performance issues.
 		$email_log->set_licenser( new \EmailLog\Addon\License\Licenser() );
 
+		$email_log->add_loadie( new \EmailLog\Addon\Upseller() );
 		$email_log->add_loadie( new \EmailLog\Addon\DependencyEnforcer() );
 		$email_log->add_loadie( new \EmailLog\Core\Request\OverridePluginAPI() );
 	}
@@ -54,8 +55,6 @@ function load_email_log( $plugin_file ) {
 
 	$email_log->add_loadie( new \EmailLog\Core\Request\NonceChecker() );
 	$email_log->add_loadie( new \EmailLog\Core\Request\LogListAction() );
-
-	$email_log->add_loadie( new \EmailLog\Addon\Upseller() );
 
 	$capability_giver = new \EmailLog\Core\AdminCapabilityGiver();
 	$email_log->add_loadie( $capability_giver );

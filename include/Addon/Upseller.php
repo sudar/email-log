@@ -5,39 +5,55 @@ use EmailLog\Core\Loadie;
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 /**
- * Handles upsell messages.
+ * Upsells add-ons by displaying links to add-ons with context in different parts of admin interface.
+ *
+ * @since 2.4.0
  */
+class Upseller implements Loadie {
 
- class Upseller implements Loadie {
-
-	/**
-	 * Load all hooks.
-	 *
-	 * @inheritdoc
-	 */
+	// phpcs:ignore Squiz.Commenting.FunctionComment.Missing
 	public function load() {
-		add_action( 'el_before_logs_list_table', array( $this, 'auto_delete_logs_addon_upsell_message_loglist_page' ) );
-		add_action( 'el_auto_delete_logs_addon_upsell_message', array( $this, 'auto_delete_logs_addon_upsell_message_settings_page' ) );
+		add_action( 'admin_init', [ 'PAnD', 'init' ] );
+
+		add_action( 'el_before_logs_list_table', [ $this, 'upsell_auto_delete_logs_in_log_list_page' ] );
+		add_action( 'el_after_db_size_notification_setting', [ $this, 'upsell_auto_delete_logs_in_settings_page' ] );
 	}
 
-   	/**
-	 * Renders Upsell message for Auto delete logs add-on in Log list page.
+	/**
+	 * Renders Upsell message for Auto delete logs add-on in Log list page
+	 * if the number of logs is greater than 5000.
+	 *
+	 * @param int $total_logs Total number of logs.
 	 *
 	 * @since 2.4.0
 	 */
-	public function auto_delete_logs_addon_upsell_message_loglist_page() {
-		$email_log  = email_log();
-		$logs_count = $email_log->table_manager->get_logs_count();
-		if ( $logs_count > 5000 ) {
-			if ( ! \PAnD::is_admin_notice_active( 'disable-upsell-notice-forever' ) ) {
-				return;
-			}
-		?>
-		<div data-dismissible="disable-upsell-notice-forever" class="updated notice notice-success is-dismissible">
-			<p><?php _e( 'The Auto Delete Logs add-on allows you to automatically delete logs based on a schedule. <a href="https://wpemaillog.com/addons/auto-delete-logs/?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=log-list&utm_content=dl" target="_blank">Buy now</a>', 'email-log' ); ?></p>
-		</div>
-		<?php
+	public function upsell_auto_delete_logs_in_log_list_page( $total_logs ) {
+		if ( $total_logs < 5000 ) {
+			return;
 		}
+
+		if ( $this->is_addon_active( 'Auto Delete Logs' ) ) {
+			return;
+		}
+
+		if ( ! class_exists( 'PAnD' ) || ! \PAnD::is_admin_notice_active( 'disable-DL-upsell-notice-5000' ) ) {
+			return;
+		}
+		?>
+
+		<div data-dismissible="disable-DL-upsell-notice-5000" class="notice notice-warning is-dismissible">
+			<p>
+				<?php
+				/* translators: 1 Auto Delete Logs add-on name.  */
+				printf(
+					__( 'You have more than 5000 email logs in the database. You can use our %1s add-on to automatically delete logs as the DB size grows.', 'email-log' ),
+					'<a href="https://wpemaillog.com/addons/auto-delete-logs/?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=log-list&utm_content=dl">Auto Delete Logs</a>'
+				);
+				?>
+			</p>
+		</div>
+
+		<?php
 	}
 
 	/**
@@ -45,12 +61,34 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 	 *
 	 * @since 2.4.0
 	 */
-	public function auto_delete_logs_addon_upsell_message_settings_page() {
+	public function upsell_auto_delete_logs_in_settings_page() {
+		if ( $this->is_addon_active( 'Auto Delete Logs' ) ) {
+			return;
+		}
+
 		?>
-		<div>
-			<p><?php _e( 'The Auto Delete Logs add-on allows you to automatically delete logs based on a schedule. <a href="https://wpemaillog.com/addons/auto-delete-logs/?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=settings&utm_content=dl" target="_blank">Buy now</a>', 'email-log' ); ?></p>
-		</div>
+		<p>
+			<em>
+				<?php _e( 'You can also automatically delete logs if the database size increases using our <a href="https://wpemaillog.com/addons/auto-delete-logs/?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=settings&utm_content=dl" target="_blank">Auto Delete Logs</a> add-on.', 'email-log' ); ?>
+			</em>
+		</p>
 		<?php
 	}
 
- }
+	/**
+	 * Is an add-on active?
+	 *
+	 * @param string $addon_name Add-on name.
+	 *
+	 * @return bool True if add-on is present and is installed, false otherwise.
+	 */
+	protected function is_addon_active( $addon_name ) {
+		$licenser = email_log()->get_licenser();
+
+		if ( $licenser->is_bundle_license_valid() ) {
+			return true;
+		}
+
+		return $licenser->is_addon_active( $addon_name );
+	}
+}

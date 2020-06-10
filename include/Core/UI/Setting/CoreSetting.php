@@ -281,10 +281,10 @@ class CoreSetting extends Setting {
 					'<b>Save</b>'
 				); ?>
             </p>
-		<?php endif; ?>
-		<?php if ( $logs_count > 5000 ) {
-			do_action( 'el_auto_delete_logs_addon_upsell_message' );
-		}
+		<?php
+		endif;
+
+		do_action( 'el_after_db_size_notification_setting' );
 	}
 
 	/**

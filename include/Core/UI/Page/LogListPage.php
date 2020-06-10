@@ -45,8 +45,6 @@ class LogListPage extends BasePage {
 		add_filter( 'set-screen-option', array( $this, 'save_screen_options' ), 10, 3 );
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'load_view_logs_assets' ) );
-
-		add_action( 'admin_init', array( 'PAnD', 'init' ) );
 	}
 
 	/**

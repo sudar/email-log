@@ -330,6 +330,32 @@ final class Licenser implements Loadie {
 	}
 
 	/**
+	 * Is an add-on active?
+	 *
+	 * @since 2.4.0
+	 *
+	 * @param string $addon_name Add-on name.
+	 *
+	 * @return bool True if add-on is present and is active, false otherwise.
+	 */
+	public function is_addon_active( $addon_name ) {
+		return $this->addon_list->is_addon_active( $addon_name );
+	}
+
+	/**
+	 * Is an add-on installed?
+	 *
+	 * @since 2.4.0
+	 *
+	 * @param string $addon_name Add-on name.
+	 *
+	 * @return bool True if add-on is present and is installed, false otherwise.
+	 */
+	public function is_addon_installed( $addon_name ) {
+		return $this->addon_list->is_addon_installed( $addon_name );
+	}
+
+	/**
 	 * Return the bundle license.
 	 *
 	 * @return \EmailLog\Addon\License\BundleLicense|null Bundle license or null if no bundle license.
