@@ -25,7 +25,6 @@ class Upseller implements Loadie {
 	 *
 	 * @param int $total_logs Total number of logs.
 	 *
-	 * @since 2.4.0
 	 */
 	public function upsell_auto_delete_logs_in_log_list_page( $total_logs ) {
 		if ( $total_logs < 5000 ) {
@@ -58,8 +57,6 @@ class Upseller implements Loadie {
 
 	/**
 	 * Renders Upsell message for Auto delete logs add-on in Settings page.
-	 *
-	 * @since 2.4.0
 	 */
 	public function upsell_auto_delete_logs_in_settings_page() {
 		if ( $this->is_addon_active( 'Auto Delete Logs' ) ) {
@@ -69,7 +66,11 @@ class Upseller implements Loadie {
 		?>
 		<p>
 			<em>
-				<?php _e( 'You can also automatically delete logs if the database size increases using our <a href="https://wpemaillog.com/addons/auto-delete-logs/?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=settings&utm_content=dl" target="_blank">Auto Delete Logs</a> add-on.', 'email-log' ); ?>
+				<?php
+				printf(
+					__( 'You can also automatically delete logs if the database size increases using our <a href="https://wpemaillog.com/addons/auto-delete-logs/?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=settings&utm_content=dl" target="_blank">Auto Delete Logs</a> add-on.', 'email-log' )
+				);
+				?>
 			</em>
 		</p>
 		<?php

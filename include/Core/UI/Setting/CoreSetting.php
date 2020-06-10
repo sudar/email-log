@@ -283,7 +283,11 @@ class CoreSetting extends Setting {
             </p>
 		<?php
 		endif;
-
+		/**
+		 * After DB size notification setting in Settings page.
+		 *
+		 * @since 2.4.0
+		 */
 		do_action( 'el_after_db_size_notification_setting' );
 	}
 
