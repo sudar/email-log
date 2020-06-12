@@ -68,7 +68,8 @@ class Upseller implements Loadie {
 			<em>
 				<?php
 				printf(
-					__( 'You can also automatically delete logs if the database size increases using our <a href="https://wpemaillog.com/addons/auto-delete-logs/?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=settings&utm_content=dl" target="_blank">Auto Delete Logs</a> add-on.', 'email-log' )
+					__( 'You can also automatically delete logs if the database size increases using our %1s add-on.', 'email-log' ),
+					'<a href="https://wpemaillog.com/addons/auto-delete-logs/?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=settings&utm_content=dl" target="_blank">Auto Delete Logs</a>'
 				);
 				?>
 			</em>
