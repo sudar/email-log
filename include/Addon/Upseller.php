@@ -15,8 +15,32 @@ class Upseller implements Loadie {
 	public function load() {
 		add_action( 'admin_init', [ 'PAnD', 'init' ] );
 
+		add_action( 'el_before_logs_list_table', [ $this, 'upsell_more_fields_addon_in_log_list_page' ] );
+
 		add_action( 'el_before_logs_list_table', [ $this, 'upsell_auto_delete_logs_in_log_list_page' ] );
 		add_action( 'el_after_db_size_notification_setting', [ $this, 'upsell_auto_delete_logs_in_settings_page' ] );
+	}
+
+	/**
+	 * Renders Upsell message for More Fields add-on in the log list page.
+	 *
+	 * @since 2.2.5
+	 */
+	public function upsell_more_fields_addon_in_log_list_page() {
+		echo '<span id = "el-pro-msg">';
+		_e( 'Additional fields are available through More Fields add-on. ', 'email-log' );
+
+		if ( $this->is_bundle_license_valid() ) {
+			echo '<a href="admin.php?page=email-log-addons">';
+			_e( 'Install it', 'email-log' );
+			echo '</a>';
+		} else {
+			echo '<a rel="noopener" target="_blank" href="https://wpemaillog.com/addons/more-fields/?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=inline&utm_content=mf" style="color:red">';
+			_e( 'Buy Now', 'email-log' );
+			echo '</a>';
+		}
+
+		echo '</span>';
 	}
 
 	/**
@@ -92,5 +116,20 @@ class Upseller implements Loadie {
 		}
 
 		return $licenser->is_addon_active( $addon_name );
+	}
+
+	/**
+	 * Has valid bundle license?
+	 *
+	 * @return bool True if bundle license is valid, false otherwise.
+	 */
+	protected function is_bundle_license_valid() {
+		$licenser = email_log()->get_licenser();
+
+		if ( $licenser->is_bundle_license_valid() ) {
+			return true;
+		}
+
+		return false;
 	}
 }
