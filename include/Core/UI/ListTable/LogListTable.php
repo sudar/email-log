@@ -53,8 +53,11 @@ class LogListTable extends \WP_List_Table {
 			 * Triggered before the logs list table is displayed.
 			 *
 			 * @since 2.2.5
+			 * @since 2.4.0 Added $total_logs parameter
+			 *
+			 * @param int $total_logs Total number of logs.
 			 */
-			do_action( 'el_before_logs_list_table' );
+			do_action( 'el_before_logs_list_table', $this->get_pagination_arg( 'total_items' ) );
 		}
 	}
 
