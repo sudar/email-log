@@ -34,7 +34,7 @@ require_once plugin_dir_path( __FILE__ ) . 'include/compatibility/EmailLog.php';
 if ( version_compare( PHP_VERSION, '5.6.0', '<' ) ) {
 	/**
 	 * Version 2.4.0 of the Email Log plugin dropped support for PHP 5.3 to PHP 5.5.
-	 * 
+	 *
 	 * Version 2.0 of the Email Log plugin dropped support for PHP 5.2.
 	 * If you are still struck with PHP 5.2 and can't update, then use v1.9.1 of the plugin.
 	 * But note that some add-ons may not work.
