@@ -1,7 +1,6 @@
 <?php namespace EmailLog\Core\UI\Component;
 
 use EmailLog\Core\Loadie;
-use EmailLog\Util;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
