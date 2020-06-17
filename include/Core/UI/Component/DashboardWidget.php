@@ -43,7 +43,12 @@ class DashboardWidget implements Loadie {
 			<?php _e( 'Total number of emails logged' , 'email-log' ); ?>: <strong><?php echo number_format( absint( $logs_count ), 0, ',', ',' ); ?></strong>
 		</p>
 
-		<?php do_action( 'el_inside_dashboard_widget' ); ?>
+		<?php
+			/**
+			 * Renders auto delete logs addon next run schedule.
+			 */
+			do_action( 'el_inside_dashboard_widget' );
+		?>
 
 		<ul class="subsubsub" style="float: none">
 			<li><?php printf( __( '<a href="%s">Email Logs</a>', 'email-log' ), 'admin.php?page=email-log' ); ?> <span style="color: #ddd"> | </span></li>
