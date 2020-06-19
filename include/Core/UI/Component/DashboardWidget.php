@@ -45,7 +45,10 @@ class DashboardWidget implements Loadie {
 
 		<?php
 			/**
-			 * Renders auto delete logs addon next run schedule.
+			 * Triggered just after printing the content of the dashboard widget.
+			 * Use this hook to add custom messages to the dashboard widget.
+			 *
+			 * @since 2.4.0
 			 */
 			do_action( 'el_inside_dashboard_widget' );
 		?>
