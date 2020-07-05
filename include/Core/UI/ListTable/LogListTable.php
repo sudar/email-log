@@ -53,8 +53,11 @@ class LogListTable extends \WP_List_Table {
 			 * Triggered before the logs list table is displayed.
 			 *
 			 * @since 2.2.5
+			 * @since 2.4.0 Added $total_logs parameter
+			 *
+			 * @param int $total_logs Total number of logs.
 			 */
-			do_action( 'el_before_logs_list_table' );
+			do_action( 'el_before_logs_list_table', $this->get_pagination_arg( 'total_items' ) );
 		}
 	}
 
@@ -63,6 +66,7 @@ class LogListTable extends \WP_List_Table {
 	 *
 	 * @since 2.3.0 Retrieve Column labels using Utility methods.
 	 * @since 2.3.2 Added `result` column.
+	 * @since 2.4.0 Added `sent_status` column.
 	 * @see WP_List_Table::single_row_columns()
 	 *
 	 * @uses \EmailLog\Util\get_column_label()
@@ -71,7 +75,7 @@ class LogListTable extends \WP_List_Table {
 	 */
 	public function get_columns() {
 		$columns = array(
-			'cb' => '<input type="checkbox" />', // Render a checkbox instead of heading.
+			'cb' => '<input type="checkbox" />',
 		);
 
 		foreach ( array( 'sent_date', 'result', 'to_email', 'subject' ) as $column ) {
@@ -137,7 +141,7 @@ class LogListTable extends \WP_List_Table {
 	 */
 	protected function column_sent_date( $item ) {
 		$email_date = mysql2date(
-			sprintf( __( '%s @ %s', 'email-log' ), get_option( 'date_format', 'F j, Y' ), get_option( 'time_format', 'g:i A' ) ),
+			sprintf( __( '%s @ %s', 'email-log' ), get_option( 'date_format', 'F j, Y' ), 'g:i:s a' ),
 			$item->sent_date
 		);
 
@@ -246,8 +250,7 @@ class LogListTable extends \WP_List_Table {
 	 * Markup for Status column.
 	 *
 	 * @since 2.3.2
-	 *
-	 * @access protected
+	 * @since 2.4.0 Output the error message as tooltip.
 	 *
 	 * @param object $item Email Log item.
 	 *
@@ -260,11 +263,21 @@ class LogListTable extends \WP_List_Table {
 			return '';
 		}
 
+		$icon = \EmailLog\Util\get_failure_icon();
 		if ( $item->result ) {
-			return \EmailLog\Util\get_success_icon();
+			$icon = \EmailLog\Util\get_success_icon();
 		}
 
-		return \EmailLog\Util\get_failure_icon();
+		if ( ! isset( $item->error_message ) ) {
+			return $icon;
+		}
+
+		return sprintf(
+			'<span class="%3$s" title="%2$s">%1$s</span>',
+			$icon,
+			esc_attr( $item->error_message ),
+			'el-help'
+		);
 	}
 
 	/**

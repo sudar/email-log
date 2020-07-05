@@ -13,6 +13,8 @@ class LogListAction implements Loadie {
 	/**
 	 * Setup actions.
 	 *
+	 * @since 2.4.0 Display Plain type email using <pre>.
+	 *
 	 * @inheritdoc
 	 */
 	public function load() {
@@ -26,6 +28,7 @@ class LogListAction implements Loadie {
 	/**
 	 * AJAX callback for displaying email content.
 	 *
+	 * @since 2.4.0 Show Active Tab based on the Email's content type.
 	 * @since 1.6
 	 */
 	public function view_log_message() {
@@ -42,6 +45,17 @@ class LogListAction implements Loadie {
 		$log_items = $this->get_table_manager()->fetch_log_items_by_id( array( $id ) );
 		if ( count( $log_items ) > 0 ) {
 			$log_item = $log_items[0];
+
+			$headers = array();
+			if ( ! empty( $log_item['headers'] ) ) {
+				$parser  = new \EmailLog\Util\EmailHeaderParser();
+				$headers = $parser->parse_headers( $log_item['headers'] );
+			}
+
+			$active_tab = '0';
+			if ( isset( $headers['content_type'] ) && 'text/html' === $headers['content_type'] ) {
+				$active_tab = '1';
+			}
 
 			ob_start();
 			?>
@@ -74,13 +88,13 @@ class LogListAction implements Loadie {
 			</table>
 
 			<div id="tabs">
-				<ul>
+				<ul data-active-tab="<?php echo absint( $active_tab ); ?>">
 					<li><a href="#tabs-text"><?php _e( 'Raw Email Content', 'email-log' ); ?></a></li>
 					<li><a href="#tabs-preview"><?php _e( 'Preview Content as HTML', 'email-log' ); ?></a></li>
 				</ul>
 
 				<div id="tabs-text">
-					<textarea class="tabs-text-textarea"><?php echo esc_textarea( $log_item['message'] ); ?></textarea>
+					<pre class="tabs-text-pre"><?php echo esc_textarea( $log_item['message'] ); ?></pre>
 				</div>
 
 				<div id="tabs-preview">
@@ -93,8 +107,7 @@ class LogListAction implements Loadie {
 			</div>
 
 			<?php
-			$output = ob_get_clean();
-			echo $output;
+			echo ob_get_clean();
 		}
 
 		wp_die(); // this is required to return a proper result.

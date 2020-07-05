@@ -121,19 +121,24 @@ class EmailLogger implements Loadie {
 	/**
 	 * Updates the failed email in the DB.
 	 *
+	 * @param \WP_Error $wp_error The error instance.
+	 *
+	 * @since 2.4.0 Use is_wp_error() to validate the type of $wp_error.
 	 * @since 2.3.0
 	 *
-	 * @param \WP_Error $wp_error The error instance.
+	 * @see   is_wp_error()
+	 * @see   email_log()
 	 */
 	public function on_email_failed( $wp_error ) {
-		if ( ! ( $wp_error instanceof \WP_Error ) ) {
+		if ( ! is_wp_error( $wp_error ) ) {
 			return;
 		}
 
 		// @see wp-includes/pluggable.php#500
 		$mail_error_data = $wp_error->get_error_data( 'wp_mail_failed' );
+		$mail_error_message = $wp_error->get_error_message( 'wp_mail_failed' );
 
-		$this->mark_email_log_as_failed( $mail_error_data );
+		$this->mark_email_log_as_failed( $mail_error_data, $mail_error_message );
 	}
 
 	/**
@@ -170,11 +175,13 @@ class EmailLogger implements Loadie {
 	/**
 	 * Mark email log as failed.
 	 *
-	 * @since 2.3.2
+	 * @param array  $log           Email Log.
+	 * @param string $error_message Error message.
 	 *
-	 * @param array $log Email Log.
+	 * @since 2.3.2
+	 * @since 2.4.0 Store the error message.
 	 */
-	protected function mark_email_log_as_failed( $log ) {
+	protected function mark_email_log_as_failed( $log, $error_message = '' ) {
 		if ( ! is_array( $log ) ) {
 			return;
 		}
@@ -191,6 +198,6 @@ class EmailLogger implements Loadie {
 			return;
 		}
 
-		$email_log->table_manager->mark_log_as_failed( $log_item_id );
+		$email_log->table_manager->mark_log_as_failed( $log_item_id, $error_message );
 	}
 }

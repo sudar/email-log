@@ -2,7 +2,7 @@
   "name": "email-log",
   "title": "Email Log",
   "description": "Email Log is a WordPress Plugin that logs every email sent through WordPress.",
-  "version": "2.3.2",
+  "version": "2.4.0",
   "homepage": "https://wpemaillog.com",
   "license": "GPLv2+",
   "author": {
@@ -18,6 +18,10 @@
     "type": "git",
     "url": "https://github.com/sudar/email-log.git"
   },
+  "dependencies": {
+    "components-jqueryui": "^1.12.1",
+    "insertion-query": "^1.0.4"
+  },
   "devDependencies": {
     "grunt": "^1.0.4",
     "grunt-contrib-clean": "^2.0",
@@ -25,6 +29,11 @@
     "grunt-contrib-watch": "^1.1",
     "matchdep": "^2.0",
     "time-grunt": "^2.0"
+  },
+  "scripts": {
+    "vendor": "grunt vendor",
+    "dist": "grunt build",
+    "postinstall": "npm run vendor"
   },
   "private": true
 }

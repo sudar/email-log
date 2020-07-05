@@ -35,6 +35,7 @@ function load_email_log( $plugin_file ) {
 
 	$loader->add_file( $plugin_dir . 'include/Util/helper.php' );
 	$loader->add_file( $plugin_dir . 'include/Addon/addon-helper.php' );
+	$loader->add_file( $plugin_dir . 'vendor/collizo4sky/persist-admin-notices-dismissal/persist-admin-notices-dismissal.php' );
 
 	$loader->register();
 
@@ -44,6 +45,7 @@ function load_email_log( $plugin_file ) {
 		// Loading licenser in frontend or ajax request is resulting in huge performance issues.
 		$email_log->set_licenser( new \EmailLog\Addon\License\Licenser() );
 
+		$email_log->add_loadie( new \EmailLog\Addon\Upseller() );
 		$email_log->add_loadie( new \EmailLog\Addon\DependencyEnforcer() );
 		$email_log->add_loadie( new \EmailLog\Core\Request\OverridePluginAPI() );
 	}

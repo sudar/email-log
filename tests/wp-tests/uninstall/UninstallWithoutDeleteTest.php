@@ -40,7 +40,7 @@ class UninstallWithoutDeleteTest extends \WP_Plugin_Uninstall_UnitTestCase {
 		$this->assertTableExists( $wpdb->prefix . 'email_log' );
 
 		// Check that an option was added to the database.
-		$this->assertEquals( '0.2', get_option( 'email-log-db' ) );
+		$this->assertEquals( '0.3', get_option( 'email-log-db' ) );
 
 		/*
 		 * Now, test that it uninstalls itself properly.

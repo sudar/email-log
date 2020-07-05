@@ -5,7 +5,7 @@
  * Description: Logs every email sent through WordPress
  * Donate Link: http://sudarmuthu.com/if-you-wanna-thank-me
  * Author: Sudar
- * Version: 2.3.2
+ * Version: 2.4.0
  * Author URI: http://sudarmuthu.com/
  * Text Domain: email-log
  * Domain Path: languages/
@@ -31,8 +31,10 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 // Include the stub of the old `EmailLog` class, so that old add-ons don't generate a fatal error.
 require_once plugin_dir_path( __FILE__ ) . 'include/compatibility/EmailLog.php';
 
-if ( version_compare( PHP_VERSION, '5.3.0', '<' ) ) {
+if ( version_compare( PHP_VERSION, '5.6.0', '<' ) ) {
 	/**
+	 * Version 2.4.0 of the Email Log plugin dropped support for PHP 5.3 to PHP 5.5.
+	 *
 	 * Version 2.0 of the Email Log plugin dropped support for PHP 5.2.
 	 * If you are still struck with PHP 5.2 and can't update, then use v1.9.1 of the plugin.
 	 * But note that some add-ons may not work.
@@ -46,7 +48,7 @@ if ( version_compare( PHP_VERSION, '5.3.0', '<' ) ) {
 			<p>
 				<?php
 				printf(
-					__( 'Email Log requires at least PHP 5.3 to function properly. Please upgrade PHP or use <a href="%s" target="_blank" rel="noopener">v1.9.1 of Email Log</a>.', 'email-log' ), // @codingStandardsIgnoreLine
+					__( 'Email Log requires at least PHP 5.6 to function properly. Please upgrade PHP or use <a href="%s" target="_blank" rel="noopener">v1.9.1 of Email Log</a>.', 'email-log' ), // @codingStandardsIgnoreLine
 					'https://downloads.wordpress.org/plugin/email-log.1.9.1.zip'
 				);
 				?>
@@ -71,7 +73,7 @@ if ( version_compare( PHP_VERSION, '5.3.0', '<' ) ) {
 	return;
 }
 
-// PHP is at least 5.3, so we can safely include namespace code.
+// PHP is at least 5.6, so we can safely include namespace code.
 require_once 'load-email-log.php';
 load_email_log( __FILE__ );
 
