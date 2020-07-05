@@ -62,6 +62,44 @@ class AddonList {
 	}
 
 	/**
+	 * Is an add-on active?
+	 *
+	 * @since 2.4.0
+	 *
+	 * @param string $name Add-on name.
+	 *
+	 * @return bool True if add-on is present and is active, false otherwise.
+	 */
+	public function is_addon_active( $name ) {
+		$addon = $this->get_addon_by_name( $name );
+
+		if ( ! $addon instanceof Addon ) {
+			return false;
+		}
+
+		return $addon->is_active();
+	}
+
+	/**
+	 * Is an add-on installed?
+	 *
+	 * @since 2.4.0
+	 *
+	 * @param string $name Add-on name.
+	 *
+	 * @return bool True if add-on is present and is installed, false otherwise.
+	 */
+	public function is_addon_installed( $name ) {
+		$addon = $this->get_addon_by_name( $name );
+
+		if ( ! $addon instanceof Addon ) {
+			return false;
+		}
+
+		return $addon->is_installed();
+	}
+
+	/**
 	 * Get all add-ons that are not active (either not installed or not activated).
 	 *
 	 * @return \EmailLog\Addon\Addon[] List of inactive add-ons.
@@ -84,9 +122,8 @@ class AddonList {
 	public function render() {
 		?>
 
-		<div class="el-container">
+		<div class="el-addon-list">
 			<?php $this->render_addons(); ?>
-			<div class="clear"></div>
 		</div> <!-- .el-container -->
 		<?php
 	}
