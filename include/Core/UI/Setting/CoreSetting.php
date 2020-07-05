@@ -21,6 +21,7 @@ class CoreSetting extends Setting {
 			'remove_on_uninstall'   => __( 'Remove Data on Uninstall?', 'email-log' ),
 			'hide_dashboard_widget' => __( 'Disable Dashboard Widget', 'email-log' ),
 			'db_size_notification'  => __( 'Database Size Notification', 'email-log' ),
+			'pause_emails'          => __( 'Pause Emails', 'email-log' ),
 		);
 
 		$this->section->default_value = array(
@@ -34,6 +35,7 @@ class CoreSetting extends Setting {
 				'log_threshold_met'         => false,
 				'threshold_email_last_sent' => false,
 			),
+			'pause_emails'          => 'false',
 		);
 
 		$this->load();
@@ -501,4 +503,40 @@ EOT;
 		<?php
 	}
 
+	/**
+	 * Sanitize Pause Emails value.
+	 *
+	 * @param string $value User selected value. Either 'true' or 'false'.
+	 *
+	 * @return string Sanitized value.
+	 */
+	public function sanitize_pause_emails( $value ) {
+		return sanitize_text_field( $value );
+	}
+
+	public function render_pause_emails_settings( $args ) {
+		$option      = $this->get_value();
+		$remove_data = $option[ $args['id'] ];
+
+		$field_name = $this->section->option_name . '[' . $args['id'] . ']';
+		?>
+
+		<input type="checkbox" name="<?php echo esc_attr( $field_name ); ?>" value="true" <?php checked( 'true', $remove_data ); ?>>
+		<?php _e( 'Check this box if you would like to pause the emails that are sent.', 'email-log' ) ?>
+
+		<p>
+			<em>
+				<?php echo wp_kses(
+					__( '<strong>Note</strong>: Emails will only be logged and won\'t be sent.', 'email-log' ),
+					array(
+						'strong' => array(),
+						'em'     => array(),
+					)
+				);
+				?>
+			</em>
+		</p>
+
+		<?php
+	}
 }
