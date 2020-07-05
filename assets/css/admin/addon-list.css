@@ -78,6 +78,7 @@
 
 .bundle-license .el-license, .bundle-license .button {
 	font-size: 1.7em;
+	line-height: 2;
 }
 
 .bundle-license .expires {
