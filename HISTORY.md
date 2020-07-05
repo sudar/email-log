@@ -1,5 +1,12 @@
 ## Changelog ##
 
+### v2.4.0 – (2020-07-05) ###
+- New: Capture the error message when an email fails to be delivered.
+- New: Show seconds in send time.
+- Tweak: Enhance the email preview screen.
+- Tweak: Code enhancements for better maintenance.
+- Fix: Minor CSS alignment issues in addon list page.
+
 ### v2.3.2 – (2020-03-03) ###
 - New: Added the ability to log BuddyPress emails which don't use wp_mail function.
 - New: Supports PHP 5.6 to PHP 7.4
@@ -17,8 +24,8 @@
 - New: Store ip address of the request that triggered the email.
 - New: Setting to enable notification when the number of email logs reach a threshold.
 - New: Dashboard Widget - Provide an option to hide Dashboard Widget from all users.
-- Tweak: Dashboard Widget - Add thousand separator for logs count.
-- Tweak: Improve preview of HTML emails.
+- Tweak: Dashboard Widget - Add a thousand separator for logs count.
+- Tweak: Improve the preview of HTML emails.
 - Tweak: Enhanced the output of System Info page.
 - Fix: Deleting logs in bulk was not working.
 - Fix: Added compatibility with wp-ses plugin.
