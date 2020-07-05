@@ -218,7 +218,7 @@ class Addon {
 				       placeholder="<?php echo esc_attr( sprintf( __( '%s Add-on License Key', 'email-log' ), $this->name ) ); ?>"
 				       value="<?php echo esc_attr( $this->get_addon_license_key() ); ?>">
 
-				<input type="submit" class="button button-large <?php echo sanitize_html_class( $button_class ); ?> el-small-activate"
+				<input type="submit" class="button <?php echo sanitize_html_class( $button_class ); ?>"
 				       value="<?php echo esc_attr( $action_text ); ?>">
 
 				<p class="expires"><?php echo $expiry_details; ?></p>
