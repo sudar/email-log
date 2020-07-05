@@ -65,8 +65,7 @@ class Addon {
 
 			<a rel="noopener" target="_blank" href="<?php echo esc_url( $this->link ); ?>?utm_campaign=Upsell&utm_medium=wpadmin&utm_source=addon-grid&utm_content=<?php echo $this->name; ?>"
 			   title="<?php echo esc_attr( $this->name ); ?>">
-				<img src="<?php echo esc_url( $this->thumbnail ); ?>" class="attachment-showcase wp-post-image"
-				     alt="<?php echo esc_attr( $this->name ); ?>" title="<?php echo esc_attr( $this->name ); ?>">
+				<img src="<?php echo esc_url( $this->thumbnail ); ?>" class="el-addon-image" alt="<?php echo esc_attr( $this->name ); ?>" title="<?php echo esc_attr( $this->name ); ?>">
 			</a>
 
 			<p> <?php echo esc_html( $this->description ); ?> </p>
@@ -183,7 +182,7 @@ class Addon {
 	 */
 	protected function render_individual_license() {
 		$action         = 'el_license_activate';
-		$action_text    = __( 'Activate', 'email-log' );
+		$action_text    = __( 'Activate License', 'email-log' );
 		$button_class   = 'button-primary';
 		$dashicon       = 'down';
 		$license_wrap   = 'hidden';
@@ -191,7 +190,7 @@ class Addon {
 
 		if ( $this->has_valid_addon_license() ) {
 			$action       = 'el_license_deactivate';
-			$action_text  = __( 'Deactivate', 'email-log' );
+			$action_text  = __( 'Deactivate License', 'email-log' );
 			$button_class = '';
 			$dashicon     = 'up';
 			$license_wrap = '';
@@ -213,7 +212,7 @@ class Addon {
 
 		<div class="individual-license <?php echo sanitize_html_class( $license_wrap ); ?>">
 			<form method="post">
-				<input type="text" name="el-license" class="el-license" size="33"
+				<input type="text" name="el-license" class="el-license" size="40"
 				       title="<?php _e( 'Email Log License Key', 'email-log' ); ?>"
 				       placeholder="<?php echo esc_attr( sprintf( __( '%s Add-on License Key', 'email-log' ), $this->name ) ); ?>"
 				       value="<?php echo esc_attr( $this->get_addon_license_key() ); ?>">

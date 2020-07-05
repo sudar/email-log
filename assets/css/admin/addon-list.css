@@ -1,66 +1,23 @@
-.el-container {
-	width: 100%;
+.el-addon-list {
+	display: grid;
+	grid-gap: 10px;
+	grid-template-columns: repeat(auto-fit, 350px);
 }
 
 .el-addon {
 	background: #FFF;
 	border: 1px solid #ccc;
 	box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
-	padding: 1%;
-	margin-bottom: 2%;
+	padding: 10px;
 }
 
-.el-container .disabled {
+.el-addon-image,
+.individual-license .el-license {
+	width: 330px;
+}
+
+.el-addon-list .disabled {
 	cursor: not-allowed !important;
-}
-
-@media screen and (max-width:989px) {
-	.el-addon {
-		float: none;
-		width: 95%;
-	}
-
-	.el-addon img {
-		height: auto;
-		width: 100%;
-	}
-}
-
-@media screen and (min-width:990px) and (max-width:1274px) {
-	.el-addon {
-		float: left;
-		width: 45%;
-	}
-
-	.el-addon img {
-		height: auto;
-		width: 100%;
-	}
-
-	.el-addon:nth-child(even) {
-		margin-left: 1%;
-	}
-}
-
-@media screen and (min-width:1275px) {
-	.el-addon {
-		float: left;
-		width: 30%;
-	}
-
-	.el-addon img {
-		height: auto;
-		width: 100%;
-	}
-
-	.el-addon:nth-child(3n-1) {
-		margin-left: 1.5%;
-		margin-right: 1.5%;
-	}
-
-	.el-addon:nth-child(3n+1) {
-		clear: both;
-	}
 }
 
 .bundle-license {
@@ -92,9 +49,23 @@
 	padding-top: 10px;
 }
 
+.individual-license .el-license {
+	padding-left: 10px;
+}
+
+.individual-license .button {
+	margin-top: 10px;
+}
+
 .el-expander {
 	float: right;
 	font-size: 40px;
 	margin-top: -5px;
 	margin-right: 10px;
+}
+
+@media screen and (max-width: 782px) {
+	.bundle-license .el-license, .bundle-license .button {
+		font-size: 0.8em;
+	}
 }

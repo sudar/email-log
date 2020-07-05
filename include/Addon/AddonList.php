@@ -122,9 +122,8 @@ class AddonList {
 	public function render() {
 		?>
 
-		<div class="el-container">
+		<div class="el-addon-list">
 			<?php $this->render_addons(); ?>
-			<div class="clear"></div>
 		</div> <!-- .el-container -->
 		<?php
 	}
