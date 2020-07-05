@@ -1,7 +1,6 @@
 <?php namespace EmailLog\Core\UI\Component;
 
 use EmailLog\Core\Loadie;
-use EmailLog\Util;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
@@ -44,7 +43,15 @@ class DashboardWidget implements Loadie {
 			<?php _e( 'Total number of emails logged' , 'email-log' ); ?>: <strong><?php echo number_format( absint( $logs_count ), 0, ',', ',' ); ?></strong>
 		</p>
 
-		<?php Util\render_auto_delete_logs_next_run_schedule(); ?>
+		<?php
+			/**
+			 * Triggered just after printing the content of the dashboard widget.
+			 * Use this hook to add custom messages to the dashboard widget.
+			 *
+			 * @since 2.4.0
+			 */
+			do_action( 'el_inside_dashboard_widget' );
+		?>
 
 		<ul class="subsubsub" style="float: none">
 			<li><?php printf( __( '<a href="%s">Email Logs</a>', 'email-log' ), 'admin.php?page=email-log' ); ?> <span style="color: #ddd"> | </span></li>
