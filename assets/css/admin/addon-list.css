@@ -76,8 +76,11 @@
 	font-size: 1.7em;
 }
 
-.bundle-license .button {
-	margin-top: 2px;
+.bundle-license .el-license,
+.bundle-license .button,
+.individual-license .el-license,
+.individual-license .button {
+	line-height: 2;
 }
 
 .bundle-license .expires {
