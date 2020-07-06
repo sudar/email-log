@@ -2,6 +2,9 @@
 
 ### v2.5.0 – (In dev) ###
 
+### v2.4.1 – (2020-07-06) ###
+- Fix: Added a missing file that broke v2.4.0 release for some installations.
+
 ### v2.4.0 – (2020-07-05) ###
 - New: Capture the error message when an email fails to be delivered.
 - New: Show seconds in send time.
@@ -207,6 +210,12 @@
 - Initial Release
 
 ## Upgrade Notice ##
+
+### 2.4.1 ###
+Starting v2.4.0 the plugin now captures the error message when an email fails to be delivered.
+
+### 2.4.0 ###
+Starting v2.4.0 the plugin now captures the error message when an email fails to be delivered.
 
 ### 2.3.0 ###
 The 'To' and 'Subject' fields now supports text upto 500 characters.
