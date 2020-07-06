@@ -13,7 +13,9 @@ class Upseller implements Loadie {
 
 	// phpcs:ignore Squiz.Commenting.FunctionComment.Missing
 	public function load() {
-		add_action( 'admin_init', [ 'PAnD', 'init' ] );
+		if ( class_exists( 'PAnD' ) ) {
+			add_action( 'admin_init', [ 'PAnD', 'init' ] );
+		}
 
 		add_action( 'el_before_logs_list_table', [ $this, 'upsell_more_fields_addon_in_log_list_page' ] );
 
