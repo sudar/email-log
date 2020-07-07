@@ -27,7 +27,7 @@ module.exports = function( grunt ) {
 							'!codeception.yml',
 							'!node_modules/**',
 							'!assets/vendor/**',
-							'assets/vendor/insertionQuery/insQ.min.js',
+							'assets/vendor/insertion-query/insQ.min.js',
 							'assets/vendor/jquery-ui/jquery-ui.min.js',
 							'assets/vendor/jquery-ui/themes/base/jquery-ui.min.css',
 							'!assets/js/src/**',
