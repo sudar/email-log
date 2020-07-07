@@ -2,7 +2,7 @@
   "name": "email-log",
   "title": "Email Log",
   "description": "Email Log is a WordPress Plugin that logs every email sent through WordPress.",
-  "version": "2.4.1",
+  "version": "2.4.2",
   "homepage": "https://wpemaillog.com",
   "license": "GPLv2+",
   "author": {
@@ -27,6 +27,7 @@
     "grunt-contrib-clean": "^2.0",
     "grunt-contrib-copy": "^1.0",
     "grunt-contrib-watch": "^1.1",
+    "grunt-wp-i18n": "^1.0.3",
     "matchdep": "^2.0",
     "time-grunt": "^2.0"
   },

@@ -1,5 +1,9 @@
 ## Changelog ##
 
+### v2.4.2 – (2020-07-07) ###
+- Fix: Fixed issues with email preview tab switcher that occurred in some installations.
+- Tweak: Enhanced the UI for lifetime license activation.
+
 ### v2.4.1 – (2020-07-06) ###
 - Fix: Added a missing file that broke v2.4.0 release for some installations.
 
