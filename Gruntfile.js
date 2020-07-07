@@ -102,7 +102,7 @@ module.exports = function( grunt ) {
 	require('time-grunt')(grunt);
 
 	grunt.registerTask("vendor", ["copy:jqueryUi", "copy:insertionQ"]);
-	grunt.registerTask("build", ["vendor", "makepot", "clean", "copy:dist"]);
+	grunt.registerTask("build", ["vendor", "clean", "copy:dist"]);
 
 	grunt.util.linefeed = '\n';
 };
