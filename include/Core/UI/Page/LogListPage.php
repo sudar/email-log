@@ -36,7 +36,7 @@ class LogListPage extends BasePage {
 	 */
 	const CAPABILITY = 'manage_email_logs';
 
-	const STARRED_LOGS_META_KEY = 'email-log-starred-logs';
+	const STARRED_LOGS_META_KEY = 'el-starred-logs';
 
 	/**
 	 * Setup hooks.
@@ -218,6 +218,14 @@ class LogListPage extends BasePage {
 		wp_register_script( 'jquery-ui', $plugin_dir_url . 'assets/vendor/jquery-ui/jquery-ui.min.js', array( 'jquery' ), '1.12.1', true );
 		wp_register_script( 'insertionQ', $plugin_dir_url . 'assets/vendor/insertion-query/insQ.min.js', array( 'jquery' ), '1.0.4', true );
 
-		wp_enqueue_script( 'el-view-logs', $plugin_dir_url . 'assets/js/admin/view-logs.js', array( 'insertionQ', 'jquery-ui', 'jquery-ui-datepicker', 'jquery-ui-tooltip' ), $email_log->get_version(), true );
+		wp_register_script( 'el-view-logs', $plugin_dir_url . 'assets/js/admin/view-logs.js', array( 'insertionQ', 'jquery-ui', 'jquery-ui-datepicker', 'jquery-ui-tooltip' ), $email_log->get_version(), true );
+
+		$translation_array = [
+			'starActionNonce' => wp_create_nonce( 'el-star-email' ),
+		];
+
+		wp_localize_script( 'el-view-logs', 'EmailLog', $translation_array );
+
+		wp_enqueue_script( 'el-view-logs' );
 	}
 }

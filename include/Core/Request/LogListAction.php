@@ -26,7 +26,7 @@ class LogListAction implements Loadie {
 		add_action( 'el-log-list-delete-all', array( $this, 'delete_all_logs' ) );
 		add_action( 'el-log-list-manage-user-roles-changed', array( $this, 'update_capabilities_for_user_roles' ), 10, 2 );
 
-		add_action( 'wp_ajax_el-log-list-star-email', array( $this, 'star_email' ) );
+		add_action( 'wp_ajax_el-star-email', array( $this, 'star_email' ) );
 	}
 
 	/**
@@ -240,10 +240,7 @@ class LogListAction implements Loadie {
 	 * @since 2.4.0
 	 */
 	public function star_email() {
-		/*
-		 * Nonce validation handled at
-		 * {@see EmailLog\Core\Request\NonceChecker::check_nonce()}
-		 */
+		check_ajax_referer( 'el-star-email' );
 
 		$is_star = sanitize_text_field( Util\el_array_get( $_POST, 'is_star', '0' ) ) === '1';
 		$log_id  = absint( Util\el_array_get( $_POST, 'log_id', 0 ) );
