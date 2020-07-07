@@ -63,4 +63,19 @@ class BundleLicense extends BaseLicense {
 
 		return $this->license_data->bundled_licenses->{$addon_name}->license_key;
 	}
+
+	/**
+	 * Is the bundle license a lifetime license.
+	 *
+	 * @since 2.4.1
+	 *
+	 * @return bool True if it is a lifetime license, False otherwise.
+	 */
+	public function is_lifetime_license() {
+		if ( empty( $this->license_data ) || ! isset( $this->license_data->expires ) ) {
+			return false;
+		}
+
+		return ( false === $this->license_data->expires );
+	}
 }
