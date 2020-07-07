@@ -110,16 +110,22 @@ final class Licenser implements Loadie {
 			$action       = 'el_bundle_license_deactivate';
 			$action_text  = __( 'Deactivate', 'email-log' );
 			$button_class = '';
-			$expiry_date  = date( 'F d, Y', strtotime( $this->get_bundle_license_expiry_date() ) );
 
-			if ( $this->bundle_license->has_expired() ) {
-				/* translators: 1 License expiry date, 2 License Renewal link */
-				$expiry_details       = sprintf( __( 'Your license has expired on %1$s. Please <a href="%2$s">renew it</a> to receive automatic updates and support.', 'email-log' ), $expiry_date, esc_url( $this->bundle_license->get_renewal_link() ) );
-				$expiry_details_class = 'notice notice-warning';
+			if ( $this->bundle_license->is_lifetime_license() ) {
+				$expiry_details       = __( 'You have a lifetime license, which will never expire!', 'email-log' );
+				$expiry_details_class = 'notice notice-success';
 			} else {
-				/* translators: 1 License expiry date */
-				$expiry_details       = sprintf( __( 'Your license is valid till %s', 'email-log' ), $expiry_date );
-				$expiry_details_class = 'expires';
+				$expiry_date = date( 'F d, Y', strtotime( $this->get_bundle_license_expiry_date() ) );
+
+				if ( $this->bundle_license->has_expired() ) {
+					/* translators: 1 License expiry date, 2 License Renewal link */
+					$expiry_details       = sprintf( __( 'Your license has expired on %1$s. Please <a href="%2$s">renew it</a> to receive automatic updates and support.', 'email-log' ), $expiry_date, esc_url( $this->bundle_license->get_renewal_link() ) );
+					$expiry_details_class = 'notice notice-warning';
+				} else {
+					/* translators: 1 License expiry date */
+					$expiry_details       = sprintf( __( 'Your license is valid till %s', 'email-log' ), $expiry_date );
+					$expiry_details_class = 'expires';
+				}
 			}
 		}
 		?>

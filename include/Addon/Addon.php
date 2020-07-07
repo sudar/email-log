@@ -155,7 +155,7 @@ class Addon {
 	protected function get_download_button_js() {
 		ob_start();
 		?>
-		javascript:alert( 'You will now be able to download the zip file. Once the zip file is downloaded, upload it from the plugin page to install the add-on.' );
+		javascript:alert( "The zip file download will start now. Once the zip file is downloaded, upload it from the plugin page to install the add-on. WordPress plugin repo guidelines prevent us from automatically installing the add-on and that's why you have to do this manual step once." );
 		<?php
 		return ob_get_clean();
 	}
