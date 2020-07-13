@@ -398,12 +398,7 @@ class LogListTable extends \WP_List_Table {
 				'per_page'        => $per_page,
 			);
 
-			$this->page->get_table_manager()->fetch_log_items_by_id( $log_ids, $additional_args );
-
-			$this->items = $this->page->get_table_manager()->fetch_log_items_by_id( $log_ids,
-				array(
-					'output_type' => OBJECT,
-				) );
+			$this->items = $this->page->get_table_manager()->fetch_log_items_by_id( $log_ids, $additional_args );
 			$total_items  = count( $log_ids );
 		}
 
