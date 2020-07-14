@@ -157,15 +157,16 @@ class TableManager implements Loadie {
 	/**
 	 * Fetch log item by ID.
 	 *
-	 * @param array $ids                Optional. Array of IDs of the log items to be retrieved.
-	 * @param array $additional_args    {
-	 *                                  Optional. Array of additional args.
+	 * @param array $ids             Optional. Array of IDs of the log items to be retrieved.
+	 * @param array $additional_args {
+	 *                               Optional. Array of additional args.
 	 *
 	 * @type string $date_column_format MySQL date column format. Refer
+	 *
 	 * @link  https://dev.mysql.com/doc/refman/5.5/en/date-and-time-functions.html#function_date-format
-	 * @type int    $current_page_no    Current Page number.
-	 * @type int    $per_page           Per Page count.
-	 * }
+	 * @type int $current_page_no    Current Page number.
+	 * @type int $per_page           Per Page count.
+	 *           }
 	 *
 	 * @return array Log item(s).
 	 */
@@ -201,7 +202,7 @@ class TableManager implements Loadie {
 		// Adjust the query to take pagination into account.
 		if ( ! empty( $current_page_no ) && ! empty( $per_page ) ) {
 			$offset = ( $current_page_no - 1 ) * $per_page;
-			$query  .= ' LIMIT ' . (int) $offset . ',' . (int) $per_page;
+			$query .= ' LIMIT ' . (int) $offset . ',' . (int) $per_page;
 		}
 		error_log( '$query' . $query );
 		if ( ! empty( $additional_args['output_type'] )
