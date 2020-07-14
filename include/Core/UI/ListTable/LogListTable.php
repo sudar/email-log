@@ -1,7 +1,7 @@
 <?php namespace EmailLog\Core\UI\ListTable;
 
-use EmailLog\Util;
 use \EmailLog\Core\UI\Page\LogListPage;
+use EmailLog\Util;
 
 if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once ABSPATH . WPINC . '/class-wp-list-table.php';
@@ -290,12 +290,14 @@ class LogListTable extends \WP_List_Table {
 	 *
 	 * @since 2.4.0
 	 *
+	 * @param mixed $item
+	 *
 	 * @return string
 	 */
 	protected function column_star( $item ) {
 		$current_user_id = get_current_user_id();
-		$nonce_field = LogListPage::LOG_LIST_ACTION_NONCE_FIELD;
-		$class = 'dashicons-star-empty';
+		$nonce_field     = LogListPage::LOG_LIST_ACTION_NONCE_FIELD;
+		$class           = 'dashicons-star-empty';
 
 		$starred_ids = get_user_meta( $current_user_id, LogListPage::STARRED_LOGS_META_KEY, true );
 
@@ -336,13 +338,13 @@ class LogListTable extends \WP_List_Table {
 		return array(
 			'all_logs'     => sprintf(
 				'<a href="%2$s"%3$s>%1$s</a>',
-				"All",
+				'All',
 				'admin.php?page=email-log&el_log_list_type=all',
 				'all' === $this->log_list_type ? ' class="current"' : ''
 			),
 			'starred_logs' => sprintf(
 				'<a href="%2$s"%3$s>%1$s</a>',
-				"Starred", 'admin.php?page=email-log&el_log_list_type=starred',
+				'Starred', 'admin.php?page=email-log&el_log_list_type=starred',
 				'starred' === $this->log_list_type ? ' class="current"' : ''
 			),
 		);
@@ -398,7 +400,7 @@ class LogListTable extends \WP_List_Table {
 				'per_page'        => $per_page,
 			);
 
-			$this->items = $this->page->get_table_manager()->fetch_log_items_by_id( $log_ids, $additional_args );
+			$this->items  = $this->page->get_table_manager()->fetch_log_items_by_id( $log_ids, $additional_args );
 			$total_items  = count( $log_ids );
 		}
 

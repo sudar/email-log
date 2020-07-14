@@ -242,8 +242,8 @@ class LogListAction implements Loadie {
 	public function star_email() {
 		check_ajax_referer( 'el-star-email' );
 
-		$is_star = sanitize_text_field( Util\el_array_get( $_POST, 'is_star', '0' ) ) === '1';
-		$log_id  = absint( Util\el_array_get( $_POST, 'log_id', 0 ) );
+		$is_star         = sanitize_text_field( Util\el_array_get( $_POST, 'is_star', '0' ) ) === '1';
+		$log_id          = absint( Util\el_array_get( $_POST, 'log_id', 0 ) );
 		$current_user_id = get_current_user_id();
 
 		if ( 0 === $log_id ) {
