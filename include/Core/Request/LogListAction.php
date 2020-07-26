@@ -36,9 +36,7 @@ class LogListAction implements Loadie {
 	 * @since 1.6
 	 */
 	public function view_log_message() {
-		if ( ! current_user_can( LogListPage::CAPABILITY ) ) {
-			wp_die();
-		}
+		$this->fail_if_user_cant_perform_email_log_action();
 
 		$id = absint( $_GET['log_id'] );
 
@@ -123,6 +121,8 @@ class LogListAction implements Loadie {
 	 * @param array $data Request data.
 	 */
 	public function delete_logs( $data ) {
+		$this->fail_if_user_cant_perform_email_log_action();
+
 		if ( ! is_array( $data ) || ! array_key_exists( 'email-log', $data ) ) {
 			return;
 		}
@@ -144,6 +144,8 @@ class LogListAction implements Loadie {
 	 * Delete all log entries.
 	 */
 	public function delete_all_logs() {
+		$this->fail_if_user_cant_perform_email_log_action();
+
 		$logs_deleted = $this->get_table_manager()->delete_all_logs();
 		$this->render_log_deleted_notice( $logs_deleted );
 	}
@@ -240,6 +242,8 @@ class LogListAction implements Loadie {
 	 * @since 2.4.0
 	 */
 	public function star_email() {
+		$this->fail_if_user_cant_perform_email_log_action();
+
 		check_ajax_referer( 'el-star-email' );
 
 		$is_star         = sanitize_text_field( Util\el_array_get( $_POST, 'is_star', '0' ) ) === '1';
@@ -250,7 +254,6 @@ class LogListAction implements Loadie {
 			wp_send_json_error( new \WP_Error( 'INVALID_LOG_ID', 'Invalid Log ID' ) );
 		}
 
-		// TODO: Should we check user capabilities?
 		$starred_log_ids = get_user_meta( $current_user_id,
 			LogListPage::STARRED_LOGS_META_KEY, true );
 
@@ -276,5 +279,14 @@ class LogListAction implements Loadie {
 		}
 
 		wp_send_json_success();
+	}
+
+	/**
+	 * Fail if the currently logged in user can't perform email log action.
+	 */
+	protected function fail_if_user_cant_perform_email_log_action() {
+		if ( ! current_user_can( LogListPage::CAPABILITY ) ) {
+			wp_die();
+		}
 	}
 }
