@@ -30,13 +30,23 @@ class LogListPage extends BasePage {
 	const LOG_LIST_ACTION_NONCE = 'el-log-list-nonce';
 
 	/**
+	 * Star email action.
+	 */
+	const STAR_EMAIL_ACTION = 'el-log-list-star-email';
+
+	/**
 	 * Capability to manage email logs.
 	 *
 	 * @since 2.1.0
 	 */
 	const CAPABILITY = 'manage_email_logs';
 
-	const STARRED_LOGS_META_KEY = 'el-starred-logs';
+	/**
+	 * The user meta key in which the starred emails of a user are stored.
+	 *
+	 * @since 2.5.0
+	 */
+	const STARRED_LOGS_META_KEY = 'email-log-starred-logs';
 
 	/**
 	 * Setup hooks.
@@ -221,7 +231,8 @@ class LogListPage extends BasePage {
 		wp_register_script( 'el-view-logs', $plugin_dir_url . 'assets/js/admin/view-logs.js', array( 'insertionQ', 'jquery-ui', 'jquery-ui-datepicker', 'jquery-ui-tooltip' ), $email_log->get_version(), true );
 
 		$translation_array = [
-			'starActionNonce' => wp_create_nonce( 'el-star-email' ),
+			'starEmailAction' => self::STAR_EMAIL_ACTION,
+			'starEmailNonce'  => wp_create_nonce( self::STAR_EMAIL_ACTION ),
 		];
 
 		wp_localize_script( 'el-view-logs', 'EmailLog', $translation_array );

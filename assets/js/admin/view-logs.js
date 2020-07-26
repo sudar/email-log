@@ -16,25 +16,23 @@
 		$( document ).on( 'click', '.el-star-email', function( event ) {
 			event.preventDefault();
 
-			var nonceField = $( this ).data( 'nonce-field' );
 			var isStarred = ! $( 'span', this ).hasClass( 'dashicons-star-filled' ) ? '1' : '0';
 			var logId = $( this ).data( 'log-id' );
 			var that = this;
 
 			var data = {
-				action: 'el-log-list-star-email',
-				'_wpnonce': EmailLog.starActionNonce,
+				'action': EmailLog.starEmailAction,
+				'_wpnonce': EmailLog.starEmailNonce,
 				'is_star': isStarred,
-				'log_id': logId,
+				'log_id': logId
 			};
-			data[ nonceField ] = $( '#' + nonceField ).val() || '';
 
 			$.ajax( {
 				url: ajaxurl,
 				data: data,
 				method: 'POST',
 			} )
-				.complete( function() {
+				.success( function() {
 					$( 'span', that )
 						.toggleClass( 'dashicons-star-empty' )
 						.toggleClass( 'dashicons-star-filled' );

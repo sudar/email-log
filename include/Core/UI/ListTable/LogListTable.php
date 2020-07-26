@@ -296,7 +296,6 @@ class LogListTable extends \WP_List_Table {
 	 */
 	protected function column_star( $item ) {
 		$current_user_id = get_current_user_id();
-		$nonce_field     = LogListPage::LOG_LIST_ACTION_NONCE_FIELD;
 		$class           = 'dashicons-star-empty';
 
 		$starred_ids = get_user_meta( $current_user_id, LogListPage::STARRED_LOGS_META_KEY, true );
@@ -306,10 +305,9 @@ class LogListTable extends \WP_List_Table {
 		}
 
 		return sprintf(
-			'<a class="el-star-email" href="%2$s" data-nonce-field="%3$s" data-log-id="%4$s">%1$s</a>',
+			'<a class="el-star-email" href="%2$s" data-log-id="%3$s">%1$s</a>',
 			sprintf( '<span class="dashicons %s"></span>', $class ),
 			'#',
-			$nonce_field,
 			$item->id
 		);
 	}
