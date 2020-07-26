@@ -22,7 +22,7 @@
 			var that = this;
 
 			var data = {
-				action: 'el-star-email',
+				action: 'el-log-list-star-email',
 				'_wpnonce': EmailLog.starActionNonce,
 				'is_star': isStarred,
 				'log_id': logId,
