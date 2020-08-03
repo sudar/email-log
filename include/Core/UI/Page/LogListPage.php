@@ -42,13 +42,6 @@ class LogListPage extends BasePage {
 	const CAPABILITY = 'manage_email_logs';
 
 	/**
-	 * The user meta key in which the starred emails of a user are stored.
-	 *
-	 * @since 2.5.0
-	 */
-	const STARRED_LOGS_META_KEY = 'email-log-starred-logs';
-
-	/**
 	 * Setup hooks.
 	 */
 	public function load() {

@@ -121,38 +121,19 @@ class LogListAction implements Loadie {
 	 * @since 2.5.0
 	 */
 	public function star_email() {
-		$this->fail_if_user_cant_perform_email_log_action();
-
 		check_ajax_referer( LogListPage::STAR_EMAIL_ACTION );
 
-		$is_star         = sanitize_text_field( Util\el_array_get( $_POST, 'is_star', '0' ) ) === '1';
-		$log_id          = absint( Util\el_array_get( $_POST, 'log_id', 0 ) );
-		$current_user_id = get_current_user_id();
+		$this->fail_if_user_cant_perform_email_log_action();
 
+		$log_id = absint( Util\el_array_get( $_POST, 'log_id', 0 ) );
 		if ( 0 === $log_id ) {
 			wp_send_json_error( new \WP_Error( 'INVALID_LOG_ID', 'Invalid Log ID' ) );
 		}
 
-		$starred_log_ids = get_user_meta( $current_user_id, LogListPage::STARRED_LOGS_META_KEY, true );
+		$un_star = filter_var( sanitize_text_field( Util\el_array_get( $_POST, 'un_star', 'true' ) ), FILTER_VALIDATE_BOOLEAN );
 
-		if ( empty( $starred_log_ids ) ) {
-			$starred_log_ids = array();
-		}
-
-		if ( $is_star ) {
-			$starred_log_ids = array_merge( $starred_log_ids, array( $log_id ) );
-		} else {
-			$key = array_search( $log_id, $starred_log_ids, true );
-			unset( $starred_log_ids[ $key ] );
-		}
-
-		$update = update_user_meta(
-			$current_user_id,
-			LogListPage::STARRED_LOGS_META_KEY,
-			$starred_log_ids
-		);
-
-		if ( ! $update ) {
+		$updated = $this->get_table_manager()->star_log_item( $log_id, $un_star );
+		if ( ! $updated ) {
 			wp_send_json_error();
 		}
 

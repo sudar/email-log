@@ -12,24 +12,20 @@
 			tb_remove();
 		});
 
-		// Star an Email Log.
+		// (Un)Star an Email Log.
 		$( document ).on( 'click', '.el-star-email', function( event ) {
 			event.preventDefault();
 
-			var isStarred = ! $( 'span', this ).hasClass( 'dashicons-star-filled' ) ? '1' : '0';
-			var logId = $( this ).data( 'log-id' );
 			var that = this;
-
-			var data = {
-				'action': EmailLog.starEmailAction,
-				'_wpnonce': EmailLog.starEmailNonce,
-				'is_star': isStarred,
-				'log_id': logId
-			};
 
 			$.ajax( {
 				url: ajaxurl,
-				data: data,
+				data: {
+					'action': EmailLog.starEmailAction,
+					'_wpnonce': EmailLog.starEmailNonce,
+					'un_star': $( 'span', this ).hasClass( 'dashicons-star-filled' ),
+					'log_id': $( this ).data( 'log-id' )
+				},
 				method: 'POST',
 			} )
 				.success( function() {

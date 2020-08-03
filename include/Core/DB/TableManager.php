@@ -4,6 +4,7 @@
  * Handle installation and db table creation.
  */
 use EmailLog\Core\Loadie;
+use EmailLog\Core\UI\Page\LogListPage;
 use EmailLog\Util;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
@@ -23,6 +24,13 @@ class TableManager implements Loadie {
 
 	/* Database version */
 	const DB_VERSION = '0.3';
+
+	/**
+	 * The user meta key in which the starred emails of a user are stored.
+	 *
+	 * @since 2.5.0
+	 */
+	const STARRED_LOGS_META_KEY = 'email-log-starred-logs';
 
 	/**
 	 * Setup hooks.
@@ -204,7 +212,6 @@ class TableManager implements Loadie {
 			$offset = ( $current_page_no - 1 ) * $per_page;
 			$query .= ' LIMIT ' . (int) $offset . ',' . (int) $per_page;
 		}
-		error_log( '$query' . $query );
 		if ( ! empty( $additional_args['output_type'] )
 		     && in_array( $additional_args['output_type'], array(
 				OBJECT,
@@ -225,20 +232,20 @@ class TableManager implements Loadie {
 	 *              Example:
 	 *              id: 2
 	 *              to: sudar@sudarmuthu.com
+	 * @since 2.5.0 Return only fetched log items and not total count.
 	 *
 	 * @param array $request         Request object.
 	 * @param int   $per_page        Entries per page.
 	 * @param int   $current_page_no Current page no.
 	 *
-	 * @return array Log entries and total items count.
+	 * @return array Log entries.
 	 */
 	public function fetch_log_items( $request, $per_page, $current_page_no ) {
 		global $wpdb;
 		$table_name = $this->get_log_table_name();
 
-		$query       = 'SELECT * FROM ' . $table_name;
-		$count_query = 'SELECT count(*) FROM ' . $table_name;
-		$query_cond  = '';
+		$query      = 'SELECT * FROM ' . $table_name;
+		$query_cond = '';
 
 		if ( isset( $request['s'] ) && is_string( $request['s'] ) && $request['s'] !== '' ) {
 			$search_term = trim( esc_sql( $request['s'] ) );
@@ -327,21 +334,15 @@ class TableManager implements Loadie {
 			$query_cond .= ' ORDER BY ' . $orderby . ' ' . $order;
 		}
 
-		// Find total number of items.
-		$count_query = $count_query . $query_cond;
-		$total_items = $wpdb->get_var( $count_query );
-
 		// Adjust the query to take pagination into account.
 		if ( ! empty( $current_page_no ) && ! empty( $per_page ) ) {
-			$offset     = ( $current_page_no - 1 ) * $per_page;
+			$offset      = ( $current_page_no - 1 ) * $per_page;
 			$query_cond .= ' LIMIT ' . (int) $offset . ',' . (int) $per_page;
 		}
 
-		// Fetch the items.
-		$query = $query . $query_cond;
-		$items = $wpdb->get_results( $query );
+		$query .= $query_cond;
 
-		return array( $items, $total_items );
+		return $wpdb->get_results( $query );
 	}
 
 	/**
@@ -440,6 +441,65 @@ class TableManager implements Loadie {
 		$query = $query . $query_cond;
 
 		return absint( $wpdb->get_var( $query ) );
+	}
+
+	/**
+	 * Get the list of starred log items for a user.
+	 *
+	 * @since 2.5.0
+	 *
+	 * @param int|null $user_id User id. If empty, then current user id is used.
+	 *
+	 * @return array|mixed [] Starred log list items.
+	 */
+	public function get_starred_log_item_ids( $user_id = null ) {
+		if ( empty( $user_id ) ) {
+			$user_id = get_current_user_id();
+		}
+
+		$starred_log_item_ids = get_user_meta(
+			$user_id,
+			self::STARRED_LOGS_META_KEY,
+			true
+		);
+
+		if ( empty( $starred_log_item_ids ) ) {
+			return [];
+		}
+
+		return $starred_log_item_ids;
+	}
+
+	/**
+	 * Star (or Unstar) an email log id.
+	 *
+	 * @since 2.5.0
+	 *
+	 * @param int  $log_id  Log id.
+	 * @param bool $un_star Whether to unstar an email or star it. Default false.
+	 * @param null $user_id User id. Default null. Current user id is used if not specified.
+	 *
+	 * @return bool Whether the update was successful.
+	 */
+	public function star_log_item( $log_id, $un_star = false, $user_id = null ) {
+		if ( empty( $user_id ) ) {
+			$user_id = get_current_user_id();
+		}
+
+		$starred_log_ids = $this->get_starred_log_item_ids( $user_id );
+
+		if ( $un_star ) {
+			$key = array_search( $log_id, $starred_log_ids, true );
+			unset( $starred_log_ids[ $key ] );
+		} else {
+			$starred_log_ids = array_merge( $starred_log_ids, array( $log_id ) );
+		}
+
+		return update_user_meta(
+			$user_id,
+			self::STARRED_LOGS_META_KEY,
+			$starred_log_ids
+		);
 	}
 
 	/**

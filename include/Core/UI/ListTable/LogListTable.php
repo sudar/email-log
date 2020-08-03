@@ -21,9 +21,31 @@ class LogListTable extends \WP_List_Table {
 	protected $page;
 
 	/**
-	 * @var string Log list type. Either 'All' or 'Starred'.
+	 * Log list type. Either 'All' or 'Starred'.
+	 *
+	 * @since 2.5.0
+	 *
+	 * @var string
 	 */
-	protected $log_list_type;
+	protected $log_list_type = 'all';
+
+	/**
+	 * Total number of log items.
+	 *
+	 * @since 2.5.0
+	 *
+	 * @var int
+	 */
+	protected $total_log_count = 0;
+
+	/**
+	 * Started log item ids.
+	 *
+	 * @since 2.5.0
+	 *
+	 * @var array
+	 */
+	protected $stared_log_item_ids = [];
 
 	/**
 	 * Set up a constructor that references the parent constructor.
@@ -291,18 +313,16 @@ class LogListTable extends \WP_List_Table {
 	/**
 	 * Display column to star Email logs.
 	 *
-	 * @since 2.4.0
+	 * @since 2.5.0
 	 *
-	 * @param mixed $item
+	 * @param object $item Email Log item.
 	 *
 	 * @return string
 	 */
 	protected function column_star( $item ) {
-		$current_user_id = get_current_user_id();
-		$class           = 'dashicons-star-empty';
+		$starred_ids = $this->stared_log_item_ids;
 
-		$starred_ids = get_user_meta( $current_user_id, LogListPage::STARRED_LOGS_META_KEY, true );
-
+		$class = 'dashicons-star-empty';
 		if ( ! empty( $starred_ids ) && in_array( $item->id, $starred_ids ) ) {
 			$class = 'dashicons-star-filled';
 		}
@@ -333,40 +353,18 @@ class LogListTable extends \WP_List_Table {
 	}
 
 	/**
-	 * @inheritdoc
-	 */
-	protected function get_views() {
-		return array(
-			'all_logs'     => sprintf(
-				'<a href="%2$s"%3$s>%1$s</a>',
-				__( 'All', 'email-log' ),
-				'admin.php?page=email-log&el_log_list_type=all',
-				'all' === $this->log_list_type ? ' class="current"' : ''
-			),
-			'starred_logs' => sprintf(
-				'<a href="%2$s"%3$s>%1$s</a>',
-				__( 'Starred', 'email-log' ),
-				'admin.php?page=email-log&el_log_list_type=starred',
-				'starred' === $this->log_list_type ? ' class="current"' : ''
-			),
-		);
-	}
-
-	/**
 	 * Sets the Log List type.
 	 *
-	 * Two types of views are avialable using the View Logs table - All & Starred.
+	 * Two types of views are available using the View Logs table - All & Starred.
+	 *
+	 * @since 2.5.0
 	 *
 	 * @used-by \EmailLog\Core\UI\ListTable\LogListTable::__construct()
 	 * @used-by \EmailLog\Core\UI\ListTable\LogListTable::get_views()
 	 */
 	protected function set_log_list_type() {
-		$log_list_type = sanitize_text_field( Util\el_array_get( $_REQUEST, 'el_log_list_type', 'all' ) );
-
-		if ( 'starred' === $log_list_type ) {
+		if ( 'starred' === sanitize_text_field( Util\el_array_get( $_REQUEST, 'el_log_list_type', 'all' ) ) ) {
 			$this->log_list_type = 'starred';
-		} else {
-			$this->log_list_type = 'all';
 		}
 	}
 
@@ -374,23 +372,23 @@ class LogListTable extends \WP_List_Table {
 	 * Prepare data for display.
 	 */
 	public function prepare_items() {
+		$table_manager = $this->page->get_table_manager();
+
 		$this->_column_headers = $this->get_column_info();
 
 		// Get current page number.
 		$current_page_no = $this->get_pagenum();
 		$per_page        = $this->page->get_per_page();
 
+		$this->total_log_count = $table_manager->get_logs_count();
+
+		$this->stared_log_item_ids = $table_manager->get_starred_log_item_ids();
+
 		if ( 'all' === $this->log_list_type ) {
-			list( $items, $total_items ) = $this->page->get_table_manager()->fetch_log_items( $_GET, $per_page, $current_page_no );
-
-			$this->items = $items;
+			$this->items = $table_manager->fetch_log_items( $_GET, $per_page, $current_page_no );
+			$total_items = $this->total_log_count;
 		} else {
-			$log_ids = get_user_meta(
-				get_current_user_id(),
-				LogListPage::STARRED_LOGS_META_KEY,
-				true
-			);
-
+			$log_ids = $this->stared_log_item_ids;
 			if ( empty( $log_ids ) ) {
 				$log_ids = array( 0 );
 			}
@@ -401,8 +399,8 @@ class LogListTable extends \WP_List_Table {
 				'per_page'        => $per_page,
 			);
 
-			$this->items  = $this->page->get_table_manager()->fetch_log_items_by_id( $log_ids, $additional_args );
-			$total_items  = count( $log_ids );
+			$this->items = $table_manager->fetch_log_items_by_id( $log_ids, $additional_args );
+			$total_items = count( $this->stared_log_item_ids );
 		}
 
 		// Register pagination options & calculations.
@@ -414,10 +412,36 @@ class LogListTable extends \WP_List_Table {
 	}
 
 	/**
+	 * @inheritdoc
+	 */
+	protected function get_views() {
+		return [
+			'all_logs'     => sprintf(
+				'<a href="%3$s"%4$s>%1$s (%2$d)</a>',
+				__( 'All', 'email-log' ),
+				$this->total_log_count,
+				'admin.php?page=email-log&el_log_list_type=all',
+				'all' === $this->log_list_type ? ' class="current"' : ''
+			),
+			'starred_logs' => sprintf(
+				'<a href="%3$s"%4$s>%1$s (%2$d)</a>',
+				__( 'Starred', 'email-log' ),
+				count( $this->stared_log_item_ids ),
+				'admin.php?page=email-log&el_log_list_type=starred',
+				'starred' === $this->log_list_type ? ' class="current"' : ''
+			),
+		];
+	}
+
+	/**
 	 * Displays default message when no items are found.
 	 */
 	public function no_items() {
-		_e( 'Your email log is empty', 'email-log' );
+		if ( 'starred' === $this->log_list_type ) {
+			_e( 'Your have not starred any email logs yet.', 'email-log' );
+		} else {
+			_e( 'Your email log is empty.', 'email-log' );
+		}
 	}
 
 	/**
