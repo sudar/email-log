@@ -5,6 +5,7 @@
  */
 use EmailLog\Core\Loadie;
 use EmailLog\Util;
+use function EmailLog\Util\el_array_get;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
@@ -180,8 +181,8 @@ class TableManager implements Loadie {
 	public function fetch_log_items_by_id( $ids = array(), $additional_args = array() ) {
 		global $wpdb;
 		$table_name      = $this->get_log_table_name();
-		$current_page_no = Util\el_array_get( $additional_args, 'current_page_no', false );
-		$per_page        = Util\el_array_get( $additional_args, 'per_page', false );
+		$current_page_no = el_array_get( $additional_args, 'current_page_no', false );
+		$per_page        = el_array_get( $additional_args, 'per_page', false );
 
 		$query = "SELECT * FROM {$table_name}";
 
@@ -449,7 +450,7 @@ class TableManager implements Loadie {
 	 *
 	 * @param int|null $user_id User id. If empty, then current user id is used.
 	 *
-	 * @return array|mixed [] Starred log list items.
+	 * @return array Starred log list items.
 	 */
 	public function get_starred_log_item_ids( $user_id = null ) {
 		if ( empty( $user_id ) ) {
@@ -462,7 +463,7 @@ class TableManager implements Loadie {
 			true
 		);
 
-		if ( empty( $starred_log_item_ids ) ) {
+		if ( empty( $starred_log_item_ids ) || ! is_array( $starred_log_item_ids ) ) {
 			return [];
 		}
 
@@ -474,9 +475,9 @@ class TableManager implements Loadie {
 	 *
 	 * @since 2.5.0
 	 *
-	 * @param int  $log_id  Log id.
-	 * @param bool $un_star Whether to unstar an email or star it. Default false.
-	 * @param null $user_id User id. Default null. Current user id is used if not specified.
+	 * @param int      $log_id  Log id.
+	 * @param bool     $un_star Whether to unstar an email or star it. Default false.
+	 * @param int|null $user_id User id. Default null. Current user id is used if not specified.
 	 *
 	 * @return bool Whether the update was successful.
 	 */

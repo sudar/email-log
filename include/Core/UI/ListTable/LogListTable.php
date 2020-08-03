@@ -1,6 +1,9 @@
 <?php namespace EmailLog\Core\UI\ListTable;
 
-use EmailLog\Util;
+use function EmailLog\Util\el_array_get;
+use function EmailLog\Util\get_column_label;
+use function EmailLog\Util\get_failure_icon;
+use function EmailLog\Util\get_success_icon;
 
 if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once ABSPATH . WPINC . '/class-wp-list-table.php';
@@ -108,7 +111,7 @@ class LogListTable extends \WP_List_Table {
 		);
 
 		foreach ( array( 'sent_date', 'result', 'to_email', 'subject', 'star' ) as $column ) {
-			$columns[ $column ] = Util\get_column_label( $column );
+			$columns[ $column ] = get_column_label( $column );
 		}
 
 		/**
@@ -292,9 +295,9 @@ class LogListTable extends \WP_List_Table {
 			return '';
 		}
 
-		$icon = \EmailLog\Util\get_failure_icon();
+		$icon = get_failure_icon();
 		if ( $item->result ) {
-			$icon = \EmailLog\Util\get_success_icon();
+			$icon = get_success_icon();
 		}
 
 		if ( ! isset( $item->error_message ) ) {
@@ -362,7 +365,7 @@ class LogListTable extends \WP_List_Table {
 	 * @used-by \EmailLog\Core\UI\ListTable\LogListTable::get_views()
 	 */
 	protected function set_log_list_type() {
-		if ( 'starred' === sanitize_text_field( Util\el_array_get( $_REQUEST, 'el_log_list_type', 'all' ) ) ) {
+		if ( 'starred' === sanitize_text_field( el_array_get( $_REQUEST, 'el_log_list_type', 'all' ) ) ) {
 			$this->log_list_type = 'starred';
 		}
 	}
