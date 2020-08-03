@@ -54,18 +54,21 @@ class LogListTable extends \WP_List_Table {
 	 *
 	 * We use the parent reference to set some default configs.
 	 *
-	 * @param \EmailLog\Core\UI\Page\LogListPage $page
-	 * @param mixed                              $args
+	 * @param \EmailLog\Core\UI\Page\LogListPage $page Page in which this table is rendered.
+	 * @param array                              $args Args.
 	 */
 	public function __construct( $page, $args = array() ) {
 		$this->page = $page;
 
-		$args = wp_parse_args( $args, array(
-			'singular' => 'email-log',     // singular name of the listed records
-			'plural'   => 'email-logs',    // plural name of the listed records
-			'ajax'     => false,           // does this table support ajax?
-			'screen'   => $this->page->get_screen(),
-		) );
+		$args = wp_parse_args(
+			$args,
+			[
+				'singular' => 'email-log',     // singular name of the listed records.
+				'plural'   => 'email-logs',    // plural name of the listed records.
+				'ajax'     => false,           // does this table support ajax?
+				'screen'   => $this->page->get_screen(),
+			]
+		);
 
 		parent::__construct( $args );
 
