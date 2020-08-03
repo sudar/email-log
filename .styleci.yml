@@ -33,7 +33,6 @@ enabled:
   - no_empty_statement
   - no_extra_consecutive_blank_lines
   - no_leading_namespace_whitespace
-  - no_php4_constructor
   - no_short_echo_tag
   - no_spaces_after_function_name
   - no_trailing_comma_in_list_call
