@@ -2,8 +2,8 @@
 
 use EmailLog\Core\Loadie;
 use EmailLog\Core\UI\Page\LogListPage;
-use EmailLog\Util\EmailHeaderParser;
 use function EmailLog\Util\el_array_get;
+use EmailLog\Util\EmailHeaderParser;
 
 /**
  * Actions performed in Log List.
