@@ -14,8 +14,8 @@ class LogListAction implements Loadie {
 	/**
 	 * Setup actions.
 	 *
-	 * @since 2.4.0 Added Star Email Log AJAX.
 	 * @since 2.4.0 Display Plain type email using <pre>.
+	 * @since 2.5.0 Added Star Email Log AJAX.
 	 *
 	 * @inheritdoc
 	 */
@@ -282,6 +282,8 @@ class LogListAction implements Loadie {
 
 	/**
 	 * Fail if the currently logged in user can't perform email log action.
+	 *
+	 * @since 2.5.0
 	 */
 	protected function fail_if_user_cant_perform_email_log_action() {
 		if ( ! current_user_can( LogListPage::CAPABILITY ) ) {

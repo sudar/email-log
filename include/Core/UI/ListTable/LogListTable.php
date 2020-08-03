@@ -20,6 +20,9 @@ class LogListTable extends \WP_List_Table {
 	 */
 	protected $page;
 
+	/**
+	 * @var string Log list type. Either 'All' or 'Starred'.
+	 */
 	protected $log_list_type;
 
 	/**
@@ -336,13 +339,14 @@ class LogListTable extends \WP_List_Table {
 		return array(
 			'all_logs'     => sprintf(
 				'<a href="%2$s"%3$s>%1$s</a>',
-				'All',
+				__( 'All', 'email-log' ),
 				'admin.php?page=email-log&el_log_list_type=all',
 				'all' === $this->log_list_type ? ' class="current"' : ''
 			),
 			'starred_logs' => sprintf(
 				'<a href="%2$s"%3$s>%1$s</a>',
-				'Starred', 'admin.php?page=email-log&el_log_list_type=starred',
+				__( 'Starred', 'email-log' ),
+				'admin.php?page=email-log&el_log_list_type=starred',
 				'starred' === $this->log_list_type ? ' class="current"' : ''
 			),
 		);
@@ -357,13 +361,12 @@ class LogListTable extends \WP_List_Table {
 	 * @used-by \EmailLog\Core\UI\ListTable\LogListTable::get_views()
 	 */
 	protected function set_log_list_type() {
-		$log_list_type = esc_attr( Util\el_array_get( $_REQUEST, 'el_log_list_type', '' ) );
-		switch ( $log_list_type ) {
-			case 'starred':
-				$this->log_list_type = 'starred';
-				break;
-			default:
-				$this->log_list_type = 'all';
+		$log_list_type = sanitize_text_field( Util\el_array_get( $_REQUEST, 'el_log_list_type', 'all' ) );
+
+		if ( 'starred' === $log_list_type ) {
+			$this->log_list_type = 'starred';
+		} else {
+			$this->log_list_type = 'all';
 		}
 	}
 
