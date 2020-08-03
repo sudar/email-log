@@ -1,6 +1,5 @@
 <?php namespace EmailLog\Core\UI\ListTable;
 
-use \EmailLog\Core\UI\Page\LogListPage;
 use EmailLog\Util;
 
 if ( ! class_exists( 'WP_List_Table' ) ) {
