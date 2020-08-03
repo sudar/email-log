@@ -4,7 +4,6 @@
  * Handle installation and db table creation.
  */
 use EmailLog\Core\Loadie;
-use EmailLog\Core\UI\Page\LogListPage;
 use EmailLog\Util;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
