@@ -385,7 +385,7 @@ class LogListTable extends \WP_List_Table {
 
 		if ( 'all' === $this->log_list_type ) {
 			$this->items = $table_manager->fetch_log_items( $_GET, $per_page, $current_page_no );
-			$total_items = $this->total_log_count;
+			$total_items = $table_manager->get_result_logs_count( $_GET );
 		} else {
 			$log_ids = $this->stared_log_item_ids;
 			if ( empty( $log_ids ) ) {

@@ -244,8 +244,29 @@ class TableManager implements Loadie {
 		$table_name = $this->get_log_table_name();
 
 		$query      = 'SELECT * FROM ' . $table_name;
-		$query_cond = '';
 
+		$query_cond = $this->build_query_condition( $request );
+
+		// Adjust the query to take pagination into account.
+		if ( ! empty( $current_page_no ) && ! empty( $per_page ) ) {
+			$offset      = ( $current_page_no - 1 ) * $per_page;
+			$query_cond .= ' LIMIT ' . (int) $offset . ',' . (int) $per_page;
+		}
+
+		$query .= $query_cond;
+
+		return $wpdb->get_results( $query );
+	}
+
+	/**
+	 * Builds query condition based on supplied parameters. Currently handles search and sorting.
+	 *
+	 * @param array $request Request object.
+	 *
+	 * @since 2.5.0
+	 */
+	public function build_query_condition( $request ) {
+		$query_cond = '';
 		if ( isset( $request['s'] ) && is_string( $request['s'] ) && $request['s'] !== '' ) {
 			$search_term = trim( esc_sql( $request['s'] ) );
 
@@ -333,15 +354,7 @@ class TableManager implements Loadie {
 			$query_cond .= ' ORDER BY ' . $orderby . ' ' . $order;
 		}
 
-		// Adjust the query to take pagination into account.
-		if ( ! empty( $current_page_no ) && ! empty( $per_page ) ) {
-			$offset      = ( $current_page_no - 1 ) * $per_page;
-			$query_cond .= ' LIMIT ' . (int) $offset . ',' . (int) $per_page;
-		}
-
-		$query .= $query_cond;
-
-		return $wpdb->get_results( $query );
+		return $query_cond;
 	}
 
 	/**
@@ -374,6 +387,27 @@ class TableManager implements Loadie {
 		global $wpdb;
 
 		$query = 'SELECT count(*) FROM ' . $this->get_log_table_name();
+
+		return $wpdb->get_var( $query );
+	}
+
+	/**
+	 * Get the total number of email logs in the result after search or filtering.
+	 *
+	 * @param array $request Request object.
+	 *
+	 * @return int Total email log count in the result.
+	 *
+	 * @since 2.5.0
+	 */
+	public function get_result_logs_count( $request ) {
+		global $wpdb;
+
+		$query = 'SELECT count(*) FROM ' . $this->get_log_table_name();
+
+		$query_condition = $this->build_query_condition( $request );
+
+		$query .= $query_condition;
 
 		return $wpdb->get_var( $query );
 	}
