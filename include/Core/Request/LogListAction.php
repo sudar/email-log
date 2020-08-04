@@ -2,7 +2,8 @@
 
 use EmailLog\Core\Loadie;
 use EmailLog\Core\UI\Page\LogListPage;
-use EmailLog\Util;
+use function EmailLog\Util\el_array_get;
+use EmailLog\Util\EmailHeaderParser;
 
 /**
  * Actions performed in Log List.
@@ -50,7 +51,7 @@ class LogListAction implements Loadie {
 
 			$headers = array();
 			if ( ! empty( $log_item['headers'] ) ) {
-				$parser  = new \EmailLog\Util\EmailHeaderParser();
+				$parser  = new EmailHeaderParser();
 				$headers = $parser->parse_headers( $log_item['headers'] );
 			}
 
@@ -125,12 +126,12 @@ class LogListAction implements Loadie {
 
 		$this->fail_if_user_cant_perform_email_log_action();
 
-		$log_id = absint( Util\el_array_get( $_POST, 'log_id', 0 ) );
+		$log_id = absint( el_array_get( $_POST, 'log_id', 0 ) );
 		if ( 0 === $log_id ) {
 			wp_send_json_error( new \WP_Error( 'INVALID_LOG_ID', 'Invalid Log ID' ) );
 		}
 
-		$un_star = filter_var( sanitize_text_field( Util\el_array_get( $_POST, 'un_star', 'true' ) ), FILTER_VALIDATE_BOOLEAN );
+		$un_star = filter_var( sanitize_text_field( el_array_get( $_POST, 'un_star', 'true' ) ), FILTER_VALIDATE_BOOLEAN );
 
 		$updated = $this->get_table_manager()->star_log_item( $log_id, $un_star );
 		if ( ! $updated ) {
