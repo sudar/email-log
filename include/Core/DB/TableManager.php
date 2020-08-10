@@ -201,11 +201,7 @@ class TableManager implements Loadie {
 			$query .= " where id IN ( {$ids_list} )";
 		}
 
-		// Ordering parameters.
-		$orderby = ! empty( $additional_args['orderby'] ) ? esc_sql( $additional_args['orderby'] ) : 'sent_date';
-		$order   = ! empty( $additional_args['order'] ) ? esc_sql( $additional_args['order'] ) : 'DESC';
-
-		$query .= " ORDER BY {$orderby} {$order}";
+		$query .= $this->build_query_condition( $_GET, true );
 
 		// Adjust the query to take pagination into account.
 		if ( ! empty( $current_page_no ) && ! empty( $per_page ) ) {
@@ -256,11 +252,12 @@ class TableManager implements Loadie {
 	/**
 	 * Builds query condition based on supplied parameters. Currently handles search and sorting.
 	 *
-	 * @param array $request Request object.
+	 * @param array $request      Request object.
+	 * @param bool  $where_clause True if where clause is present, False otherwise.
 	 *
 	 * @since 2.5.0
 	 */
-	public function build_query_condition( $request ) {
+	public function build_query_condition( $request, $where_clause = false ) {
 		$query_cond = '';
 		if ( isset( $request['s'] ) && is_string( $request['s'] ) && $request['s'] !== '' ) {
 			$search_term = trim( esc_sql( $request['s'] ) );
@@ -271,15 +268,15 @@ class TableManager implements Loadie {
 				foreach ( $predicates as $column => $email ) {
 					switch ( $column ) {
 						case 'id':
-							$query_cond .= empty( $query_cond ) ? ' WHERE ' : ' AND ';
+							$query_cond .= empty( $query_cond ) && ! $where_clause ? ' WHERE ' : ' AND ';
 							$query_cond .= "id = '$email'";
 							break;
 						case 'to':
-							$query_cond .= empty( $query_cond ) ? ' WHERE ' : ' AND ';
+							$query_cond .= empty( $query_cond ) && ! $where_clause ? ' WHERE ' : ' AND ';
 							$query_cond .= "to_email LIKE '%$email%'";
 							break;
 						case 'email':
-							$query_cond .= empty( $query_cond ) ? ' WHERE ' : ' AND ';
+							$query_cond .= empty( $query_cond )  && ! $where_clause ? ' WHERE ' : ' AND ';
 							$query_cond .= ' ( '; /* Begin 1st */
 							$query_cond .= " ( to_email LIKE '%$email%' OR subject LIKE '%$email%' ) "; /* Begin 2nd & End 2nd */
 							$query_cond .= ' OR ';
@@ -296,7 +293,7 @@ class TableManager implements Loadie {
 							$query_cond .= ' ) '; /* End 1st */
 							break;
 						case 'cc':
-							$query_cond .= empty( $query_cond ) ? ' WHERE ' : ' AND ';
+							$query_cond .= empty( $query_cond ) && ! $where_clause ? ' WHERE ' : ' AND ';
 							$query_cond .= ' ( '; /* Begin 1st */
 							$query_cond .= "headers <> ''";
 							$query_cond .= ' AND ';
@@ -306,7 +303,7 @@ class TableManager implements Loadie {
 							$query_cond .= ' ) '; /* End 1st */
 							break;
 						case 'bcc':
-							$query_cond .= empty( $query_cond ) ? ' WHERE ' : ' AND ';
+							$query_cond .= empty( $query_cond ) && ! $where_clause ? ' WHERE ' : ' AND ';
 							$query_cond .= ' ( '; /* Begin 1st */
 							$query_cond .= "headers <> ''";
 							$query_cond .= ' AND ';
@@ -316,7 +313,7 @@ class TableManager implements Loadie {
 							$query_cond .= ' ) '; /* End 1st */
 							break;
 						case 'reply-to':
-							$query_cond .= empty( $query_cond ) ? ' WHERE ' : ' AND ';
+							$query_cond .= empty( $query_cond ) && ! $where_clause ? ' WHERE ' : ' AND ';
 							$query_cond .= ' ( '; /* Begin 1st */
 							$query_cond .= "headers <> ''";
 							$query_cond .= ' AND ';
@@ -328,13 +325,17 @@ class TableManager implements Loadie {
 					}
 				}
 			} else {
-				$query_cond .= " WHERE ( to_email LIKE '%$search_term%' OR subject LIKE '%$search_term%' ) ";
+				if ( $where_clause ) {
+					$query_cond .= " AND ( to_email LIKE '%$search_term%' OR subject LIKE '%$search_term%' ) ";
+				} else {
+					$query_cond .= " WHERE ( to_email LIKE '%$search_term%' OR subject LIKE '%$search_term%' ) ";
+				}
 			}
 		}
 
 		if ( isset( $request['d'] ) && $request['d'] !== '' ) {
 			$search_date = trim( esc_sql( $request['d'] ) );
-			if ( '' === $query_cond ) {
+			if ( empty( $query_cond ) && ! $where_clause ) {
 				$query_cond .= " WHERE sent_date BETWEEN '$search_date 00:00:00' AND '$search_date 23:59:59' ";
 			} else {
 				$query_cond .= " AND sent_date BETWEEN '$search_date 00:00:00' AND '$search_date 23:59:59' ";
