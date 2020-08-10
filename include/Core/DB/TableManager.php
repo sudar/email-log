@@ -276,7 +276,7 @@ class TableManager implements Loadie {
 							$query_cond .= "to_email LIKE '%$email%'";
 							break;
 						case 'email':
-							$query_cond .= empty( $query_cond )  && ! $where_clause ? ' WHERE ' : ' AND ';
+							$query_cond .= empty( $query_cond ) && ! $where_clause ? ' WHERE ' : ' AND ';
 							$query_cond .= ' ( '; /* Begin 1st */
 							$query_cond .= " ( to_email LIKE '%$email%' OR subject LIKE '%$email%' ) "; /* Begin 2nd & End 2nd */
 							$query_cond .= ' OR ';
