@@ -198,7 +198,11 @@ class TableManager implements Loadie {
 			// Can't use wpdb->prepare for the below query. If used it results in this bug https://github.com/sudar/email-log/issues/13.
 			$ids_list = esc_sql( implode( ',', $ids ) );
 
-			$query .= " where id IN ( {$ids_list} )";
+			if ( isset( $additional_args['exclude_starred'] ) && true === $additional_args['exclude_starred'] ) {
+				$query .= " where id NOT IN ( {$ids_list} )";
+			} else {
+				$query .= " where id IN ( {$ids_list} )";
+			}
 		}
 
 		$query .= $this->build_query_condition( $_GET, true );
@@ -208,7 +212,7 @@ class TableManager implements Loadie {
 			$offset = ( $current_page_no - 1 ) * $per_page;
 			$query .= ' LIMIT ' . (int) $offset . ',' . (int) $per_page;
 		}
-		if ( in_array( $additional_args['output_type'], [ OBJECT, OBJECT_K, ARRAY_A, ARRAY_N ], true ) ) {
+		if ( isset( $additional_args['output_type'] ) && in_array( $additional_args['output_type'], [ OBJECT, OBJECT_K, ARRAY_A, ARRAY_N ], true ) ) {
 			return $wpdb->get_results( $query, $additional_args['output_type'] );
 		}
 
