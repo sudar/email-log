@@ -1,6 +1,7 @@
 <?php namespace EmailLog\Core\UI\ListTable;
 
 use EmailLog\Util;
+use function EmailLog\Util\get_display_format_for_log_time;
 
 if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once ABSPATH . WPINC . '/class-wp-list-table.php';
@@ -141,7 +142,12 @@ class LogListTable extends \WP_List_Table {
 	 */
 	protected function column_sent_date( $item ) {
 		$email_date = mysql2date(
-			sprintf( __( '%s @ %s', 'email-log' ), get_option( 'date_format', 'F j, Y' ), 'g:i:s a' ),
+			sprintf(
+				/* translators: 1 Date of the log, 2 Time of the log */
+				__( '%1$s @ %2$s', 'email-log' ),
+				get_option( 'date_format', 'F j, Y' ),
+				get_display_format_for_log_time()
+			),
 			$item->sent_date
 		);
 
