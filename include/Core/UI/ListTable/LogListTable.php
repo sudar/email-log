@@ -339,10 +339,10 @@ class LogListTable extends \WP_List_Table {
 		}
 
 		return sprintf(
-			'<a class="el-star-email" href="%2$s" data-log-id="%3$s">%1$s</a>',
+			'<a class="el-star-email" href="#" data-log-id="%2$s">%1$s</a> <img class="el-star-spinner" src="%3$s">',
 			sprintf( '<span class="dashicons %s"></span>', $class ),
-			'#',
-			$item->id
+			$item->id,
+			includes_url( 'images/spinner.gif' )
 		);
 	}
 

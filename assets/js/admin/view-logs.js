@@ -17,21 +17,28 @@
 		$( document ).on( "click", ".el-star-email", function( event ) {
 			event.preventDefault();
 
-			var that = this;
+			var icon = $( "span", this ),
+				$this = $( this ),
+				spinner = $this.next( 'img.el-star-spinner' );
 
 			$.ajax( {
 				url: ajaxurl,
 				data: {
 					"action": EmailLog.starEmailAction,
 					"_wpnonce": EmailLog.starEmailNonce,
-					"un_star": $( "span", this ).hasClass( "dashicons-star-filled" ),
-					"log_id": $( this ).data( "log-id" )
+					"un_star": icon.hasClass( "dashicons-star-filled" ),
+					"log_id": $this.data( "log-id" )
 				},
 				method: "POST",
+				beforeSend: function () {
+					spinner.show();
+				},
+				complete: function () {
+					spinner.hide();
+				}
 			} )
 				.success( function() {
-					$( "span", that )
-						.toggleClass( "dashicons-star-empty" )
+					icon.toggleClass( "dashicons-star-empty" )
 						.toggleClass( "dashicons-star-filled" );
 				} );
 		} );

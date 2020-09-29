@@ -48,3 +48,20 @@
 .column-result .dashicons-dismiss {
 	color: #E53935;
 }
+
+.el-star-spinner {
+	display: none;
+}
+
+a.el-star-email:hover span.dashicons-star-filled:before {
+	content: "\f154";
+}
+
+a.el-star-email:hover span.dashicons-star-empty:before {
+	content: "\f155";
+}
+
+a.el-star-email:active, a.el-star-email:focus {
+	box-shadow: none;
+	outline: none;
+}
