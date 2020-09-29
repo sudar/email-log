@@ -185,6 +185,31 @@ function get_user_defined_date_time_format() {
 }
 
 /**
+ * Get the display format for displaying the email log time.
+ *
+ * @since 2.4.3
+ *
+ * @return string Email log time display format.
+ */
+function get_display_format_for_log_time() {
+	$default_time_format = get_option( 'time_format', 'g:i:s a' );
+
+	if ( false === stripos( $default_time_format, 's' ) ) {
+		/* translators: Email Log time display format, see http://php.net/date */
+		$default_time_format = __( 'g:i:s a', 'email-log' );
+	}
+
+	/**
+	 * Filter the time format string for displaying log time.
+	 *
+	 * @since 2.4.3
+	 *
+	 * @param string $default_time_format Default time format.
+	 */
+	return apply_filters( 'el_log_time_display_format', $default_time_format );
+}
+
+/**
  * Gets the value by key from the array.
  *
  * If the key isn't found, then null is returned.
