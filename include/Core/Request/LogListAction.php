@@ -2,6 +2,8 @@
 
 use EmailLog\Core\Loadie;
 use EmailLog\Core\UI\Page\LogListPage;
+use function EmailLog\Util\el_array_get;
+use EmailLog\Util\EmailHeaderParser;
 
 /**
  * Actions performed in Log List.
@@ -14,14 +16,17 @@ class LogListAction implements Loadie {
 	 * Setup actions.
 	 *
 	 * @since 2.4.0 Display Plain type email using <pre>.
+	 * @since 2.5.0 Added Star Email Log AJAX.
 	 *
 	 * @inheritdoc
 	 */
 	public function load() {
 		add_action( 'wp_ajax_el-log-list-view-message', array( $this, 'view_log_message' ) );
+		add_action( 'wp_ajax_' . LogListPage::STAR_EMAIL_ACTION, array( $this, 'star_email' ) );
 
 		add_action( 'el-log-list-delete', array( $this, 'delete_logs' ) );
 		add_action( 'el-log-list-delete-all', array( $this, 'delete_all_logs' ) );
+
 		add_action( 'el-log-list-manage-user-roles-changed', array( $this, 'update_capabilities_for_user_roles' ), 10, 2 );
 	}
 
@@ -32,9 +37,7 @@ class LogListAction implements Loadie {
 	 * @since 1.6
 	 */
 	public function view_log_message() {
-		if ( ! current_user_can( LogListPage::CAPABILITY ) ) {
-			wp_die();
-		}
+		$this->fail_if_user_cant_perform_email_log_action();
 
 		$id = absint( $_GET['log_id'] );
 
@@ -48,7 +51,7 @@ class LogListAction implements Loadie {
 
 			$headers = array();
 			if ( ! empty( $log_item['headers'] ) ) {
-				$parser  = new \EmailLog\Util\EmailHeaderParser();
+				$parser  = new EmailHeaderParser();
 				$headers = $parser->parse_headers( $log_item['headers'] );
 			}
 
@@ -114,11 +117,38 @@ class LogListAction implements Loadie {
 	}
 
 	/**
+	 * Stars the selected Email Log.
+	 *
+	 * @since 2.5.0
+	 */
+	public function star_email() {
+		check_ajax_referer( LogListPage::STAR_EMAIL_ACTION );
+
+		$this->fail_if_user_cant_perform_email_log_action();
+
+		$log_id = absint( el_array_get( $_POST, 'log_id', 0 ) );
+		if ( 0 === $log_id ) {
+			wp_send_json_error( new \WP_Error( 'INVALID_LOG_ID', 'Invalid Log ID' ) );
+		}
+
+		$un_star = filter_var( sanitize_text_field( el_array_get( $_POST, 'un_star', 'true' ) ), FILTER_VALIDATE_BOOLEAN );
+
+		$updated = $this->get_table_manager()->star_log_item( $log_id, $un_star );
+		if ( ! $updated ) {
+			wp_send_json_error();
+		}
+
+		wp_send_json_success();
+	}
+
+	/**
 	 * Delete log entries by id.
 	 *
 	 * @param array $data Request data.
 	 */
 	public function delete_logs( $data ) {
+		$this->fail_if_user_cant_perform_email_log_action();
+
 		if ( ! is_array( $data ) || ! array_key_exists( 'email-log', $data ) ) {
 			return;
 		}
@@ -140,6 +170,8 @@ class LogListAction implements Loadie {
 	 * Delete all log entries.
 	 */
 	public function delete_all_logs() {
+		$this->fail_if_user_cant_perform_email_log_action();
+
 		$logs_deleted = $this->get_table_manager()->delete_all_logs();
 		$this->render_log_deleted_notice( $logs_deleted );
 	}
@@ -228,5 +260,16 @@ class LogListAction implements Loadie {
 		);
 
 		return $allowed_tags;
+	}
+
+	/**
+	 * Fail if the currently logged in user can't perform email log action.
+	 *
+	 * @since 2.5.0
+	 */
+	protected function fail_if_user_cant_perform_email_log_action() {
+		if ( ! current_user_can( LogListPage::CAPABILITY ) ) {
+			wp_die();
+		}
 	}
 }

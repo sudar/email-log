@@ -5,6 +5,7 @@
  */
 use EmailLog\Core\Loadie;
 use EmailLog\Util;
+use function EmailLog\Util\el_array_get;
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
@@ -23,6 +24,13 @@ class TableManager implements Loadie {
 
 	/* Database version */
 	const DB_VERSION = '0.3';
+
+	/**
+	 * The user meta key in which the starred emails of a user are stored.
+	 *
+	 * @since 2.5.0
+	 */
+	const STARRED_LOGS_META_KEY = 'email-log-starred-logs';
 
 	/**
 	 * Setup hooks.
@@ -164,13 +172,17 @@ class TableManager implements Loadie {
 	 * @type string $date_column_format MySQL date column format. Refer
 	 *
 	 * @link  https://dev.mysql.com/doc/refman/5.5/en/date-and-time-functions.html#function_date-format
-	 * }
+	 * @type int $current_page_no    Current Page number.
+	 * @type int $per_page           Per Page count.
+	 *           }
 	 *
 	 * @return array Log item(s).
 	 */
 	public function fetch_log_items_by_id( $ids = array(), $additional_args = array() ) {
 		global $wpdb;
-		$table_name = $this->get_log_table_name();
+		$table_name      = $this->get_log_table_name();
+		$current_page_no = el_array_get( $additional_args, 'current_page_no', false );
+		$per_page        = el_array_get( $additional_args, 'per_page', false );
 
 		$query = "SELECT * FROM {$table_name}";
 
@@ -186,7 +198,22 @@ class TableManager implements Loadie {
 			// Can't use wpdb->prepare for the below query. If used it results in this bug https://github.com/sudar/email-log/issues/13.
 			$ids_list = esc_sql( implode( ',', $ids ) );
 
-			$query .= " where id IN ( {$ids_list} )";
+			if ( isset( $additional_args['exclude_starred'] ) && true === $additional_args['exclude_starred'] ) {
+				$query .= " where id NOT IN ( {$ids_list} )";
+			} else {
+				$query .= " where id IN ( {$ids_list} )";
+			}
+		}
+
+		$query .= $this->build_query_condition( $_GET, true );
+
+		// Adjust the query to take pagination into account.
+		if ( ! empty( $current_page_no ) && ! empty( $per_page ) ) {
+			$offset = ( $current_page_no - 1 ) * $per_page;
+			$query .= ' LIMIT ' . (int) $offset . ',' . (int) $per_page;
+		}
+		if ( isset( $additional_args['output_type'] ) && in_array( $additional_args['output_type'], [ OBJECT, OBJECT_K, ARRAY_A, ARRAY_N ], true ) ) {
+			return $wpdb->get_results( $query, $additional_args['output_type'] );
 		}
 
 		return $wpdb->get_results( $query, 'ARRAY_A' ); //@codingStandardsIgnoreLine
@@ -199,21 +226,43 @@ class TableManager implements Loadie {
 	 *              Example:
 	 *              id: 2
 	 *              to: sudar@sudarmuthu.com
+	 * @since 2.5.0 Return only fetched log items and not total count.
 	 *
 	 * @param array $request         Request object.
 	 * @param int   $per_page        Entries per page.
 	 * @param int   $current_page_no Current page no.
 	 *
-	 * @return array Log entries and total items count.
+	 * @return array Log entries.
 	 */
 	public function fetch_log_items( $request, $per_page, $current_page_no ) {
 		global $wpdb;
 		$table_name = $this->get_log_table_name();
 
-		$query       = 'SELECT * FROM ' . $table_name;
-		$count_query = 'SELECT count(*) FROM ' . $table_name;
-		$query_cond  = '';
+		$query      = 'SELECT * FROM ' . $table_name;
 
+		$query_cond = $this->build_query_condition( $request );
+
+		// Adjust the query to take pagination into account.
+		if ( ! empty( $current_page_no ) && ! empty( $per_page ) ) {
+			$offset      = ( $current_page_no - 1 ) * $per_page;
+			$query_cond .= ' LIMIT ' . (int) $offset . ',' . (int) $per_page;
+		}
+
+		$query .= $query_cond;
+
+		return $wpdb->get_results( $query );
+	}
+
+	/**
+	 * Builds query condition based on supplied parameters. Currently handles search and sorting.
+	 *
+	 * @param array $request      Request object.
+	 * @param bool  $where_clause True if where clause is present, False otherwise.
+	 *
+	 * @since 2.5.0
+	 */
+	public function build_query_condition( $request, $where_clause = false ) {
+		$query_cond = '';
 		if ( isset( $request['s'] ) && is_string( $request['s'] ) && $request['s'] !== '' ) {
 			$search_term = trim( esc_sql( $request['s'] ) );
 
@@ -223,15 +272,15 @@ class TableManager implements Loadie {
 				foreach ( $predicates as $column => $email ) {
 					switch ( $column ) {
 						case 'id':
-							$query_cond .= empty( $query_cond ) ? ' WHERE ' : ' AND ';
+							$query_cond .= empty( $query_cond ) && ! $where_clause ? ' WHERE ' : ' AND ';
 							$query_cond .= "id = '$email'";
 							break;
 						case 'to':
-							$query_cond .= empty( $query_cond ) ? ' WHERE ' : ' AND ';
+							$query_cond .= empty( $query_cond ) && ! $where_clause ? ' WHERE ' : ' AND ';
 							$query_cond .= "to_email LIKE '%$email%'";
 							break;
 						case 'email':
-							$query_cond .= empty( $query_cond ) ? ' WHERE ' : ' AND ';
+							$query_cond .= empty( $query_cond ) && ! $where_clause ? ' WHERE ' : ' AND ';
 							$query_cond .= ' ( '; /* Begin 1st */
 							$query_cond .= " ( to_email LIKE '%$email%' OR subject LIKE '%$email%' ) "; /* Begin 2nd & End 2nd */
 							$query_cond .= ' OR ';
@@ -248,7 +297,7 @@ class TableManager implements Loadie {
 							$query_cond .= ' ) '; /* End 1st */
 							break;
 						case 'cc':
-							$query_cond .= empty( $query_cond ) ? ' WHERE ' : ' AND ';
+							$query_cond .= empty( $query_cond ) && ! $where_clause ? ' WHERE ' : ' AND ';
 							$query_cond .= ' ( '; /* Begin 1st */
 							$query_cond .= "headers <> ''";
 							$query_cond .= ' AND ';
@@ -258,7 +307,7 @@ class TableManager implements Loadie {
 							$query_cond .= ' ) '; /* End 1st */
 							break;
 						case 'bcc':
-							$query_cond .= empty( $query_cond ) ? ' WHERE ' : ' AND ';
+							$query_cond .= empty( $query_cond ) && ! $where_clause ? ' WHERE ' : ' AND ';
 							$query_cond .= ' ( '; /* Begin 1st */
 							$query_cond .= "headers <> ''";
 							$query_cond .= ' AND ';
@@ -268,7 +317,7 @@ class TableManager implements Loadie {
 							$query_cond .= ' ) '; /* End 1st */
 							break;
 						case 'reply-to':
-							$query_cond .= empty( $query_cond ) ? ' WHERE ' : ' AND ';
+							$query_cond .= empty( $query_cond ) && ! $where_clause ? ' WHERE ' : ' AND ';
 							$query_cond .= ' ( '; /* Begin 1st */
 							$query_cond .= "headers <> ''";
 							$query_cond .= ' AND ';
@@ -280,13 +329,17 @@ class TableManager implements Loadie {
 					}
 				}
 			} else {
-				$query_cond .= " WHERE ( to_email LIKE '%$search_term%' OR subject LIKE '%$search_term%' ) ";
+				if ( $where_clause ) {
+					$query_cond .= " AND ( to_email LIKE '%$search_term%' OR subject LIKE '%$search_term%' ) ";
+				} else {
+					$query_cond .= " WHERE ( to_email LIKE '%$search_term%' OR subject LIKE '%$search_term%' ) ";
+				}
 			}
 		}
 
 		if ( isset( $request['d'] ) && $request['d'] !== '' ) {
 			$search_date = trim( esc_sql( $request['d'] ) );
-			if ( '' === $query_cond ) {
+			if ( empty( $query_cond ) && ! $where_clause ) {
 				$query_cond .= " WHERE sent_date BETWEEN '$search_date 00:00:00' AND '$search_date 23:59:59' ";
 			} else {
 				$query_cond .= " AND sent_date BETWEEN '$search_date 00:00:00' AND '$search_date 23:59:59' ";
@@ -301,21 +354,7 @@ class TableManager implements Loadie {
 			$query_cond .= ' ORDER BY ' . $orderby . ' ' . $order;
 		}
 
-		// Find total number of items.
-		$count_query = $count_query . $query_cond;
-		$total_items = $wpdb->get_var( $count_query );
-
-		// Adjust the query to take pagination into account.
-		if ( ! empty( $current_page_no ) && ! empty( $per_page ) ) {
-			$offset     = ( $current_page_no - 1 ) * $per_page;
-			$query_cond .= ' LIMIT ' . (int) $offset . ',' . (int) $per_page;
-		}
-
-		// Fetch the items.
-		$query = $query . $query_cond;
-		$items = $wpdb->get_results( $query );
-
-		return array( $items, $total_items );
+		return $query_cond;
 	}
 
 	/**
@@ -348,6 +387,27 @@ class TableManager implements Loadie {
 		global $wpdb;
 
 		$query = 'SELECT count(*) FROM ' . $this->get_log_table_name();
+
+		return $wpdb->get_var( $query );
+	}
+
+	/**
+	 * Get the total number of email logs in the result after search or filtering.
+	 *
+	 * @param array $request Request object.
+	 *
+	 * @return int Total email log count in the result.
+	 *
+	 * @since 2.5.0
+	 */
+	public function get_result_logs_count( $request ) {
+		global $wpdb;
+
+		$query = 'SELECT count(*) FROM ' . $this->get_log_table_name();
+
+		$query_condition = $this->build_query_condition( $request );
+
+		$query .= $query_condition;
 
 		return $wpdb->get_var( $query );
 	}
@@ -414,6 +474,65 @@ class TableManager implements Loadie {
 		$query = $query . $query_cond;
 
 		return absint( $wpdb->get_var( $query ) );
+	}
+
+	/**
+	 * Get the list of starred log items for a user.
+	 *
+	 * @since 2.5.0
+	 *
+	 * @param int|null $user_id User id. If empty, then current user id is used.
+	 *
+	 * @return array Starred log list items.
+	 */
+	public function get_starred_log_item_ids( $user_id = null ) {
+		if ( empty( $user_id ) ) {
+			$user_id = get_current_user_id();
+		}
+
+		$starred_log_item_ids = get_user_meta(
+			$user_id,
+			self::STARRED_LOGS_META_KEY,
+			true
+		);
+
+		if ( empty( $starred_log_item_ids ) || ! is_array( $starred_log_item_ids ) ) {
+			return [];
+		}
+
+		return $starred_log_item_ids;
+	}
+
+	/**
+	 * Star (or Unstar) an email log id.
+	 *
+	 * @since 2.5.0
+	 *
+	 * @param int      $log_id  Log id.
+	 * @param bool     $un_star Whether to unstar an email or star it. Default false.
+	 * @param int|null $user_id User id. Default null. Current user id is used if not specified.
+	 *
+	 * @return bool Whether the update was successful.
+	 */
+	public function star_log_item( $log_id, $un_star = false, $user_id = null ) {
+		if ( empty( $user_id ) ) {
+			$user_id = get_current_user_id();
+		}
+
+		$starred_log_ids = $this->get_starred_log_item_ids( $user_id );
+
+		if ( $un_star ) {
+			$key = array_search( $log_id, $starred_log_ids, true );
+			unset( $starred_log_ids[ $key ] );
+		} else {
+			$starred_log_ids = array_merge( $starred_log_ids, array( $log_id ) );
+		}
+
+		return update_user_meta(
+			$user_id,
+			self::STARRED_LOGS_META_KEY,
+			$starred_log_ids
+		);
 	}
 
 	/**

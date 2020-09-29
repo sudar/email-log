@@ -30,6 +30,11 @@ class LogListPage extends BasePage {
 	const LOG_LIST_ACTION_NONCE = 'el-log-list-nonce';
 
 	/**
+	 * Star email action.
+	 */
+	const STAR_EMAIL_ACTION = 'el-log-list-star-email';
+
+	/**
 	 * Capability to manage email logs.
 	 *
 	 * @since 2.1.0
@@ -100,6 +105,7 @@ class LogListPage extends BasePage {
 			<h2><?php _e( 'Email Logs', 'email-log' ); ?></h2>
 			<?php settings_errors(); ?>
 
+			<?php $this->log_list_table->views(); ?>
 			<form id="email-logs-list" method="get">
 				<input type="hidden" name="page" value="<?php echo esc_attr( self::PAGE_SLUG ); ?>">
 				<?php $this->log_list_table->search_box( __( 'Search Logs', 'email-log' ), 'search_id' ); ?>
@@ -215,6 +221,15 @@ class LogListPage extends BasePage {
 		wp_register_script( 'jquery-ui', $plugin_dir_url . 'assets/vendor/jquery-ui/jquery-ui.min.js', array( 'jquery' ), '1.12.1', true );
 		wp_register_script( 'insertionQ', $plugin_dir_url . 'assets/vendor/insertion-query/insQ.min.js', array( 'jquery' ), '1.0.4', true );
 
-		wp_enqueue_script( 'el-view-logs', $plugin_dir_url . 'assets/js/admin/view-logs.js', array( 'insertionQ', 'jquery-ui', 'jquery-ui-datepicker', 'jquery-ui-tooltip' ), $email_log->get_version(), true );
+		wp_register_script( 'el-view-logs', $plugin_dir_url . 'assets/js/admin/view-logs.js', array( 'insertionQ', 'jquery-ui', 'jquery-ui-datepicker', 'jquery-ui-tooltip' ), $email_log->get_version(), true );
+
+		$translation_array = [
+			'starEmailAction' => self::STAR_EMAIL_ACTION,
+			'starEmailNonce'  => wp_create_nonce( self::STAR_EMAIL_ACTION ),
+		];
+
+		wp_localize_script( 'el-view-logs', 'EmailLog', $translation_array );
+
+		wp_enqueue_script( 'el-view-logs' );
 	}
 }

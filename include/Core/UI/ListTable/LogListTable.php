@@ -1,7 +1,10 @@
 <?php namespace EmailLog\Core\UI\ListTable;
 
-use EmailLog\Util;
+use function EmailLog\Util\el_array_get;
+use function EmailLog\Util\get_column_label;
 use function EmailLog\Util\get_display_format_for_log_time;
+use function EmailLog\Util\get_failure_icon;
+use function EmailLog\Util\get_success_icon;
 
 if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once ABSPATH . WPINC . '/class-wp-list-table.php';
@@ -21,24 +24,56 @@ class LogListTable extends \WP_List_Table {
 	protected $page;
 
 	/**
+	 * Log list type. Either 'All' or 'Starred'.
+	 *
+	 * @since 2.5.0
+	 *
+	 * @var string
+	 */
+	protected $log_list_type = 'all';
+
+	/**
+	 * Total number of log items.
+	 *
+	 * @since 2.5.0
+	 *
+	 * @var int
+	 */
+	protected $total_log_count = 0;
+
+	/**
+	 * Started log item ids.
+	 *
+	 * @since 2.5.0
+	 *
+	 * @var array
+	 */
+	protected $stared_log_item_ids = [];
+
+	/**
 	 * Set up a constructor that references the parent constructor.
 	 *
 	 * We use the parent reference to set some default configs.
 	 *
-	 * @param \EmailLog\Core\UI\Page\LogListPage $page
-	 * @param mixed                              $args
+	 * @param \EmailLog\Core\UI\Page\LogListPage $page Page in which this table is rendered.
+	 * @param array                              $args Args.
 	 */
 	public function __construct( $page, $args = array() ) {
 		$this->page = $page;
 
-		$args = wp_parse_args( $args, array(
-			'singular' => 'email-log',     // singular name of the listed records
-			'plural'   => 'email-logs',    // plural name of the listed records
-			'ajax'     => false,           // does this table support ajax?
-			'screen'   => $this->page->get_screen(),
-		) );
+		$args = wp_parse_args(
+			$args,
+			[
+				'singular' => 'email-log',     // singular name of the listed records.
+				'plural'   => 'email-logs',    // plural name of the listed records.
+				'ajax'     => false,           // does this table support ajax?
+				'screen'   => $this->page->get_screen(),
+			]
+		);
 
 		parent::__construct( $args );
+
+		$this->set_log_list_type();
 	}
 
 	/**
@@ -79,8 +114,8 @@ class LogListTable extends \WP_List_Table {
 			'cb' => '<input type="checkbox" />',
 		);
 
-		foreach ( array( 'sent_date', 'result', 'to_email', 'subject' ) as $column ) {
-			$columns[ $column ] = Util\get_column_label( $column );
+		foreach ( array( 'sent_date', 'result', 'to_email', 'subject', 'star' ) as $column ) {
+			$columns[ $column ] = get_column_label( $column );
 		}
 
 		/**
@@ -269,9 +304,9 @@ class LogListTable extends \WP_List_Table {
 			return '';
 		}
 
-		$icon = \EmailLog\Util\get_failure_icon();
+		$icon = get_failure_icon();
 		if ( $item->result ) {
-			$icon = \EmailLog\Util\get_success_icon();
+			$icon = get_success_icon();
 		}
 
 		if ( ! isset( $item->error_message ) ) {
@@ -283,6 +318,31 @@ class LogListTable extends \WP_List_Table {
 			$icon,
 			esc_attr( $item->error_message ),
 			'el-help'
+		);
+	}
+
+	/**
+	 * Display column to star Email logs.
+	 *
+	 * @since 2.5.0
+	 *
+	 * @param object $item Email Log item.
+	 *
+	 * @return string
+	 */
+	protected function column_star( $item ) {
+		$starred_ids = $this->stared_log_item_ids;
+
+		$class = 'dashicons-star-empty';
+		if ( ! empty( $starred_ids ) && in_array( $item->id, $starred_ids ) ) {
+			$class = 'dashicons-star-filled';
+		}
+
+		return sprintf(
+			'<a class="el-star-email" href="#" data-log-id="%2$s">%1$s</a> <img class="el-star-spinner" src="%3$s">',
+			sprintf( '<span class="dashicons %s"></span>', $class ),
+			$item->id,
+			includes_url( 'images/spinner.gif' )
 		);
 	}
 
@@ -304,18 +364,55 @@ class LogListTable extends \WP_List_Table {
 	}
 
 	/**
+	 * Sets the Log List type.
+	 *
+	 * Two types of views are available using the View Logs table - All & Starred.
+	 *
+	 * @since 2.5.0
+	 *
+	 * @used-by \EmailLog\Core\UI\ListTable\LogListTable::__construct()
+	 * @used-by \EmailLog\Core\UI\ListTable\LogListTable::get_views()
+	 */
+	protected function set_log_list_type() {
+		if ( 'starred' === sanitize_text_field( el_array_get( $_REQUEST, 'el_log_list_type', 'all' ) ) ) {
+			$this->log_list_type = 'starred';
+		}
+	}
+
+	/**
 	 * Prepare data for display.
 	 */
 	public function prepare_items() {
+		$table_manager = $this->page->get_table_manager();
+
 		$this->_column_headers = $this->get_column_info();
 
 		// Get current page number.
 		$current_page_no = $this->get_pagenum();
 		$per_page        = $this->page->get_per_page();
 
-		list( $items, $total_items ) = $this->page->get_table_manager()->fetch_log_items( $_GET, $per_page, $current_page_no );
+		$this->total_log_count = $table_manager->get_logs_count();
 
-		$this->items = $items;
+		$this->stared_log_item_ids = $table_manager->get_starred_log_item_ids();
+
+		if ( 'all' === $this->log_list_type ) {
+			$this->items = $table_manager->fetch_log_items( $_GET, $per_page, $current_page_no );
+			$total_items = $table_manager->get_result_logs_count( $_GET );
+		} else {
+			$log_ids = $this->stared_log_item_ids;
+			if ( empty( $log_ids ) ) {
+				$log_ids = array( 0 );
+			}
+
+			$additional_args = array(
+				'output_type'     => OBJECT,
+				'current_page_no' => $current_page_no,
+				'per_page'        => $per_page,
+			);
+
+			$this->items = $table_manager->fetch_log_items_by_id( $log_ids, $additional_args );
+			$total_items = count( $this->stared_log_item_ids );
+		}
 
 		// Register pagination options & calculations.
 		$this->set_pagination_args( array(
@@ -326,10 +423,36 @@ class LogListTable extends \WP_List_Table {
 	}
 
 	/**
+	 * @inheritdoc
+	 */
+	protected function get_views() {
+		return [
+			'all_logs'     => sprintf(
+				'<a href="%3$s"%4$s>%1$s (%2$d)</a>',
+				__( 'All', 'email-log' ),
+				$this->total_log_count,
+				'admin.php?page=email-log&el_log_list_type=all',
+				'all' === $this->log_list_type ? ' class="current"' : ''
+			),
+			'starred_logs' => sprintf(
+				'<a href="%3$s"%4$s>%1$s (%2$d)</a>',
+				__( 'Starred', 'email-log' ),
+				count( $this->stared_log_item_ids ),
+				'admin.php?page=email-log&el_log_list_type=starred',
+				'starred' === $this->log_list_type ? ' class="current"' : ''
+			),
+		];
+	}
+
+	/**
 	 * Displays default message when no items are found.
 	 */
 	public function no_items() {
-		_e( 'Your email log is empty', 'email-log' );
+		if ( 'starred' === $this->log_list_type ) {
+			_e( 'Your have not starred any email logs yet.', 'email-log' );
+		} else {
+			_e( 'Your email log is empty.', 'email-log' );
+		}
 	}
 
 	/**

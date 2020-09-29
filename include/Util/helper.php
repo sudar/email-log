@@ -352,6 +352,7 @@ function get_column_label_map() {
 		'reply_to'    => __( 'Reply To', 'email-log' ),
 		'ip_address'  => __( 'IP Address', 'email-log' ),
 		'result'      => __( 'Sent Status', 'email-log' ),
+		'star'        => __( 'Star', 'email-log' ),
 	);
 
 	/**
