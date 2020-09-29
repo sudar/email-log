@@ -58,20 +58,16 @@ class NonceChecker implements Loadie {
 				$action = sanitize_text_field( $_REQUEST['action2'] );
 			}
 
-			if ( strpos( $action, 'el-log-list-' ) !== 0 && strpos( $action, 'el-settings-' ) !== 0 ) {
+			if ( strpos( $action, 'el-' ) !== 0 ) {
 				return;
 			}
 
-			if ( isset( $_REQUEST[ LogListPage::LOG_LIST_ACTION_NONCE_FIELD ] ) ) {
-				if ( ! wp_verify_nonce( $_REQUEST[ LogListPage::LOG_LIST_ACTION_NONCE_FIELD ], LogListPage::LOG_LIST_ACTION_NONCE ) ) {
-					return;
-				}
+			if ( ! isset( $_REQUEST[ $action . '-nonce-field' ] ) ) {
+				return;
 			}
 
-			if ( isset( $_REQUEST[ 'el-settings-run-cron-nonce-field' ] ) ) {
-				if( ! wp_verify_nonce( $_REQUEST[ 'el-settings-run-cron-nonce-field' ], 'el-settings-run-cron-nonce' ) ) {
-					return;
-				}
+			if ( ! wp_verify_nonce( $_REQUEST[ $action . '-nonce-field' ], $action . '-nonce' ) ) {
+				return;
 			}
 		}
 
