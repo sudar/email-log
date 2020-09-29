@@ -2,9 +2,9 @@
 
 use function EmailLog\Util\el_array_get;
 use function EmailLog\Util\get_column_label;
+use function EmailLog\Util\get_display_format_for_log_time;
 use function EmailLog\Util\get_failure_icon;
 use function EmailLog\Util\get_success_icon;
-use function EmailLog\Util\get_display_format_for_log_time;
 
 if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once ABSPATH . WPINC . '/class-wp-list-table.php';
