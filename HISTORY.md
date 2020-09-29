@@ -1,6 +1,8 @@
 ## Changelog ##
 
-### v2.5.0 – (In dev) ###
+### v2.4.3 – (In dev) ###
+- New: Added `el_log_time_display_format` filter to change the email log display time.
+- New: Provide an option for translators to override the email log display time.
 
 ### v2.4.2 – (2020-07-07) ###
 - Fix: Fixed issues with email preview tab switcher that occurred in some installations.
