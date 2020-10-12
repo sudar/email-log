@@ -348,10 +348,10 @@ class TableManager implements Loadie {
 
 		if ( isset( $request['el_log_list_type'] ) ) {
 			if( 'sent' === $request['el_log_list_type'] ) {
-				$query_cond .= " WHERE result = 1";
+				$query_cond .= ' WHERE result = 1';
 			}
 			if( 'failed' === $request['el_log_list_type'] ) {
-				$query_cond .= " WHERE result = 0";
+				$query_cond .= ' WHERE result = 0';
 			}
 		}
 
