@@ -65,7 +65,7 @@
 			if ( $openLogLink ) {
 				$openLogLink.trigger('click');
 			}
-		}, 1000);
+		}, 2500);
 	});
 
 	var tabsInsertedEvent = "tabs_elem_inserted";
