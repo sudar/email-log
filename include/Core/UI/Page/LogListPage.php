@@ -116,6 +116,7 @@ class LogListPage extends BasePage {
 				$this->log_list_table->display();
 				?>
 			</form>
+			<a style="display: none;" href="https://ss.test/wp-admin/admin-ajax.php?action=el-log-list-view-message&log_id=26&width=800&height=550" id="el-open-log-link" class="thickbox"></a>
 		</div>
 		<?php
 		$this->render_page_footer();

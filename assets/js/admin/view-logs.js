@@ -58,6 +58,14 @@
 				duration: 100
 			}
 		});
+
+		setTimeout( function () {
+			var $openLogLink = $('#el-open-log-link');
+
+			if ( $openLogLink ) {
+				$openLogLink.trigger('click');
+			}
+		}, 1000);
 	});
 
 	var tabsInsertedEvent = "tabs_elem_inserted";
