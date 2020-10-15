@@ -60,10 +60,10 @@
 		});
 
 		setTimeout( function () {
-			var $openLogLink = $('#el-open-log-link');
+			var $openLogLink = $("#el-open-log-link");
 
 			if ( $openLogLink ) {
-				$openLogLink.trigger('click');
+				$openLogLink.trigger("click");
 			}
 		}, 2500);
 	});
