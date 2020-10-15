@@ -407,13 +407,13 @@ class LogListTable extends \WP_List_Table {
 		$current_page_no = $this->get_pagenum();
 		$per_page        = $this->page->get_per_page();
 
-		$this->total_log_count        = $table_manager->get_logs_count();
+		$this->total_log_count = $table_manager->get_logs_count();
 
-		$this->stared_log_item_ids    = $table_manager->get_starred_log_item_ids();
+		$this->stared_log_item_ids = $table_manager->get_starred_log_item_ids();
 
-		$this->total_sent_log_count   = $table_manager->get_result_logs_count( ['el_log_list_type' => 'sent'] );
+		$this->total_sent_log_count = $table_manager->get_result_logs_count( [ 'el_log_list_type' => 'sent' ] );
 
-		$this->total_failed_log_count = $table_manager->get_result_logs_count( ['el_log_list_type' => 'failed'] );
+		$this->total_failed_log_count = $table_manager->get_result_logs_count( [ 'el_log_list_type' => 'failed' ] );
 
 		$total_items = $table_manager->get_result_logs_count( $_GET );
 
@@ -464,14 +464,14 @@ class LogListTable extends \WP_List_Table {
 				'admin.php?page=email-log&el_log_list_type=starred',
 				'starred' === $this->log_list_type ? ' class="current"' : ''
 			),
-			'sent_logs' => sprintf(
+			'sent_logs'    => sprintf(
 				'<a href="%3$s"%4$s>%1$s (%2$d)</a>',
 				__( 'Sent', 'email-log' ),
 				$this->total_sent_log_count,
 				'admin.php?page=email-log&el_log_list_type=sent',
 				'sent' === $this->log_list_type ? ' class="current"' : ''
 			),
-			'failed_logs' => sprintf(
+			'failed_logs'  => sprintf(
 				'<a href="%3$s"%4$s>%1$s (%2$d)</a>',
 				__( 'Failed', 'email-log' ),
 				$this->total_failed_log_count,
