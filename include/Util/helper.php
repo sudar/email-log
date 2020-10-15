@@ -230,6 +230,7 @@ function el_array_get( $array, $key, $default = null ) {
  * Returns escaped log content url.
  *
  * @param int $log_id Log ID.
+ *
  * @return string URL built with log id query param.
  */
 function get_log_content_url( $log_id ) {
