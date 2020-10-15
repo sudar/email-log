@@ -118,7 +118,13 @@ class LogListPage extends BasePage {
 				?>
 			</form>
 			<?php if ( isset( $_GET['log_id'] ) ) : ?>
-				<a style="display: none;" href= "<?php echo get_admin_url() . get_log_content_url( absint( $_GET['log_id'] ) ); ?>" id="el-open-log-link" class="thickbox"></a>
+				<?php
+					$logid = absint( $_GET['log_id'] );
+					$log   = $this->get_table_manager()->fetch_log_items_by_id( [ $logid ] );
+				?>
+				<?php if ( ! empty( $log ) ) : ?>
+					<a style="display: none;" href= "<?php echo get_admin_url() . get_log_content_url( $logid ); ?>" id="el-open-log-link" class="thickbox"></a>
+				<?php endif; ?>
 			<?php endif; ?>
 		</div>
 		<?php
