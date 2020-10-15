@@ -419,7 +419,7 @@ class LogListTable extends \WP_List_Table {
 
 		if ( 'all' === $this->log_list_type ) {
 			$this->items = $table_manager->fetch_log_items( $_GET, $per_page, $current_page_no );
-		} else if ( 'starred' === $this->log_list_type ) {
+		} elseif ( 'starred' === $this->log_list_type ) {
 			$log_ids = $this->stared_log_item_ids;
 			if ( empty( $log_ids ) ) {
 				$log_ids = array( 0 );
@@ -433,7 +433,7 @@ class LogListTable extends \WP_List_Table {
 
 			$this->items = $table_manager->fetch_log_items_by_id( $log_ids, $additional_args );
 			$total_items = count( $this->stared_log_item_ids );
-		} else if ( 'sent' === $this->log_list_type || 'failed' === $this->log_list_type ) {
+		} elseif ( 'sent' === $this->log_list_type || 'failed' === $this->log_list_type ) {
 			$this->items = $table_manager->fetch_log_items( $_GET, $per_page, $current_page_no );
 		}
 
