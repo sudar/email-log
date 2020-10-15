@@ -118,7 +118,7 @@ class LogListPage extends BasePage {
 				?>
 			</form>
 			<?php if ( isset( $_GET['log_id'] ) ) : ?>
-				<a style="display: none;" href= "<?php echo get_admin_url() . get_log_content_url( absint( $_GET['log_id'] ) ) ?>" id="el-open-log-link" class="thickbox"></a>
+				<a style="display: none;" href= "<?php echo get_admin_url() . get_log_content_url( absint( $_GET['log_id'] ) ); ?>" id="el-open-log-link" class="thickbox"></a>
 			<?php endif; ?>
 		</div>
 		<?php
