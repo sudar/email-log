@@ -346,6 +346,15 @@ class TableManager implements Loadie {
 			}
 		}
 
+		if ( isset( $request['el_log_list_type'] ) ) {
+			if ( 'sent' === $request['el_log_list_type'] ) {
+				$query_cond .= ' WHERE result = 1';
+			}
+			if ( 'failed' === $request['el_log_list_type'] ) {
+				$query_cond .= ' WHERE result = 0';
+			}
+		}
+
 		// Ordering parameters.
 		$orderby = ! empty( $request['orderby'] ) ? esc_sql( $request['orderby'] ) : 'sent_date';
 		$order   = ! empty( $request['order'] ) ? esc_sql( $request['order'] ) : 'DESC';
