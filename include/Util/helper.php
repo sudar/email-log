@@ -227,6 +227,28 @@ function el_array_get( $array, $key, $default = null ) {
 }
 
 /**
+ * Returns escaped log content url.
+ *
+ * @param int $log_id Log ID.
+ *
+ * @return string URL built with log id query param.
+ */
+function get_log_content_url( $log_id ) {
+	return esc_url(
+		add_query_arg(
+			array(
+				'action' => 'el-log-list-view-message',
+				'log_id' => $log_id,
+				'width'  => '800',
+				'height' => '550',
+			),
+			'admin-ajax.php'
+		)
+	);
+
+}
+
+/**
  * Returns TRUE if the given search term is Advanced Search Term.
  *
  * @param string $term Search Term.

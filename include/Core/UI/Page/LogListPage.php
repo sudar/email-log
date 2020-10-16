@@ -2,6 +2,7 @@
 
 use EmailLog\Core\DB\TableManager;
 use EmailLog\Core\UI\ListTable\LogListTable;
+use function EmailLog\Util\get_log_content_url;
 
 /**
  * Log List Page.
@@ -116,6 +117,15 @@ class LogListPage extends BasePage {
 				$this->log_list_table->display();
 				?>
 			</form>
+			<?php if ( isset( $_GET['log_id'] ) ) : ?>
+				<?php
+					$logid = absint( $_GET['log_id'] );
+					$log   = $this->get_table_manager()->fetch_log_items_by_id( [ $logid ] );
+				?>
+				<?php if ( ! empty( $log ) ) : ?>
+					<a style="display: none;" href= "<?php echo get_admin_url() . get_log_content_url( $logid ); ?>" id="el-open-log-link" class="thickbox"></a>
+				<?php endif; ?>
+			<?php endif; ?>
 		</div>
 		<?php
 		$this->render_page_footer();

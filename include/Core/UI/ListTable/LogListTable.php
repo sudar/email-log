@@ -4,6 +4,7 @@ use function EmailLog\Util\el_array_get;
 use function EmailLog\Util\get_column_label;
 use function EmailLog\Util\get_display_format_for_log_time;
 use function EmailLog\Util\get_failure_icon;
+use function EmailLog\Util\get_log_content_url;
 use function EmailLog\Util\get_success_icon;
 
 if ( ! class_exists( 'WP_List_Table' ) ) {
@@ -206,18 +207,8 @@ class LogListTable extends \WP_List_Table {
 
 		$actions = array();
 
-		$content_ajax_url = add_query_arg(
-			array(
-				'action' => 'el-log-list-view-message',
-				'log_id' => $item->id,
-				'width'  => '800',
-				'height' => '550',
-			),
-			'admin-ajax.php'
-		);
-
 		$actions['view-content'] = sprintf( '<a href="%1$s" class="thickbox" title="%2$s">%3$s</a>',
-			esc_url( $content_ajax_url ),
+			get_log_content_url( $item->id ),
 			__( 'Email Content', 'email-log' ),
 			__( 'View Content', 'email-log' )
 		);
