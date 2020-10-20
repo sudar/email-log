@@ -12,7 +12,7 @@ class EmailLogger implements Loadie {
 	 * Load the logger.
 	 */
 	public function load() {
-		add_filter( 'wp_mail', array( $this, 'log_email' ) );
+		add_filter( 'wp_mail', array( $this, 'wp_mail_filter' ) );
 		add_action( 'wp_mail_failed', array( $this, 'on_email_failed' ) );
 
 		/**
@@ -28,11 +28,23 @@ class EmailLogger implements Loadie {
 	}
 
 	/**
-	 * Logs email to database.
+	 * wp_mail filter that logs email to database.
 	 *
 	 * @param array $original_mail_info Information about email.
 	 *
 	 * @return array Information about email.
+	 */
+	public function wp_mail_filter( $original_mail_info ) {
+		$this->log_email( $original_mail_info );
+		return $original_mail_info;
+	}
+
+	/**
+	 * Logs email to database.
+	 *
+	 * @param array $original_mail_info Information about email.
+	 *
+	 * @return boolean|int Insertion failure/success.
 	 */
 	public function log_email( $original_mail_info ) {
 		/**
@@ -94,7 +106,7 @@ class EmailLogger implements Loadie {
 		$log = apply_filters( 'el_email_log_before_insert', $log, $original_mail_info );
 
 		$email_log = email_log();
-		$email_log->table_manager->insert_log( $log );
+		$result    = $email_log->table_manager->insert_log( $log );
 
 		/**
 		 * Fires the `el_email_log_inserted` action right after the log is inserted in to DB.
@@ -115,7 +127,7 @@ class EmailLogger implements Loadie {
 		 */
 		do_action( 'el_email_log_inserted', $log );
 
-		return $original_mail_info;
+		return $result;
 	}
 
 	/**
