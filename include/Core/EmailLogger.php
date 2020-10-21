@@ -28,7 +28,7 @@ class EmailLogger implements Loadie {
 	}
 
 	/**
-	 * wp_mail filter that logs email to database.
+	 * Filter for wp_mail that logs email to database.
 	 *
 	 * @param array $original_mail_info Information about email.
 	 *
