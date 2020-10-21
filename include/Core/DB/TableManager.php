@@ -107,12 +107,13 @@ class TableManager implements Loadie {
 	 *
 	 * @param array $data Data to be inserted.
 	 *
-	 * @return boolean|int False on error and int on success.
+	 * @return bool|int False on error and int on success.
 	 */
 	public function insert_log( $data ) {
 		global $wpdb;
 
 		$table_name = $this->get_log_table_name();
+
 		return $wpdb->insert( $table_name, $data );
 	}
 
