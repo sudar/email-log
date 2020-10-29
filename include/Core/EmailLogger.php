@@ -42,6 +42,8 @@ class EmailLogger implements Loadie {
 	/**
 	 * Logs email to database.
 	 *
+	 * @since 2.5.0
+	 *
 	 * @param array $original_mail_info Information about email.
 	 *
 	 * @return boolean|int Insertion failure/success.
