@@ -107,6 +107,7 @@ class TableManager implements Loadie {
 	 *
 	 * @param array $data Data to be inserted.
 	 *
+	 * @since 2.5.0 Return status of insertion.
 	 * @return bool|int False on error and int on success.
 	 */
 	public function insert_log( $data ) {
