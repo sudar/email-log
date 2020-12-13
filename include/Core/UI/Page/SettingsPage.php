@@ -110,7 +110,7 @@ class SettingsPage extends BasePage {
 		<div class="wrap">
 			<h1><?php _e( 'Email Log Settings', 'email-log' ); ?></h1>
 
-			<form method="post" action="options.php">
+			<form method="post" enctype='multipart/form-data' action="options.php">
 				<?php
 				settings_errors();
 				settings_fields( self::PAGE_SLUG );
