@@ -212,9 +212,8 @@ class LogListPage extends BasePage {
 		wp_register_style( 'jquery-ui-css', $plugin_dir_url . 'assets/vendor/jquery-ui/themes/base/jquery-ui.min.css', array(), '1.12.1' );
 		wp_enqueue_style( 'el-view-logs-css', $plugin_dir_url . 'assets/css/admin/view-logs.css', array( 'jquery-ui-css' ), $email_log->get_version() );
 
-		wp_register_script( 'jquery-ui', $plugin_dir_url . 'assets/vendor/jquery-ui/jquery-ui.min.js', array( 'jquery' ), '1.12.1', true );
 		wp_register_script( 'insertionQ', $plugin_dir_url . 'assets/vendor/insertion-query/insQ.min.js', array( 'jquery' ), '1.0.4', true );
 
-		wp_enqueue_script( 'el-view-logs', $plugin_dir_url . 'assets/js/admin/view-logs.js', array( 'insertionQ', 'jquery-ui', 'jquery-ui-datepicker', 'jquery-ui-tooltip' ), $email_log->get_version(), true );
+		wp_enqueue_script( 'el-view-logs', $plugin_dir_url . 'assets/js/admin/view-logs.js', array( 'insertionQ', 'jquery-ui-core', 'jquery-ui-datepicker', 'jquery-ui-tooltip', 'jquery-ui-tabs' ), $email_log->get_version(), true );
 	}
 }
