@@ -35,6 +35,16 @@ class EmailLog {
 	private $loaded = false;
 
 	/**
+	 * Flag to override plugin API.
+	 *
+	 * @since 2.4.5
+	 * @access private
+	 *
+	 * @var bool
+	 */
+	private $plugins_api_overridden = false;
+
+	/**
 	 * Plugin file path.
 	 *
 	 * @since 2.0
@@ -169,6 +179,26 @@ class EmailLog {
 		 * @since 2.0
 		 */
 		do_action( 'el_loaded' );
+	}
+
+	/**
+	 * Plugin API has been overridden.
+	 *
+	 * @since 2.4.5
+	 */
+	public function plugin_api_overridden() {
+		$this->plugins_api_overridden = true;
+	}
+
+	/**
+	 * Has the plugin API have been overridden?
+	 *
+	 * @since 2.4.5
+	 *
+	 * @return bool True if overridden, False otherwise.
+	 */
+	public function is_plugin_api_overridden() {
+		return $this->plugins_api_overridden;
 	}
 
 	/**

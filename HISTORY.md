@@ -1,5 +1,8 @@
 ## Changelog ##
 
+### v2.4.5 – (In Dev) ###
+- Fix: Don't override WordPress plugin update in base plugin.
+
 ### v2.4.4 – (2021-03-28) ###
 - Tweak: Use the jQuery UI that is bundled with WordPress.
 - Tweak: Don't load add-on information from a local json file.

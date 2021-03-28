@@ -47,7 +47,6 @@ function load_email_log( $plugin_file ) {
 
 		$email_log->add_loadie( new \EmailLog\Addon\Upseller() );
 		$email_log->add_loadie( new \EmailLog\Addon\DependencyEnforcer() );
-		$email_log->add_loadie( new \EmailLog\Core\Request\OverridePluginAPI() );
 	}
 
 	$email_log->add_loadie( new \EmailLog\Core\EmailLogger() );
