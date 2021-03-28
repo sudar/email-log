@@ -1,14 +1,14 @@
-# Copyright (C) 2020 Sudar
+# Copyright (C) 2021 Sudar
 # This file is distributed under the same license as the Email Log package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Email Log 2.4.3\n"
+"Project-Id-Version: Email Log 2.4.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/email-log\n"
-"POT-Creation-Date: 2020-10-09 06:19:12+00:00\n"
+"POT-Creation-Date: 2021-03-28 03:54:23+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2020-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2021-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "X-Generator: grunt-wp-i18n 1.0.3\n"
@@ -68,7 +68,7 @@ msgstr ""
 msgid "%s Add-on License Key"
 msgstr ""
 
-#: include/Addon/AddonList.php:214
+#: include/Addon/AddonList.php:212
 msgid ""
 "We are not able to retrieve the add-on list now. Please visit the <a "
 "target=\"_blank\" rel=\"noopener\" href=\"%s\">add-on page</a> to view the "
