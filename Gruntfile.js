@@ -21,7 +21,6 @@ module.exports = function( grunt ) {
 						src: [
 							'**',
 							'!dist/**',
-							'!AUTHORS.md',
 							'!assets-wp-repo/**',
 							'!code-coverage/**',
 							'!codeception.yml',
