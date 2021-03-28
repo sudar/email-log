@@ -28,7 +28,6 @@ module.exports = function( grunt ) {
 							'!node_modules/**',
 							'!assets/vendor/**',
 							'assets/vendor/insertion-query/insQ.min.js',
-							'assets/vendor/jquery-ui/jquery-ui.min.js',
 							'assets/vendor/jquery-ui/themes/base/jquery-ui.min.css',
 							'!assets/js/src/**',
 							'!assets/css/src/**',
@@ -55,10 +54,6 @@ module.exports = function( grunt ) {
 			},
 			jqueryUi: {
 				files: [
-					{
-						src : "node_modules/components-jqueryui/jquery-ui.min.js",
-						dest: "assets/vendor/jquery-ui/jquery-ui.min.js"
-					},
 					{
 						src : "node_modules/components-jqueryui/themes/base/jquery-ui.min.css",
 						dest: "assets/vendor/jquery-ui/themes/base/jquery-ui.min.css"

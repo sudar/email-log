@@ -1,5 +1,9 @@
 ## Changelog ##
 
+### v2.4.4 – (2021-03-28) ###
+- Tweak: Use the jQuery UI that is bundled with WordPress.
+- Tweak: Don't load add-on information from a local json file.
+
 ### v2.4.3 – (2020-10-09) ###
 - New: Added `el_log_time_display_format` filter to change the email log display time.
 - New: Provide an option for translators to override the email log display time.
