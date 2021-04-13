@@ -32,6 +32,7 @@
     "time-grunt": "^2.0"
   },
   "scripts": {
+    "makepot": "grunt makepot",
     "vendor": "grunt vendor",
     "dist": "grunt build",
     "postinstall": "npm run vendor"

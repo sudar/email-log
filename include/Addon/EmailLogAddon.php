@@ -49,6 +49,17 @@ abstract class EmailLogAddon implements Loadie {
 	 * Load the add-on and setup hooks.
 	 */
 	public function load() {
+		if ( \EmailLog\Util\is_admin_non_ajax_request() ) {
+			$email_log = email_log();
+
+			if ( ! $email_log->is_plugin_api_overridden() ) {
+				$override_plugin_api = new \EmailLog\Core\Request\OverridePluginAPI();
+				$override_plugin_api->load();
+
+				$email_log->plugin_api_overridden();
+			}
+		}
+
 		if ( is_null( $this->updater ) ) {
 			return;
 		}
