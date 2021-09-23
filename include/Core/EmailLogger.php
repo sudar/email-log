@@ -64,6 +64,8 @@ class EmailLogger implements Loadie {
 		 *
 		 * @since 2.0.0
 		 */
+		$original_mail_info['to'] = implode(',',array_unique(array_map('trim', explode(',', $original_mail_info['to']))));	
+
 		$original_mail_info = apply_filters( 'el_wp_mail_log', $original_mail_info );
 
 		// Sometimes the array passed to the `wp_mail` filter may not contain all the required keys.
