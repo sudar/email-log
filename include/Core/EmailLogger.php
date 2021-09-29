@@ -66,9 +66,9 @@ class EmailLogger implements Loadie {
 		 */
 		// if this is being called from import addon
 		// set the fields ip_address, sent_date and result from the args instead of defaults
-		$ip_address = array_key_exists('ip_address', $original_mail_info ) ? $original_mail_info['ip_address'] : $_SERVER['REMOTE_ADDR'];
-		$sent_at = array_key_exists('sent_at', $original_mail_info ) ? $original_mail_info['sent_at'] : current_time( 'mysql' );
-		$sent_status = array_key_exists('sent_status', $original_mail_info ) ? $original_mail_info['sent_status'] : 1;
+		// $ip_address = array_key_exists('ip_address', $original_mail_info ) ? $original_mail_info['ip_address'] : $_SERVER['REMOTE_ADDR'];
+		// $sent_at = array_key_exists('sent_at', $original_mail_info ) ? $original_mail_info['sent_at'] : current_time( 'mysql' );
+		// $sent_status = array_key_exists('sent_status', $original_mail_info ) ? $original_mail_info['sent_status'] : 1;
 
 		$original_mail_info = apply_filters( 'el_wp_mail_log', $original_mail_info );
 
@@ -82,6 +82,9 @@ class EmailLogger implements Loadie {
 				'message'     => '',
 				'headers'     => '',
 				'attachments' => array(),
+				'ip_address' => $_SERVER['REMOTE_ADDR'],
+				'sent_at' => current_time( 'mysql' ),
+				'sent_status' => 1
 			)
 		);
 		$log = array(
@@ -90,9 +93,9 @@ class EmailLogger implements Loadie {
 			'message'         => $mail_info['message'],
 			'headers'         => \EmailLog\Util\stringify( $mail_info['headers'], "\n" ),
 			'attachment_name' => \EmailLog\Util\stringify( $mail_info['attachments'] ),
-			'sent_date'       => $sent_at,
-			'ip_address'      => $ip_address,
-			'result'          => $sent_status,
+			'sent_date'       => $mail_info['sent_at'],
+			'ip_address'      => $mail_info['ip_address'],
+			'result'          => $mail_info['sent_status'],
 		);
 
 		if ( empty( $log['attachment_name'] ) ) {
