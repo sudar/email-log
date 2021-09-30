@@ -64,12 +64,6 @@ class EmailLogger implements Loadie {
 		 *
 		 * @since 2.0.0
 		 */
-		// if this is being called from import addon
-		// set the fields ip_address, sent_date and result from the args instead of defaults
-		// $ip_address = array_key_exists('ip_address', $original_mail_info ) ? $original_mail_info['ip_address'] : $_SERVER['REMOTE_ADDR'];
-		// $sent_at = array_key_exists('sent_at', $original_mail_info ) ? $original_mail_info['sent_at'] : current_time( 'mysql' );
-		// $sent_status = array_key_exists('sent_status', $original_mail_info ) ? $original_mail_info['sent_status'] : 1;
-
 		$original_mail_info = apply_filters( 'el_wp_mail_log', $original_mail_info );
 
 		// Sometimes the array passed to the `wp_mail` filter may not contain all the required keys.
