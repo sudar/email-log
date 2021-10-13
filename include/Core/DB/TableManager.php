@@ -304,8 +304,8 @@ class TableManager implements Loadie {
 			'subject',
 		];
 
-		$sanitized_order_by = sanitize_text_field( $request['orderby'] );
-		if ( ! empty( $request['orderby'] ) && in_array( $sanitized_order_by, $allowed_order_by, true ) ) {
+		$sanitized_order_by = ( ! empty( $request['orderby'] ) ) ? sanitize_text_field( $request['orderby'] ) : '';
+		if ( ! empty( $sanitized_order_by ) && in_array( $sanitized_order_by, $allowed_order_by, true ) ) {
 			$order_by = $sanitized_order_by;
 		}
 
