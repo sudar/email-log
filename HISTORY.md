@@ -1,6 +1,6 @@
 ## Changelog ##
 
-### v2.4.5 – (In Dev) ###
+### v2.4.5 – (2021-04-13) ###
 - Fix: Don't override WordPress plugin update in base plugin.
 
 ### v2.4.4 – (2021-03-28) ###
@@ -224,6 +224,9 @@
 - Initial Release
 
 ## Upgrade Notice ##
+
+### 2.4.5 ###
+Improved admin performance and reduced network calls.
 
 ### 2.4.1 ###
 Starting v2.4.0 the plugin now captures the error message when an email fails to be delivered.
