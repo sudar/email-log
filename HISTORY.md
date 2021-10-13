@@ -1,5 +1,8 @@
 ## Changelog ##
 
+### v2.4.7 – (2021-10-13) ###
+- Fix: Fix the typo that was introduced in v2.4.6
+
 ### v2.4.6 – (2021-10-13) ###
 - Fix: Enhance how order and order by works.
 - Tweak: Tested upto WordPress 5.8

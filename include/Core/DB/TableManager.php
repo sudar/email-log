@@ -295,7 +295,7 @@ class TableManager implements Loadie {
 		}
 
 		// Ordering parameters.
-		$order_by = 'send_date';
+		$order_by = 'sent_date';
 		$order    = 'DESC';
 
 		$allowed_order_by = [
@@ -304,12 +304,12 @@ class TableManager implements Loadie {
 			'subject',
 		];
 
-		$sanitized_order_by = sanitize_text_field( $request['orderby'] );
-		if ( ! empty( $request['orderby'] ) && in_array( $sanitized_order_by, $allowed_order_by, true ) ) {
+		$sanitized_order_by = ( ! empty( $request['orderby'] ) ) ? sanitize_text_field( $request['orderby'] ) : '';
+		if ( ! empty( $sanitized_order_by ) && in_array( $sanitized_order_by, $allowed_order_by, true ) ) {
 			$order_by = $sanitized_order_by;
 		}
 
-		if ( ! empty( $request['order'] ) && 'ASC' === sanitize_text_field( $request['order'] ) ) {
+		if ( ! empty( $request['order'] ) && 'asc' === strtolower( sanitize_text_field( $request['order'] ) ) ) {
 			$order = 'ASC';
 		}
 
