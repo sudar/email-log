@@ -295,7 +295,7 @@ class TableManager implements Loadie {
 		}
 
 		// Ordering parameters.
-		$order_by = 'send_date';
+		$order_by = 'sent_date';
 		$order    = 'DESC';
 
 		$allowed_order_by = [
