@@ -309,7 +309,7 @@ class TableManager implements Loadie {
 			$order_by = $sanitized_order_by;
 		}
 
-		if ( ! empty( $request['order'] ) && 'ASC' === sanitize_text_field( $request['order'] ) ) {
+		if ( ! empty( $request['order'] ) && 'asc' === strtolower( sanitize_text_field( $request['order'] ) ) ) {
 			$order = 'ASC';
 		}
 
