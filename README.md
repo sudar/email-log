@@ -3,8 +3,8 @@
 **Tags:** email, log, log email, resend email, multisite  
 **Requires PHP:** 5.6  
 **Requires at least:** 4.0  
-**Tested up to:** 5.7  
-**Stable tag:** 2.4.5  
+**Tested up to:** 5.8  
+**Stable tag:** 2.4.6  
 [![Plugin Version](https://img.shields.io/wordpress/plugin/v/email-log.svg)]() [![Total Downloads](https://img.shields.io/wordpress/plugin/dt/email-log.svg)]() [![Plugin Rating](https://img.shields.io/wordpress/plugin/r/email-log.svg)]() [![WordPress Compatibility](https://img.shields.io/wordpress/v/email-log.svg)]() [![Build Status](https://scrutinizer-ci.com/g/sudar/email-log/badges/build.png?b=master)](https://scrutinizer-ci.com/g/sudar/email-log/build-status/master) [![Code Coverage](https://scrutinizer-ci.com/g/sudar/email-log/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/sudar/email-log/?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/sudar/email-log/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/sudar/email-log/?branch=master) [![StyleCI](https://styleci.io/repos/7374859/shield?branch=master)](https://styleci.io/repos/7374859) [![License](https://img.shields.io/badge/license-GPL--2.0%2B-red.svg)](https://wordpress.org/about/license/)
 
 Log and view all outgoing emails from WordPress. Very useful if you have to debug email related problems or have to store sent emails for auditing.

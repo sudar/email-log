@@ -2,6 +2,7 @@
 
 ### v2.4.6 – (2021-10-13) ###
 - Fix: Enhance how order and order by works.
+- Tweak: Tested upto WordPress 5.8
 
 ### v2.4.5 – (2021-04-13) ###
 - Fix: Don't override WordPress plugin update in base plugin.
@@ -227,6 +228,9 @@
 - Initial Release
 
 ## Upgrade Notice ##
+
+### 2.4.6 ###
+Tested upto WordPress 5.8
 
 ### 2.4.5 ###
 Improved admin performance and reduced network calls.
