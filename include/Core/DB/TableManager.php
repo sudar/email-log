@@ -3,6 +3,7 @@
 /**
  * Handle installation and db table creation.
  */
+
 use EmailLog\Core\Loadie;
 use EmailLog\Util;
 
@@ -294,11 +295,26 @@ class TableManager implements Loadie {
 		}
 
 		// Ordering parameters.
-		$orderby = ! empty( $request['orderby'] ) ? esc_sql( $request['orderby'] ) : 'sent_date';
-		$order   = ! empty( $request['order'] ) ? esc_sql( $request['order'] ) : 'DESC';
+		$order_by = 'send_date';
+		$order    = 'DESC';
 
-		if ( ! empty( $orderby ) & ! empty( $order ) ) {
-			$query_cond .= ' ORDER BY ' . $orderby . ' ' . $order;
+		$allowed_order_by = [
+			'sent_date',
+			'to_email',
+			'subject',
+		];
+
+		$sanitized_order_by = sanitize_text_field( $request['orderby'] );
+		if ( ! empty( $request['orderby'] ) && in_array( $sanitized_order_by, $allowed_order_by, true ) ) {
+			$order_by = $sanitized_order_by;
+		}
+
+		if ( ! empty( $request['order'] ) && 'ASC' === sanitize_text_field( $request['order'] ) ) {
+			$order = 'ASC';
+		}
+
+		if ( ! empty( $order_by ) & ! empty( $order ) ) {
+			$query_cond .= ' ORDER BY ' . $order_by . ' ' . $order;
 		}
 
 		// Find total number of items.

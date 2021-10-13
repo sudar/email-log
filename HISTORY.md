@@ -1,5 +1,8 @@
 ## Changelog ##
 
+### v2.4.6 – (2021-10-13) ###
+- Fix: Enhance how order and order by works.
+
 ### v2.4.5 – (2021-04-13) ###
 - Fix: Don't override WordPress plugin update in base plugin.
 
