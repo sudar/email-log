@@ -1,5 +1,8 @@
 ## Changelog ##
 
+### v2.4.8 – (2021-11-06) ###
+- Fix: Escape the search parameters before rendering them
+
 ### v2.4.7 – (2021-10-13) ###
 - Fix: Fix the typo that was introduced in v2.4.6
 
