@@ -17,7 +17,7 @@ class EmailLog {
 	 *
 	 * @var string
 	 */
-	const VERSION = '2.4.7';
+	const VERSION = '2.4.8';
 
 	/**
 	 * Email Log Store URL.
