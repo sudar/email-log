@@ -620,7 +620,7 @@ class TableManager implements Loadie {
 				id mediumint(9) NOT NULL AUTO_INCREMENT,
 				to_email VARCHAR(500) NOT NULL,
 				subject VARCHAR(500) NOT NULL,
-				message TEXT NOT NULL,
+				message LONGTEXT NOT NULL,
 				headers TEXT NOT NULL,
 				attachments TEXT NOT NULL,
 				sent_date timestamp NOT NULL,
