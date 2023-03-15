@@ -1,0 +1,639 @@
+# Copyright (C) 2020 Sudar
+# This file is distributed under the same license as the Email Log package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Email Log 2.4.3\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/email-log\n"
+"POT-Creation-Date: 2020-10-09 06:19:12+00:00\n"
+"PO-Revision-Date: 2023-03-15 23:32+0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: zh\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.2.2\n"
+
+#: email-log.php:51
+msgid ""
+"Email Log requires at least PHP 5.6 to function properly. Please upgrade PHP "
+"or use <a href=\"%s\" target=\"_blank\" rel=\"noopener\">v1.9.1 of Email "
+"Log</a>."
+msgstr ""
+"电子邮件日志至少需要PHP 5.6才能正常运行。请升级PHP或使用<a href=\"%s\" "
+"target=\"_blank\" rel=\"noopener\">V1.9.1版本的电子邮件日志</a>。"
+
+#: include/Addon/API/EDDAPI.php:115
+msgid ""
+"Unknown error occurred while trying to contact Email Log store. Please try "
+"again after sometime. If the problem persists contact support."
+msgstr ""
+"在尝试联系电子邮件日志商店时发生了未知的错误。请在一段时间后再试。如果问题仍"
+"然存在，请联系技术支持。"
+
+#: include/Addon/API/EDDAPI.php:122
+msgid ""
+"Unable to parse the response Email Log store response. Please try again "
+"after sometime. If the problem persists contact support."
+msgstr ""
+"无法解析响应 电子邮件日志存储响应。请在一段时间后再试。如果问题持续存在，请联"
+"系支持部门。"
+
+#: include/Addon/Addon.php:175
+msgid "You need an active license to use the add-on"
+msgstr "你需要一个有效的许可证来使用附加组件"
+
+#: include/Addon/Addon.php:185
+msgid "Activate License"
+msgstr "激活许可证"
+
+#: include/Addon/Addon.php:193
+msgid "Deactivate License"
+msgstr "停用许可证"
+
+#. translators: 1 License expiry date, 2 License Renewal link
+#: include/Addon/Addon.php:202 include/Addon/License/Licenser.php:122
+msgid ""
+"Your license has expired on %1$s. Please <a href=\"%2$s\">renew it</a> to "
+"receive automatic updates and support."
+msgstr ""
+"您的许可证在%1$s 上已经过期。请<a href=\"%2$s\">更新它</a>以获得自动更新和支"
+"持。"
+
+#. translators: 1 License expiry date
+#: include/Addon/Addon.php:205 include/Addon/License/Licenser.php:126
+msgid "Your license is valid till %s"
+msgstr "您的许可证有效期至%s"
+
+#: include/Addon/Addon.php:211
+msgid "Individual add-on license"
+msgstr "个人附加许可证"
+
+#: include/Addon/Addon.php:216
+msgid "Email Log License Key"
+msgstr "电子邮件日志许可证密钥"
+
+#: include/Addon/Addon.php:217
+msgid "%s Add-on License Key"
+msgstr "％6S 附加许可密钥"
+
+#: include/Addon/AddonList.php:214
+msgid ""
+"We are not able to retrieve the add-on list now. Please visit the <a "
+"target=\"_blank\" rel=\"noopener\" href=\"%s\">add-on page</a> to view the "
+"add-ons."
+msgstr ""
+"我们现在无法检索附加列表。请访问<a target=\"_blank\" rel=\"noopener\" "
+"href=\"%S\">附加页</a>查看加载项。"
+
+#: include/Addon/DependencyEnforcer.php:46
+msgid ""
+"The following add-ons are not compatible with the installed version of Email "
+"Log and have been deactivated."
+msgstr "以下附加组件与已安装的电子邮件日志不兼容，并且已停用。"
+
+#: include/Addon/DependencyEnforcer.php:54
+msgid "Please get the latest version of these add-ons from add-on store."
+msgstr "请从附加商店获取这些附加组件的最新版本。"
+
+#. translators: 1 License expiry date, 2 License Renewal link
+#: include/Addon/License/BaseLicense.php:173
+msgid ""
+"Your license key expired on %1$s. Please <a href=\"%2$s\">renew it</a> to "
+"receive automatic updates and support."
+msgstr ""
+"您的许可密钥以％1 $ s 到期。请<a href=\"%2$s\">续订</a>接收自动更新和支持。"
+
+#: include/Addon/License/BaseLicense.php:180
+msgid "Your license key has been disabled."
+msgstr "您的许可证密钥已被禁用。"
+
+#: include/Addon/License/BaseLicense.php:184
+msgid "Your license key is invalid."
+msgstr "您的许可证密钥无效。"
+
+#: include/Addon/License/BaseLicense.php:189
+msgid "Your license is not active for this URL."
+msgstr "您的许可证不在此 URL 上。"
+
+#. translators: 1 Add-on name
+#: include/Addon/License/BaseLicense.php:194
+msgid "Your license key is not valid for %s."
+msgstr "您的许可密钥无效％s。"
+
+#. translators: 1 License Upgrade link
+#: include/Addon/License/BaseLicense.php:200
+msgid ""
+"Your license key has reached its activation limit. Please <a "
+"href=\"%s\">upgrade</a> your license."
+msgstr "您的许可证密钥已达到其激活限制。请<a href=\"%S\">升级</a>您的许可证。"
+
+#: include/Addon/License/BaseLicense.php:206
+#: include/Addon/License/BaseLicense.php:237
+msgid "An error occurred, please try again."
+msgstr "发生错误，请重试。"
+
+#: include/Addon/License/BaseLicense.php:261
+msgid "An error occurred, please try again"
+msgstr "发生错误，请重试"
+
+#: include/Addon/License/Licenser.php:103
+msgid "Activate"
+msgstr "启用"
+
+#: include/Addon/License/Licenser.php:111
+msgid "Deactivate"
+msgstr "停用"
+
+#: include/Addon/License/Licenser.php:115
+msgid "You have a lifetime license, which will never expire!"
+msgstr "您拥有终身许可证，这将永远不会到期！"
+
+#: include/Addon/License/Licenser.php:138
+msgid ""
+"Enter your license key to activate add-ons. If you don't have a license, "
+"then you can <a href='%s' target='_blank'>buy it</a>"
+msgstr "输入您的许可证密钥以激活附加组件。如果您没有许可"
+
+#: include/Addon/License/Licenser.php:147
+#: include/Addon/License/Licenser.php:148
+msgid "Email Log Bundle License Key"
+msgstr "输入许可证密钥"
+
+#: include/Addon/License/Licenser.php:180
+msgid ""
+"Your license has been activated. You can now install add-ons, will receive "
+"automatic updates and access to email support."
+msgstr ""
+"您的许可已被激活。您现在可以安装附加组件，将接收自动更新并访问电子邮件支持。"
+
+#: include/Addon/License/Licenser.php:196
+msgid ""
+"Your license has been deactivated. You will not receive automatic updates."
+msgstr "您的许可已停用。您将不会收到自动更新。"
+
+#: include/Addon/License/Licenser.php:239
+msgid ""
+"Your license for %s has been activated. You will receive automatic updates "
+"and access to email support."
+msgstr "您的％s 许可已被激活。您将收到自动更新并访问电子邮件支持。"
+
+#: include/Addon/License/Licenser.php:266
+msgid ""
+"Your license for %s has been deactivated. You will not receive automatic "
+"updates."
+msgstr "您的％s 许可已停用。您将不会收到自动更新。"
+
+#: include/Addon/Upseller.php:33
+msgid "Additional fields are available through More Fields add-on. "
+msgstr "其他字段可通过更多字段插件获得。 "
+
+#: include/Addon/Upseller.php:37
+msgid "Install it"
+msgstr "安装它"
+
+#: include/Addon/Upseller.php:41
+msgid "Buy Now"
+msgstr "立即购买"
+
+#. translators: 1 Auto Delete Logs add-on name.
+#: include/Addon/Upseller.php:74
+msgid ""
+"You have more than 5000 email logs in the database. You can use our %1s add-"
+"on to automatically delete logs as the DB size grows."
+msgstr ""
+"您在数据库中有 5000 多个电子邮件日志。随着数据库大小的增长，您可以使用我们"
+"的％1S 附加组件自动删除日志。"
+
+#: include/Addon/Upseller.php:97
+msgid ""
+"You can also automatically delete logs if the database size increases using "
+"our %1s add-on."
+msgstr "如果数据库大小使用我们的 9％1 附加组件增加，您也可以自动删除日志。"
+
+#: include/Core/Request/LogListAction.php:64 include/Util/helper.php:348
+msgid "Sent at"
+msgstr "发送时间"
+
+#: include/Core/Request/LogListAction.php:68 include/Util/helper.php:344
+msgid "To"
+msgstr "邮箱地址"
+
+#: include/Core/Request/LogListAction.php:72 include/Util/helper.php:345
+msgid "Subject"
+msgstr "主题"
+
+#: include/Core/Request/LogListAction.php:92
+msgid "Raw Email Content"
+msgstr "原始电子邮件内容"
+
+#: include/Core/Request/LogListAction.php:93
+msgid "Preview Content as HTML"
+msgstr "预览内容为 HTML"
+
+#: include/Core/Request/LogListAction.php:106
+msgid "Close"
+msgstr "关闭"
+
+#: include/Core/Request/LogListAction.php:181
+msgid "There was some problem in deleting the email logs"
+msgstr "删除电子邮件日志存在一些问题"
+
+#: include/Core/Request/LogListAction.php:185
+msgid "1 email log deleted."
+msgid_plural "%s email logs deleted"
+msgstr[0] "电子邮件日志已删除"
+
+#: include/Core/UI/Component/AdminUIEnhancer.php:69
+msgid "Buy Addons"
+msgstr "购买插件"
+
+#: include/Core/UI/Component/AdminUIEnhancer.php:85
+#: include/Core/UI/Page/LogListPage.php:68
+#: include/Core/UI/Page/LogListPage.php:69
+msgid "View Logs"
+msgstr "查看日志"
+
+#: include/Core/UI/Component/AdminUIEnhancer.php:86
+#: include/Core/UI/Page/SettingsPage.php:94
+#: include/Core/UI/Page/SettingsPage.php:95
+msgid "Settings"
+msgstr "设置"
+
+#: include/Core/UI/Component/AdminUIEnhancer.php:109
+msgid "plugin"
+msgstr "插件"
+
+#: include/Core/UI/Component/AdminUIEnhancer.php:109
+msgid "Version"
+msgstr "版本"
+
+#: include/Core/UI/Component/AdminUIEnhancer.php:109
+msgid "by"
+msgstr "作者"
+
+#: include/Core/UI/Component/DashboardWidget.php:29
+msgid "Email Logs Summary"
+msgstr "电子邮件日志摘要"
+
+#: include/Core/UI/Component/DashboardWidget.php:43
+msgid "Total number of emails logged"
+msgstr "记录的电子邮件总数"
+
+#: include/Core/UI/Component/DashboardWidget.php:57
+msgid "<a href=\"%s\">Email Logs</a>"
+msgstr "记录的电子邮件总数"
+
+#: include/Core/UI/Component/DashboardWidget.php:58
+msgid "<a href=\"%s\">Settings</a>"
+msgstr "<a href=\"%S\">设置</a>"
+
+#: include/Core/UI/Component/DashboardWidget.php:59
+msgid "<a href=\"%s\">Addons</a>"
+msgstr "<a href=\"%S\"> 插件 </a>"
+
+#. translators: 1 Date of the log, 2 Time of the log
+#: include/Core/UI/ListTable/LogListTable.php:147
+msgid "%1$s @ %2$s"
+msgstr "%1$s @ %2$s"
+
+#: include/Core/UI/ListTable/LogListTable.php:168
+msgid "Email Content"
+msgstr "电子邮件内容"
+
+#: include/Core/UI/ListTable/LogListTable.php:169
+msgid "View Content"
+msgstr "查看内容"
+
+#: include/Core/UI/ListTable/LogListTable.php:183
+#: include/Core/UI/ListTable/LogListTable.php:298
+msgid "Delete"
+msgstr "删除"
+
+#: include/Core/UI/ListTable/LogListTable.php:299
+msgid "Delete All Logs"
+msgstr "删除所有日志"
+
+#: include/Core/UI/ListTable/LogListTable.php:332
+msgid "Your email log is empty"
+msgstr "您的电子邮件日志为空"
+
+#: include/Core/UI/ListTable/LogListTable.php:359
+msgid "Search by date"
+msgstr "按日期搜索"
+
+#: include/Core/UI/ListTable/LogListTable.php:360
+msgid "Search by term"
+msgstr "逐期搜索"
+
+#: include/Core/UI/Page/AddonListPage.php:23
+#: include/Core/UI/Page/AddonListPage.php:24
+#: include/Core/UI/Page/BasePage.php:78
+msgid "Add-ons"
+msgstr "附加组件"
+
+#: include/Core/UI/Page/AddonListPage.php:40
+msgid "Email Log Add-ons"
+msgstr "电子邮件日志附加组件"
+
+#: include/Core/UI/Page/AddonListPage.php:44
+msgid ""
+"These add-ons provide additional functionality to Email Log plugin and are "
+"available for purchase."
+msgstr "这些附加组件为电子邮件日志插件提供了其他功能，可供购买。"
+
+#: include/Core/UI/Page/AddonListPage.php:45
+msgid ""
+"If your license includes the add-ons below, you will be able to install them "
+"from here with one-click."
+msgstr "这些附加组件为电子邮件日志插件提供了其他功能，可供购买。"
+
+#: include/Core/UI/Page/BasePage.php:49
+msgid ""
+"Email Log is a WordPress plugin that allows you to easily log and view all "
+"emails sent from WordPress."
+msgstr "如果您的许可证包括以下附加组件，则可以使用一键单击从这里安装它们。"
+
+#: include/Core/UI/Page/BasePage.php:52
+msgid "You can view the logged emails from the View Logs screen. "
+msgstr "您可以从“查看日志”屏幕上查看已记录的电子邮件。 "
+
+#: include/Core/UI/Page/BasePage.php:54
+msgid ""
+"Check the <a target=\"_blank\" rel=\"noopener\" href=\"%s\">documentation "
+"about the View Logs screen</a> for more details."
+msgstr ""
+"检查<a target=\"_blank\"Rel=\"noopener\"Href=\"%S\">有关查看日志屏幕的文档</"
+"a>以获取更多详细信息。"
+
+#: include/Core/UI/Page/BasePage.php:60
+msgid ""
+"You can perform advanced actions like re-sending email, automatically "
+"forwarding emails or export logs with our <a target=\"_blank\" "
+"rel=\"noopener\" href=\"%s\">premium plugins</a>."
+msgstr ""
+"检查<a target=\"_blank\"Rel=\"noopener\"Href=\"%S\">有关查看日志屏幕的文档</"
+"a>以获取更多详细信息。"
+
+#: include/Core/UI/Page/BasePage.php:67
+msgid "About Plugin"
+msgstr "关于插件"
+
+#: include/Core/UI/Page/BasePage.php:75
+msgid "More information"
+msgstr "更多信息"
+
+#: include/Core/UI/Page/BasePage.php:76
+msgid "Documentation"
+msgstr "文档"
+
+#: include/Core/UI/Page/BasePage.php:77
+msgid "Support"
+msgstr "支持"
+
+#. Plugin Name of the plugin/theme
+msgid "Email Log"
+msgstr "电子邮件日志"
+
+#: include/Core/UI/Page/LogListPage.php:100
+msgid "Email Logs"
+msgstr "电子邮件日志"
+
+#: include/Core/UI/Page/LogListPage.php:105
+msgid "Search Logs"
+msgstr "搜索日志"
+
+#: include/Core/UI/Page/LogListPage.php:128
+msgid "Entries per page"
+msgstr "搜索日志"
+
+#: include/Core/UI/Page/SettingsPage.php:111
+msgid "Email Log Settings"
+msgstr "电子邮件日志设置"
+
+#: include/Core/UI/Page/SettingsPage.php:119
+msgid "Save"
+msgstr "保存"
+
+#: include/Core/UI/Page/SystemInfoPage.php:41
+#: include/Core/UI/Page/SystemInfoPage.php:42
+msgid "System Info"
+msgstr "系统信息"
+
+#: include/Core/UI/Page/SystemInfoPage.php:70
+msgid "Please include this information when posting support requests."
+msgstr "发布支持请求时，请在此信息中包含此信息。"
+
+#: include/Core/UI/Page/SystemInfoPage.php:78
+msgid ""
+"DISABLE_WP_CRON is <a href=\"%s\" rel=\"noopener\" "
+"target=\"_blank\">enabled</a>. This prevents scheduler from running."
+msgstr ""
+"禁用 wp cron 是<a href=\"%S\"Rel=\"noopener\"target=\"blank\">已启用</a>。这"
+"样可以防止调度程序运行。"
+
+#: include/Core/UI/Page/SystemInfoPage.php:84
+msgid "Email Log  - System Info"
+msgstr "电子邮件日志 - 系统信息"
+
+#: include/Core/UI/Page/SystemInfoPage.php:94
+msgid "Download System Info File"
+msgstr "下载系统信息文件"
+
+#: include/Core/UI/Setting/CoreSetting.php:16
+msgid "Core Email Log Settings"
+msgstr "核心电子邮件日志设置"
+
+#: include/Core/UI/Setting/CoreSetting.php:20
+msgid "Allowed User Roles"
+msgstr "允许用户角色"
+
+#: include/Core/UI/Setting/CoreSetting.php:21
+msgid "Remove Data on Uninstall?"
+msgstr "卸载时删除数据？"
+
+#: include/Core/UI/Setting/CoreSetting.php:22
+msgid "Disable Dashboard Widget"
+msgstr "禁用仪表板小部件"
+
+#: include/Core/UI/Setting/CoreSetting.php:23
+msgid "Database Size Notification"
+msgstr "数据库大小通知"
+
+#: include/Core/UI/Setting/CoreSetting.php:73
+msgid "Administrator"
+msgstr "管理员"
+
+#: include/Core/UI/Setting/CoreSetting.php:87
+msgid ""
+"<strong>Note:</strong> Users with the above User Roles can view Email Logs."
+msgstr "<strong>注意：</strong>带有上述用户角色的用户可以查看电子邮件日志。"
+
+#: include/Core/UI/Setting/CoreSetting.php:88
+msgid "Administrator role always has access and cannot be disabled."
+msgstr "管理员角色始终具有访问权限，不能被禁用。"
+
+#: include/Core/UI/Setting/CoreSetting.php:123
+msgid ""
+"Check this box if you would like to completely remove all of its data when "
+"the plugin is deleted."
+msgstr "如果您想在删除插件时完全删除其所有数据，请选中此框。"
+
+#: include/Core/UI/Setting/CoreSetting.php:128
+msgid ""
+"<strong>Note:</strong> You can also export the Email Logs using our <a "
+"href=\"%s\" rel=\"noopener noreferrer\" target=\"_blank\">Export Logs</a> "
+"add-on."
+msgstr ""
+"<strong>注意：</strong>您也可以使用我们的<a href=“%s”rel=“noopener "
+"noreferrer”target=“blank”>导出日志</a>插件导出电子邮件日志。"
+
+#: include/Core/UI/Setting/CoreSetting.php:216
+msgid "Check this box if you would like to disable dashboard widget."
+msgstr "如果您想禁用仪表板小部件，请选中此框。"
+
+#: include/Core/UI/Setting/CoreSetting.php:221
+msgid ""
+"<strong>Note:</strong> Each users can also disable dashboard widget using "
+"screen options"
+msgstr "<strong>注意：</strong>每个用户还可以使用屏幕选项禁用仪表板小部件"
+
+#: include/Core/UI/Setting/CoreSetting.php:262
+msgid "Notify %1$s if there are more than %2$s logs."
+msgstr "如果日志超过%2$s，请通知%1$s。"
+
+#: include/Core/UI/Setting/CoreSetting.php:270
+msgid "%1$s There are %2$s email logs currently logged in the database."
+msgstr "<strong>注意：</strong> 数据库中当前记录了%2$s 封电子邮件日志。"
+
+#: include/Core/UI/Setting/CoreSetting.php:279
+msgid ""
+"Last notification email was sent on %1$s. Click %2$s button to reset sending "
+"the notification."
+msgstr "最后一封通知电子邮件是在%1$s 发送的。单击%2$s 按钮重置发送通知。"
+
+#: include/Core/UI/Setting/CoreSetting.php:440
+msgid "Email Log Plugin: Your log threshold of %s has been met"
+msgstr "电子邮件日志插件：已达到%s 的日志阈值"
+
+#: include/Core/UI/Setting/CoreSetting.php:492
+msgid ""
+"Currently there are %1$s logged, which is more than the threshold that is "
+"set in the %2$s screen. You can delete some logs or increase the threshold. "
+"You can also use our %3$s add-on to automatically delete logs"
+msgstr ""
+"当前记录了%1$s，这超过了%2$s 屏幕中设置的阈值。您可以删除一些日志或提高阈值。"
+"您也可以使用我们的%3$s 加载项自动删除日志"
+
+#: include/Core/UI/Setting/CoreSetting.php:493
+msgid " email log"
+msgid_plural " email logs"
+msgstr[0] " 电子邮件日志"
+
+#. translators: Email Log time display format, see http:php.net/date
+#: include/Util/helper.php:199
+msgid "g:i:s a"
+msgstr "g:i:s a"
+
+#: include/Util/helper.php:343
+msgid "ID"
+msgstr "ID"
+
+#: include/Util/helper.php:346
+msgid "Message"
+msgstr "消息"
+
+#: include/Util/helper.php:347
+msgid "Attachment"
+msgstr "附件"
+
+#: include/Util/helper.php:349
+msgid "From"
+msgstr "从"
+
+#: include/Util/helper.php:350
+msgid "CC"
+msgstr "CC"
+
+#: include/Util/helper.php:351
+msgid "BCC"
+msgstr "密件抄送"
+
+#: include/Util/helper.php:352
+msgid "Reply To"
+msgstr "回复"
+
+#: include/Util/helper.php:353
+msgid "IP Address"
+msgstr "IP 地址"
+
+#: include/Util/helper.php:354
+msgid "Sent Status"
+msgstr "已发送状态"
+
+#: include/libraries/EDD_SL_Plugin_Updater.php:201
+msgid ""
+"There is a new version of %1$s available. %2$sView version %3$s details%4$s."
+msgstr "有%1$s 的新版本可用。%2$s 查看版本%3$s 详细信息%4$s。"
+
+#: include/libraries/EDD_SL_Plugin_Updater.php:209
+msgid ""
+"There is a new version of %1$s available. %2$sView version %3$s details%4$s "
+"or %5$supdate now%6$s."
+msgstr ""
+"有%1$s 的新版本可用。%2$s 查看版本%3$s 详细信息%4$s 或%5$s，现在更新%6$s。"
+
+#: include/libraries/EDD_SL_Plugin_Updater.php:399
+msgid "You do not have permission to install plugin updates"
+msgstr "您没有安装插件更新的权限"
+
+#: include/libraries/EDD_SL_Plugin_Updater.php:399
+msgid "Error"
+msgstr "错误"
+
+#. Plugin URI of the plugin/theme
+msgid "https://wpemaillog.com"
+msgstr "https://wpemaillog.com"
+
+#. Description of the plugin/theme
+msgid "Logs every email sent through WordPress"
+msgstr "记录通过 WordPress 发送的每封电子邮件"
+
+#. Author of the plugin/theme
+msgid "Sudar"
+msgstr "Sudar"
+
+#. Author URI of the plugin/theme
+msgid "http://sudarmuthu.com/"
+msgstr "http://sudarmuthu.com/"
+
+#: include/Addon/Addon.php:129
+msgctxt "Installed on website but not activated"
+msgid "Installed"
+msgstr "安装"
+
+#: include/Addon/Addon.php:132
+msgctxt "Installed and activated on website"
+msgid "Activated"
+msgstr "激活"
+
+#: include/Addon/Addon.php:134
+msgctxt "Enable addon so it may be used"
+msgid "Activate"
+msgstr "激活"
+
+#: include/Addon/Addon.php:142
+msgctxt "Download to your computer"
+msgid "Download"
+msgstr "下载"
+
+#: include/Addon/Addon.php:167
+msgctxt "Download add-on"
+msgid "Activate License to Download"
+msgstr "激活要下载的许可证"
+
+#: include/Addon/Addon.php:170
+msgctxt "Download and activate addon"
+msgid "Activate License to Use"
+msgstr "激活要使用的许可证"
