@@ -38,6 +38,21 @@ class NonceChecker implements Loadie {
 		if ( isset( $_POST['el-action'] ) ) {
 			$action = sanitize_text_field( $_POST['el-action'] );
 
+			$allowed_actions = [
+				'el-download-system-info',
+				'el_license_activate',
+				'el_license_deactivate',
+				'el_bundle_license_activate',
+				'el_bundle_license_deactivate',
+				'el-log-list-export',
+				'el-log-list-export-all',
+				'el-export-logs-with-columns'
+			];
+
+			if ( ! in_array( $action, $allowed_actions ) ) {
+				return;
+			}
+
 			if ( ! isset( $_POST[ $action . '_nonce' ] ) ) {
 				return;
 			}

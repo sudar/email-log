@@ -1,5 +1,8 @@
 ## Changelog ##
 
+### v2.4.9 – (In Dev) ###
+- Tweak: Explicitly check the action name and only allow actions based on an allow list.
+
 ### v2.4.8 – (2021-11-06) ###
 - Fix: Escape the search parameters before rendering them
 
