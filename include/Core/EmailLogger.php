@@ -76,18 +76,20 @@ class EmailLogger implements Loadie {
 				'message'     => '',
 				'headers'     => '',
 				'attachments' => array(),
+				'ip_address' => $_SERVER['REMOTE_ADDR'],
+				'sent_at' => current_time( 'mysql' ),
+				'sent_status' => 1
 			)
 		);
-
 		$log = array(
 			'to_email'        => \EmailLog\Util\stringify( $mail_info['to'] ),
 			'subject'         => $mail_info['subject'],
 			'message'         => $mail_info['message'],
 			'headers'         => \EmailLog\Util\stringify( $mail_info['headers'], "\n" ),
 			'attachment_name' => \EmailLog\Util\stringify( $mail_info['attachments'] ),
-			'sent_date'       => current_time( 'mysql' ),
-			'ip_address'      => $_SERVER['REMOTE_ADDR'],
-			'result'          => 1,
+			'sent_date'       => $mail_info['sent_at'],
+			'ip_address'      => $mail_info['ip_address'],
+			'result'          => $mail_info['sent_status'],
 		);
 
 		if ( empty( $log['attachment_name'] ) ) {
