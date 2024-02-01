@@ -354,7 +354,7 @@ function get_column_label( $column_name ) {
  * Returns an array of Email Log columns.
  *
  * Keys are the column names in the DB.
- * This holds true except for CC, BCC & Reply To as they are put under one column `headers`.
+ * This holds true except for From, CC, BCC & Reply To as they are put under one column `headers`.
  *
  * @since 2.3.2
  *

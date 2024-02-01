@@ -221,6 +221,16 @@ class TableManager implements Loadie {
 			return $wpdb->get_results( $query, $additional_args['output_type'] );
 		}
 
+		if ( isset( $additional_args['step'] ) ) {
+			$step = absint( $additional_args['step'] );
+			$query .= " AND 1 = {$step}";
+		}
+
+		$output = isset( $additional_args['output'] ) ? $additional_args['output'] : '';
+		if ( OBJECT === $output ) {
+			return $wpdb->get_results( $query ); //@codingStandardsIgnoreLine
+		}
+
 		return $wpdb->get_results( $query, 'ARRAY_A' ); //@codingStandardsIgnoreLine
 	}
 
